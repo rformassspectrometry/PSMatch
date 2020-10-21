@@ -196,8 +196,8 @@ The `readPSMs()` function can take two different values for the
 `parser` parameter, namely `"mzR"` (which is also the default value)
 and `"mzID"`.
 
-- **mzR** uses the `openIDfile()` function from the `r
-  BiocStyle::Biocpkg("mzR")` to parse the `mzId` file(s), and then
+- **mzR** uses the `openIDfile()` function from the 
+   `r BiocStyle::Biocpkg("mzR")` to parse the `mzId` file(s), and then
   coerces the data to a `data.frame` which is eventually returned as a
   `DataFrame`. The parser function uses dedicated code from the
   Proteowizard project (included in `mzR`) and is generally the
