@@ -26,9 +26,10 @@
 ## * OS: operating system
 
 ## Specify which branches you want this GHA to run on.
-## Bioconductor uses branches such as main (bioc-devel) and RELEASE_* like
+## Bioconductor uses branches such as master (bioc-devel) and RELEASE_* like
 ## RELEASE_3_10. For more details check
 ## http://bioconductor.org/developers/how-to/git/
+## Github now has replaced master with main for new repos.
 on:
   push:
     branches:
@@ -135,7 +136,7 @@ jobs:
       ## Related to https://github.com/rocker-org/rocker-versioned2/issues/52
 
       ## Most of these steps are the same as the ones in
-      ## https://github.com/r-lib/actions/blob/main/examples/check-standard.yaml
+      ## https://github.com/r-lib/actions/blob/master/examples/check-standard.yaml
       ## If they update their steps, we will also need to update ours.
       - uses: actions/checkout@v2
 
@@ -306,12 +307,13 @@ jobs:
 
     strategy:
       fail-fast: false
-      # matrix:
-      #   config:
-      #     ## Comment/Un-comment in case you also want to run other versions
-      #     # - {os: windows-latest}
-      #     # - {os: macOS-latest}
-      #     # - {os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+      matrix:
+        config:
+          ## Comment/Un-comment in case you also want to run other versions
+	  - {os: }
+          # - {os: windows-latest}
+          # - {os: macOS-latest}
+          # - {os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
