@@ -1,0 +1,193 @@
+---
+title: "Working with PSM data"
+output:
+    BiocStyle::html_document:
+        toc_float: true
+vignette: >
+    %\VignetteIndexEntry{Working with PSM data}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+    %\VignettePackage{Spectra}
+    %\VignetteDepends{mzR,BiocStyle,msdata,magrittr,dplyr,tidyr,msdata}
+---
+
+```{r style, echo = FALSE, results = 'asis', message=FALSE}
+BiocStyle::markdown()
+```
+
+**Package**: `r Biocpkg("psm")`<br />
+**Authors**: `r packageDescription("Spectra")[["Author"]] `<br />
+**Last modified:** `r file.info("psm.Rmd")$mtime`<br />
+**Compiled**: `r date()`
+
+
+
+# Introduction
+
+This vignette demonstrates how the handle and process proteomics
+identification data using the `psm` package and general handling
+packages such `dplyr`.
+
+# Handling and processing identification data
+
+## Loading PSM data
+
+We are going to use an `mzid` file from the `msdata` package.
+
+```{r}
+f <- msdata::ident(full.names = TRUE, pattern = "TMT")
+basename(f)
+```
+
+The `readPSMs()` function parses one of multiple `mzid` files and
+returns an object of class `DFrame`.
+
+
+```{r}
+library(psm)
+id <- readPSMs(f) 
+id
+```
+
+```{r, echo = FALSE}
+n_matches <- nrow(id)
+n_scans <- length(unique(id$spectrumID))
+n_seqs <- length(unique(id$sequence))
+```
+
+This table contains `r n_matches` matches for `r n_scans` scans and 
+`r n_seqs` peptides sequences.
+
+```{r}
+nrow(id) ## number of matches
+length(unique(id$spectrumID)) ## number of scans
+length(unique(id$sequence))   ## number of peptide sequences
+```
+
+
+The PSM data are read as is, without and filtering. As we can see
+below, we still have all the hits from the forward and reverse (decoy)
+databases.
+
+```{r}
+table(id$isDecoy)
+```
+
+## Keeping all matches
+
+The data contains also contains multiple matches for several
+spectra. The table below shows the number of number of spectra that
+have 1, 2, ... up to 5 matches.
+
+```{r}
+table(table(id$spectrumID))
+```
+
+Below, we can see how scan 1774 has 4 matches, all to sequence
+`RTRYQAEVR`, which itself matches to 4 different proteins:
+
+
+```{r}
+i <- which(id$spectrumID == "controllerType=0 controllerNumber=1 scan=1774")
+id[i, ]
+```
+
+If the goal is to keep all the matches, but arranged by scan/spectrum,
+one can *reduce* the `DataFrame` object by the `spectrumID` variable,
+so that each scal correponds to a single row that still stores all
+values:
+
+```{r}
+id2 <- QFeatures::reduceDataFrame(id, id$spectrumID)
+dim(id2)
+```
+
+The resulting object contains a single entrie for scan 1774 with
+information for the multiple matches stored as lists within the cells.
+
+```{r}
+j <- which(id2$spectrumID == "controllerType=0 controllerNumber=1 scan=1774")
+id2[j, ]
+```
+
+```{r}
+id2[j, "DatabaseAccess"]
+```
+
+The is the type of complete identification table that could be used to
+annotate an raw mass spectrometry `Spectra` object.
+
+## Filtering data
+
+Often, the PSM data is filtered to only retain reliable matches. The
+`MSnID` package can be used to set thresholds to attain user-defined
+PSM, peptide or protein-level FDRs. Here, we will simply filter out
+wrong identification manually.
+
+Here, the `filter()` from the `dplyr` package comes very handy. We
+will thus start by convering the `DataFrame` to a `tibble`.
+
+```{r}
+id_tbl <- tidyr::as_tibble(id)
+id_tbl
+```
+
+
+### Remove decoy hits
+
+```{r, message = FALSE}
+library("dplyr")
+id_tbl <- id_tbl %>%
+    filter(!isDecoy)
+id_tbl
+```
+
+### Keep first rank matches
+
+```{r}
+id_tbl <- id_tbl %>%
+    filter(rank == 1)
+id_tbl
+```
+
+### Remove non-proteotypic peptides
+
+The scans below are those that match different proteins. For example
+scan 4884 (the two first rows) matches proteins `XXX_ECA3406` and
+`ECA3415`. Scan 4099 (rows 6 to 8) match `XXX_ECA4416_1`,
+`XXX_ECA4416_2` and `XXX_ECA4416_3`.
+
+```{r}
+mltm <-
+    id_tbl %>%
+    group_by(spectrumID) %>%
+    mutate(nProts = length(unique(DatabaseAccess))) %>%
+    filter(nProts > 1) %>%
+    select(DatabaseAccess, nProts)
+mltm
+```
+
+We can now remove the scane with 
+
+```{r}
+id_tbl <-
+    id_tbl %>%
+    filter(!spectrumID %in% mltm$spectrumID)
+id_tbl
+```
+
+Which leaves us with `r nrow(id_tbl)` PSMs.
+
+This can also be achieved with the `filterPSMs()` function:
+
+```{r}
+id_filtered <- filterPSMs(id)
+```
+
+# Session information
+
+```{r si}
+sessionInfo()
+```
+
+
