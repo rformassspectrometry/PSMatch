@@ -154,7 +154,7 @@ jobs:
         name: Find Bioc and R versions
         run: |
           ## Find what branch we are working on
-          if echo "$GITHUB_REF" | grep -q "main"; then
+          if echo "$GITHUB_REF" | grep -q "master"; then
               biocversion="devel"
           elif echo "$GITHUB_REF" | grep -q "RELEASE_"; then
               biocversion="release"
@@ -310,9 +310,8 @@ jobs:
       matrix:
         config:
           ## Comment/Un-comment in case you also want to run other versions
-	  - {os: }
-          # - {os: windows-latest}
-          # - {os: macOS-latest}
+          - {os: windows-latest}
+          - {os: macOS-latest}
           # - {os: ubuntu-16.04, rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
 
     env:
@@ -325,12 +324,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Setup R from r-lib
-        uses: r-lib/actions/setup-r@main
+        uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ needs.R-CMD-check-bioc.outputs.rversion }}
 
       - name: Setup pandoc from r-lib
-        uses: r-lib/actions/setup-pandoc@main
+        uses: r-lib/actions/setup-pandoc@master
 
       - name: Query dependencies
         run: |
