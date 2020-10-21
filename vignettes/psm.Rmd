@@ -98,10 +98,14 @@ id[i, ]
 If the goal is to keep all the matches, but arranged by scan/spectrum,
 one can *reduce* the `DataFrame` object by the `spectrumID` variable,
 so that each scal correponds to a single row that still stores all
-values:
+values[^rownames]:
+
+[^rownames]: The rownames aren't needed here are are removed to reduce
+    to output in the the next code chunk display parts of `id2`.
 
 ```{r}
 id2 <- QFeatures::reduceDataFrame(id, id$spectrumID)
+rownames(id2) <- NULL ## rownames not needed here
 dim(id2)
 ```
 
