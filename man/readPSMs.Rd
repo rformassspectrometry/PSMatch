@@ -23,12 +23,18 @@ as a \code{DataFrame}.
 }
 \details{
 This function uses parsers provided by the \code{mzR} or \code{mzID}
-packages to read the \code{mzIdentML} data
+packages to read the \code{mzIdentML} data. See the vignette for some
+apparent differences in their outputs.
 }
 \examples{
 f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 basename(f)
+
+## mzR parser (default)
 readPSMs(f)
+
+## mzID parser
+readPSMs(f, backend = "mzID")
 }
 \author{
 Laurent Gatto

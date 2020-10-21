@@ -2,7 +2,8 @@
 ##' as a `DataFrame`.
 ##'
 ##' This function uses parsers provided by the `mzR` or `mzID`
-##' packages to read the `mzIdentML` data 
+##' packages to read the `mzIdentML` data. See the vignette for some
+##' apparent differences in their outputs.
 ##'
 ##' @title Import peptide-spectrum matches
 ##' 
@@ -24,7 +25,12 @@
 ##' @examples
 ##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 ##' basename(f)
+##'
+##' ## mzR parser (default)
 ##' readPSMs(f)
+##'
+##' ## mzID parser
+##' readPSMs(f, backend = "mzID")
 readPSMs <- function(files, backend = c("mzR", "mzID")) {
     if (!all(flex <- file.exists(files)))
         stop(paste(files[!flex], collapse = ", "), " not found.")    
@@ -52,10 +58,10 @@ readPSMsMzR <- function(files) {
 readPSMsMzID <- function(files) {
     stopifnot(requireNamespace("mzID"))
     if (length(files) == 1) {
-        iddf <- mzID::flatten(mzID::mzID(f))
+        iddf <- mzID::flatten(mzID::mzID(files))
     } else {
         iddf <- lapply(files,
-                       function(f) mzID::flatten(mzID::mzID(f)))
+                       function(f) mzID::flatten(mzID::mzID(files)))
         iddf <- do.call(rbind, iddf)
     }    
     as(iddf, "DataFrame")
