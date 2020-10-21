@@ -21,8 +21,8 @@ by captial letters.
 }
 \examples{
 nms <- c("aa.foo", "ab.bar")
-makeCamelCase(nms)
-makeCamelCase(nms, prefix = "x")
+psm:::makeCamelCase(nms)
+psm:::makeCamelCase(nms, prefix = "x")
 }
 \author{
 Laurent Gatto

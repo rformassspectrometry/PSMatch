@@ -20,6 +20,8 @@
 ##' @aliases as.data.frame.mzRident
 ##'
 ##' @export
+##'
+##' @importFrom BiocGenerics fileName
 ##' 
 ##' @examples
 ##' ## find path to an mzIdentML file
@@ -57,7 +59,7 @@ setAs("mzRident", "data.frame",
                         all = TRUE, sort = FALSE)
           iddf[, "spectrumID.y"] <- NULL
           ## add substitutions
-          subs <- factorsAsStrings(substitutions(from))
+          subs <- factorsAsStrings(mzR::substitutions(from))
           names(subs)[-1] <- makeCamelCase(names(subs), prefix = "sub")[-1]
           iddf <- merge(iddf, subs,
                         by.x = c("spectrumID" = "sequence"),

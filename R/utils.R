@@ -14,8 +14,8 @@
 ##' 
 ##' @examples
 ##' nms <- c("aa.foo", "ab.bar")
-##' makeCamelCase(nms)
-##' makeCamelCase(nms, prefix = "x")
+##' psm:::makeCamelCase(nms)
+##' psm:::makeCamelCase(nms, prefix = "x")
 makeCamelCase <- function(x, prefix) {
     if (!missing(prefix))
         x <- paste(prefix[1], x, sep = ".")
@@ -40,7 +40,7 @@ makeCamelCase <- function(x, prefix) {
 ##' @examples
 ##' data(iris)
 ##' str(iris)
-##' str(factorsAsStrings(iris))
+##' str(psm:::factorsAsStrings(iris))
 factorsAsStrings <- function(x) {
     x <- lapply(x,
                    function(xx) {

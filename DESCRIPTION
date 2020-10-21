@@ -11,7 +11,8 @@ Description: A simple package to load, hangle and manage PSMs
 Depends:
     S4Vectors
 Imports:
-    methods
+    methods,
+    BiocGenerics
 Suggests:
     msdata,
     Spectra,

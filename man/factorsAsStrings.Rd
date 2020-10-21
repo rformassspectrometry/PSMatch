@@ -21,7 +21,7 @@ converts \code{factors} columns to \code{characters}.
 \examples{
 data(iris)
 str(iris)
-str(factorsAsStrings(iris))
+str(psm:::factorsAsStrings(iris))
 }
 \author{
 Laurent Gatto

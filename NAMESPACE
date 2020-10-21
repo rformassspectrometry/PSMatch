@@ -3,4 +3,5 @@
 export(as)
 export(readPSMs)
 import(S4Vectors)
+importFrom(BiocGenerics,fileName)
 importFrom(methods,as)
