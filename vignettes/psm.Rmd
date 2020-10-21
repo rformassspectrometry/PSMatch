@@ -20,7 +20,10 @@ BiocStyle::markdown()
 **Last modified:** `r file.info("psm.Rmd")$mtime`<br />
 **Compiled**: `r date()`
 
-
+```{r setup, message = FALSE}
+library("psm")
+library("dplyr")
+```
 
 # Introduction
 
@@ -205,19 +208,16 @@ and `"mzID"`.
   robust to variations in the `mzID` implementation, as is a useful
   backup when the `mzR` approach fails with errors.
 
-Other differences in the two parsers include the columns that are
-returned, way they name them, and, as will shown below the matches
-that are returned.
-
 ```{r}
 system.time(id1 <- readPSMs(f, backend = "mzR"))
 system.time(id2 <- readPSMs(f, backend = "mzID"))
 ```
 
-Here, we see that the variables names are different, and that the
-variables returned by the two backend are also different - note for
-instance (and this will be important later), that there is not
-equivalent of `"modLocation"` in `id2`.
+Other differences in the two parsers include the columns that are
+returned, way they name them, and, as will shown below the matches
+that are returned. Below, note for instance (and this will be
+important later), that there is not equivalent of `"modLocation"` in
+`id2`.
 
 ```{r}
 names(id1)
