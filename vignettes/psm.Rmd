@@ -44,8 +44,8 @@ returns an object of class `DFrame`.
 
 
 ```{r}
-library(psm)
-id <- readPSMs(f) 
+library("psm")
+id <- readPSMs(f)
 id
 ```
 
@@ -208,6 +208,89 @@ and `"mzID"`.
 Other differences in the two parsers include the columns that are
 returned, way they name them, and, as will shown below the matches
 that are returned.
+
+```{r}
+system.time(id1 <- readPSMs(f, backend = "mzR"))
+system.time(id2 <- readPSMs(f, backend = "mzID"))
+```
+
+Here, we see that the variables names are different, and that the
+variables returned by the two backend are also different - note for
+instance (and this will be important later), that there is not
+equivalent of `"modLocation"` in `id2`.
+
+```{r}
+names(id1)
+names(id2)
+```
+
+We also have different number of matches in the two tables:
+
+```{r}
+nrow(id1)
+nrow(id2)
+```
+
+```{r}
+table(id1$isDecoy)
+table(id2$isdecoy)
+```
+
+Let's first filter the PSM tables to facilitate focus the comparison
+of relevant scans. Note that the default `filterPSMs()` arguments are
+set to work with the `mzR` parser.
+
+```{r}
+id1_filtered <- filterPSMs(id1)
+
+id2_filtered <-
+    filterPSMs(id2, decoy = "isdecoy",
+           accession = "accession",
+           spectrumID = "spectrumid")
+```
+
+As can be seen, we are also left with `r nrow(id1_filtered)` vs 
+`r nrow(id2_filtered)` PSMs after filtering.
+
+The difference doesn't stem from different scans, given that the
+spectum identifiers are identical in both tables:
+
+```{r}
+identical(sort(unique(id1_filtered$spectrumID)),
+          sort(unique(id2_filtered$spectrumid)))
+```
+
+The difference is obvious when we tally a table of spectrum ids
+occurences in the filtered tables. In `id2_filtered`, each scan is
+unique, i.e matched only once.
+
+```{r}
+anyDuplicated(id2_filtered$spectrumid)
+```
+
+However, for `id1_filtered`, we see that some scans are still repeat
+up to 4 times in the table:
+
+```{r}
+table(table(id1_filtered$spectrumID))
+```
+
+The example below shows that these differences stem from the
+modification location (`"modLocation"`), that is not report by the
+`mzID` backend:
+
+```{r}
+k <- names(which(table(id1_filtered$spectrumID) == 4))
+id1_filtered[id1_filtered$spectrumID == k, ]
+```
+
+If we remove the `"modLocation"` column, we recoved the same number of
+PSMs than with the `mzID` parser.
+
+```{r}
+id1_filtered$modLocation <- NULL
+nrow(unique(id1_filtered))
+```
 
 # Session information
 
