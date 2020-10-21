@@ -20,7 +20,7 @@ BiocStyle::markdown()
 **Last modified:** `r file.info("psm.Rmd")$mtime`<br />
 **Compiled**: `r date()`
 
-```{r setup, message = FALSE}
+```{r setup, message = FALSE, echo = FALSE}
 library("psm")
 library("dplyr")
 ```
