@@ -193,7 +193,7 @@ id_filtered <- filterPSMs(id)
 # The `mzR` and `mzID` parsers
 
 The `readPSMs()` function can take two different values for the
-`backend` parameter, namely `"mzR"` (which is also the default value)
+`parser` parameter, namely `"mzR"` (which is also the default value)
 and `"mzID"`.
 
 - **mzR** uses the `openIDfile()` function from the `r
@@ -213,8 +213,8 @@ and `"mzID"`.
   backup when the `mzR` approach fails with errors.
 
 ```{r}
-system.time(id1 <- readPSMs(f, backend = "mzR"))
-system.time(id2 <- readPSMs(f, backend = "mzID"))
+system.time(id1 <- readPSMs(f, parser = "mzR"))
+system.time(id2 <- readPSMs(f, parser = "mzID"))
 ```
 
 Other differences in the two parsers include the columns that are
@@ -281,7 +281,7 @@ table(table(id1_filtered$spectrumID))
 
 The example below shows that these differences stem from the
 modification location (`"modLocation"`), that is not report by the
-`mzID` backend:
+`mzID` parser:
 
 ```{r}
 k <- names(which(table(id1_filtered$spectrumID) == 4))

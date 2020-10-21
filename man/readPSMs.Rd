@@ -4,12 +4,12 @@
 \alias{readPSMs}
 \title{Import peptide-spectrum matches}
 \usage{
-readPSMs(files, backend = c("mzR", "mzID"))
+readPSMs(files, parser = c("mzR", "mzID"))
 }
 \arguments{
 \item{files}{A \code{character} of \code{mzid} files.}
 
-\item{backend}{\code{character(1)} defining the parser to be used to
+\item{parser}{\code{character(1)} defining the parser to be used to
 read the \code{mzIdentML} files. One of \code{"mzR"} (default) or
 \code{"mzID"}.}
 }
@@ -34,7 +34,7 @@ basename(f)
 readPSMs(f)
 
 ## mzID parser
-readPSMs(f, backend = "mzID")
+readPSMs(f, parser = "mzID")
 }
 \author{
 Laurent Gatto

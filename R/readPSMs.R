@@ -9,7 +9,7 @@
 ##' 
 ##' @param files A `character` of `mzid` files.
 ##' 
-##' @param backend `character(1)` defining the parser to be used to
+##' @param parser `character(1)` defining the parser to be used to
 ##'     read the `mzIdentML` files. One of `"mzR"` (default) or
 ##'     `"mzID"`.
 ##' 
@@ -30,12 +30,12 @@
 ##' readPSMs(f)
 ##'
 ##' ## mzID parser
-##' readPSMs(f, backend = "mzID")
-readPSMs <- function(files, backend = c("mzR", "mzID")) {
+##' readPSMs(f, parser = "mzID")
+readPSMs <- function(files, parser = c("mzR", "mzID")) {
     if (!all(flex <- file.exists(files)))
         stop(paste(files[!flex], collapse = ", "), " not found.")    
-    backend <- match.arg(backend)
-    if (backend == "mzR") readPSMsMzR(files)
+    parser <- match.arg(parser)
+    if (parser == "mzR") readPSMsMzR(files)
     else readPSMsMzID(files)
 }
 
