@@ -11,6 +11,8 @@
 ##' @return A `character` of same length as `x`.
 ##' 
 ##' @author Laurent Gatto
+##'
+##' @noRd
 ##' 
 ##' @examples
 ##' nms <- c("aa.foo", "ab.bar")
@@ -36,6 +38,8 @@ makeCamelCase <- function(x, prefix) {
 ##'     `characters`.
 ##' 
 ##' @author Laurent Gatto
+##'
+##' @noRd
 ##' 
 ##' @examples
 ##' data(iris)
