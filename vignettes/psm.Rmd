@@ -7,7 +7,7 @@ vignette: >
     %\VignetteIndexEntry{Working with PSM data}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
-    %\VignettePackage{Spectra}
+    %\VignettePackage{psm}
     %\VignetteDepends{mzR,BiocStyle,msdata,magrittr,dplyr,tidyr,msdata}
 ---
 
