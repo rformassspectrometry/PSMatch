@@ -67,7 +67,7 @@ filterPSMs <- function(x,
                       x[, spectrumID],
                       function(xx) length(unique(xx)) > 1)
         mlt <- names(which(mlt))        
-        x <- x[!x$spectrumID %in% mlt, ]
+        x <- x[!x[, spectrumID] %in% mlt, ]
         n3 <- nrow(x)
         if (verbose)
             message(" removed ", n0 - n3, " non-proteotypic peptides")

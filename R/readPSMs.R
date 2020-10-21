@@ -51,5 +51,12 @@ readPSMsMzR <- function(files) {
 
 readPSMsMzID <- function(files) {
     stopifnot(requireNamespace("mzID"))
-    stop("Not yet implemented")
+    if (length(files) == 1) {
+        iddf <- mzID::flatten(mzID::mzID(f))
+    } else {
+        iddf <- lapply(files,
+                       function(f) mzID::flatten(mzID::mzID(f)))
+        iddf <- do.call(rbind, iddf)
+    }    
+    as(iddf, "DataFrame")
 }

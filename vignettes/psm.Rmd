@@ -16,7 +16,7 @@ BiocStyle::markdown()
 ```
 
 **Package**: `r Biocpkg("psm")`<br />
-**Authors**: `r packageDescription("Spectra")[["Author"]] `<br />
+**Authors**: `r packageDescription("psm")[["Author"]] `<br />
 **Last modified:** `r file.info("psm.Rmd")$mtime`<br />
 **Compiled**: `r date()`
 
