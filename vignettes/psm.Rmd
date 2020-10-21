@@ -8,7 +8,7 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
     %\VignettePackage{psm}
-    %\VignetteDepends{mzR,BiocStyle,msdata,magrittr,dplyr,tidyr,msdata}
+    %\VignetteDepends{mzR,mzID,BiocStyle,msdata,magrittr,dplyr,tidyr,msdata}
 ---
 
 ```{r style, echo = FALSE, results = 'asis', message=FALSE}
@@ -183,6 +183,31 @@ This can also be achieved with the `filterPSMs()` function:
 ```{r}
 id_filtered <- filterPSMs(id)
 ```
+# The `mzR` and `mzID` parsers
+
+The `readPSMs()` function can take two different values for the
+`backend` parameter, namely `"mzR"` (which is also the default value)
+and `"mzID"`.
+
+- **mzR** uses the `openIDfile()` function from the `r
+  BiocStyle::Biocpkg("mzR")` to parse the `mzId` file(s), and then
+  coerces the data to a `data.frame` which is eventually returned as a
+  `DataFrame`. The parser function uses dedicated code from the
+  Proteowizard project (included in `mzR`) and is generally the
+  fastest approach.
+
+
+- **mzID** parses the `mzId` file with `mzID()` function from the 
+  `r BiocStyle::Biocpkg("mzID")` package, and the flattens the data to
+  a `data.frame` with `mzID::flatten()` and eventuelly returns a
+  `DataFrame`. The `mzID` package relies on the 
+  `r BiocStyle::CRANpkg("XML")` package. Is is slower but is is more
+  robust to variations in the `mzID` implementation, as is a useful
+  backup when the `mzR` approach fails with errors.
+
+Other differences in the two parsers include the columns that are
+returned, way they name them, and, as will shown below the matches
+that are returned.
 
 # Session information
 
