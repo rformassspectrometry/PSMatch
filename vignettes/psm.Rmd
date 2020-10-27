@@ -7,7 +7,7 @@ vignette: >
     %\VignetteIndexEntry{Working with PSM data}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
-    %\VignettePackage{psm}
+    %\VignettePackage{PSM}
     %\VignetteDepends{mzR,mzID,BiocStyle,msdata,magrittr,dplyr,tidyr,msdata}
 ---
 
@@ -15,20 +15,20 @@ vignette: >
 BiocStyle::markdown()
 ```
 
-**Package**: `r Biocpkg("psm")`<br />
-**Authors**: `r packageDescription("psm")[["Author"]] `<br />
-**Last modified:** `r file.info("psm.Rmd")$mtime`<br />
+**Package**: `r Biocpkg("PSM")`<br />
+**Authors**: `r packageDescription("PSM")[["Author"]] `<br />
+**Last modified:** `r file.info("PSM.Rmd")$mtime`<br />
 **Compiled**: `r date()`
 
 ```{r setup, message = FALSE, echo = FALSE}
-library("psm")
+library("PSM")
 library("dplyr")
 ```
 
 # Introduction
 
 This vignette demonstrates how the handle and process proteomics
-identification data using the `psm` package and general handling
+identification data using the `PSM` package and general handling
 packages such `dplyr`.
 
 # Handling and processing identification data
@@ -47,7 +47,7 @@ returns an object of class `DFrame`.
 
 
 ```{r}
-library("psm")
+library("PSM")
 id <- readPSMs(f)
 id
 ```

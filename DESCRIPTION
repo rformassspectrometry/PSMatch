@@ -1,4 +1,4 @@
-Package: PSMs
+Package: PSM
 Title: Handling and Managing Peptide Spectrum Matches
 Version: 0.0.1
 Authors@R:
@@ -30,6 +30,6 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
-BugReports: https://github.com/lgatto/PSMs/issues
-URL: https://github.com/lgatto/PSMs
+BugReports: https://github.com/RforMassSpectrometry/PSM/issues
+URL: https://github.com/RforMassSpectrometry/PSM
 biocViews: Infrastructure, Proteomics, MassSpectrometry
