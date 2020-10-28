@@ -1,2 +1,7 @@
-- name: GH actions stale run canceller
-  uses: yellowmegaman/gh-build-canceller@master
+on:
+  push:
+    branches:
+      - main
+
+name: GH actions stale run canceller
+uses: yellowmegaman/gh-build-canceller@master
