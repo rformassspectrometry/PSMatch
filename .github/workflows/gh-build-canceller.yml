@@ -1,0 +1,2 @@
+- name: GH actions stale run canceller
+  uses: yellowmegaman/gh-build-canceller@master
