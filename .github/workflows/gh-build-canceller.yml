@@ -5,5 +5,8 @@ on:
 
 name: GH actions stale run canceller
 
-jobs: 
-  - uses: yellowmegaman/gh-build-canceller@master
+jobs:
+    steps:
+      - uses: yellowmegaman/gh-build-canceller@master
+
+
