@@ -11,4 +11,5 @@ jobs:
     - name: shot
       uses: yellowmegaman/gh-build-canceller@v1.6
       with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         workflows_filter: "CI|pr"
