@@ -408,6 +408,9 @@ jobs:
           message(paste('****', Sys.time(), 'installing rcmdcheck and BiocCheck ****'))
           remotes::install_cran("rcmdcheck")
           BiocManager::install("BiocCheck")
+
+          ## Manual dependency installations
+          BiocManager::install("lgatto/ProtGenerics") ## latest version required
         shell: Rscript {0}
 
       - name: Session info
