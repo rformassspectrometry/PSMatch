@@ -12,7 +12,8 @@ Depends:
     S4Vectors
 Imports:
     methods,
-    BiocGenerics
+    BiocGenerics,
+    ProtGenerics (>= 1.23.1)
 Suggests:
     msdata,
     mzID,
@@ -23,7 +24,10 @@ Suggests:
     QFeatures,
     BiocStyle,
     rmarkdown,
-    knitr
+    knitr,
+    testthat
+Remotes:
+   lgatto/ProtGenerics
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
