@@ -1,4 +1,5 @@
-# File: .github/workflows/shot.yml
+## https://github.com/marketplace/actions/gh-actions-stale-run-canceller
+## File: .github/workflows/shot.yml
 name: build_canceller
 on:
   pull_request:
