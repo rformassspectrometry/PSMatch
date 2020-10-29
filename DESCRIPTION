@@ -25,6 +25,8 @@ Suggests:
     magrittr,
     tidyr,
     QFeatures,
+    Spectra,
+    MsCoreUtils,    
     BiocStyle,
     rmarkdown,
     knitr,
