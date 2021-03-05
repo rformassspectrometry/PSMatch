@@ -1,7 +1,7 @@
-pandoc: 2.7.3
+pandoc: 2.11.4
 pkgdown: 1.6.1.9000
-pkgdown_sha: e1e46f2e13c7efdb17bc4eae40bc3779c2b0b517
+pkgdown_sha: 9c95f00d2505ddd83c4722e019202370715d3a3d
 articles:
   PSM: PSM.html
-last_built: 2020-10-29T14:07Z
+last_built: 2021-03-05T21:09Z
 
