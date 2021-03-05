@@ -208,6 +208,7 @@ jobs:
           BiocManager::install("BiocCheck")
 
           ## Manual dependency installations
+          BiocManager::install("lgatto/QFeatures")
           BiocManager::install("lgatto/ProtGenerics") ## latest version required
         shell: Rscript {0}
 
