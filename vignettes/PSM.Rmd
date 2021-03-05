@@ -8,7 +8,7 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
     %\VignettePackage{PSM}
-    %\VignetteDepends{mzR,mzID,BiocStyle,msdata,magrittr,dplyr,tidyr,msdata}
+    %\VignetteDepends{mzR,mzID,BiocStyle,msdata,magrittr,dplyr,tidyr,msdata,QFeatures}
 ---
 
 ```{r style, echo = FALSE, results = 'asis', message=FALSE}
@@ -58,7 +58,7 @@ n_scans <- length(unique(id$spectrumID))
 n_seqs <- length(unique(id$sequence))
 ```
 
-This table contains `r n_matches` matches for `r n_scans` scans and 
+This table contains `r n_matches` matches for `r n_scans` scans and
 `r n_seqs` peptides sequences.
 
 ```{r}
@@ -174,7 +174,7 @@ mltm <-
 mltm
 ```
 
-We can now remove the scane with 
+We can now remove the scane with
 
 ```{r}
 id_tbl <-
@@ -196,7 +196,7 @@ The `readPSMs()` function can take two different values for the
 `parser` parameter, namely `"mzR"` (which is also the default value)
 and `"mzID"`.
 
-- **mzR** uses the `openIDfile()` function from the 
+- **mzR** uses the `openIDfile()` function from the
    `r BiocStyle::Biocpkg("mzR")` to parse the `mzId` file(s), and then
   coerces the data to a `data.frame` which is eventually returned as a
   `DataFrame`. The parser function uses dedicated code from the
@@ -204,10 +204,10 @@ and `"mzID"`.
   fastest approach.
 
 
-- **mzID** parses the `mzId` file with `mzID()` function from the 
+- **mzID** parses the `mzId` file with `mzID()` function from the
   `r BiocStyle::Biocpkg("mzID")` package, and the flattens the data to
   a `data.frame` with `mzID::flatten()` and eventuelly returns a
-  `DataFrame`. The `mzID` package relies on the 
+  `DataFrame`. The `mzID` package relies on the
   `r BiocStyle::CRANpkg("XML")` package. Is is slower but is is more
   robust to variations in the `mzID` implementation, as is a useful
   backup when the `mzR` approach fails with errors.
@@ -253,7 +253,7 @@ id2_filtered <-
            spectrumID = "spectrumid")
 ```
 
-As can be seen, we are also left with `r nrow(id1_filtered)` vs 
+As can be seen, we are also left with `r nrow(id1_filtered)` vs
 `r nrow(id2_filtered)` PSMs after filtering.
 
 The difference doesn't stem from different scans, given that the
@@ -301,5 +301,3 @@ nrow(unique(id1_filtered))
 ```{r si}
 sessionInfo()
 ```
-
-
