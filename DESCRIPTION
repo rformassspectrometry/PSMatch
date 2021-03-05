@@ -1,24 +1,25 @@
 Package: PSM
 Title: Handling and Managing Peptide Spectrum Matches
-Version: 0.2.0
+Version: 0.2.1
 Authors@R:
    c(person(given = "Laurent", family = "Gatto",
-            email = "laurent.gatto@uclouvain.be",
-            role = c("aut", "cre"),
-            comment = c(ORCID = "0000-0002-1520-2268")),
+	    email = "laurent.gatto@uclouvain.be",
+	    role = c("aut", "cre"),
+	    comment = c(ORCID = "0000-0002-1520-2268")),
      person(given = "Johannes", family = "Rainer",
 	    email = "Johannes.Rainer@eurac.edu",
 	    role = "aut",
-	    comment = c(ORCID = "0000-0002-6977-7147")),	    
+	    comment = c(ORCID = "0000-0002-6977-7147")),
      person(given = "Sebastian", family = "Gibb",
-            email = "mail@sebastiangibb.de",
-            role = "aut"))
-Description: A simple package to load, hangle and manage PSMs
+	    email = "mail@sebastiangibb.de",
+	    role = "aut"))
+Description: A simple package to load, handle and manage PSMs
    (peptide-spectrum matches).
 Depends:
     S4Vectors
 Imports:
     methods,
+    BiocParallel,
     BiocGenerics,
     ProtGenerics (>= 1.23.1)
 Suggests:
@@ -30,7 +31,7 @@ Suggests:
     tidyr,
     QFeatures,
     Spectra,
-    MsCoreUtils,    
+    MsCoreUtils,
     BiocStyle,
     rmarkdown,
     knitr,

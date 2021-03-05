@@ -1,4 +1,4 @@
-##' Reads as set of `mzId` files containing PSMs and returns the PSMs
+##' Reads a set of `mzId` files containing PSMs and returns the PSMs
 ##' as a `DataFrame`.
 ##'
 ##' This function uses parsers provided by the `mzR` or `mzID`
@@ -6,22 +6,26 @@
 ##' apparent differences in their outputs.
 ##'
 ##' @title Import peptide-spectrum matches
-##' 
+##'
 ##' @param files A `character` of `mzid` files.
-##' 
+##'
 ##' @param parser `character(1)` defining the parser to be used to
 ##'     read the `mzIdentML` files. One of `"mzR"` (default) or
 ##'     `"mzID"`.
-##' 
+##'
+##' @param BPPARAM an object inheriting from [BiocParallelParam] to
+##'     control parallel processing. The default value is
+##'     `SerialParam()` to read files in series.
+##'
 ##' @return A `DataFrame` containing the PSMs stored in the `mzId`
 ##'     files.
-##' 
+##'
 ##' @author Laurent Gatto
 ##'
 ##' @export
 ##'
-##' @import S4Vectors
-##' 
+##' @import S4Vectors BiocParallel
+##'
 ##' @examples
 ##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 ##' basename(f)
@@ -31,38 +35,36 @@
 ##'
 ##' ## mzID parser
 ##' readPSMs(f, parser = "mzID")
-readPSMs <- function(files, parser = c("mzR", "mzID")) {
+readPSMs <- function(files,
+                     parser = c("mzR", "mzID"),
+                     BPPARAM = SerialParam()) {
     if (!all(flex <- file.exists(files)))
-        stop(paste(files[!flex], collapse = ", "), " not found.")    
+        stop(paste(files[!flex], collapse = ", "), " not found.")
     parser <- match.arg(parser)
-    if (parser == "mzR") readPSMsMzR(files)
-    else readPSMsMzID(files)
+    if (parser == "mzR") readPSMsMzR(files, BPPARAM)
+    else readPSMsMzID(files, BPPARAM)
 }
 
 
 ##' @importFrom methods as
-readPSMsMzR <- function(files) {
+readPSMsMzR <- function(files, BPPARAM) {
     stopifnot(requireNamespace("mzR"))
-    if (length(files) == 1) {
-        id <- mzR::openIDfile(files)
-        iddf <- as(id, "data.frame")
-    } else {
-        iddf <- lapply(files,
-                       function(f) as(mzR::openIDfile(f), "data.frame"))
-        iddf <- do.call(rbind, iddf)
-    }
+    iddf <- bplapply(files,
+                     function(f) as(mzR::openIDfile(f), "data.frame"),
+                     BPPARAM = BPPARAM)
+    iddf <- do.call(rbind, iddf)
     as(iddf, "DataFrame")
 }
 
 
-readPSMsMzID <- function(files) {
+## mzID automatically reads data in parallel and uses all the cores,
+## without giving the user any control. This function doesn't make use
+## of this by passing only one file at a time to the constructor.
+readPSMsMzID <- function(files, BPPARAM) {
     stopifnot(requireNamespace("mzID"))
-    if (length(files) == 1) {
-        iddf <- mzID::flatten(mzID::mzID(files))
-    } else {
-        iddf <- lapply(files,
-                       function(f) mzID::flatten(mzID::mzID(files)))
-        iddf <- do.call(rbind, iddf)
-    }    
+    iddf <- bplapply(files,
+                     function(f) mzID::flatten(mzID::mzID(f)),
+                     BPPARAM = BPPARAM)
+    iddf <- do.call(rbind, iddf)
     as(iddf, "DataFrame")
 }

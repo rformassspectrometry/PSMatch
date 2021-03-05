@@ -4,7 +4,7 @@
 \alias{readPSMs}
 \title{Import peptide-spectrum matches}
 \usage{
-readPSMs(files, parser = c("mzR", "mzID"))
+readPSMs(files, parser = c("mzR", "mzID"), BPPARAM = SerialParam())
 }
 \arguments{
 \item{files}{A \code{character} of \code{mzid} files.}
@@ -12,13 +12,17 @@ readPSMs(files, parser = c("mzR", "mzID"))
 \item{parser}{\code{character(1)} defining the parser to be used to
 read the \code{mzIdentML} files. One of \code{"mzR"} (default) or
 \code{"mzID"}.}
+
+\item{BPPARAM}{an object inheriting from \link{BiocParallelParam} to
+control parallel processing. The default value is
+\code{SerialParam()} to read files in series.}
 }
 \value{
 A \code{DataFrame} containing the PSMs stored in the \code{mzId}
 files.
 }
 \description{
-Reads as set of \code{mzId} files containing PSMs and returns the PSMs
+Reads a set of \code{mzId} files containing PSMs and returns the PSMs
 as a \code{DataFrame}.
 }
 \details{
