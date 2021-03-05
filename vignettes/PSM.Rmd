@@ -212,7 +212,7 @@ and `"mzID"`.
   robust to variations in the `mzID` implementation, as is a useful
   backup when the `mzR` approach fails with errors.
 
-```{r}
+```{r, warning = FALSE}
 system.time(id1 <- readPSMs(f, parser = "mzR"))
 system.time(id2 <- readPSMs(f, parser = "mzID"))
 ```
