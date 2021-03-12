@@ -97,7 +97,7 @@ id[i, ]
 
 If the goal is to keep all the matches, but arranged by scan/spectrum,
 one can *reduce* the `DataFrame` object by the `spectrumID` variable,
-so that each scal correponds to a single row that still stores all
+so that each scan correponds to a single row that still stores all
 values[^rownames]:
 
 [^rownames]: The rownames aren't needed here are are removed to reduce
