@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.13/PSM" class="external-link">PSM</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-03-05 21:20:23<br><strong>Compiled</strong>: Fri Mar 5 21:24:27 2021</p>
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.13/PSM" class="external-link">PSM</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-03-12 21:02:04<br><strong>Compiled</strong>: Fri Mar 12 21:07:38 2021</p>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## 2                    NA          NA
 ## 3                    NA          NA
 ## 4                    NA          NA</code></pre>
-<p>If the goal is to keep all the matches, but arranged by scan/spectrum, one can <em>reduce</em> the <code>DataFrame</code> object by the <code>spectrumID</code> variable, so that each scal correponds to a single row that still stores all values<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>:</p>
+<p>If the goal is to keep all the matches, but arranged by scan/spectrum, one can <em>reduce</em> the <code>DataFrame</code> object by the <code>spectrumID</code> variable, so that each scan correponds to a single row that still stores all values<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu">QFeatures</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/QFeatures/man/reduceDataFrame.html" class="external-link">reduceDataFrame</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">id</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co">## rownames not needed here</span>
@@ -513,13 +513,13 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readPSMs.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.259   0.016   0.275</code></pre>
+##   0.301   0.012   0.313</code></pre>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readPSMs.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required namespace: mzID</code></pre>
 <pre><code>## reading TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid... DONE!</code></pre>
 <pre><code>##    user  system elapsed 
-##   8.023   0.124   8.147</code></pre>
+##   7.404   0.112   7.517</code></pre>
 <p>Other differences in the two parsers include the columns that are returned, way they name them, and, as will shown below the matches that are returned. Below, note for instance (and this will be important later), that there is not equivalent of <code>"modLocation"</code> in <code>id2</code>.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></code></pre></div>
@@ -702,38 +702,36 @@ document.addEventListener("DOMContentLoaded", function() {
 ## [17] htmltools_0.5.1.1            Matrix_1.3-2                
 ## [19] XML_3.99-0.5                 pkgconfig_2.0.3             
 ## [21] bookdown_0.21                zlibbioc_1.37.0             
-## [23] purrr_0.3.4                  HDF5Array_1.19.9            
-## [25] MultiAssayExperiment_1.17.13 BiocParallel_1.25.4         
-## [27] tibble_3.1.0                 generics_0.1.0              
-## [29] AnnotationFilter_1.15.0      IRanges_2.25.6              
-## [31] ellipsis_0.3.1               cachem_1.0.4                
-## [33] SummarizedExperiment_1.21.1  lazyeval_0.2.2              
-## [35] cli_2.3.1                    magrittr_2.0.1              
-## [37] crayon_1.4.1                 ps_1.6.0                    
-## [39] memoise_2.0.0                evaluate_0.14               
-## [41] fs_1.5.0                     ncdf4_1.17                  
-## [43] fansi_0.4.2                  doParallel_1.0.16           
-## [45] MASS_7.3-53.1                QFeatures_1.1.1             
-## [47] mzR_2.25.3                   textshaping_0.3.1           
-## [49] tools_4.1.0                  lifecycle_1.0.0             
-## [51] matrixStats_0.58.0           stringr_1.4.0               
-## [53] Rhdf5lib_1.13.4              cluster_2.1.1               
-## [55] DelayedArray_0.17.9          compiler_4.1.0              
-## [57] pkgdown_1.6.1.9000           GenomeInfoDb_1.27.6         
-## [59] mzID_1.29.0                  systemfonts_1.0.1           
-## [61] rlang_0.4.10                 rhdf5_2.35.2                
-## [63] grid_4.1.0                   RCurl_1.98-1.2              
-## [65] iterators_1.0.13             rstudioapi_0.13             
-## [67] rhdf5filters_1.3.4           MsCoreUtils_1.3.3           
-## [69] bitops_1.0-6                 rmarkdown_2.7               
-## [71] codetools_0.2-18             R6_2.5.0                    
-## [73] knitr_1.31                   fastmap_1.1.0               
-## [75] utf8_1.1.4                   clue_0.3-58                 
-## [77] rprojroot_2.0.2              ragg_1.1.1                  
-## [79] ProtGenerics_1.23.7          desc_1.3.0                  
-## [81] stringi_1.5.3                Rcpp_1.0.6                  
-## [83] vctrs_0.3.6                  tidyselect_1.1.0            
-## [85] xfun_0.21</code></pre>
+## [23] purrr_0.3.4                  MultiAssayExperiment_1.17.18
+## [25] BiocParallel_1.25.5          tibble_3.1.0                
+## [27] generics_0.1.0               AnnotationFilter_1.15.0     
+## [29] IRanges_2.25.6               ellipsis_0.3.1              
+## [31] cachem_1.0.4                 SummarizedExperiment_1.21.1 
+## [33] lazyeval_0.2.2               cli_2.3.1                   
+## [35] magrittr_2.0.1               crayon_1.4.1                
+## [37] ps_1.6.0                     memoise_2.0.0               
+## [39] evaluate_0.14                fs_1.5.0                    
+## [41] ncdf4_1.17                   fansi_0.4.2                 
+## [43] doParallel_1.0.16            MASS_7.3-53.1               
+## [45] QFeatures_1.1.2              mzR_2.25.3                  
+## [47] textshaping_0.3.2            tools_4.1.0                 
+## [49] lifecycle_1.0.0              matrixStats_0.58.0          
+## [51] stringr_1.4.0                cluster_2.1.1               
+## [53] DelayedArray_0.17.9          compiler_4.1.0              
+## [55] pkgdown_1.6.1.9000           GenomeInfoDb_1.27.6         
+## [57] mzID_1.29.0                  systemfonts_1.0.1           
+## [59] rlang_0.4.10                 grid_4.1.0                  
+## [61] RCurl_1.98-1.2               iterators_1.0.13            
+## [63] rstudioapi_0.13              MsCoreUtils_1.3.3           
+## [65] bitops_1.0-6                 rmarkdown_2.7               
+## [67] codetools_0.2-18             R6_2.5.0                    
+## [69] knitr_1.31                   fastmap_1.1.0               
+## [71] utf8_1.1.4                   clue_0.3-58                 
+## [73] rprojroot_2.0.2              ragg_1.1.1                  
+## [75] ProtGenerics_1.23.7          desc_1.3.0                  
+## [77] stringi_1.5.3                Rcpp_1.0.6                  
+## [79] vctrs_0.3.6                  tidyselect_1.1.0            
+## [81] xfun_0.22</code></pre>
 </div>
 <div class="footnotes">
 <hr>
