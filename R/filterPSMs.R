@@ -6,30 +6,30 @@
 ##' this function should be used before reducing the PSM table.
 ##'
 ##' @title Filter out unreliable PSMs.
-##' 
+##'
 ##' @param x A `DataFrame` containing PSMs.
-##' 
+##'
 ##' @param decoy The column name defining whether entries match the
 ##'     decoy database. Default is `"isDecoy"`. The column should be a
 ##'     `logical` and only PSMs holding a `FALSE` are
 ##'     retained. Ignored is set to `NULL`.
-##' 
+##'
 ##' @param rank The column name holding the rank of the PSM. Default
 ##'     is `"rank"`. This column should be a `numeric` and only PSMs
 ##'     having rank equal to 1 are retained. Ignored is set to `NULL`.
-##' 
+##'
 ##' @param accession The column name holding the protein (groups)
 ##'     accession. Default is `"DatabaseAccess"`. Ignored is set to
 ##'     `NULL`.
-##' 
+##'
 ##' @param spectrumID The name of the spectrum identifier
 ##'     column. Default is `spectrumID`.
-##' 
+##'
 ##' @param verbose `logical(1)` setting the verbosity flag.
-##' 
+##'
 ##' @return A new `DataFrame` with filtered out peptides and with the
 ##'     same columns as the input `x`.
-##' 
+##'
 ##' @author Laurent Gatto
 ##'
 ##' @export
@@ -66,7 +66,7 @@ filterPSMs <- function(x,
         mlt <- tapply(x[, accession],
                       x[, spectrumID],
                       function(xx) length(unique(xx)) > 1)
-        mlt <- names(which(mlt))        
+        mlt <- names(which(mlt))
         x <- x[!x[, spectrumID] %in% mlt, ]
         n3 <- nrow(x)
         if (verbose)
@@ -75,4 +75,61 @@ filterPSMs <- function(x,
     if (verbose)
         message(nrow(x), " PSMs left.")
     x
+}
+
+
+filterPsmDecoy <- function(x,
+                           decoy = "isDecoy",
+                           verbose = TRUE) {
+    n0 <- nrow(x)
+    x <- x[!x[, decoy], ]
+    n1 <- nrow(x)
+    if (verbose)
+        message("Removed ", n0 - n1, " decoy hits.")
+    x
+}
+
+
+filterPsmRank <- function(x,
+                          rank = "rank",
+                          verbose = TRUE) {
+    n0 <- nrow(x)
+    x <- x[x[, rank] == 1, ]
+    n1 <- nrow(x)
+    if (verbose)
+        message("Removed ", n0 - n1, " PSMs with rank > 1.")
+    x
+}
+
+filterPsmNonProteotypic <- function(x,
+                                    accession = "DatabaseAccess",
+                                    spectrumID = "SpectrumID",
+                                    verbose = TRUE) {
+    n0 <- nrow(x)
+    mlt <- tapply(x[, accession],
+                  x[, spectrumID],
+                  function(xx) length(unique(xx)) > 1)
+    mlt <- names(which(mlt))
+    x <- x[!x[, spectrumID] %in% mlt, ]
+    n1 <- nrow(x)
+    if (verbose)
+        message("Removed ", n0 - n1, " non-proteotypic peptides.")
+}
+
+
+filterPsmUniqueSeq <- function(x,
+                               sequence = "sequence",
+                               verbose = TRUE) {}
+
+filterPsmBestScore <- function(x, score, verbose = TRUE) {}
+
+
+filterPsmMods <- function(x,
+                          mod = "modName",
+                          versbose = TRUE) {
+    n0 <- nrow(x)
+    x <- x[is.na(x[, mod]), ]
+    n1 <- nrow(x)
+    if (verbose)
+        message("Removed ", n0 - n1, " modified peptides.")
 }
