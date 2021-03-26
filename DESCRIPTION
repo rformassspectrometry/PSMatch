@@ -24,6 +24,7 @@ Imports:
     ProtGenerics (>= 1.23.1)
 Suggests:
     msdata,
+    rpx,
     mzID,
     mzR,
     dplyr,

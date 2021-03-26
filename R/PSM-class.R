@@ -38,6 +38,10 @@
 ##'
 ##' @examples
 ##'
+##' ## ---------------------------------
+##' ## Example with a single mzid file
+##' ## ---------------------------------
+##'
 ##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 ##' basename(f)
 ##'
@@ -62,6 +66,48 @@
 ##' rpsm2
 ##' DataFrame(rpsm2[, c("sequence", "spectrumID", "modName", "modLocation")])
 ##' reduced(rpsm2)
+##'
+##' ## ---------------------------------
+##' ## Multiple mzid files
+##' ## ---------------------------------
+##'
+##' library(rpx)
+##' PXD022816 <- PXDataset("PXD022816")
+##' PXD022816
+##'
+##' (mzids <- pxget(PXD022816, grep("mzID", pxfiles(PXD022816))[1:2]))
+##' psm <- PSM(mzids)
+##' psm
+##'
+##' ## Here, spectrum identifiers are repeated accross files
+##' psm[grep("scan=20000", psm$spectrumID), "spectrumFile"]
+##'
+##' ## Let's create a new primary identifier composed of the scan
+##' ## number and the file name
+##' psm$pkey <- paste(sub("^.+Task\\\\", "", psm$spectrumFile),
+##'                   sub("^.+scan=", "", psm$spectrumID),
+##'                   sep = "::")
+##' head(psm$pkey)
+##'
+##' ## the PSM is not reduced
+##' reduced(psm, "pkey")
+##' DataFrame(psm[6:7, ])
+##'
+##' ## same sequence, same spectrumID, same file
+##' psm$sequence[6:7]
+##' psm$pkey[6:7]
+##'
+##' ## different modification locations
+##' psm$modLocation[6:7]
+##'
+##' rpsm <- reducePSMs(psm, psm$pkey)
+##' rpsm
+##' reduced(rpsm, "pkey")
+##'
+##' ## the two rows are now merged into a single one; the distinct
+##' ## modification locations are preserved.
+##' (i <- which(rpsm$pkey == "QEP2LC6_HeLa_50ng_251120_01-calib.mzML::12894"))
+##' DataFrame(rpsm[i, c("sequence", "pkey", "modName", "modLocation")])
 NULL
 
 
@@ -128,7 +174,8 @@ PSM <- function(files,
 
 ##' @param spectrumID `character(1)` with the column name referring to
 ##'     the spectrum identifier or any other unique key for the `PSM`
-##'     object `x`.
+##'     object `x`. This parameter can be set to calculate the reduced
+##'     state explicitly by by-passing the `reduced` metadata flag.
 ##'
 ##' @param x An instance of class `PSM`.
 ##'
