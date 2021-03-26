@@ -2,6 +2,9 @@
 % Please edit documentation in R/filterPSMs.R
 \name{filterPSMs}
 \alias{filterPSMs}
+\alias{filterPsmDecoy}
+\alias{filterPsmRank}
+\alias{filterPsmNonProteotypic}
 \title{Filter out unreliable PSMs.}
 \usage{
 filterPSMs(
@@ -12,45 +15,68 @@ filterPSMs(
   spectrumID = "spectrumID",
   verbose = TRUE
 )
+
+filterPsmDecoy(x, decoy = "isDecoy", verbose = TRUE)
+
+filterPsmRank(x, rank = "rank", verbose = TRUE)
+
+filterPsmNonProteotypic(
+  x,
+  accession = "DatabaseAccess",
+  spectrumID = "SpectrumID",
+  verbose = TRUE
+)
 }
 \arguments{
-\item{x}{A \code{DataFrame} containing PSMs.}
+\item{x}{An instance of class \code{PSM}.}
 
-\item{decoy}{The column name defining whether entries match the
-decoy database. Default is \code{"isDecoy"}. The column should be a
-\code{logical} and only PSMs holding a \code{FALSE} are
-retained. Ignored is set to \code{NULL}.}
-
-\item{rank}{The column name holding the rank of the PSM. Default
-is \code{"rank"}. This column should be a \code{numeric} and only PSMs
-having rank equal to 1 are retained. Ignored is set to \code{NULL}.}
-
-\item{accession}{The column name holding the protein (groups)
-accession. Default is \code{"DatabaseAccess"}. Ignored is set to
+\item{decoy}{\code{character(1)} with the column name specifying
+whether entries match the decoy database or not. Default is
+\code{"isDecoy"}. The column should be a \code{logical} and only PSMs
+holding a \code{FALSE} are retained. Filtering is ignored if set to
 \code{NULL}.}
 
-\item{spectrumID}{The name of the spectrum identifier
-column. Default is \code{spectrumID}.}
+\item{rank}{\code{character(1)} with the column name holding the rank
+of the PSM. Default is \code{"rank"}. This column should be a
+\code{numeric} and only PSMs having rank equal to 1 are
+retained. Filtering is ignored if set to \code{NULL}.}
+
+\item{accession}{\code{character(1)} with the column name holding the
+protein (groups) accession. Default is
+\code{"DatabaseAccess"}. Filtering is ignored if set to \code{NULL}.}
+
+\item{spectrumID}{\code{character(1)} with the name of the spectrum
+identifier column. Default is \code{spectrumID}. Filtering is
+ignored if set to \code{NULL}.}
 
 \item{verbose}{\code{logical(1)} setting the verbosity flag.}
 }
 \value{
-A new \code{DataFrame} with filtered out peptides and with the
-same columns as the input \code{x}.
+A new filtered \code{PSM} object with the same columns as the
+input \code{x}.
 }
 \description{
-A function to filter out PSMs matching to the decoy database, of
-rank greater than one and matching non-proteotypic peptides.
+Functions to filter out PSMs matching. The PSMs should be stored
+in a \code{PSM} such as those produced by \code{\link[=PSM]{PSM()}}.
+
+\itemize{
+\item \code{filterPsmDecoy()} filters out decoy PSMs, i.e. those annotated
+as \code{isDecoy}.
 }
-\details{
-The PSMs should be stored in a \code{DataFrame} (or \code{data.frame} or
-\code{tibble}) such as those produced by \code{\link[=readPSMs]{readPSMs()}}. Note that
-this function should be used before reducing the PSM table.
+
+\itemize{
+\item \code{filterPsmRank()} filters out PSMs of rank > 1.
+}
+
+\itemize{
+\item \code{filterPsmNonProteotypic()} filters out non-proteotypic PSMs,
+i.e. those that match multiple proteins.
+}
 }
 \examples{
 f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 basename(f)
-id <- readPSMs(f)
+id <- PSM(f)
 filterPSMs(id)
 }
 \author{

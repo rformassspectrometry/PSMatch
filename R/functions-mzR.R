@@ -32,7 +32,7 @@
 ##' library("mzR")
 ##' x <- openIDfile(f)
 ##' x
-##' as_data_frame(x)
+##' PSM:::as_data_frame(x)
 as_data_frame <-
       function(from) {
           stopifnot(requireNamespace("mzR"))

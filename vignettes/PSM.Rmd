@@ -48,7 +48,7 @@ returns an object of class `DFrame`.
 
 ```{r}
 library("PSM")
-id <- readPSMs(f)
+id <- PSM(f)
 id
 ```
 
@@ -104,7 +104,7 @@ values[^rownames]:
     to output in the the next code chunk display parts of `id2`.
 
 ```{r}
-id2 <- QFeatures::reduceDataFrame(id, id$spectrumID)
+id2 <- reducePSMs(id, id$spectrumID)
 rownames(id2) <- NULL ## rownames not needed here
 dim(id2)
 ```

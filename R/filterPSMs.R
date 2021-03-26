@@ -1,44 +1,27 @@
-##' A function to filter out PSMs matching to the decoy database, of
-##' rank greater than one and matching non-proteotypic peptides.
-##'
-##' The PSMs should be stored in a `DataFrame` (or `data.frame` or
-##' `tibble`) such as those produced by [readPSMs()]. Note that
-##' this function should be used before reducing the PSM table.
-##'
 ##' @title Filter out unreliable PSMs.
 ##'
-##' @param x A `DataFrame` containing PSMs.
+##' @description
 ##'
-##' @param decoy The column name defining whether entries match the
-##'     decoy database. Default is `"isDecoy"`. The column should be a
-##'     `logical` and only PSMs holding a `FALSE` are
-##'     retained. Ignored is set to `NULL`.
+##' Functions to filter out PSMs matching. The PSMs should be stored
+##' in a `PSM` such as those produced by [PSM()].
 ##'
-##' @param rank The column name holding the rank of the PSM. Default
-##'     is `"rank"`. This column should be a `numeric` and only PSMs
-##'     having rank equal to 1 are retained. Ignored is set to `NULL`.
-##'
-##' @param accession The column name holding the protein (groups)
-##'     accession. Default is `"DatabaseAccess"`. Ignored is set to
-##'     `NULL`.
-##'
-##' @param spectrumID The name of the spectrum identifier
-##'     column. Default is `spectrumID`.
-##'
-##' @param verbose `logical(1)` setting the verbosity flag.
-##'
-##' @return A new `DataFrame` with filtered out peptides and with the
-##'     same columns as the input `x`.
+##' @return A new filtered `PSM` object with the same columns as the
+##'     input `x`.
 ##'
 ##' @author Laurent Gatto
 ##'
-##' @export
+##' @name filterPSMs
 ##'
 ##' @examples
 ##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 ##' basename(f)
-##' id <- readPSMs(f)
+##' id <- PSM(f)
 ##' filterPSMs(id)
+NULL
+
+##' @name filterPSMs
+##'
+##' @export
 filterPSMs <- function(x,
                        decoy = "isDecoy",
                        rank = "rank",
@@ -78,9 +61,29 @@ filterPSMs <- function(x,
 }
 
 
+##' @description
+##'
+##' - `filterPsmDecoy()` filters out decoy PSMs, i.e. those annotated
+##'    as `isDecoy`.
+##'
+##' @param x An instance of class `PSM`.
+##'
+##' @param decoy `character(1)` with the column name specifying
+##'     whether entries match the decoy database or not. Default is
+##'     `"isDecoy"`. The column should be a `logical` and only PSMs
+##'     holding a `FALSE` are retained. Filtering is ignored if set to
+##'     `NULL`.
+##'
+##' @param verbose `logical(1)` setting the verbosity flag.
+##'
+##' @name filterPSMs
+##'
+##' @export
 filterPsmDecoy <- function(x,
                            decoy = "isDecoy",
                            verbose = TRUE) {
+    if (is.null(decoy))
+        return(x)
     n0 <- nrow(x)
     x <- x[!x[, decoy], ]
     n1 <- nrow(x)
@@ -89,10 +92,23 @@ filterPsmDecoy <- function(x,
     x
 }
 
-
+##' @description
+##'
+##' - `filterPsmRank()` filters out PSMs of rank > 1.
+##'
+##' @param rank `character(1)` with the column name holding the rank
+##'     of the PSM. Default is `"rank"`. This column should be a
+##'     `numeric` and only PSMs having rank equal to 1 are
+##'     retained. Filtering is ignored if set to `NULL`.
+##'
+##' @name filterPSMs
+##'
+##' @export
 filterPsmRank <- function(x,
                           rank = "rank",
                           verbose = TRUE) {
+    if (is.null(rank))
+        return(x)
     n0 <- nrow(x)
     x <- x[x[, rank] == 1, ]
     n1 <- nrow(x)
@@ -101,10 +117,29 @@ filterPsmRank <- function(x,
     x
 }
 
+
+##' @description
+##'
+##' - `filterPsmNonProteotypic()` filters out non-proteotypic PSMs,
+##'    i.e. those that match multiple proteins.
+##'
+##' @param accession `character(1)` with the column name holding the
+##'     protein (groups) accession. Default is
+##'     `"DatabaseAccess"`. Filtering is ignored if set to `NULL`.
+##'
+##' @param spectrumID `character(1)` with the name of the spectrum
+##'     identifier column. Default is `spectrumID`. Filtering is
+##'     ignored if set to `NULL`.
+##'
+##' @name filterPSMs
+##'
+##' @export
 filterPsmNonProteotypic <- function(x,
                                     accession = "DatabaseAccess",
                                     spectrumID = "SpectrumID",
                                     verbose = TRUE) {
+    if (is.null(accession) | is.null(spectrumID))
+        return(x)
     n0 <- nrow(x)
     mlt <- tapply(x[, accession],
                   x[, spectrumID],
@@ -121,12 +156,45 @@ filterPsmUniqueSeq <- function(x,
                                sequence = "sequence",
                                verbose = TRUE) {}
 
-filterPsmBestScore <- function(x, score, verbose = TRUE) {}
+
+##' @description
+##'
+##' - `filterPsmBestScore()` filters out PSMs but those with he
+##'    highest score when matching the same spectrum identifier.
+##'
+##' @param score `character(1)` with the name of a score column to be
+##'     used. Filtering is ignored if set to `NULL`.
+##'
+filterPsmBestScore <- function(x,
+                               score,
+                               spectrumID = "spectrumID",
+                               verbose = TRUE) {
+    if (missing(score))
+        stop("Please provide a score variable.")
+    if (!score %in% names(x))
+        stop("Please provide a valid score.")
+    if (is.null(score) | is.null(spectrumID))
+        return(x)
+    ## TODO
+}
 
 
+
+##' @description
+##'
+##' - `filterPsmMods()` filters out PSMs that contain any PTM, as
+##'    defined by non-missing (i.e. non-`NA`) modification name.
+##'
+##' @param mod `character(1)` with the column name holding the
+##'     modification name. Default is `"modName"`. Filtering is
+##'     ignored if set to `NULL`.
+##'
+##' @export
 filterPsmMods <- function(x,
                           mod = "modName",
-                          versbose = TRUE) {
+                          verbose = TRUE) {
+    if (is.null(mod))
+        return(x)
     n0 <- nrow(x)
     x <- x[is.na(x[, mod]), ]
     n1 <- nrow(x)
