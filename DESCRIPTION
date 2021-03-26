@@ -1,18 +1,18 @@
 Package: PSM
 Title: Handling and Managing Peptide Spectrum Matches
-Version: 0.2.1
+Version: 0.3.0
 Authors@R:
    c(person(given = "Laurent", family = "Gatto",
-	    email = "laurent.gatto@uclouvain.be",
-	    role = c("aut", "cre"),
-	    comment = c(ORCID = "0000-0002-1520-2268")),
+            email = "laurent.gatto@uclouvain.be",
+            role = c("aut", "cre"),
+            comment = c(ORCID = "0000-0002-1520-2268")),
      person(given = "Johannes", family = "Rainer",
-	    email = "Johannes.Rainer@eurac.edu",
-	    role = "aut",
-	    comment = c(ORCID = "0000-0002-6977-7147")),
+            email = "Johannes.Rainer@eurac.edu",
+            role = "aut",
+            comment = c(ORCID = "0000-0002-6977-7147")),
      person(given = "Sebastian", family = "Gibb",
-	    email = "mail@sebastiangibb.de",
-	    role = "aut"))
+            email = "mail@sebastiangibb.de",
+            role = "aut"))
 Description: A simple package to load, handle and manage PSMs
    (peptide-spectrum matches).
 Depends:

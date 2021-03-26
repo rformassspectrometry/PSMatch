@@ -50,10 +50,11 @@ readPSMs <- function(files,
 readPSMsMzR <- function(files, BPPARAM) {
     stopifnot(requireNamespace("mzR"))
     iddf <- bplapply(files,
-                     function(f) as(mzR::openIDfile(f), "data.frame"),
+                     function(f) as_data_frame(mzR::openIDfile(f)),
                      BPPARAM = BPPARAM)
     iddf <- do.call(rbind, iddf)
-    as(iddf, "DataFrame")
+    iddf <- as(iddf, "DataFrame")
+    as(iddf, "PSM")
 }
 
 
@@ -66,5 +67,9 @@ readPSMsMzID <- function(files, BPPARAM) {
                      function(f) mzID::flatten(mzID::mzID(f)),
                      BPPARAM = BPPARAM)
     iddf <- do.call(rbind, iddf)
-    as(iddf, "DataFrame")
+    iddf <- as(iddf, "DataFrame")
+    as(iddf, "PSM")
 }
+
+##' @export PSM
+PSM <- readPSMs

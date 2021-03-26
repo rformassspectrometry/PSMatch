@@ -4,35 +4,36 @@
 ##' repeated several times if the PSM matches multiple proteins and/or
 ##' contains two or more modifications.
 ##'
-##' @title Coerce PSM data to a `data.frame`
-##' 
-##' @param from An object of class `mzRident` defined in the `mzR`
-##'     package.
-##' 
-##' @return A `data.frame`
-##' 
-##' @author Laurent Gatto
-##' 
-##' @name as
-##' 
-##' @rdname mzRident2dfr
-##' 
-##' @aliases as.data.frame.mzRident
+##' @details
 ##'
-##' @export
+##' This function implements the same funtionality as `MSnbase::as(.,
+##' "data.frame")`. It as been renamed and isn't been exported to
+##' avoid conflicts and confusion. Ideally, the function in `MSnbase`
+##' might be moved to `mzR` and this package would re-use that one.
+##'
+##' @title Coerce PSM data to a `data.frame`
+##'
+##' @param from An object of class `mzRident` as defined in the `mzR`
+##'     package.
+##'
+##' @return A `data.frame`
+##'
+##' @author Laurent Gatto
+##'
+##' @rdname mzRident2dfr
 ##'
 ##' @importFrom BiocGenerics fileName
-##' 
+##'
 ##' @examples
 ##' ## find path to an mzIdentML file
 ##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 ##' basename(f)
-##' 
+##'
 ##' library("mzR")
 ##' x <- openIDfile(f)
 ##' x
-##' as(x, "data.frame")
-setAs("mzRident", "data.frame",
+##' as_data_frame(x)
+as_data_frame <-
       function(from) {
           stopifnot(requireNamespace("mzR"))
           ## peptide spectrum matching
@@ -68,7 +69,4 @@ setAs("mzRident", "data.frame",
                         all = TRUE, sort = FALSE)
           iddf[, "spectrumID.y"] <- NULL
           iddf
-      })
-
-as.data.frame.mzRident <-
-    function(x, row.names = NULL, optional = FALSE, ...) as(x, "data.frame")
+      }
