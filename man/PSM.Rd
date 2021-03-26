@@ -5,9 +5,15 @@
 \alias{PSM-class}
 \alias{reducePSMs}
 \alias{readPSMs}
+\alias{reduced}
+\alias{reduced<-}
 \title{A class for peptide-spectrum matches results}
 \usage{
 PSM(files, parser = c("mzR", "mzID"), BPPARAM = SerialParam())
+
+reduced(x, spectrumID)
+
+reduced(x) <- value
 
 reducePSMs(x, k)
 }
@@ -23,6 +29,13 @@ control parallel processing. The default value is
 \code{SerialParam()} to read files in series.}
 
 \item{x}{An instance of class \code{PSM}.}
+
+\item{spectrumID}{\code{character(1)} with the column name referring to
+the spectrum identifier or any other unique key for the \code{PSM}
+object \code{x}.}
+
+\item{value}{\code{logical(1)} to set the reduced state of the \code{PSM}
+object.}
 
 \item{k}{A \code{vector} or \code{factor} of length equal to \code{nrow(x)} that
 defines the primary key used to reduce \code{x}. This typically
@@ -43,24 +56,31 @@ lightweight metadata annotation.
 
 There are two types of \code{PSM} objects:
 \itemize{
-\item Objects where each PSM is stored in a single data row. This also
-holds for multiple matches to the same spectrum, be it different
-peptide sequences or the same sequence with or without a
-post-translational modification. In such cases, the spectrum
-identifier column contains duplicated entries. Such objects are
-typically created with the \code{PSM()} constructor starting from
-\code{mzIdentML} files.
-\item Reduced object where the spectrum identifiers are unique keys
-within the PSM table. Matches to the same scan/spectrum are
-merged into a single data row. Reduced \code{PSM} object are created
-with the \code{reducePSMs()} function. See examples below.
+\item Objects with duplicated spectrum identifiers. This holds for
+multiple matches to the same spectrum, be it different peptide
+sequences or the same sequence with or without a
+post-translational modification. Such objects are typically
+created with the \code{PSM()} constructor starting from \code{mzIdentML}
+files.
+\item Reduced object where the spectrum identifiers (or any equivalent
+column - see example below) are unique keys within the PSM
+table. Matches to the same scan/spectrum in each raw data file
+are merged into a single data row. Reduced \code{PSM} object are
+created with the \code{reducePSMs()} function. See examples below.
 }
+
+Objects can be checked for their reduced state with the
+\code{reduced()} function which returns TRUE for reduced instances,
+FALSE when the spectrum identifiers are duplicated, or NA when
+unknown. The flag can also be set explicitly with the
+\verb{reduced()<-} setter.
 
 The constructor uses parsers provided by the \code{mzR} or \code{mzID}
 packages to read the \code{mzIdentML} data. See the vignette for some
 apparent differences in their outputs.
 }
 \examples{
+
 f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 basename(f)
 
@@ -74,12 +94,15 @@ PSM(f, parser = "mzID")
 i <- which(duplicated(psm$spectrumID))[1:2]
 i <- which(psm$spectrumID \%in\% psm$spectrumID[i])
 psm2 <- psm[i, ]
+reduced(psm2)
 
 ## Peptide sequence CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR with
 ## Carbamidomethyl modifications at positions 1 and 28.
 DataFrame(psm2[, c("sequence", "spectrumID", "modName", "modLocation")])
+reduced(psm2) <- FALSE
 
 rpsm2 <- reducePSMs(psm2, psm2$spectrumID)
 rpsm2
 DataFrame(rpsm2[, c("sequence", "spectrumID", "modName", "modLocation")])
+reduced(rpsm2)
 }
