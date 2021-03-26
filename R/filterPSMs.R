@@ -165,6 +165,9 @@ filterPsmUniqueSeq <- function(x,
 ##' @param score `character(1)` with the name of a score column to be
 ##'     used. Filtering is ignored if set to `NULL`.
 ##'
+##' @name filterPSMs
+##'
+##' @export
 filterPsmBestScore <- function(x,
                                score,
                                spectrumID = "spectrumID",
@@ -188,6 +191,8 @@ filterPsmBestScore <- function(x,
 ##' @param mod `character(1)` with the column name holding the
 ##'     modification name. Default is `"modName"`. Filtering is
 ##'     ignored if set to `NULL`.
+##'
+##' @name filterPSMs
 ##'
 ##' @export
 filterPsmMods <- function(x,

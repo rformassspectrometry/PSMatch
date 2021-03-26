@@ -5,6 +5,8 @@
 \alias{filterPsmDecoy}
 \alias{filterPsmRank}
 \alias{filterPsmNonProteotypic}
+\alias{filterPsmBestScore}
+\alias{filterPsmMods}
 \title{Filter out unreliable PSMs.}
 \usage{
 filterPSMs(
@@ -26,6 +28,10 @@ filterPsmNonProteotypic(
   spectrumID = "SpectrumID",
   verbose = TRUE
 )
+
+filterPsmBestScore(x, score, spectrumID = "spectrumID", verbose = TRUE)
+
+filterPsmMods(x, mod = "modName", verbose = TRUE)
 }
 \arguments{
 \item{x}{An instance of class \code{PSM}.}
@@ -50,6 +56,13 @@ identifier column. Default is \code{spectrumID}. Filtering is
 ignored if set to \code{NULL}.}
 
 \item{verbose}{\code{logical(1)} setting the verbosity flag.}
+
+\item{score}{\code{character(1)} with the name of a score column to be
+used. Filtering is ignored if set to \code{NULL}.}
+
+\item{mod}{\code{character(1)} with the column name holding the
+modification name. Default is \code{"modName"}. Filtering is
+ignored if set to \code{NULL}.}
 }
 \value{
 A new filtered \code{PSM} object with the same columns as the
@@ -71,6 +84,16 @@ as \code{isDecoy}.
 \itemize{
 \item \code{filterPsmNonProteotypic()} filters out non-proteotypic PSMs,
 i.e. those that match multiple proteins.
+}
+
+\itemize{
+\item \code{filterPsmBestScore()} filters out PSMs but those with he
+highest score when matching the same spectrum identifier.
+}
+
+\itemize{
+\item \code{filterPsmMods()} filters out PSMs that contain any PTM, as
+defined by non-missing (i.e. non-\code{NA}) modification name.
 }
 }
 \examples{
