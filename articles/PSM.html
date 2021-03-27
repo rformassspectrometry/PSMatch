@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSM</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.13/PSM" class="external-link">PSM</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-03-12 21:02:04<br><strong>Compiled</strong>: Fri Mar 12 21:07:38 2021</p>
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.13/PSM" class="external-link">PSM</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-03-27 06:47:17<br><strong>Compiled</strong>: Sat Mar 27 07:24:03 2021</p>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -104,118 +104,15 @@ document.addEventListener("DOMContentLoaded", function() {
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">ident</a></span><span class="op">(</span>full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">"TMT"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid"</code></pre>
-<p>The <code><a href="../reference/readPSMs.html">readPSMs()</a></code> function parses one of multiple <code>mzid</code> files and returns an object of class <code>DFrame</code>.</p>
+<p>The <code><a href="../reference/PSM.html">readPSMs()</a></code> function parses one of multiple <code>mzid</code> files and returns an object of class <code>DFrame</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/RforMassSpectrometry/PSM" class="external-link">"PSM"</a></span><span class="op">)</span>
-<span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readPSMs.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></code></pre></div>
+<span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required namespace: mzR</code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id</span></code></pre></div>
-<pre><code>## DataFrame with 5802 rows and 35 columns
-##                    sequence             spectrumID chargeState      rank
-##                 &lt;character&gt;            &lt;character&gt;   &lt;integer&gt; &lt;integer&gt;
-## 1              RQCRTDFLNYLR controllerType=0 con..           3         1
-## 2    ESVALADQVTCVDWRNRKATKK controllerType=0 con..           2         1
-## 3              KELLCLAMQIIR controllerType=0 con..           2         1
-## 4    QRMARTSDKQQSIRFLERLCGR controllerType=0 con..           3         1
-## 5    KDEGSTEPLKVVRDMTDAIC.. controllerType=0 con..           3         1
-## ...                     ...                    ...         ...       ...
-## 5798              LLLARLFLK controllerType=0 con..           2         1
-## 5799                LFSLLKK controllerType=0 con..           2         1
-## 5800              LAATKKITK controllerType=0 con..           2         1
-## 5801               RLIPVVKR controllerType=0 con..           2         1
-## 5802                 IVKFRR controllerType=0 con..           2         1
-##      passThreshold experimentalMassToCharge calculatedMassToCharge  peptideRef
-##          &lt;logical&gt;                &lt;numeric&gt;              &lt;numeric&gt; &lt;character&gt;
-## 1             TRUE                  548.286                547.947       Pep77
-## 2             TRUE                 1288.153               1288.174      Pep108
-## 3             TRUE                  744.411                744.425      Pep136
-## 4             TRUE                  913.164                912.813      Pep163
-## 5             TRUE                  926.810                926.471      Pep169
-## ...            ...                      ...                    ...         ...
-## 5798          TRUE                  543.874                543.874     Pep4927
-## 5799          TRUE                  425.290                424.784     Pep4842
-## 5800          TRUE                  487.834                487.324     Pep4891
-## 5801          TRUE                  491.343                490.840     Pep4885
-## 5802          TRUE                  410.281                409.772     Pep4861
-##         modNum   isDecoy        post         pre     start       end
-##      &lt;integer&gt; &lt;logical&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;integer&gt;
-## 1            1     FALSE           V           R       574       585
-## 2            1     FALSE           G           R        69        90
-## 3            1      TRUE           Q           R       131       142
-## 4            1     FALSE           D           R       182       203
-## 5            1      TRUE           R           R       135       158
-## ...        ...       ...         ...         ...       ...       ...
-## 5798         0     FALSE           P           R       449       457
-## 5799         0     FALSE           R           R        40        46
-## 5800         0     FALSE           -           R       312       320
-## 5801         0      TRUE           G           K       160       167
-## 5802         0     FALSE           R           K        74        79
-##      DatabaseAccess DBseqLength DatabaseSeq    DatabaseDescription
-##         &lt;character&gt;   &lt;integer&gt; &lt;character&gt;            &lt;character&gt;
-## 1           ECA2006        1295             ECA2006 ATP-dependen..
-## 2           ECA1676         110             ECA1676 putative gro..
-## 3       XXX_ECA2855         157                                   
-## 4           ECA3009         437             ECA3009 putative cop..
-## 5       XXX_ECA0048         501                                   
-## ...             ...         ...         ...                    ...
-## 5798        ECA2534         636             ECA2534 ABC transpor..
-## 5799        ECA1583          83             ECA1583 putative int..
-## 5800        ECA0610         320             ECA0610 LysR-family ..
-## 5801    XXX_ECA3377         211                                   
-## 5802        ECA0690         103             ECA0690 50S ribosoma..
-##      scan.number.s. acquisitionNum           spectrumFile
-##           &lt;numeric&gt;      &lt;numeric&gt;            &lt;character&gt;
-## 1              2949           2949 TMT_Erwinia_1uLSike_..
-## 2              6534           6534 TMT_Erwinia_1uLSike_..
-## 3              5674           5674 TMT_Erwinia_1uLSike_..
-## 4              4782           4782 TMT_Erwinia_1uLSike_..
-## 5              5839           5839 TMT_Erwinia_1uLSike_..
-## ...             ...            ...                    ...
-## 5798           2533           2533 TMT_Erwinia_1uLSike_..
-## 5799           2645           2645 TMT_Erwinia_1uLSike_..
-## 5800           1699           1699 TMT_Erwinia_1uLSike_..
-## 5801           6739           6739 TMT_Erwinia_1uLSike_..
-## 5802           1634           1634 TMT_Erwinia_1uLSike_..
-##                      idFile MS.GF.RawScore MS.GF.DeNovoScore MS.GF.SpecEValue
-##                 &lt;character&gt;      &lt;numeric&gt;         &lt;numeric&gt;        &lt;numeric&gt;
-## 1    TMT_Erwinia_1uLSike_..             10               101      4.61712e-08
-## 2    TMT_Erwinia_1uLSike_..             12               121      7.25588e-08
-## 3    TMT_Erwinia_1uLSike_..              8                74      9.34102e-08
-## 4    TMT_Erwinia_1uLSike_..             -5               160      1.27073e-07
-## 5    TMT_Erwinia_1uLSike_..              8               241      1.31824e-07
-## ...                     ...            ...               ...              ...
-## 5798 TMT_Erwinia_1uLSike_..            -90               118      0.004498388
-## 5799 TMT_Erwinia_1uLSike_..           -102                43      0.006621415
-## 5800 TMT_Erwinia_1uLSike_..            -66                90      0.001297466
-## 5801 TMT_Erwinia_1uLSike_..            -91                16      0.001965771
-## 5802 TMT_Erwinia_1uLSike_..            -44                54      0.000919113
-##      MS.GF.EValue MS.GF.QValue MS.GF.PepQValue modPeptideRef         modName
-##         &lt;numeric&gt;    &lt;numeric&gt;       &lt;numeric&gt;   &lt;character&gt;     &lt;character&gt;
-## 1        0.132198     0.525424        0.549020         Pep77 Carbamidomethyl
-## 2        0.208748     0.610390        0.623188        Pep108 Carbamidomethyl
-## 3        0.267453     0.625000        0.636364        Pep136 Carbamidomethyl
-## 4        0.365583     0.716981        0.724490        Pep163 Carbamidomethyl
-## 5        0.379461     0.736364        0.745098        Pep169 Carbamidomethyl
-## ...           ...          ...             ...           ...             ...
-## 5798     12838.72            1               1            NA              NA
-## 5799     18816.18            1               1            NA              NA
-## 5800      3703.06            1               1            NA              NA
-## 5801      5600.99            1               1            NA              NA
-## 5802      2587.26            1               1            NA              NA
-##        modMass modLocation subOriginalResidue subReplacementResidue subLocation
-##      &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;           &lt;character&gt;   &lt;integer&gt;
-## 1      57.0215           3                 NA                    NA          NA
-## 2      57.0215          11                 NA                    NA          NA
-## 3      57.0215           5                 NA                    NA          NA
-## 4      57.0215          20                 NA                    NA          NA
-## 5      57.0215          20                 NA                    NA          NA
-## ...        ...         ...                ...                   ...         ...
-## 5798        NA          NA                 NA                    NA          NA
-## 5799        NA          NA                 NA                    NA          NA
-## 5800        NA          NA                 NA                    NA          NA
-## 5801        NA          NA                 NA                    NA          NA
-## 5802        NA          NA                 NA                    NA          NA</code></pre>
+<pre><code>## PSM with 5802 rows and 35 columns.
+## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 <p>This table contains 5802 matches for 5343 scans and 4938 peptides sequences.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="co">## number of matches</span></code></pre></div>
@@ -246,58 +143,11 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">id</span><span class="op">$</span><span class="va">spectrumID</span> <span class="op">==</span> <span class="st">"controllerType=0 controllerNumber=1 scan=1774"</span><span class="op">)</span>
 <span class="va">id</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span></code></pre></div>
-<pre><code>## DataFrame with 4 rows and 35 columns
-##      sequence             spectrumID chargeState      rank passThreshold
-##   &lt;character&gt;            &lt;character&gt;   &lt;integer&gt; &lt;integer&gt;     &lt;logical&gt;
-## 1   RTRYQAEVR controllerType=0 con..           2         1          TRUE
-## 2   RTRYQAEVR controllerType=0 con..           2         1          TRUE
-## 3   RTRYQAEVR controllerType=0 con..           2         1          TRUE
-## 4   RTRYQAEVR controllerType=0 con..           2         1          TRUE
-##   experimentalMassToCharge calculatedMassToCharge  peptideRef    modNum
-##                  &lt;numeric&gt;              &lt;numeric&gt; &lt;character&gt; &lt;integer&gt;
-## 1                  589.821                589.823     Pep1890         0
-## 2                  589.821                589.823     Pep1890         0
-## 3                  589.821                589.823     Pep1890         0
-## 4                  589.821                589.823     Pep1890         0
-##     isDecoy        post         pre     start       end DatabaseAccess
-##   &lt;logical&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;integer&gt;    &lt;character&gt;
-## 1     FALSE           P           R        89        97        ECA2104
-## 2     FALSE           P           R        99       107        ECA2867
-## 3     FALSE           P           R        89        97        ECA3427
-## 4     FALSE           P           R        89        97        ECA4142
-##   DBseqLength DatabaseSeq    DatabaseDescription scan.number.s. acquisitionNum
-##     &lt;integer&gt; &lt;character&gt;            &lt;character&gt;      &lt;numeric&gt;      &lt;numeric&gt;
-## 1         675               ECA2104 VgrG protein           1774           1774
-## 2         619             ECA2867 putative RHS..           1774           1774
-## 3         678             ECA3427 conserved hy..           1774           1774
-## 4         675               ECA4142 VgrG protein           1774           1774
-##             spectrumFile                 idFile MS.GF.RawScore
-##              &lt;character&gt;            &lt;character&gt;      &lt;numeric&gt;
-## 1 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..              0
-## 2 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..              0
-## 3 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..              0
-## 4 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..              0
-##   MS.GF.DeNovoScore MS.GF.SpecEValue MS.GF.EValue MS.GF.QValue MS.GF.PepQValue
-##           &lt;numeric&gt;        &lt;numeric&gt;    &lt;numeric&gt;    &lt;numeric&gt;       &lt;numeric&gt;
-## 1                96      3.69254e-06      10.5388            1        0.990816
-## 2                96      3.69254e-06      10.5388            1        0.990816
-## 3                96      3.69254e-06      10.5388            1        0.990816
-## 4                96      3.69254e-06      10.5388            1        0.990816
-##   modPeptideRef     modName   modMass modLocation subOriginalResidue
-##     &lt;character&gt; &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;
-## 1            NA          NA        NA          NA                 NA
-## 2            NA          NA        NA          NA                 NA
-## 3            NA          NA        NA          NA                 NA
-## 4            NA          NA        NA          NA                 NA
-##   subReplacementResidue subLocation
-##             &lt;character&gt;   &lt;integer&gt;
-## 1                    NA          NA
-## 2                    NA          NA
-## 3                    NA          NA
-## 4                    NA          NA</code></pre>
+<pre><code>## PSM with 4 rows and 35 columns.
+## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 <p>If the goal is to keep all the matches, but arranged by scan/spectrum, one can <em>reduce</em> the <code>DataFrame</code> object by the <code>spectrumID</code> variable, so that each scan correponds to a single row that still stores all values<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu">QFeatures</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/QFeatures/man/reduceDataFrame.html" class="external-link">reduceDataFrame</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">id</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">reducePSMs</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">id</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co">## rownames not needed here</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 5343   35</code></pre>
@@ -305,37 +155,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">j</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">id2</span><span class="op">$</span><span class="va">spectrumID</span> <span class="op">==</span> <span class="st">"controllerType=0 controllerNumber=1 scan=1774"</span><span class="op">)</span>
 <span class="va">id2</span><span class="op">[</span><span class="va">j</span>, <span class="op">]</span></code></pre></div>
-<pre><code>## DataFrame with 1 row and 35 columns
-##                            sequence    spectrumID chargeState          rank
-##                     &lt;CharacterList&gt;   &lt;character&gt;   &lt;integer&gt; &lt;IntegerList&gt;
-## 1 RTRYQAEVR,RTRYQAEVR,RTRYQAEVR,... controller...           2     1,1,1,...
-##   passThreshold experimentalMassToCharge      calculatedMassToCharge
-##       &lt;logical&gt;                &lt;numeric&gt;               &lt;NumericList&gt;
-## 1          TRUE                  589.821 589.823,589.823,589.823,...
-##                    peptideRef        modNum               isDecoy
-##               &lt;CharacterList&gt; &lt;IntegerList&gt;         &lt;LogicalList&gt;
-## 1 Pep1890,Pep1890,Pep1890,...     0,0,0,... FALSE,FALSE,FALSE,...
-##              post             pre         start           end
-##   &lt;CharacterList&gt; &lt;CharacterList&gt; &lt;IntegerList&gt; &lt;IntegerList&gt;
-## 1       P,P,P,...       R,R,R,...  89,99,89,... 97,107,97,...
-##                DatabaseAccess     DBseqLength DatabaseSeq
-##               &lt;CharacterList&gt;   &lt;IntegerList&gt; &lt;character&gt;
-## 1 ECA2104,ECA2867,ECA3427,... 675,619,678,...            
-##                             DatabaseDescription scan.number.s. acquisitionNum
-##                                 &lt;CharacterList&gt;      &lt;numeric&gt;      &lt;numeric&gt;
-## 1 ECA2104 Vg...,ECA2867 pu...,ECA3427 co...,...           1774           1774
-##    spectrumFile        idFile MS.GF.RawScore MS.GF.DeNovoScore MS.GF.SpecEValue
-##     &lt;character&gt;   &lt;character&gt;      &lt;numeric&gt;         &lt;numeric&gt;        &lt;numeric&gt;
-## 1 TMT_Erwini... TMT_Erwini...              0                96      3.69254e-06
-##                  MS.GF.EValue MS.GF.QValue                MS.GF.PepQValue
-##                 &lt;NumericList&gt;    &lt;numeric&gt;                  &lt;NumericList&gt;
-## 1 10.5388,10.5388,10.5388,...            1 0.990816,0.990816,0.990816,...
-##     modPeptideRef         modName       modMass   modLocation
-##   &lt;CharacterList&gt; &lt;CharacterList&gt; &lt;NumericList&gt; &lt;IntegerList&gt;
-## 1    NA,NA,NA,...    NA,NA,NA,...  NA,NA,NA,...  NA,NA,NA,...
-##   subOriginalResidue subReplacementResidue subLocation
-##          &lt;character&gt;           &lt;character&gt;   &lt;integer&gt;
-## 1                 NA                    NA          NA</code></pre>
+<pre><code>## Reduced PSM with 1 rows and 35 columns.
+## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id2</span><span class="op">[</span><span class="va">j</span>, <span class="st">"DatabaseAccess"</span><span class="op">]</span></code></pre></div>
 <pre><code>## CharacterList of length 1
@@ -505,21 +326,21 @@ document.addEventListener("DOMContentLoaded", function() {
 <div id="the-mzr-and-mzid-parsers" class="section level1">
 <h1 class="hasAnchor">
 <a href="#the-mzr-and-mzid-parsers" class="anchor"></a>The <code>mzR</code> and <code>mzID</code> parsers</h1>
-<p>The <code><a href="../reference/readPSMs.html">readPSMs()</a></code> function can take two different values for the <code>parser</code> parameter, namely <code>"mzR"</code> (which is also the default value) and <code>"mzID"</code>.</p>
+<p>The <code><a href="../reference/PSM.html">readPSMs()</a></code> function can take two different values for the <code>parser</code> parameter, namely <code>"mzR"</code> (which is also the default value) and <code>"mzID"</code>.</p>
 <ul>
 <li><p><strong>mzR</strong> uses the <code><a href="https://rdrr.io/pkg/mzR/man/openMSfile.html" class="external-link">openIDfile()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.13/mzR" class="external-link">mzR</a></em> to parse the <code>mzId</code> file(s), and then coerces the data to a <code>data.frame</code> which is eventually returned as a <code>DataFrame</code>. The parser function uses dedicated code from the Proteowizard project (included in <code>mzR</code>) and is generally the fastest approach.</p></li>
 <li><p><strong>mzID</strong> parses the <code>mzId</code> file with <code>mzID()</code> function from the <em><a href="https://bioconductor.org/packages/3.13/mzID" class="external-link">mzID</a></em> package, and the flattens the data to a <code>data.frame</code> with <code><a href="https://rdrr.io/pkg/mzID/man/flatten.html" class="external-link">mzID::flatten()</a></code> and eventuelly returns a <code>DataFrame</code>. The <code>mzID</code> package relies on the <em><a href="https://CRAN.R-project.org/package=XML" class="external-link">XML</a></em> package. Is is slower but is is more robust to variations in the <code>mzID</code> implementation, as is a useful backup when the <code>mzR</code> approach fails with errors.</p></li>
 </ul>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readPSMs.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.301   0.012   0.313</code></pre>
+##   0.263   0.008   0.271</code></pre>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/readPSMs.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required namespace: mzID</code></pre>
 <pre><code>## reading TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid... DONE!</code></pre>
 <pre><code>##    user  system elapsed 
-##   7.404   0.112   7.517</code></pre>
+##   6.624   0.132   6.757</code></pre>
 <p>Other differences in the two parsers include the columns that are returned, way they name them, and, as will shown below the matches that are returned. Below, note for instance (and this will be important later), that there is not equivalent of <code>"modLocation"</code> in <code>id2</code>.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></code></pre></div>
@@ -613,49 +434,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
 <span class="va">id1_filtered</span><span class="op">[</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span> <span class="op">==</span> <span class="va">k</span>, <span class="op">]</span></code></pre></div>
-<pre><code>## DataFrame with 4 rows and 35 columns
-##        sequence    spectrumID chargeState      rank passThreshold
-##     &lt;character&gt;   &lt;character&gt;   &lt;integer&gt; &lt;integer&gt;     &lt;logical&gt;
-## 1 KCNQCLKVAC... controller...           3         1          TRUE
-## 2 KCNQCLKVAC... controller...           3         1          TRUE
-## 3 KCNQCLKVAC... controller...           3         1          TRUE
-## 4 KCNQCLKVAC... controller...           3         1          TRUE
-##   experimentalMassToCharge calculatedMassToCharge  peptideRef    modNum
-##                  &lt;numeric&gt;              &lt;numeric&gt; &lt;character&gt; &lt;integer&gt;
-## 1                  698.663                698.331      Pep453         4
-## 2                  698.663                698.331      Pep453         4
-## 3                  698.663                698.331      Pep453         4
-## 4                  698.663                698.331      Pep453         4
-##     isDecoy        post         pre     start       end DatabaseAccess
-##   &lt;logical&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;integer&gt;    &lt;character&gt;
-## 1     FALSE           C           K       127       142        ECA0668
-## 2     FALSE           C           K       127       142        ECA0668
-## 3     FALSE           C           K       127       142        ECA0668
-## 4     FALSE           C           K       127       142        ECA0668
-##   DBseqLength DatabaseSeq DatabaseDescription scan.number.s. acquisitionNum
-##     &lt;integer&gt; &lt;character&gt;         &lt;character&gt;      &lt;numeric&gt;      &lt;numeric&gt;
-## 1         302                   ECA0668 hy...           5490           5490
-## 2         302                   ECA0668 hy...           5490           5490
-## 3         302                   ECA0668 hy...           5490           5490
-## 4         302                   ECA0668 hy...           5490           5490
-##    spectrumFile        idFile MS.GF.RawScore MS.GF.DeNovoScore MS.GF.SpecEValue
-##     &lt;character&gt;   &lt;character&gt;      &lt;numeric&gt;         &lt;numeric&gt;        &lt;numeric&gt;
-## 1 TMT_Erwini... TMT_Erwini...            -22                79      4.55559e-07
-## 2 TMT_Erwini... TMT_Erwini...            -22                79      4.55559e-07
-## 3 TMT_Erwini... TMT_Erwini...            -22                79      4.55559e-07
-## 4 TMT_Erwini... TMT_Erwini...            -22                79      4.55559e-07
-##   MS.GF.EValue MS.GF.QValue MS.GF.PepQValue modPeptideRef       modName
-##      &lt;numeric&gt;    &lt;numeric&gt;       &lt;numeric&gt;   &lt;character&gt;   &lt;character&gt;
-## 1      1.30769     0.900621         0.89011        Pep453 Carbamidom...
-## 2      1.30769     0.900621         0.89011        Pep453 Carbamidom...
-## 3      1.30769     0.900621         0.89011        Pep453 Carbamidom...
-## 4      1.30769     0.900621         0.89011        Pep453 Carbamidom...
-##     modMass modLocation subOriginalResidue subReplacementResidue subLocation
-##   &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;           &lt;character&gt;   &lt;integer&gt;
-## 1   57.0215           2                 NA                    NA          NA
-## 2   57.0215           5                 NA                    NA          NA
-## 3   57.0215          10                 NA                    NA          NA
-## 4   57.0215          15                 NA                    NA          NA</code></pre>
+<pre><code>## PSM with 4 rows and 35 columns.
+## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 <p>If we remove the <code>"modLocation"</code> column, we recoved the same number of PSMs than with the <code>mzID</code> parser.</p>
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id1_filtered</span><span class="op">$</span><span class="va">modLocation</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
@@ -667,7 +447,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <a href="#session-information" class="anchor"></a>Session information</h1>
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## R Under development (unstable) (2021-03-04 r80066)
+<pre><code>## R Under development (unstable) (2021-03-18 r80099)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 20.04.2 LTS
 ## 
@@ -687,51 +467,53 @@ document.addEventListener("DOMContentLoaded", function() {
 ## [8] methods   base     
 ## 
 ## other attached packages:
-## [1] dplyr_1.0.5         PSM_0.2.1           S4Vectors_0.29.7   
+## [1] dplyr_1.0.5         PSM_0.3.0           S4Vectors_0.29.9   
 ## [4] BiocGenerics_0.37.1 BiocStyle_2.19.1   
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] MatrixGenerics_1.3.1         Biobase_2.51.0              
-##  [3] tidyr_1.1.3                  foreach_1.5.1               
-##  [5] assertthat_0.2.1             BiocManager_1.30.10         
-##  [7] msdata_0.31.1                GenomeInfoDbData_1.2.4      
-##  [9] yaml_2.2.1                   pillar_1.5.1                
-## [11] lattice_0.20-41              glue_1.4.2                  
-## [13] digest_0.6.27                GenomicRanges_1.43.3        
-## [15] XVector_0.31.1               plyr_1.8.6                  
-## [17] htmltools_0.5.1.1            Matrix_1.3-2                
-## [19] XML_3.99-0.5                 pkgconfig_2.0.3             
-## [21] bookdown_0.21                zlibbioc_1.37.0             
-## [23] purrr_0.3.4                  MultiAssayExperiment_1.17.18
-## [25] BiocParallel_1.25.5          tibble_3.1.0                
-## [27] generics_0.1.0               AnnotationFilter_1.15.0     
-## [29] IRanges_2.25.6               ellipsis_0.3.1              
-## [31] cachem_1.0.4                 SummarizedExperiment_1.21.1 
-## [33] lazyeval_0.2.2               cli_2.3.1                   
-## [35] magrittr_2.0.1               crayon_1.4.1                
-## [37] ps_1.6.0                     memoise_2.0.0               
-## [39] evaluate_0.14                fs_1.5.0                    
-## [41] ncdf4_1.17                   fansi_0.4.2                 
-## [43] doParallel_1.0.16            MASS_7.3-53.1               
-## [45] QFeatures_1.1.2              mzR_2.25.3                  
-## [47] textshaping_0.3.2            tools_4.1.0                 
-## [49] lifecycle_1.0.0              matrixStats_0.58.0          
-## [51] stringr_1.4.0                cluster_2.1.1               
-## [53] DelayedArray_0.17.9          compiler_4.1.0              
-## [55] pkgdown_1.6.1.9000           GenomeInfoDb_1.27.6         
-## [57] mzID_1.29.0                  systemfonts_1.0.1           
-## [59] rlang_0.4.10                 grid_4.1.0                  
-## [61] RCurl_1.98-1.2               iterators_1.0.13            
-## [63] rstudioapi_0.13              MsCoreUtils_1.3.3           
-## [65] bitops_1.0-6                 rmarkdown_2.7               
-## [67] codetools_0.2-18             R6_2.5.0                    
-## [69] knitr_1.31                   fastmap_1.1.0               
-## [71] utf8_1.1.4                   clue_0.3-58                 
-## [73] rprojroot_2.0.2              ragg_1.1.1                  
-## [75] ProtGenerics_1.23.7          desc_1.3.0                  
-## [77] stringi_1.5.3                Rcpp_1.0.6                  
-## [79] vctrs_0.3.6                  tidyselect_1.1.0            
-## [81] xfun_0.22</code></pre>
+##  [3] tidyr_1.1.3                  sass_0.3.1                  
+##  [5] foreach_1.5.1                jsonlite_1.7.2              
+##  [7] bslib_0.2.4                  assertthat_0.2.1            
+##  [9] BiocManager_1.30.10          msdata_0.31.1               
+## [11] GenomeInfoDbData_1.2.4       yaml_2.2.1                  
+## [13] pillar_1.5.1                 lattice_0.20-41             
+## [15] glue_1.4.2                   digest_0.6.27               
+## [17] GenomicRanges_1.43.3         XVector_0.31.1              
+## [19] plyr_1.8.6                   htmltools_0.5.1.1           
+## [21] Matrix_1.3-2                 XML_3.99-0.6                
+## [23] pkgconfig_2.0.3              bookdown_0.21               
+## [25] zlibbioc_1.37.0              purrr_0.3.4                 
+## [27] MultiAssayExperiment_1.17.18 BiocParallel_1.25.5         
+## [29] tibble_3.1.0                 generics_0.1.0              
+## [31] AnnotationFilter_1.15.0      IRanges_2.25.6              
+## [33] ellipsis_0.3.1               cachem_1.0.4                
+## [35] SummarizedExperiment_1.21.1  lazyeval_0.2.2              
+## [37] cli_2.3.1                    magrittr_2.0.1              
+## [39] crayon_1.4.1                 ps_1.6.0                    
+## [41] memoise_2.0.0                evaluate_0.14               
+## [43] fs_1.5.0                     ncdf4_1.17                  
+## [45] fansi_0.4.2                  doParallel_1.0.16           
+## [47] MASS_7.3-53.1                QFeatures_1.1.2             
+## [49] mzR_2.25.3                   textshaping_0.3.3           
+## [51] tools_4.1.0                  lifecycle_1.0.0             
+## [53] matrixStats_0.58.0           stringr_1.4.0               
+## [55] cluster_2.1.1                DelayedArray_0.17.9         
+## [57] compiler_4.1.0               pkgdown_1.6.1.9001          
+## [59] jquerylib_0.1.3              GenomeInfoDb_1.27.8         
+## [61] mzID_1.29.0                  systemfonts_1.0.1           
+## [63] rlang_0.4.10                 grid_4.1.0                  
+## [65] RCurl_1.98-1.3               iterators_1.0.13            
+## [67] rstudioapi_0.13              MsCoreUtils_1.3.3           
+## [69] bitops_1.0-6                 rmarkdown_2.7               
+## [71] codetools_0.2-18             DBI_1.1.1                   
+## [73] R6_2.5.0                     knitr_1.31                  
+## [75] fastmap_1.1.0                utf8_1.2.1                  
+## [77] clue_0.3-58                  rprojroot_2.0.2             
+## [79] ragg_1.1.2                   ProtGenerics_1.23.7         
+## [81] desc_1.3.0                   stringi_1.5.3               
+## [83] Rcpp_1.0.6                   vctrs_0.3.6                 
+## [85] tidyselect_1.1.0             xfun_0.22</code></pre>
 </div>
 <div class="footnotes">
 <hr>
@@ -758,7 +540,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>

@@ -40,8 +40,32 @@
 
 
 <meta property="og:title" content="Filter out unreliable PSMs. — filterPSMs" />
-<meta property="og:description" content="A function to filter out PSMs matching to the decoy database, of
-rank greater than one and matching non-proteotypic peptides." />
+<meta property="og:description" content="Functions to filter out PSMs matching. The PSMs should be stored
+in a PSM such as those produced by PSM().
+
+filterPsmDecoy() filters out decoy PSMs, i.e. those annotated
+as isDecoy.
+
+
+
+filterPsmRank() filters out PSMs of rank &amp;gt; 1.
+
+
+
+filterPsmNonProteotypic() filters out non-proteotypic PSMs,
+i.e. those that match multiple proteins.
+
+
+
+filterPsmBestScore() filters out PSMs but those with he
+highest score when matching the same spectrum identifier.
+
+
+
+filterPsmMods() filters out PSMs that contain any PTM, as
+defined by non-missing (i.e. non-NA) modification name.
+
+" />
 
 
 
@@ -57,6 +81,9 @@ rank greater than one and matching non-proteotypic peptides." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+
+
+<!-- dependencies from examples -->
 
 
   
@@ -81,7 +108,7 @@ rank greater than one and matching non-proteotypic peptides." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSM</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -120,8 +147,32 @@ rank greater than one and matching non-proteotypic peptides." />
     </div>
 
     <div class="ref-description">
-    <p>A function to filter out PSMs matching to the decoy database, of
-rank greater than one and matching non-proteotypic peptides.</p>
+    <p>Functions to filter out PSMs matching. The PSMs should be stored
+in a <code>PSM</code> such as those produced by <code><a href='PSM.html'>PSM()</a></code>.</p>
+<ul>
+<li><p><code>filterPsmDecoy()</code> filters out decoy PSMs, i.e. those annotated
+as <code>isDecoy</code>.</p></li>
+</ul>
+
+<ul>
+<li><p><code>filterPsmRank()</code> filters out PSMs of rank &gt; 1.</p></li>
+</ul>
+
+<ul>
+<li><p><code>filterPsmNonProteotypic()</code> filters out non-proteotypic PSMs,
+i.e. those that match multiple proteins.</p></li>
+</ul>
+
+<ul>
+<li><p><code>filterPsmBestScore()</code> filters out PSMs but those with he
+highest score when matching the same spectrum identifier.</p></li>
+</ul>
+
+<ul>
+<li><p><code>filterPsmMods()</code> filters out PSMs that contain any PTM, as
+defined by non-missing (i.e. non-<code>NA</code>) modification name.</p></li>
+</ul>
+
     </div>
 
     <pre class="usage"><span class='fu'>filterPSMs</span><span class='op'>(</span>
@@ -131,54 +182,78 @@ rank greater than one and matching non-proteotypic peptides.</p>
   accession <span class='op'>=</span> <span class='st'>"DatabaseAccess"</span>,
   spectrumID <span class='op'>=</span> <span class='st'>"spectrumID"</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span>
+
+<span class='fu'>filterPsmDecoy</span><span class='op'>(</span><span class='va'>x</span>, decoy <span class='op'>=</span> <span class='st'>"isDecoy"</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'>filterPsmRank</span><span class='op'>(</span><span class='va'>x</span>, rank <span class='op'>=</span> <span class='st'>"rank"</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'>filterPsmNonProteotypic</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  accession <span class='op'>=</span> <span class='st'>"DatabaseAccess"</span>,
+  spectrumID <span class='op'>=</span> <span class='st'>"SpectrumID"</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+
+<span class='fu'>filterPsmBestScore</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>score</span>, spectrumID <span class='op'>=</span> <span class='st'>"spectrumID"</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'>filterPsmMods</span><span class='op'>(</span><span class='va'>x</span>, mod <span class='op'>=</span> <span class='st'>"modName"</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A <code>DataFrame</code> containing PSMs.</p></td>
+      <td><p>An instance of class <code>PSM</code>.</p></td>
     </tr>
     <tr>
       <th>decoy</th>
-      <td><p>The column name defining whether entries match the
-decoy database. Default is <code>"isDecoy"</code>. The column should be a
-<code>logical</code> and only PSMs holding a <code>FALSE</code> are
-retained. Ignored is set to <code>NULL</code>.</p></td>
-    </tr>
-    <tr>
-      <th>rank</th>
-      <td><p>The column name holding the rank of the PSM. Default
-is <code>"rank"</code>. This column should be a <code>numeric</code> and only PSMs
-having rank equal to 1 are retained. Ignored is set to <code>NULL</code>.</p></td>
-    </tr>
-    <tr>
-      <th>accession</th>
-      <td><p>The column name holding the protein (groups)
-accession. Default is <code>"DatabaseAccess"</code>. Ignored is set to
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> with the column name specifying
+whether entries match the decoy database or not. Default is
+<code>"isDecoy"</code>. The column should be a <code>logical</code> and only PSMs
+holding a <code>FALSE</code> are retained. Filtering is ignored if set to
 <code>NULL</code>.</p></td>
     </tr>
     <tr>
+      <th>rank</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> with the column name holding the rank
+of the PSM. Default is <code>"rank"</code>. This column should be a
+<code>numeric</code> and only PSMs having rank equal to 1 are
+retained. Filtering is ignored if set to <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>accession</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> with the column name holding the
+protein (groups) accession. Default is
+<code>"DatabaseAccess"</code>. Filtering is ignored if set to <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
       <th>spectrumID</th>
-      <td><p>The name of the spectrum identifier
-column. Default is <code>spectrumID</code>.</p></td>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> with the name of the spectrum
+identifier column. Default is <code>spectrumID</code>. Filtering is
+ignored if set to <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
       <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> setting the verbosity flag.</p></td>
     </tr>
+    <tr>
+      <th>score</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> with the name of a score column to be
+used. Filtering is ignored if set to <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>mod</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> with the column name holding the
+modification name. Default is <code>"modName"</code>. Filtering is
+ignored if set to <code>NULL</code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A new <code>DataFrame</code> with filtered out peptides and with the
-same columns as the input <code>x</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The PSMs should be stored in a <code>DataFrame</code> (or <code>data.frame</code> or
-<code>tibble</code>) such as those produced by <code><a href='readPSMs.html'>readPSMs()</a></code>. Note that
-this function should be used before reducing the PSM table.</p>
+    <p>A new filtered <code>PSM</code> object with the same columns as the
+input <code>x</code>.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Laurent Gatto</p>
@@ -186,113 +261,10 @@ this function should be used before reducing the PSM table.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>f</span> <span class='op'>&lt;-</span> <span class='fu'>msdata</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/msdata/man/proteomics.html'>ident</a></span><span class='op'>(</span>full.names <span class='op'>=</span> <span class='cn'>TRUE</span>, pattern <span class='op'>=</span> <span class='st'>"TMT"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>basename</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid"</div><div class='input'><span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='readPSMs.html'>readPSMs</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: mzR</span></div><div class='input'><span class='fu'>filterPSMs</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Starting with 5802 PSMs:</span></div><div class='output co'>#&gt; <span class='message'> removed 2896 decoy hits</span></div><div class='output co'>#&gt; <span class='message'> removed 155 PSMs with rank &gt; 1</span></div><div class='output co'>#&gt; <span class='message'> removed 85 non-proteotypic peptides</span></div><div class='output co'>#&gt; <span class='message'>2666 PSMs left.</span></div><div class='output co'>#&gt; DataFrame with 2666 rows and 35 columns
-#&gt;                    sequence             spectrumID chargeState      rank
-#&gt;                 &lt;character&gt;            &lt;character&gt;   &lt;integer&gt; &lt;integer&gt;
-#&gt; 1              RQCRTDFLNYLR controllerType=0 con..           3         1
-#&gt; 2    ESVALADQVTCVDWRNRKATKK controllerType=0 con..           2         1
-#&gt; 3    QRMARTSDKQQSIRFLERLCGR controllerType=0 con..           3         1
-#&gt; 4    DGGPAIYGHERVGRNAKKFK.. controllerType=0 con..           3         1
-#&gt; 5    QRMARTSDKQQSIRFLERLCGR controllerType=0 con..           2         1
-#&gt; ...                     ...                    ...         ...       ...
-#&gt; 2662                KKRAKVK controllerType=0 con..           2         1
-#&gt; 2663              LLLARLFLK controllerType=0 con..           2         1
-#&gt; 2664                LFSLLKK controllerType=0 con..           2         1
-#&gt; 2665              LAATKKITK controllerType=0 con..           2         1
-#&gt; 2666                 IVKFRR controllerType=0 con..           2         1
-#&gt;      passThreshold experimentalMassToCharge calculatedMassToCharge  peptideRef
-#&gt;          &lt;logical&gt;                &lt;numeric&gt;              &lt;numeric&gt; &lt;character&gt;
-#&gt; 1             TRUE                  548.286                547.947       Pep77
-#&gt; 2             TRUE                 1288.153               1288.174      Pep108
-#&gt; 3             TRUE                  913.164                912.813      Pep163
-#&gt; 4             TRUE                  969.194                968.856      Pep206
-#&gt; 5             TRUE                 1369.238               1368.717      Pep163
-#&gt; ...            ...                      ...                    ...         ...
-#&gt; 2662          TRUE                  429.800                429.306     Pep4913
-#&gt; 2663          TRUE                  543.874                543.874     Pep4927
-#&gt; 2664          TRUE                  425.290                424.784     Pep4842
-#&gt; 2665          TRUE                  487.834                487.324     Pep4891
-#&gt; 2666          TRUE                  410.281                409.772     Pep4861
-#&gt;         modNum   isDecoy        post         pre     start       end
-#&gt;      &lt;integer&gt; &lt;logical&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;integer&gt;
-#&gt; 1            1     FALSE           V           R       574       585
-#&gt; 2            1     FALSE           G           R        69        90
-#&gt; 3            1     FALSE           D           R       182       203
-#&gt; 4            1     FALSE           S           K       310       334
-#&gt; 5            1     FALSE           D           R       182       203
-#&gt; ...        ...       ...         ...         ...       ...       ...
-#&gt; 2662         0     FALSE           N           R       547       553
-#&gt; 2663         0     FALSE           P           R       449       457
-#&gt; 2664         0     FALSE           R           R        40        46
-#&gt; 2665         0     FALSE           -           R       312       320
-#&gt; 2666         0     FALSE           R           K        74        79
-#&gt;      DatabaseAccess DBseqLength DatabaseSeq    DatabaseDescription
-#&gt;         &lt;character&gt;   &lt;integer&gt; &lt;character&gt;            &lt;character&gt;
-#&gt; 1           ECA2006        1295             ECA2006 ATP-dependen..
-#&gt; 2           ECA1676         110             ECA1676 putative gro..
-#&gt; 3           ECA3009         437             ECA3009 putative cop..
-#&gt; 4           ECA1420         477             ECA1420 undecaprenyl..
-#&gt; 5           ECA3009         437             ECA3009 putative cop..
-#&gt; ...             ...         ...         ...                    ...
-#&gt; 2662        ECA2881         610             ECA2881 excinuclease..
-#&gt; 2663        ECA2534         636             ECA2534 ABC transpor..
-#&gt; 2664        ECA1583          83             ECA1583 putative int..
-#&gt; 2665        ECA0610         320             ECA0610 LysR-family ..
-#&gt; 2666        ECA0690         103             ECA0690 50S ribosoma..
-#&gt;      scan.number.s. acquisitionNum           spectrumFile
-#&gt;           &lt;numeric&gt;      &lt;numeric&gt;            &lt;character&gt;
-#&gt; 1              2949           2949 TMT_Erwinia_1uLSike_..
-#&gt; 2              6534           6534 TMT_Erwinia_1uLSike_..
-#&gt; 3              4782           4782 TMT_Erwinia_1uLSike_..
-#&gt; 4              6118           6118 TMT_Erwinia_1uLSike_..
-#&gt; 5              4757           4757 TMT_Erwinia_1uLSike_..
-#&gt; ...             ...            ...                    ...
-#&gt; 2662           1079           1079 TMT_Erwinia_1uLSike_..
-#&gt; 2663           2533           2533 TMT_Erwinia_1uLSike_..
-#&gt; 2664           2645           2645 TMT_Erwinia_1uLSike_..
-#&gt; 2665           1699           1699 TMT_Erwinia_1uLSike_..
-#&gt; 2666           1634           1634 TMT_Erwinia_1uLSike_..
-#&gt;                      idFile MS.GF.RawScore MS.GF.DeNovoScore MS.GF.SpecEValue
-#&gt;                 &lt;character&gt;      &lt;numeric&gt;         &lt;numeric&gt;        &lt;numeric&gt;
-#&gt; 1    TMT_Erwinia_1uLSike_..             10               101      4.61712e-08
-#&gt; 2    TMT_Erwinia_1uLSike_..             12               121      7.25588e-08
-#&gt; 3    TMT_Erwinia_1uLSike_..             -5               160      1.27073e-07
-#&gt; 4    TMT_Erwinia_1uLSike_..              7               214      1.72203e-07
-#&gt; 5    TMT_Erwinia_1uLSike_..             21               196      1.76840e-07
-#&gt; ...                     ...            ...               ...              ...
-#&gt; 2662 TMT_Erwinia_1uLSike_..            -76                48      0.002470319
-#&gt; 2663 TMT_Erwinia_1uLSike_..            -90               118      0.004498388
-#&gt; 2664 TMT_Erwinia_1uLSike_..           -102                43      0.006621415
-#&gt; 2665 TMT_Erwinia_1uLSike_..            -66                90      0.001297466
-#&gt; 2666 TMT_Erwinia_1uLSike_..            -44                54      0.000919113
-#&gt;      MS.GF.EValue MS.GF.QValue MS.GF.PepQValue modPeptideRef         modName
-#&gt;         &lt;numeric&gt;    &lt;numeric&gt;       &lt;numeric&gt;   &lt;character&gt;     &lt;character&gt;
-#&gt; 1        0.132198     0.525424        0.549020         Pep77 Carbamidomethyl
-#&gt; 2        0.208748     0.610390        0.623188        Pep108 Carbamidomethyl
-#&gt; 3        0.365583     0.716981        0.724490        Pep163 Carbamidomethyl
-#&gt; 4        0.495817     0.837037        0.856000        Pep206 Carbamidomethyl
-#&gt; 5        0.508761     0.837037        0.724490        Pep163 Carbamidomethyl
-#&gt; ...           ...          ...             ...           ...             ...
-#&gt; 2662      7019.94            1               1            NA              NA
-#&gt; 2663     12838.72            1               1            NA              NA
-#&gt; 2664     18816.18            1               1            NA              NA
-#&gt; 2665      3703.06            1               1            NA              NA
-#&gt; 2666      2587.26            1               1            NA              NA
-#&gt;        modMass modLocation subOriginalResidue subReplacementResidue subLocation
-#&gt;      &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;           &lt;character&gt;   &lt;integer&gt;
-#&gt; 1      57.0215           3                 NA                    NA          NA
-#&gt; 2      57.0215          11                 NA                    NA          NA
-#&gt; 3      57.0215          20                 NA                    NA          NA
-#&gt; 4      57.0215          21                 NA                    NA          NA
-#&gt; 5      57.0215          20                 NA                    NA          NA
-#&gt; ...        ...         ...                ...                   ...         ...
-#&gt; 2662        NA          NA                 NA                    NA          NA
-#&gt; 2663        NA          NA                 NA                    NA          NA
-#&gt; 2664        NA          NA                 NA                    NA          NA
-#&gt; 2665        NA          NA                 NA                    NA          NA
-#&gt; 2666        NA          NA                 NA                    NA          NA</div></pre>
+</div><div class='output co'>#&gt; [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid"</div><div class='input'><span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='PSM.html'>PSM</a></span><span class='op'>(</span><span class='va'>f</span><span class='op'>)</span>
+<span class='fu'>filterPSMs</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Starting with 5802 PSMs:</span></div><div class='output co'>#&gt; <span class='message'> removed 2896 decoy hits</span></div><div class='output co'>#&gt; <span class='message'> removed 155 PSMs with rank &gt; 1</span></div><div class='output co'>#&gt; <span class='message'> removed 85 non-proteotypic peptides</span></div><div class='output co'>#&gt; <span class='message'>2666 PSMs left.</span></div><div class='output co'>#&gt; PSM with 2666 rows and 35 columns.
+#&gt; names(35): sequence spectrumID ... subReplacementResidue subLocation</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -308,7 +280,7 @@ this function should be used before reducing the PSM table.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
