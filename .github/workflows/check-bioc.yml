@@ -203,7 +203,8 @@ jobs:
           BiocManager::install(deps$package[deps$diff != 0])
 
           ## Manual dependency installations
-          BiocManager::install("lgatto/ProtGenerics") ## latest version required
+          BiocManager::install("lgatto/ProtGenerics")
+          BiocManager::install("lgatto/rpx")
           remotes::install_git("https://git.bioconductor.org/packages/BiocCheck",
                                repos=BiocManager::repositories())
 
