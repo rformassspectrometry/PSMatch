@@ -149,6 +149,7 @@ filterPsmNonProteotypic <- function(x,
     n1 <- nrow(x)
     if (verbose)
         message("Removed ", n0 - n1, " non-proteotypic peptides.")
+    x
 }
 
 
@@ -178,7 +179,7 @@ filterPsmBestScore <- function(x,
         stop("Please provide a valid score.")
     if (is.null(score) | is.null(spectrumID))
         return(x)
-    ## TODO
+    stop("TODO")
 }
 
 
@@ -205,4 +206,5 @@ filterPsmMods <- function(x,
     n1 <- nrow(x)
     if (verbose)
         message("Removed ", n0 - n1, " modified peptides.")
+    x
 }
