@@ -136,7 +136,7 @@ filterPsmRank <- function(x,
 ##' @export
 filterPsmNonProteotypic <- function(x,
                                     accession = "DatabaseAccess",
-                                    spectrumID = "SpectrumID",
+                                    spectrumID = "spectrumID",
                                     verbose = TRUE) {
     if (is.null(accession) | is.null(spectrumID))
         return(x)
