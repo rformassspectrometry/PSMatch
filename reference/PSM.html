@@ -295,8 +295,8 @@ peptide-spectrum matches stored in <code>files</code>.</p>
 #&gt;  [1] 'QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz' ... [32] 'checksum.txt'
 #&gt;  Use 'pxfiles(.)' to see all files.</div><div class='input'>
 <span class='op'>(</span><span class='va'>mzids</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rpx/man/PXDataset-class.html'>pxget</a></span><span class='op'>(</span><span class='va'>PXD022816</span>, <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span><span class='op'>(</span><span class='st'>"mzID"</span>, <span class='fu'><a href='https://rdrr.io/pkg/rpx/man/PXDataset-class.html'>pxfiles</a></span><span class='op'>(</span><span class='va'>PXD022816</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz from cache.</span></div><div class='output co'>#&gt; <span class='message'>Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz from cache.</span></div><div class='output co'>#&gt; [1] "~/.cache/rpx/71544bf3be83_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"
-#&gt; [2] "~/.cache/rpx/71543c19d0a0_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</div><div class='input'><span class='va'>psm</span> <span class='op'>&lt;-</span> <span class='fu'>PSM</span><span class='op'>(</span><span class='va'>mzids</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz from cache.</span></div><div class='output co'>#&gt; <span class='message'>Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz from cache.</span></div><div class='output co'>#&gt; [1] "~/.cache/rpx/c685aa067b9_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"
+#&gt; [2] "~/.cache/rpx/c682facb223_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</div><div class='input'><span class='va'>psm</span> <span class='op'>&lt;-</span> <span class='fu'>PSM</span><span class='op'>(</span><span class='va'>mzids</span><span class='op'>)</span>
 <span class='va'>psm</span>
 </div><div class='output co'>#&gt; PSM with 50314 rows and 31 columns.
 #&gt; names(31): sequence spectrumID ... subReplacementResidue subLocation</div><div class='input'>
@@ -338,8 +338,8 @@ peptide-spectrum matches stored in <code>files</code>.</p>
 #&gt; 2         387 MNVLLLLVLC...       Q58D62|FET...       32.788864          12894
 #&gt;     spectrumFile        idFile MetaMorpheus.score PSM.level.q.value
 #&gt;      &lt;character&gt;   &lt;character&gt;          &lt;numeric&gt;         &lt;numeric&gt;
-#&gt; 1 P:\\Project... 71544bf3be...            31.2586                 0
-#&gt; 2 P:\\Project... 71544bf3be...            31.2586                 0
+#&gt; 1 P:\\Project... c685aa067b...            31.2586                 0
+#&gt; 2 P:\\Project... c685aa067b...            31.2586                 0
 #&gt;   modPeptideRef       modName   modMass modLocation subOriginalResidue
 #&gt;     &lt;character&gt;   &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;
 #&gt; 1          P_19 Carbamidom...   57.0215           6                 NA
