@@ -25,7 +25,7 @@ filterPsmRank(x, rank = "rank", verbose = TRUE)
 filterPsmNonProteotypic(
   x,
   accession = "DatabaseAccess",
-  spectrumID = "SpectrumID",
+  spectrumID = "spectrumID",
   verbose = TRUE
 )
 
