@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.13/PSM" class="external-link">PSM</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-04-03 09:55:22<br><strong>Compiled</strong>: Sat Apr 3 10:01:39 2021</p>
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.13/PSM" class="external-link">PSM</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-04-19 16:16:05<br><strong>Compiled</strong>: Mon Apr 19 16:55:11 2021</p>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -334,13 +334,13 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.297   0.012   0.309</code></pre>
+##   0.309   0.008   0.317</code></pre>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required namespace: mzID</code></pre>
 <pre><code>## reading TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid... DONE!</code></pre>
 <pre><code>##    user  system elapsed 
-##   7.599   0.092   7.692</code></pre>
+##   7.301   0.120   7.422</code></pre>
 <p>Other differences in the two parsers include the columns that are returned, way they name them, and, as will shown below the matches that are returned. Below, note for instance (and this will be important later), that there is not equivalent of <code>"modLocation"</code> in <code>id2</code>.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></code></pre></div>
@@ -447,7 +447,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <a href="#session-information" class="anchor"></a>Session information</h1>
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## R Under development (unstable) (2021-03-18 r80099)
+<pre><code>## R Under development (unstable) (2021-04-15 r80175)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 20.04.2 LTS
 ## 
@@ -467,8 +467,8 @@ document.addEventListener("DOMContentLoaded", function() {
 ## [8] methods   base     
 ## 
 ## other attached packages:
-## [1] dplyr_1.0.5         PSM_0.3.0           S4Vectors_0.29.9   
-## [4] BiocGenerics_0.37.1 BiocStyle_2.19.2   
+## [1] dplyr_1.0.5         PSM_0.3.0           S4Vectors_0.29.15  
+## [4] BiocGenerics_0.37.2 BiocStyle_2.19.2   
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] MatrixGenerics_1.3.1         Biobase_2.51.0              
@@ -477,40 +477,40 @@ document.addEventListener("DOMContentLoaded", function() {
 ##  [7] bslib_0.2.4                  assertthat_0.2.1            
 ##  [9] BiocManager_1.30.12          msdata_0.31.1               
 ## [11] GenomeInfoDbData_1.2.4       yaml_2.2.1                  
-## [13] pillar_1.5.1                 lattice_0.20-41             
+## [13] pillar_1.6.0                 lattice_0.20-41             
 ## [15] glue_1.4.2                   digest_0.6.27               
-## [17] GenomicRanges_1.43.3         XVector_0.31.1              
+## [17] GenomicRanges_1.43.4         XVector_0.31.1              
 ## [19] plyr_1.8.6                   htmltools_0.5.1.1           
 ## [21] Matrix_1.3-2                 XML_3.99-0.6                
 ## [23] pkgconfig_2.0.3              bookdown_0.21               
 ## [25] zlibbioc_1.37.0              purrr_0.3.4                 
-## [27] MultiAssayExperiment_1.17.20 BiocParallel_1.25.5         
-## [29] tibble_3.1.0                 generics_0.1.0              
-## [31] AnnotationFilter_1.15.0      IRanges_2.25.6              
+## [27] MultiAssayExperiment_1.17.21 BiocParallel_1.25.5         
+## [29] tibble_3.1.1                 generics_0.1.0              
+## [31] AnnotationFilter_1.15.0      IRanges_2.25.9              
 ## [33] ellipsis_0.3.1               cachem_1.0.4                
-## [35] SummarizedExperiment_1.21.1  lazyeval_0.2.2              
-## [37] cli_2.3.1                    magrittr_2.0.1              
+## [35] SummarizedExperiment_1.21.3  lazyeval_0.2.2              
+## [37] cli_2.4.0                    magrittr_2.0.1              
 ## [39] crayon_1.4.1                 ps_1.6.0                    
 ## [41] memoise_2.0.0                evaluate_0.14               
 ## [43] fs_1.5.0                     ncdf4_1.17                  
 ## [45] fansi_0.4.2                  doParallel_1.0.16           
-## [47] MASS_7.3-53.1                QFeatures_1.1.2             
+## [47] MASS_7.3-53.1                QFeatures_1.1.3             
 ## [49] mzR_2.25.3                   textshaping_0.3.3           
 ## [51] tools_4.1.0                  lifecycle_1.0.0             
 ## [53] matrixStats_0.58.0           stringr_1.4.0               
 ## [55] cluster_2.1.1                DelayedArray_0.17.10        
 ## [57] compiler_4.1.0               pkgdown_1.6.1.9001          
-## [59] jquerylib_0.1.3              GenomeInfoDb_1.27.8         
+## [59] jquerylib_0.1.3              GenomeInfoDb_1.27.11        
 ## [61] mzID_1.29.0                  systemfonts_1.0.1           
 ## [63] rlang_0.4.10                 grid_4.1.0                  
 ## [65] RCurl_1.98-1.3               iterators_1.0.13            
 ## [67] rstudioapi_0.13              MsCoreUtils_1.3.3           
 ## [69] bitops_1.0-6                 rmarkdown_2.7               
 ## [71] codetools_0.2-18             DBI_1.1.1                   
-## [73] R6_2.5.0                     knitr_1.31                  
+## [73] R6_2.5.0                     knitr_1.32                  
 ## [75] fastmap_1.1.0                utf8_1.2.1                  
-## [77] clue_0.3-58                  rprojroot_2.0.2             
-## [79] ragg_1.1.2                   ProtGenerics_1.23.7         
+## [77] clue_0.3-59                  rprojroot_2.0.2             
+## [79] ragg_1.1.2                   ProtGenerics_1.23.9         
 ## [81] desc_1.3.0                   stringi_1.5.3               
 ## [83] Rcpp_1.0.6                   vctrs_0.3.7                 
 ## [85] tidyselect_1.1.0             xfun_0.22</code></pre>
