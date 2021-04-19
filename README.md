@@ -1,6 +1,6 @@
 # Handling peptide-spectrum matches
 
-A simple package to load, hangle and manage PSMs (peptide-spectrum
+A simple package to load, manage and process PSMs (peptide-spectrum
 matches). Code in this package is partly composed of functions ported
 from [`MSnbase`](http://lgatto.github.io/MSnbase/) with the goal 
 to (1) make them more general and (2) integrate with the
