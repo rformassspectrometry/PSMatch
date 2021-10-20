@@ -1,6 +1,6 @@
 Package: PSM
 Title: Handling and Managing Peptide Spectrum Matches
-Version: 0.3.0
+Version: 0.3.1
 Authors@R:
    c(person(given = "Laurent", family = "Gatto",
             email = "laurent.gatto@uclouvain.be",
