@@ -1,4 +1,4 @@
-##' @title A class for peptide-spectrum matches results
+##' @title A class for peptide-spectrum matches
 ##'
 ##' @aliases PSM-class PSM reducePSMs readPSMs
 ##'

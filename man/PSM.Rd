@@ -7,7 +7,7 @@
 \alias{readPSMs}
 \alias{reduced}
 \alias{reduced<-}
-\title{A class for peptide-spectrum matches results}
+\title{A class for peptide-spectrum matches}
 \usage{
 PSM(files, parser = c("mzR", "mzID"), BPPARAM = SerialParam())
 

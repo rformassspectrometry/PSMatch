@@ -1,6 +1,6 @@
-Package: PSM
+Package: PSMatch
 Title: Handling and Managing Peptide Spectrum Matches
-Version: 0.3.1
+Version: 0.4.0
 Authors@R:
    c(person(given = "Laurent", family = "Gatto",
             email = "laurent.gatto@uclouvain.be",
@@ -13,8 +13,8 @@ Authors@R:
      person(given = "Sebastian", family = "Gibb",
             email = "mail@sebastiangibb.de",
             role = "aut"))
-Description: A simple package to load, handle and manage PSMs
-   (peptide-spectrum matches).
+Description: A simple package to load, handle and manage
+    Peptide-Spectrum Matches (PSMs).
 Depends:
     S4Vectors
 Imports:
@@ -41,7 +41,7 @@ License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 BugReports: https://github.com/RforMassSpectrometry/PSM/issues
 URL: https://github.com/RforMassSpectrometry/PSM

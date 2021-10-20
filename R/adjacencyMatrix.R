@@ -25,6 +25,8 @@
 ##'
 ##' @author Laurent Gatto
 ##'
+##' @export
+##'
 ##' @examples
 ##' ## Protein vector without names
 ##' prots <- c("ProtA", "ProtB", "ProtA;ProtB")
