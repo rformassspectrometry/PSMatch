@@ -7,7 +7,7 @@ vignette: >
     %\VignetteIndexEntry{Working with PSM data}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
-    %\VignettePackage{PSM}
+    %\VignettePackage{PSMatch}
     %\VignetteDepends{mzR,mzID,BiocStyle,msdata,magrittr,dplyr,tidyr,msdata,QFeatures}
 ---
 
@@ -15,13 +15,13 @@ vignette: >
 BiocStyle::markdown()
 ```
 
-**Package**: `r Biocpkg("PSM")`<br />
-**Authors**: `r packageDescription("PSM")[["Author"]] `<br />
-**Last modified:** `r file.info("PSM.Rmd")$mtime`<br />
+**Package**: `r Biocpkg("PSMatch")`<br />
+**Authors**: `r packageDescription("PSMatch")[["Author"]] `<br />
+**Last modified:** `r file.info("PSMatch.Rmd")$mtime`<br />
 **Compiled**: `r date()`
 
 ```{r setup, message = FALSE, echo = FALSE}
-library("PSM")
+library("PSMatch")
 library("dplyr")
 ```
 
@@ -47,7 +47,7 @@ returns an object of class `DFrame`.
 
 
 ```{r}
-library("PSM")
+library("PSMatch")
 id <- PSM(f)
 id
 ```

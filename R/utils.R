@@ -2,22 +2,22 @@
 ##' by captial letters.
 ##'
 ##' @title Convert to camel case by replacing dots by captial letters
-##' 
+##'
 ##' @param x A `character` to be transformed to camel case.
-##' 
+##'
 ##' @param prefix An optional `character` of length one. Any
 ##'     additional elements are ignores.
-##' 
+##'
 ##' @return A `character` of same length as `x`.
-##' 
+##'
 ##' @author Laurent Gatto
 ##'
 ##' @noRd
-##' 
+##'
 ##' @examples
 ##' nms <- c("aa.foo", "ab.bar")
-##' PSM:::makeCamelCase(nms)
-##' PSM:::makeCamelCase(nms, prefix = "x")
+##' PSMatch:::makeCamelCase(nms)
+##' PSMatch:::makeCamelCase(nms, prefix = "x")
 makeCamelCase <- function(x, prefix) {
     if (!missing(prefix))
         x <- paste(prefix[1], x, sep = ".")
@@ -31,20 +31,20 @@ makeCamelCase <- function(x, prefix) {
 ##' converts `factors` columns to `characters`.
 ##'
 ##' @title Converts factors to strings
-##' 
+##'
 ##' @param x A `data.frame`
-##' 
+##'
 ##' @return A `data.frame` where `factors` are converted to
 ##'     `characters`.
-##' 
+##'
 ##' @author Laurent Gatto
 ##'
 ##' @noRd
-##' 
+##'
 ##' @examples
 ##' data(iris)
 ##' str(iris)
-##' str(PSM:::factorsAsStrings(iris))
+##' str(PSMatch:::factorsAsStrings(iris))
 factorsAsStrings <- function(x) {
     x <- lapply(x,
                    function(xx) {
@@ -61,15 +61,15 @@ factorsAsStrings <- function(x) {
 ##' and `pI`.
 ##'
 ##' @title Amino acids
-##' 
+##'
 ##' @return `data.frame`
-##' 
+##'
 ##' @author Laurent Gatto
 ##'
 ##' @export
-##' 
+##'
 ##' @examples
-##' 
+##'
 ##' getAminoAcids()
 getAminoAcids <- function()
     data.frame(AA = c("peg","A","R","N","D","C","E",
@@ -123,13 +123,13 @@ getAminoAcids <- function()
 ##' Returns a `double` of used atomic mass.
 ##'
 ##' @title Atomic mass.
-##' 
+##'
 ##' @return A named `double`.
-##' 
+##'
 ##' @author Sebastian Gibb
 ##'
 ##' @export
-##' 
+##'
 ##' @examples
 ##' getAtomicMass()
 getAtomicMass <- function() {
@@ -141,5 +141,3 @@ getAtomicMass <- function() {
       O = 15.994915,
       p = 1.007276)
 }
-
-
