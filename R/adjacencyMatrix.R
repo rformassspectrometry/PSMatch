@@ -17,14 +17,6 @@
 ##' idenifiers. If the protein identifier vector is named and the
 ##' names are unique, these are then used to name to matrix rows.
 ##'
-##' The adjacency matrix produced from a `PSM` object doesn't
-##' represent a peptide-by-protein adjacency matrix, given that the
-##' observations of a `PSM` object represent peptide-spectrum matches,
-##' rather than peptides. It is possible to set the `unique` parameter
-##' to return unique PSM occurences. Note however that this implicitly
-##' assumes that the same peptides where matched to the same
-##' protein(s), which is not explicitly verified.
-##'
 ##' @param x Either an instance of class `PSM` or a `character`. See
 ##'     example below for details.
 ##'
@@ -39,13 +31,6 @@
 ##' @param proteins `character(1)` indicating the name of the variable
 ##'     that defines proteins in the `PSM` object. Default is
 ##'     `DatanbaseAccess`.
-##'
-##' @param unique `logical(1)` defining if all peptides should should
-##'     be considered in the contingency matrix, or should duplicates
-##'     be ingored (and only first occurences taken into account). The
-##'     default is `FALSE` and all peptides names are made unique by
-##'     appending sequence numbers to duplicates (see
-##'     [make.unique()]).
 ##'
 ##' @return A peptide-by-protein adjacency matrix.
 ##'
@@ -76,10 +61,9 @@
 ##' adj[1:10, 1:4]
 makeAdjacencyMatrix <- function(x, split = ";",
                                 peptides = "sequence",
-                                proteins = "DatabaseAccess",
-                                unique = FALSE) {
+                                proteins = "DatabaseAccess") {
     if (inherits(x, "PSM"))
-        return(.makeAdjacencyMatrixFromPSM(x, peptides, proteins, unique))
+        return(.makeAdjacencyMatrixFromPSM(x, peptides, proteins))
     if (is.character(x))
         return(.makeAdjacencyMatrixFromChar(x, split))
     stop("'x' must be a character or a PSM object.")
@@ -105,13 +89,15 @@ makeAdjacencyMatrix <- function(x, split = ";",
     adj
 }
 
-.makeAdjacencyMatrixFromPSM <- function(x,
-                                        peptides, proteins,
-                                        unique) {
-    vec <- x[[proteins]]
-    names(vec) <- make.unique(x[[peptides]])
-    adj <- makeAdjacencyMatrix(vec, split = NULL)
-    if (unique)
-        adj <- adj[!duplicated(x[[peptides]]), ]
+.makeAdjacencyMatrixFromPSM <- function(x, peptides, proteins) {
+    n <- length(nx <- unique(x[[peptides]]))
+    m <- length(mx <- unique(x[[proteins]]))
+    adj <- matrix(0, nrow = n, ncol = m,
+                  dimnames = list(rownames = nx,
+                                  colnames = mx))
+    for (k in nx) {
+        i <- which(x[[peptides]] %in% k)
+        adj[k, x[[proteins]][i]] <- 1
+    }
     adj
 }
