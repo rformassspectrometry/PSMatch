@@ -4,14 +4,31 @@
 \alias{makeAdjacencyMatrix}
 \title{Create an adjacency matrix.}
 \usage{
-makeAdjacencyMatrix(x, split = ";")
+makeAdjacencyMatrix(
+  x,
+  split = ";",
+  peptides = "sequence",
+  proteins = "DatabaseAccess",
+  sparse = FALSE
+)
 }
 \arguments{
 \item{x}{Either an instance of class \code{PSM} or a \code{character}. See
 example below for details.}
 
-\item{split}{A \code{character(1)} that defines how to split the string
-of protein identifiers.}
+\item{split}{\code{character(1)} defining how to split the string of
+protein identifiers.}
+
+\item{peptides}{\code{character(1)} indicating the name of the variable
+that defines peptides in the \code{PSM} object. Default is
+\code{sequence}.}
+
+\item{proteins}{\code{character(1)} indicating the name of the variable
+that defines proteins in the \code{PSM} object. Default is
+\code{DatanbaseAccess}.}
+
+\item{sparse}{\code{logical(1)} defining is a sparse adjacency matrix
+should be generated. Default is \code{FALSE}.}
 }
 \value{
 A peptide-by-protein adjacency \code{matrix}.
@@ -26,8 +43,8 @@ protein "ProtA", the second one to protein "ProtB", the third one
 to "ProtA" and "ProtB", and so on. The resulting matrix contain
 \code{length(x)} rows an as many columns as there are unique protein
 idenifiers in \code{x}. The column are always named after the protein
-idenifiers. If the protein identifier vector is named, these are
-used to name to matrix rows.
+idenifiers. If the protein identifier vector is named and the
+names are unique, these are then used to name to matrix rows.
 }
 \examples{
 ## Protein vector without names

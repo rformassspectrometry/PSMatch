@@ -18,8 +18,19 @@
 ##' @param x Either an instance of class `PSM` or a `character`. See
 ##'     example below for details.
 ##'
-##' @param split A `character(1)` that defines how to split the string
-##'     of protein identifiers.
+##' @param split `character(1)` defining how to split the string of
+##'     protein identifiers.
+##'
+##' @param peptides `character(1)` indicating the name of the variable
+##'     that defines peptides in the `PSM` object. Default is
+##'     `sequence`.
+##'
+##' @param proteins `character(1)` indicating the name of the variable
+##'     that defines proteins in the `PSM` object. Default is
+##'     `DatanbaseAccess`.
+##'
+##' @param sparse `logical(1)` defining is a sparse adjacency matrix
+##'     should be generated. Default is `FALSE`.
 ##'
 ##' @return A peptide-by-protein adjacency `matrix`.
 ##'
