@@ -35,18 +35,28 @@
 ##' ## Named protein vector
 ##' names(prots) <- c("pep1", "pep2", "pep3")
 ##' makeAdjacencyMatrix(prots)
-makeAdjacencyMatrix <- function(x, split = ";") {
+makeAdjacencyMatrix <- function(x, split = ";",
+                                peptides = "sequence",
+                                proteins = "DatabaseAccess",
+                                sparse = FALSE) {
     if (inherits(x, "PSM"))
-        return(.makeAdjacencyMatrixFromPSM(x))
-    if (is.character(x))
+        return(.makeAdjacencyMatrixFromPSM(x, peptides, proteins, sparse))
+    if (is.character(x) & !sparse)
         return(.makeAdjacencyMatrixFromChar(x, split))
+    if (is.character(x) & sparse)
+        return(.makeSparseAdjacencyMatrixFromChar(x, split))
     stop("'x' must be a character or a PSM object.")
 }
 
 .makeAdjacencyMatrixFromChar <- function(x, split = ";") {
     n <- length(x)
-    col_list <- strsplit(x, split)
-    m <- length(cnames <- unique(unlist(col_list)))
+    if (is.null(split)) {
+        col_list <- x
+        m <- length(cnames <- unique(x))
+    } else {
+        col_list <- strsplit(x, split)
+        m <- length(cnames <- unique(unlist(col_list)))
+    }
     adj <- matrix(0, nrow = n, ncol = m)
     colnames(adj) <- cnames
     if (!is.null(names(x)) & !anyDuplicated(names(x))) {
@@ -58,6 +68,13 @@ makeAdjacencyMatrix <- function(x, split = ";") {
     adj
 }
 
-.makeAdjacencyMatrixFromPSM <- function(x) {
+.makeAdjacencyMatrixFromPSM <- function(x, peptides, proteins, sparse) {
+    vec <- x[[proteins]]
+    names(vec) <- x[[peptides]]
+    ## make names unique?
+    makeAdjacencyMatrix(vec, split = NULL, sparse)
+}
+
+.makeSparseAdjacencyMatrixFromChar <- function(x, split) {
     stop("Not yet implemented")
 }
