@@ -5,6 +5,8 @@
 ##' This function created a peptide-by-protein adjacency matrix from a
 ##' `character` or an instance of class `PSM`.
 ##'
+##' @details
+##'
 ##' The character is formatted as `x <- c("ProtA", "ProtB",
 ##' "ProtA;ProtB", ...)`, as commonly encoutered in proteomics data
 ##' spreadsheets. It defines that the first peptide is mapped to
@@ -14,6 +16,14 @@
 ##' idenifiers in `x`. The column are always named after the protein
 ##' idenifiers. If the protein identifier vector is named and the
 ##' names are unique, these are then used to name to matrix rows.
+##'
+##' The adjacency matrix produced from a `PSM` object doesn't
+##' represent a peptide-by-protein adjacency matrix, given that the
+##' observations of a `PSM` object represent peptide-spectrum matches,
+##' rather than peptides. It is possible to set the `unique` parameter
+##' to return unique PSM occurences. Note however that this implicitly
+##' assumes that the same peptides where matched to the same
+##' protein(s), which is not explicitly verified.
 ##'
 ##' @param x Either an instance of class `PSM` or a `character`. See
 ##'     example below for details.
@@ -35,9 +45,7 @@
 ##'     be ingored (and only first occurences taken into account). The
 ##'     default is `FALSE` and all peptides names are made unique by
 ##'     appending sequence numbers to duplicates (see
-##'     [make.unique()]). Note that this implicitly assumes that the
-##'     same peptides where matched to the same protein(s), which is
-##'     not explicitly tested.
+##'     [make.unique()]).
 ##'
 ##' @return A peptide-by-protein adjacency matrix.
 ##'
