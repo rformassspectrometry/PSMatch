@@ -9,7 +9,7 @@ makeAdjacencyMatrix(
   split = ";",
   peptides = "sequence",
   proteins = "DatabaseAccess",
-  sparse = FALSE
+  unique = FALSE
 )
 }
 \arguments{
@@ -17,7 +17,8 @@ makeAdjacencyMatrix(
 example below for details.}
 
 \item{split}{\code{character(1)} defining how to split the string of
-protein identifiers.}
+protein identifiers (using \code{\link[=strsplit]{strsplit()}}). Default is ";". If
+\code{NULL}, splitting is ignored.}
 
 \item{peptides}{\code{character(1)} indicating the name of the variable
 that defines peptides in the \code{PSM} object. Default is
@@ -27,11 +28,17 @@ that defines peptides in the \code{PSM} object. Default is
 that defines proteins in the \code{PSM} object. Default is
 \code{DatanbaseAccess}.}
 
-\item{sparse}{\code{logical(1)} defining is a sparse adjacency matrix
-should be generated. Default is \code{FALSE}.}
+\item{unique}{\code{logical(1)} defining if all peptides should should
+be considered in the contingency matrix, or should duplicates
+be ingored (and only first occurences taken into account). The
+default is \code{FALSE} and all peptides names are made unique by
+appending sequence numbers to duplicates (see
+\code{\link[=make.unique]{make.unique()}}). Note that this implicitly assumes that the
+same peptides where matched to the same protein(s), which is
+not explicitly tested.}
 }
 \value{
-A peptide-by-protein adjacency \code{matrix}.
+A peptide-by-protein adjacency matrix.
 }
 \description{
 This function created a peptide-by-protein adjacency matrix from a
@@ -54,6 +61,19 @@ makeAdjacencyMatrix(prots)
 ## Named protein vector
 names(prots) <- c("pep1", "pep2", "pep3")
 makeAdjacencyMatrix(prots)
+
+## From a PSM object
+f <- msdata::ident(full.names = TRUE, pattern = "TMT")
+psm <- filterPSMs(PSM(f))
+psm
+adj <- makeAdjacencyMatrix(psm)
+dim(adj)
+adj[1:10, 1:4]
+
+## Drop duplicated peptides
+adj <- makeAdjacencyMatrix(psm, unique = TRUE)
+dim(adj)
+adj[1:10, 1:4]
 }
 \author{
 Laurent Gatto

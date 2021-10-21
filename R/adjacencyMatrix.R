@@ -19,7 +19,8 @@
 ##'     example below for details.
 ##'
 ##' @param split `character(1)` defining how to split the string of
-##'     protein identifiers.
+##'     protein identifiers (using [strsplit()]). Default is ";". If
+##'     `NULL`, splitting is ignored.
 ##'
 ##' @param peptides `character(1)` indicating the name of the variable
 ##'     that defines peptides in the `PSM` object. Default is
@@ -29,10 +30,16 @@
 ##'     that defines proteins in the `PSM` object. Default is
 ##'     `DatanbaseAccess`.
 ##'
-##' @param sparse `logical(1)` defining is a sparse adjacency matrix
-##'     should be generated. Default is `FALSE`.
+##' @param unique `logical(1)` defining if all peptides should should
+##'     be considered in the contingency matrix, or should duplicates
+##'     be ingored (and only first occurences taken into account). The
+##'     default is `FALSE` and all peptides names are made unique by
+##'     appending sequence numbers to duplicates (see
+##'     [make.unique()]). Note that this implicitly assumes that the
+##'     same peptides where matched to the same protein(s), which is
+##'     not explicitly tested.
 ##'
-##' @return A peptide-by-protein adjacency `matrix`.
+##' @return A peptide-by-protein adjacency matrix.
 ##'
 ##' @author Laurent Gatto
 ##'
@@ -46,16 +53,27 @@
 ##' ## Named protein vector
 ##' names(prots) <- c("pep1", "pep2", "pep3")
 ##' makeAdjacencyMatrix(prots)
+##'
+##' ## From a PSM object
+##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
+##' psm <- filterPSMs(PSM(f))
+##' psm
+##' adj <- makeAdjacencyMatrix(psm)
+##' dim(adj)
+##' adj[1:10, 1:4]
+##'
+##' ## Drop duplicated peptides
+##' adj <- makeAdjacencyMatrix(psm, unique = TRUE)
+##' dim(adj)
+##' adj[1:10, 1:4]
 makeAdjacencyMatrix <- function(x, split = ";",
                                 peptides = "sequence",
                                 proteins = "DatabaseAccess",
-                                sparse = FALSE) {
+                                unique = FALSE) {
     if (inherits(x, "PSM"))
-        return(.makeAdjacencyMatrixFromPSM(x, peptides, proteins, sparse))
-    if (is.character(x) & !sparse)
+        return(.makeAdjacencyMatrixFromPSM(x, peptides, proteins, unique))
+    if (is.character(x))
         return(.makeAdjacencyMatrixFromChar(x, split))
-    if (is.character(x) & sparse)
-        return(.makeSparseAdjacencyMatrixFromChar(x, split))
     stop("'x' must be a character or a PSM object.")
 }
 
@@ -79,13 +97,13 @@ makeAdjacencyMatrix <- function(x, split = ";",
     adj
 }
 
-.makeAdjacencyMatrixFromPSM <- function(x, peptides, proteins, sparse) {
+.makeAdjacencyMatrixFromPSM <- function(x,
+                                        peptides, proteins,
+                                        unique) {
     vec <- x[[proteins]]
-    names(vec) <- x[[peptides]]
-    ## make names unique?
-    makeAdjacencyMatrix(vec, split = NULL, sparse)
-}
-
-.makeSparseAdjacencyMatrixFromChar <- function(x, split) {
-    stop("Not yet implemented")
+    names(vec) <- make.unique(x[[peptides]])
+    adj <- makeAdjacencyMatrix(vec, split = NULL)
+    if (unique)
+        adj <- adj[!duplicated(x[[peptides]]), ]
+    adj
 }
