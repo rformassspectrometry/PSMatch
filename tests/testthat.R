@@ -3,4 +3,4 @@
 # revert this when that issue in R is fixed.
 Sys.setenv("R_TESTS" = "")
 library("testthat")
-library("PSM")
+library("PSMatch")

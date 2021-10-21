@@ -33,7 +33,7 @@ basename(f)
 library("mzR")
 x <- openIDfile(f)
 x
-PSM:::as_data_frame(x)
+PSMatch:::as_data_frame(x)
 }
 \author{
 Laurent Gatto
