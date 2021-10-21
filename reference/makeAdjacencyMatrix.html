@@ -7,8 +7,8 @@ protein "ProtA", the second one to protein "ProtB", the third one
 to "ProtA" and "ProtB", and so on. The resulting matrix contain
 length(x) rows an as many columns as there are unique protein
 idenifiers in x. The column are always named after the protein
-idenifiers. If the protein identifier vector is named, these are
-used to name to matrix rows.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+idenifiers. If the protein identifier vector is named and the
+names are unique, these are then used to name to matrix rows.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -66,11 +66,17 @@ protein "ProtA", the second one to protein "ProtB", the third one
 to "ProtA" and "ProtB", and so on. The resulting matrix contain
 <code>length(x)</code> rows an as many columns as there are unique protein
 idenifiers in <code>x</code>. The column are always named after the protein
-idenifiers. If the protein identifier vector is named, these are
-used to name to matrix rows.</p>
+idenifiers. If the protein identifier vector is named and the
+names are unique, these are then used to name to matrix rows.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">x</span>, split <span class="op">=</span> <span class="st">";"</span><span class="op">)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span>
+  <span class="va">x</span>,
+  split <span class="op">=</span> <span class="st">";"</span>,
+  peptides <span class="op">=</span> <span class="st">"sequence"</span>,
+  proteins <span class="op">=</span> <span class="st">"DatabaseAccess"</span>,
+  sparse <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
@@ -78,8 +84,19 @@ used to name to matrix rows.</p>
       <td><p>Either an instance of class <code>PSM</code> or a <code>character</code>. See
 example below for details.</p></td>
     </tr><tr><th>split</th>
-      <td><p>A <code>character(1)</code> that defines how to split the string
-of protein identifiers.</p></td>
+      <td><p><code>character(1)</code> defining how to split the string of
+protein identifiers.</p></td>
+    </tr><tr><th>peptides</th>
+      <td><p><code>character(1)</code> indicating the name of the variable
+that defines peptides in the <code>PSM</code> object. Default is
+<code>sequence</code>.</p></td>
+    </tr><tr><th>proteins</th>
+      <td><p><code>character(1)</code> indicating the name of the variable
+that defines proteins in the <code>PSM</code> object. Default is
+<code>DatanbaseAccess</code>.</p></td>
+    </tr><tr><th>sparse</th>
+      <td><p><code>logical(1)</code> defining is a sparse adjacency matrix
+should be generated. Default is <code>FALSE</code>.</p></td>
     </tr></table></div>
 
     <div id="ref-sections">
