@@ -12,49 +12,36 @@
 ##'
 ##' @name filterPSMs
 ##'
+##' @export
+##'
 ##' @examples
 ##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 ##' basename(f)
 ##' id <- PSM(f)
 ##' filterPSMs(id)
-NULL
-
-##' @name filterPSMs
-##'
-##' @export
 filterPSMs <- function(x,
                        decoy = "isDecoy",
                        rank = "rank",
                        accession = "DatabaseAccess",
                        spectrumID = "spectrumID",
+                       peptide = "sequence",
                        verbose = TRUE) {
     n0 <- nrow(x)
     if (verbose)
         message("Starting with ", n0, " PSMs:")
-    if (!is.null(decoy)) {
-        x <- x[!x[, decoy], ]
-        n1 <- nrow(x)
-        if (verbose)
-            message(" removed ", n0 - n1, " decoy hits")
-        n0 <- n1
-    }
-    if (!is.null(rank)) {
-        x <- x[x[, rank] == 1, ]
-        n2 <- nrow(x)
-        if (verbose)
-            message(" removed ", n0 - n2, " PSMs with rank > 1")
-        n0 <- n2
-    }
-    if (!is.null(accession)) {
-        mlt <- tapply(x[, accession],
-                      x[, spectrumID],
-                      function(xx) length(unique(xx)) > 1)
-        mlt <- names(which(mlt))
-        x <- x[!x[, spectrumID] %in% mlt, ]
-        n3 <- nrow(x)
-        if (verbose)
-            message(" removed ", n0 - n3, " non-proteotypic peptides")
-    }
+    if (!is.null(decoy))
+        x <- filterPsmDecoy(x, decoy = decoy,
+                            verbose = verbose)
+
+    if (!is.null(rank))
+        x <- filterPsmRank(x, rank = rank,
+                           verbose = verbose)
+
+    if (!is.null(accession))
+        x <- filterPsmNonProteotypic(x,
+                                     accession = accession,
+                                     peptide = peptide,
+                                     verbose = verbose)
     if (verbose)
         message(nrow(x), " PSMs left.")
     x
@@ -127,25 +114,25 @@ filterPsmRank <- function(x,
 ##'     protein (groups) accession. Default is
 ##'     `"DatabaseAccess"`. Filtering is ignored if set to `NULL`.
 ##'
-##' @param spectrumID `character(1)` with the name of the spectrum
-##'     identifier column. Default is `spectrumID`. Filtering is
-##'     ignored if set to `NULL`.
+##' @param peptide `character(1)` with the name of the peptide
+##'     identifier column. Default is `sequence`. Filtering is ignored
+##'     if set to `NULL`.
 ##'
 ##' @name filterPSMs
 ##'
 ##' @export
 filterPsmNonProteotypic <- function(x,
                                     accession = "DatabaseAccess",
-                                    spectrumID = "spectrumID",
+                                    peptide = "sequence",
                                     verbose = TRUE) {
-    if (is.null(accession) | is.null(spectrumID))
+    if (is.null(accession) | is.null(peptide))
         return(x)
     n0 <- nrow(x)
     mlt <- tapply(x[, accession],
-                  x[, spectrumID],
+                  x[, peptide],
                   function(xx) length(unique(xx)) > 1)
     mlt <- names(which(mlt))
-    x <- x[!x[, spectrumID] %in% mlt, ]
+    x <- x[!x[[peptide]] %in% mlt, ]
     n1 <- nrow(x)
     if (verbose)
         message("Removed ", n0 - n1, " non-proteotypic peptides.")
