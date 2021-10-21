@@ -12,8 +12,8 @@
 ##' to "ProtA" and "ProtB", and so on. The resulting matrix contain
 ##' `length(x)` rows an as many columns as there are unique protein
 ##' idenifiers in `x`. The column are always named after the protein
-##' idenifiers. If the protein identifier vector is named, these are
-##' used to name to matrix rows.
+##' idenifiers. If the protein identifier vector is named and the
+##' names are unique, these are then used to name to matrix rows.
 ##'
 ##' @param x Either an instance of class `PSM` or a `character`. See
 ##'     example below for details.
@@ -49,7 +49,9 @@ makeAdjacencyMatrix <- function(x, split = ";") {
     m <- length(cnames <- unique(unlist(col_list)))
     adj <- matrix(0, nrow = n, ncol = m)
     colnames(adj) <- cnames
-    rownames(adj) <- names(x)
+    if (!is.null(names(x)) & !anyDuplicated(names(x))) {
+        rownames(adj) <- names(x)
+    }
     for (i in seq_along(col_list)) {
         adj[i, col_list[[i]]] <- 1
     }
