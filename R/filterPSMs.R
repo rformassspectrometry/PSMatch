@@ -114,6 +114,10 @@ filterPsmRank <- function(x,
 ##'     protein (groups) accession. Default is
 ##'     `"DatabaseAccess"`. Filtering is ignored if set to `NULL`.
 ##'
+##' @param spectrumID `character(1)` with the name of the spectrum
+##'     identifier column. Default is `spectrumID`. Filtering is
+##'     ignored if set to `NULL`.
+##'
 ##' @param peptide `character(1)` with the name of the peptide
 ##'     identifier column. Default is `sequence`. Filtering is ignored
 ##'     if set to `NULL`.

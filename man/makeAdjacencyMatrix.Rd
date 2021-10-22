@@ -8,8 +8,7 @@ makeAdjacencyMatrix(
   x,
   split = ";",
   peptides = "sequence",
-  proteins = "DatabaseAccess",
-  unique = FALSE
+  proteins = "DatabaseAccess"
 )
 }
 \arguments{
@@ -27,13 +26,6 @@ that defines peptides in the \code{PSM} object. Default is
 \item{proteins}{\code{character(1)} indicating the name of the variable
 that defines proteins in the \code{PSM} object. Default is
 \code{DatanbaseAccess}.}
-
-\item{unique}{\code{logical(1)} defining if all peptides should should
-be considered in the contingency matrix, or should duplicates
-be ingored (and only first occurences taken into account). The
-default is \code{FALSE} and all peptides names are made unique by
-appending sequence numbers to duplicates (see
-\code{\link[=make.unique]{make.unique()}}).}
 }
 \value{
 A peptide-by-protein adjacency matrix.
@@ -51,14 +43,6 @@ to "ProtA" and "ProtB", and so on. The resulting matrix contain
 idenifiers in \code{x}. The column are always named after the protein
 idenifiers. If the protein identifier vector is named and the
 names are unique, these are then used to name to matrix rows.
-
-The adjacency matrix produced from a \code{PSM} object doesn't
-represent a peptide-by-protein adjacency matrix, given that the
-observations of a \code{PSM} object represent peptide-spectrum matches,
-rather than peptides. It is possible to set the \code{unique} parameter
-to return unique PSM occurences. Note however that this implicitly
-assumes that the same peptides where matched to the same
-protein(s), which is not explicitly verified.
 }
 \examples{
 ## Protein vector without names
@@ -74,11 +58,6 @@ f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 psm <- filterPSMs(PSM(f))
 psm
 adj <- makeAdjacencyMatrix(psm)
-dim(adj)
-adj[1:10, 1:4]
-
-## Drop duplicated peptides
-adj <- makeAdjacencyMatrix(psm, unique = TRUE)
 dim(adj)
 adj[1:10, 1:4]
 }

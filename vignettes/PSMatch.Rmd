@@ -159,15 +159,14 @@ id_tbl
 
 ### Remove non-proteotypic peptides
 
-The scans below are those that match different proteins. For example
-scan 4884 (the two first rows) matches proteins `XXX_ECA3406` and
-`ECA3415`. Scan 4099 (rows 6 to 8) match `XXX_ECA4416_1`,
-`XXX_ECA4416_2` and `XXX_ECA4416_3`.
+The peptides below are those that match different proteins. For
+example QKTRCATRAFKANKGRAR (the two first rows) matches proteins
+`ECA2869` and `ECA4278`.
 
 ```{r}
 mltm <-
     id_tbl %>%
-    group_by(spectrumID) %>%
+    group_by(sequence) %>%
     mutate(nProts = length(unique(DatabaseAccess))) %>%
     filter(nProts > 1) %>%
     select(DatabaseAccess, nProts)
@@ -179,7 +178,7 @@ We can now remove the scane with
 ```{r}
 id_tbl <-
     id_tbl %>%
-    filter(!spectrumID %in% mltm$spectrumID)
+    filter(!sequence %in% mltm$sequence)
 id_tbl
 ```
 
@@ -250,7 +249,8 @@ id1_filtered <- filterPSMs(id1)
 id2_filtered <-
     filterPSMs(id2, decoy = "isdecoy",
            accession = "accession",
-           spectrumID = "spectrumid")
+           spectrumID = "spectrumid",
+           peptide = "pepseq")
 ```
 
 As can be seen, we are also left with `r nrow(id1_filtered)` vs

@@ -54,11 +54,6 @@
 ##' adj <- makeAdjacencyMatrix(psm)
 ##' dim(adj)
 ##' adj[1:10, 1:4]
-##'
-##' ## Drop duplicated peptides
-##' adj <- makeAdjacencyMatrix(psm, unique = TRUE)
-##' dim(adj)
-##' adj[1:10, 1:4]
 makeAdjacencyMatrix <- function(x, split = ";",
                                 peptides = "sequence",
                                 proteins = "DatabaseAccess") {

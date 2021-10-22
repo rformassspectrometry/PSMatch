@@ -52,6 +52,10 @@ retained. Filtering is ignored if set to \code{NULL}.}
 protein (groups) accession. Default is
 \code{"DatabaseAccess"}. Filtering is ignored if set to \code{NULL}.}
 
+\item{spectrumID}{\code{character(1)} with the name of the spectrum
+identifier column. Default is \code{spectrumID}. Filtering is
+ignored if set to \code{NULL}.}
+
 \item{peptide}{\code{character(1)} with the name of the peptide
 identifier column. Default is \code{sequence}. Filtering is ignored
 if set to \code{NULL}.}
