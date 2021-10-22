@@ -49,11 +49,17 @@
 ##'
 ##' ## From a PSM object
 ##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
-##' psm <- filterPSMs(PSM(f))
+##' library(magrittr)
+##' psm <- PSM(f) %>%
+##'        filterPsmDecoy() %>%
+##'        filterPsmRank()
 ##' psm
 ##' adj <- makeAdjacencyMatrix(psm)
 ##' dim(adj)
 ##' adj[1:10, 1:4]
+##' ## Peptides with rowSums > 1 match multiple proteins.
+##' ## Use filterPsmNonProteotypic() to filter these out.
+##' table(rowSums(adj))
 makeAdjacencyMatrix <- function(x, split = ";",
                                 peptides = "sequence",
                                 proteins = "DatabaseAccess") {
