@@ -58,8 +58,7 @@ character or an instance of class PSM."><!-- mathjax --><script src="https://cdn
   <span class="va">x</span>,
   split <span class="op">=</span> <span class="st">";"</span>,
   peptides <span class="op">=</span> <span class="st">"sequence"</span>,
-  proteins <span class="op">=</span> <span class="st">"DatabaseAccess"</span>,
-  unique <span class="op">=</span> <span class="cn">FALSE</span>
+  proteins <span class="op">=</span> <span class="st">"DatabaseAccess"</span>
 <span class="op">)</span></code></pre></div>
 
     <div id="arguments">
@@ -79,13 +78,6 @@ that defines peptides in the <code>PSM</code> object. Default is
       <td><p><code>character(1)</code> indicating the name of the variable
 that defines proteins in the <code>PSM</code> object. Default is
 <code>DatanbaseAccess</code>.</p></td>
-    </tr><tr><th>unique</th>
-      <td><p><code>logical(1)</code> defining if all peptides should should
-be considered in the contingency matrix, or should duplicates
-be ingored (and only first occurences taken into account). The
-default is <code>FALSE</code> and all peptides names are made unique by
-appending sequence numbers to duplicates (see
-<code><a href="https://rdrr.io/r/base/make.unique.html" class="external-link">make.unique()</a></code>).</p></td>
     </tr></table></div>
 
     <div id="ref-sections">
@@ -103,13 +95,6 @@ to "ProtA" and "ProtB", and so on. The resulting matrix contain
 idenifiers in <code>x</code>. The column are always named after the protein
 idenifiers. If the protein identifier vector is named and the
 names are unique, these are then used to name to matrix rows.</p>
-<p>The adjacency matrix produced from a <code>PSM</code> object doesn't
-represent a peptide-by-protein adjacency matrix, given that the
-observations of a <code>PSM</code> object represent peptide-spectrum matches,
-rather than peptides. It is possible to set the <code>unique</code> parameter
-to return unique PSM occurences. Note however that this implicitly
-assumes that the same peptides where matched to the same
-protein(s), which is not explicitly verified.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -139,45 +124,29 @@ protein(s), which is not explicitly verified.</p>
 <span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">ident</a></span><span class="op">(</span>full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">"TMT"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Starting with 5802 PSMs:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  removed 2896 decoy hits</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  removed 155 PSMs with rank &gt; 1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  removed 85 non-proteotypic peptides</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 2896 decoy hits.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 155 PSMs with rank &gt; 1.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 85 non-proteotypic peptides.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2666 PSMs left.</span>
 <span class="r-in"><span class="va">psm</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 2666 rows and 35 columns.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names(35): sequence spectrumID ... subReplacementResidue subLocation</span>
 <span class="r-in"><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2666 1466</span>
-<span class="r-in"><span class="va">adj</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     ECA2006 ECA1676 ECA3009 ECA1420</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RQCRTDFLNYLR                              1       0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ESVALADQVTCVDWRNRKATKK                    0       1       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QRMARTSDKQQSIRFLERLCGR                    0       0       1       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> DGGPAIYGHERVGRNAKKFKCLKFR                 0       0       0       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QRMARTSDKQQSIRFLERLCGR.1                  0       0       1       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR         0       0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR.1       0       0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> VGRCRPIINYLASPGGTSER                      0       0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QRLDEHCVGVGQNALLLGR                       0       0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> VDYQGKKVVIIGLGLTGLSCVDFFLARGVVPR          0       0       0       0</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Drop duplicated peptides</span></span>
-<span class="r-in"><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span>, unique <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2324 1466</span>
 <span class="r-in"><span class="va">adj</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   ECA2006 ECA1676 ECA3009 ECA1420</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RQCRTDFLNYLR                            1       0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ESVALADQVTCVDWRNRKATKK                  0       1       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QRMARTSDKQQSIRFLERLCGR                  0       0       1       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> DGGPAIYGHERVGRNAKKFKCLKFR               0       0       0       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR       0       0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> VGRCRPIINYLASPGGTSER                    0       0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QRLDEHCVGVGQNALLLGR                     0       0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> VDYQGKKVVIIGLGLTGLSCVDFFLARGVVPR        0       0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> TLIIERCR                                0       0       0       0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QEVESCTTIEKIWVIDLKIK                    0       0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    colnames</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rownames                            ECA2006 ECA1676 ECA3009 ECA1420</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RQCRTDFLNYLR                            1       0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ESVALADQVTCVDWRNRKATKK                  0       1       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   QRMARTSDKQQSIRFLERLCGR                  0       0       1       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   DGGPAIYGHERVGRNAKKFKCLKFR               0       0       0       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR       0       0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   VGRCRPIINYLASPGGTSER                    0       0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   QRLDEHCVGVGQNALLLGR                     0       0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   VDYQGKKVVIIGLGLTGLSCVDFFLARGVVPR        0       0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   TLIIERCR                                0       0       0       0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   QEVESCTTIEKIWVIDLKIK                    0       0       0       0</span>
 </code></pre></div>
     </div>
   </div>
