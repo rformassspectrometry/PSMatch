@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.14/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-10-22 07:16:24<br><strong>Compiled</strong>: Fri Oct 22 07:21:50 2021</p>
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.14/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-10-23 21:58:58<br><strong>Compiled</strong>: Sat Oct 23 22:03:31 2021</p>
 <div class="section level1">
 <h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h1>
@@ -173,152 +173,39 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="section level2">
 <h2 id="filtering-data">Filtering data<a class="anchor" aria-label="anchor" href="#filtering-data"></a>
 </h2>
-<p>Often, the PSM data is filtered to only retain reliable matches. The <code>MSnID</code> package can be used to set thresholds to attain user-defined PSM, peptide or protein-level FDRs. Here, we will simply filter out wrong identification manually.</p>
-<p>Here, the <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> from the <code>dplyr</code> package comes very handy. We will thus start by convering the <code>DataFrame</code> to a <code>tibble</code>.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">id_tbl</span> <span class="op">&lt;-</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
-<span class="va">id_tbl</span></code></pre></div>
-<pre><code>##  [38;5;246m# A tibble: 5,802 × 35 [39m
-##    sequence     spectrumID     chargeState  rank passThreshold experimentalMass…
-##     [3m [38;5;246m&lt;chr&gt; [39m [23m         [3m [38;5;246m&lt;chr&gt; [39m [23m                 [3m [38;5;246m&lt;int&gt; [39m [23m  [3m [38;5;246m&lt;int&gt; [39m [23m  [3m [38;5;246m&lt;lgl&gt; [39m [23m                      [3m [38;5;246m&lt;dbl&gt; [39m [23m
-##  [38;5;250m 1 [39m RQCRTDFLNYLR controllerTyp…           3     1 TRUE                       548.
-##  [38;5;250m 2 [39m ESVALADQVTC… controllerTyp…           2     1 TRUE                       [4m1 [24m288.
-##  [38;5;250m 3 [39m KELLCLAMQIIR controllerTyp…           2     1 TRUE                       744.
-##  [38;5;250m 4 [39m QRMARTSDKQQ… controllerTyp…           3     1 TRUE                       913.
-##  [38;5;250m 5 [39m KDEGSTEPLKV… controllerTyp…           3     1 TRUE                       927.
-##  [38;5;250m 6 [39m DGGPAIYGHER… controllerTyp…           3     1 TRUE                       969.
-##  [38;5;250m 7 [39m QRMARTSDKQQ… controllerTyp…           2     1 TRUE                       [4m1 [24m369.
-##  [38;5;250m 8 [39m CIDRARHVEVQ… controllerTyp…           3     1 TRUE                       [4m1 [24m285.
-##  [38;5;250m 9 [39m CIDRARHVEVQ… controllerTyp…           3     1 TRUE                       [4m1 [24m285.
-##  [38;5;250m10 [39m VGRCRPIINYL… controllerTyp…           2     1 TRUE                       [4m1 [24m102.
-##  [38;5;246m# … with 5,792 more rows, and 29 more variables: calculatedMassToCharge &lt;dbl&gt;, [39m
-##  [38;5;246m#   peptideRef &lt;chr&gt;, modNum &lt;int&gt;, isDecoy &lt;lgl&gt;, post &lt;chr&gt;, pre &lt;chr&gt;, [39m
-##  [38;5;246m#   start &lt;int&gt;, end &lt;int&gt;, DatabaseAccess &lt;chr&gt;, DBseqLength &lt;int&gt;, [39m
-##  [38;5;246m#   DatabaseSeq &lt;chr&gt;, DatabaseDescription &lt;chr&gt;, scan.number.s. &lt;dbl&gt;, [39m
-##  [38;5;246m#   acquisitionNum &lt;dbl&gt;, spectrumFile &lt;chr&gt;, idFile &lt;chr&gt;, [39m
-##  [38;5;246m#   MS.GF.RawScore &lt;dbl&gt;, MS.GF.DeNovoScore &lt;dbl&gt;, MS.GF.SpecEValue &lt;dbl&gt;, [39m
-##  [38;5;246m#   MS.GF.EValue &lt;dbl&gt;, MS.GF.QValue &lt;dbl&gt;, MS.GF.PepQValue &lt;dbl&gt;, … [39m</code></pre>
+<p>Often, the PSM data is filtered to only retain reliable matches. The <code>MSnID</code> package can be used to set thresholds to attain user-defined PSM, peptide or protein-level FDRs. Here, we will simply filter out wrong identification.</p>
 <div class="section level3">
 <h3 id="remove-decoy-hits">Remove decoy hits<a class="anchor" aria-label="anchor" href="#remove-decoy-hits"></a>
 </h3>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://dplyr.tidyverse.org" class="external-link">"dplyr"</a></span><span class="op">)</span>
-<span class="va">id_tbl</span> <span class="op">&lt;-</span> <span class="va">id_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">isDecoy</span><span class="op">)</span>
-<span class="va">id_tbl</span></code></pre></div>
-<pre><code>##  [38;5;246m# A tibble: 2,906 × 35 [39m
-##    sequence     spectrumID     chargeState  rank passThreshold experimentalMass…
-##     [3m [38;5;246m&lt;chr&gt; [39m [23m         [3m [38;5;246m&lt;chr&gt; [39m [23m                 [3m [38;5;246m&lt;int&gt; [39m [23m  [3m [38;5;246m&lt;int&gt; [39m [23m  [3m [38;5;246m&lt;lgl&gt; [39m [23m                      [3m [38;5;246m&lt;dbl&gt; [39m [23m
-##  [38;5;250m 1 [39m RQCRTDFLNYLR controllerTyp…           3     1 TRUE                       548.
-##  [38;5;250m 2 [39m ESVALADQVTC… controllerTyp…           2     1 TRUE                       [4m1 [24m288.
-##  [38;5;250m 3 [39m QRMARTSDKQQ… controllerTyp…           3     1 TRUE                       913.
-##  [38;5;250m 4 [39m DGGPAIYGHER… controllerTyp…           3     1 TRUE                       969.
-##  [38;5;250m 5 [39m QRMARTSDKQQ… controllerTyp…           2     1 TRUE                       [4m1 [24m369.
-##  [38;5;250m 6 [39m CIDRARHVEVQ… controllerTyp…           3     1 TRUE                       [4m1 [24m285.
-##  [38;5;250m 7 [39m CIDRARHVEVQ… controllerTyp…           3     1 TRUE                       [4m1 [24m285.
-##  [38;5;250m 8 [39m VGRCRPIINYL… controllerTyp…           2     1 TRUE                       [4m1 [24m102.
-##  [38;5;250m 9 [39m QRLDEHCVGVG… controllerTyp…           3     1 TRUE                       713.
-##  [38;5;250m10 [39m VDYQGKKVVII… controllerTyp…           4     1 TRUE                       870.
-##  [38;5;246m# … with 2,896 more rows, and 29 more variables: calculatedMassToCharge &lt;dbl&gt;, [39m
-##  [38;5;246m#   peptideRef &lt;chr&gt;, modNum &lt;int&gt;, isDecoy &lt;lgl&gt;, post &lt;chr&gt;, pre &lt;chr&gt;, [39m
-##  [38;5;246m#   start &lt;int&gt;, end &lt;int&gt;, DatabaseAccess &lt;chr&gt;, DBseqLength &lt;int&gt;, [39m
-##  [38;5;246m#   DatabaseSeq &lt;chr&gt;, DatabaseDescription &lt;chr&gt;, scan.number.s. &lt;dbl&gt;, [39m
-##  [38;5;246m#   acquisitionNum &lt;dbl&gt;, spectrumFile &lt;chr&gt;, idFile &lt;chr&gt;, [39m
-##  [38;5;246m#   MS.GF.RawScore &lt;dbl&gt;, MS.GF.DeNovoScore &lt;dbl&gt;, MS.GF.SpecEValue &lt;dbl&gt;, [39m
-##  [38;5;246m#   MS.GF.EValue &lt;dbl&gt;, MS.GF.QValue &lt;dbl&gt;, MS.GF.PepQValue &lt;dbl&gt;, … [39m</code></pre>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPsmDecoy</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="keep-first-rank-matches">Keep first rank matches<a class="anchor" aria-label="anchor" href="#keep-first-rank-matches"></a>
 </h3>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">id_tbl</span> <span class="op">&lt;-</span> <span class="va">id_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">rank</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">id_tbl</span></code></pre></div>
-<pre><code>##  [38;5;246m# A tibble: 2,751 × 35 [39m
-##    sequence     spectrumID     chargeState  rank passThreshold experimentalMass…
-##     [3m [38;5;246m&lt;chr&gt; [39m [23m         [3m [38;5;246m&lt;chr&gt; [39m [23m                 [3m [38;5;246m&lt;int&gt; [39m [23m  [3m [38;5;246m&lt;int&gt; [39m [23m  [3m [38;5;246m&lt;lgl&gt; [39m [23m                      [3m [38;5;246m&lt;dbl&gt; [39m [23m
-##  [38;5;250m 1 [39m RQCRTDFLNYLR controllerTyp…           3     1 TRUE                       548.
-##  [38;5;250m 2 [39m ESVALADQVTC… controllerTyp…           2     1 TRUE                       [4m1 [24m288.
-##  [38;5;250m 3 [39m QRMARTSDKQQ… controllerTyp…           3     1 TRUE                       913.
-##  [38;5;250m 4 [39m DGGPAIYGHER… controllerTyp…           3     1 TRUE                       969.
-##  [38;5;250m 5 [39m QRMARTSDKQQ… controllerTyp…           2     1 TRUE                       [4m1 [24m369.
-##  [38;5;250m 6 [39m CIDRARHVEVQ… controllerTyp…           3     1 TRUE                       [4m1 [24m285.
-##  [38;5;250m 7 [39m CIDRARHVEVQ… controllerTyp…           3     1 TRUE                       [4m1 [24m285.
-##  [38;5;250m 8 [39m VGRCRPIINYL… controllerTyp…           2     1 TRUE                       [4m1 [24m102.
-##  [38;5;250m 9 [39m QRLDEHCVGVG… controllerTyp…           3     1 TRUE                       713.
-##  [38;5;250m10 [39m VDYQGKKVVII… controllerTyp…           4     1 TRUE                       870.
-##  [38;5;246m# … with 2,741 more rows, and 29 more variables: calculatedMassToCharge &lt;dbl&gt;, [39m
-##  [38;5;246m#   peptideRef &lt;chr&gt;, modNum &lt;int&gt;, isDecoy &lt;lgl&gt;, post &lt;chr&gt;, pre &lt;chr&gt;, [39m
-##  [38;5;246m#   start &lt;int&gt;, end &lt;int&gt;, DatabaseAccess &lt;chr&gt;, DBseqLength &lt;int&gt;, [39m
-##  [38;5;246m#   DatabaseSeq &lt;chr&gt;, DatabaseDescription &lt;chr&gt;, scan.number.s. &lt;dbl&gt;, [39m
-##  [38;5;246m#   acquisitionNum &lt;dbl&gt;, spectrumFile &lt;chr&gt;, idFile &lt;chr&gt;, [39m
-##  [38;5;246m#   MS.GF.RawScore &lt;dbl&gt;, MS.GF.DeNovoScore &lt;dbl&gt;, MS.GF.SpecEValue &lt;dbl&gt;, [39m
-##  [38;5;246m#   MS.GF.EValue &lt;dbl&gt;, MS.GF.QValue &lt;dbl&gt;, MS.GF.PepQValue &lt;dbl&gt;, … [39m</code></pre>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPsmRank</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></code></pre></div>
+<pre><code>## Removed 155 PSMs with rank &gt; 1.</code></pre>
 </div>
 <div class="section level3">
 <h3 id="remove-non-proteotypic-peptides">Remove non-proteotypic peptides<a class="anchor" aria-label="anchor" href="#remove-non-proteotypic-peptides"></a>
 </h3>
 <p>The peptides below are those that match different proteins. For example QKTRCATRAFKANKGRAR (the two first rows) matches proteins <code>ECA2869</code> and <code>ECA4278</code>.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mltm</span> <span class="op">&lt;-</span>
-    <span class="va">id_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">sequence</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>nProts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mzR/man/mzR-class.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">DatabaseAccess</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">nProts</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">DatabaseAccess</span>, <span class="va">nProts</span><span class="op">)</span></code></pre></div>
-<pre><code>## Adding missing grouping variables: `sequence`</code></pre>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mltm</span></code></pre></div>
-<pre><code>##  [38;5;246m# A tibble: 85 × 3 [39m
-##  [38;5;246m# Groups:   sequence [33] [39m
-##    sequence                                 DatabaseAccess nProts
-##     [3m [38;5;246m&lt;chr&gt; [39m [23m                                     [3m [38;5;246m&lt;chr&gt; [39m [23m            [3m [38;5;246m&lt;int&gt; [39m [23m
-##  [38;5;250m 1 [39m QKTRCATRAFKANKGRAR                       ECA2869             2
-##  [38;5;250m 2 [39m QKTRCATRAFKANKGRAR                       ECA4278             2
-##  [38;5;250m 3 [39m LVVRWVSSCYLDMDDVIAPYRTRRGR               ECA3480             2
-##  [38;5;250m 4 [39m LVVRWVSSCYLDMDDVIAPYRTRRGR               ECA3481             2
-##  [38;5;250m 5 [39m GVMMVRQGKGNKDRVVPLGERACKWLARYLNHARPALARR ECA4283             2
-##  [38;5;250m 6 [39m GVMMVRQGKGNKDRVVPLGERACKWLARYLNHARPALARR ECA4292             2
-##  [38;5;250m 7 [39m MVVTLIHPIAMDDGLR                         ECA0216             2
-##  [38;5;250m 8 [39m MVVTLIHPIAMDDGLR                         ECA4035             2
-##  [38;5;250m 9 [39m IIELAGYLDSYIPEPER                        ECA0216             2
-##  [38;5;250m10 [39m IIELAGYLDSYIPEPER                        ECA4035             2
-##  [38;5;246m# … with 75 more rows [39m</code></pre>
-<p>We can now remove the scane with</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">id_tbl</span> <span class="op">&lt;-</span>
-    <span class="va">id_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">sequence</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">mltm</span><span class="op">$</span><span class="va">sequence</span><span class="op">)</span>
-<span class="va">id_tbl</span></code></pre></div>
-<pre><code>##  [38;5;246m# A tibble: 2,666 × 35 [39m
-##    sequence     spectrumID     chargeState  rank passThreshold experimentalMass…
-##     [3m [38;5;246m&lt;chr&gt; [39m [23m         [3m [38;5;246m&lt;chr&gt; [39m [23m                 [3m [38;5;246m&lt;int&gt; [39m [23m  [3m [38;5;246m&lt;int&gt; [39m [23m  [3m [38;5;246m&lt;lgl&gt; [39m [23m                      [3m [38;5;246m&lt;dbl&gt; [39m [23m
-##  [38;5;250m 1 [39m RQCRTDFLNYLR controllerTyp…           3     1 TRUE                       548.
-##  [38;5;250m 2 [39m ESVALADQVTC… controllerTyp…           2     1 TRUE                       [4m1 [24m288.
-##  [38;5;250m 3 [39m QRMARTSDKQQ… controllerTyp…           3     1 TRUE                       913.
-##  [38;5;250m 4 [39m DGGPAIYGHER… controllerTyp…           3     1 TRUE                       969.
-##  [38;5;250m 5 [39m QRMARTSDKQQ… controllerTyp…           2     1 TRUE                       [4m1 [24m369.
-##  [38;5;250m 6 [39m CIDRARHVEVQ… controllerTyp…           3     1 TRUE                       [4m1 [24m285.
-##  [38;5;250m 7 [39m CIDRARHVEVQ… controllerTyp…           3     1 TRUE                       [4m1 [24m285.
-##  [38;5;250m 8 [39m VGRCRPIINYL… controllerTyp…           2     1 TRUE                       [4m1 [24m102.
-##  [38;5;250m 9 [39m QRLDEHCVGVG… controllerTyp…           3     1 TRUE                       713.
-##  [38;5;250m10 [39m VDYQGKKVVII… controllerTyp…           4     1 TRUE                       870.
-##  [38;5;246m# … with 2,656 more rows, and 29 more variables: calculatedMassToCharge &lt;dbl&gt;, [39m
-##  [38;5;246m#   peptideRef &lt;chr&gt;, modNum &lt;int&gt;, isDecoy &lt;lgl&gt;, post &lt;chr&gt;, pre &lt;chr&gt;, [39m
-##  [38;5;246m#   start &lt;int&gt;, end &lt;int&gt;, DatabaseAccess &lt;chr&gt;, DBseqLength &lt;int&gt;, [39m
-##  [38;5;246m#   DatabaseSeq &lt;chr&gt;, DatabaseDescription &lt;chr&gt;, scan.number.s. &lt;dbl&gt;, [39m
-##  [38;5;246m#   acquisitionNum &lt;dbl&gt;, spectrumFile &lt;chr&gt;, idFile &lt;chr&gt;, [39m
-##  [38;5;246m#   MS.GF.RawScore &lt;dbl&gt;, MS.GF.DeNovoScore &lt;dbl&gt;, MS.GF.SpecEValue &lt;dbl&gt;, [39m
-##  [38;5;246m#   MS.GF.EValue &lt;dbl&gt;, MS.GF.QValue &lt;dbl&gt;, MS.GF.PepQValue &lt;dbl&gt;, … [39m</code></pre>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPsmNonProteotypic</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></code></pre></div>
+<pre><code>## Removed 85 non-proteotypic peptides.</code></pre>
 <p>Which leaves us with 2666 PSMs.</p>
 <p>This can also be achieved with the <code><a href="../reference/filterPSMs.html">filterPSMs()</a></code> function:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">id_filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>
+<span class="fu"><a href="../reference/filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
 <pre><code>## Removed 2896 decoy hits.</code></pre>
 <pre><code>## Removed 155 PSMs with rank &gt; 1.</code></pre>
 <pre><code>## Removed 85 non-proteotypic peptides.</code></pre>
 <pre><code>## 2666 PSMs left.</code></pre>
+<pre><code>## PSM with 2666 rows and 35 columns.
+## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 </div>
 </div>
 </div>
@@ -330,18 +217,18 @@ document.addEventListener("DOMContentLoaded", function() {
 <li><p><strong>mzR</strong> uses the <code><a href="https://rdrr.io/pkg/mzR/man/openMSfile.html" class="external-link">openIDfile()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.14/mzR" class="external-link">mzR</a></em> to parse the <code>mzId</code> file(s), and then coerces the data to a <code>data.frame</code> which is eventually returned as a <code>DataFrame</code>. The parser function uses dedicated code from the Proteowizard project (included in <code>mzR</code>) and is generally the fastest approach.</p></li>
 <li><p><strong>mzID</strong> parses the <code>mzId</code> file with <code>mzID()</code> function from the <em><a href="https://bioconductor.org/packages/3.14/mzID" class="external-link">mzID</a></em> package, and the flattens the data to a <code>data.frame</code> with <code><a href="https://rdrr.io/pkg/mzID/man/flatten.html" class="external-link">mzID::flatten()</a></code> and eventuelly returns a <code>DataFrame</code>. The <code>mzID</code> package relies on the <em><a href="https://CRAN.R-project.org/package=XML" class="external-link">XML</a></em> package. Is is slower but is is more robust to variations in the <code>mzID</code> implementation, as is a useful backup when the <code>mzR</code> approach fails with errors.</p></li>
 </ul>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.291   0.012   0.304</code></pre>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+##   0.256   0.008   0.263</code></pre>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required namespace: mzID</code></pre>
 <pre><code>## reading TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid... DONE!</code></pre>
 <pre><code>##    user  system elapsed 
-##   9.276   0.120   9.397</code></pre>
+##   6.590   0.096   6.687</code></pre>
 <p>Other differences in the two parsers include the columns that are returned, way they name them, and, as will shown below the matches that are returned. Below, note for instance (and this will be important later), that there is not equivalent of <code>"modLocation"</code> in <code>id2</code>.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1] "sequence"                 "spectrumID"              
 ##  [3] "chargeState"              "rank"                    
@@ -361,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## [31] "modMass"                  "modLocation"             
 ## [33] "subOriginalResidue"       "subReplacementResidue"   
 ## [35] "subLocation"</code></pre>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1] "spectrumid"                "scan number(s)"           
 ##  [3] "acquisitionnum"            "passthreshold"            
@@ -379,31 +266,31 @@ document.addEventListener("DOMContentLoaded", function() {
 ## [27] "modification"              "idFile"                   
 ## [29] "spectrumFile"              "databaseFile"</code></pre>
 <p>We also have different number of matches in the two tables:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 5802</code></pre>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 5759</code></pre>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id1</span><span class="op">$</span><span class="va">isDecoy</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## FALSE  TRUE 
 ##  2906  2896</code></pre>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id2</span><span class="op">$</span><span class="va">isdecoy</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## FALSE  TRUE 
 ##  2886  2873</code></pre>
 <p>Let’s first filter the PSM tables to facilitate focus the comparison of relevant scans. Note that the default <code><a href="../reference/filterPSMs.html">filterPSMs()</a></code> arguments are set to work with the <code>mzR</code> parser.</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id1_filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
 <pre><code>## Removed 2896 decoy hits.</code></pre>
 <pre><code>## Removed 155 PSMs with rank &gt; 1.</code></pre>
 <pre><code>## Removed 85 non-proteotypic peptides.</code></pre>
 <pre><code>## 2666 PSMs left.</code></pre>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id2_filtered</span> <span class="op">&lt;-</span>
     <span class="fu"><a href="../reference/filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="va">id2</span>, decoy <span class="op">=</span> <span class="st">"isdecoy"</span>,
            accession <span class="op">=</span> <span class="st">"accession"</span>,
@@ -416,28 +303,28 @@ document.addEventListener("DOMContentLoaded", function() {
 <pre><code>## 2646 PSMs left.</code></pre>
 <p>As can be seen, we are also left with 2666 vs 2646 PSMs after filtering.</p>
 <p>The difference doesn’t stem from different scans, given that the spectum identifiers are identical in both tables:</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span><span class="op">)</span>,
           <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id2_filtered</span><span class="op">$</span><span class="va">spectrumid</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>The difference is obvious when we tally a table of spectrum ids occurences in the filtered tables. In <code>id2_filtered</code>, each scan is unique, i.e matched only once.</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">anyDuplicated</a></span><span class="op">(</span><span class="va">id2_filtered</span><span class="op">$</span><span class="va">spectrumid</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>However, for <code>id1_filtered</code>, we see that some scans are still repeat up to 4 times in the table:</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ##    1    2    3    4 
 ## 2630   13    2    1</code></pre>
 <p>The example below shows that these differences stem from the modification location (<code>"modLocation"</code>), that is not report by the <code>mzID</code> parser:</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
 <span class="va">id1_filtered</span><span class="op">[</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span> <span class="op">==</span> <span class="va">k</span>, <span class="op">]</span></code></pre></div>
 <pre><code>## PSM with 4 rows and 35 columns.
 ## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 <p>If we remove the <code>"modLocation"</code> column, we recoved the same number of PSMs than with the <code>mzID</code> parser.</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id1_filtered</span><span class="op">$</span><span class="va">modLocation</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 2646</code></pre>
@@ -445,7 +332,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="section level1">
 <h1 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h1>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## R version 4.1.1 (2021-08-10)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
@@ -472,48 +359,48 @@ document.addEventListener("DOMContentLoaded", function() {
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] MatrixGenerics_1.5.4         Biobase_2.53.0              
-##  [3] tidyr_1.1.4                  sass_0.4.0                  
-##  [5] foreach_1.5.1                jsonlite_1.7.2              
-##  [7] bslib_0.3.1                  assertthat_0.2.1            
-##  [9] BiocManager_1.30.16          msdata_0.33.2               
-## [11] GenomeInfoDbData_1.2.7       yaml_2.2.1                  
-## [13] pillar_1.6.4                 lattice_0.20-45             
-## [15] glue_1.4.2                   digest_0.6.28               
-## [17] GenomicRanges_1.45.0         XVector_0.33.0              
-## [19] plyr_1.8.6                   htmltools_0.5.2             
-## [21] Matrix_1.3-4                 XML_3.99-0.8                
-## [23] pkgconfig_2.0.3              bookdown_0.24               
-## [25] zlibbioc_1.39.0              purrr_0.3.4                 
-## [27] MultiAssayExperiment_1.19.16 BiocParallel_1.27.17        
-## [29] tibble_3.1.5                 generics_0.1.0              
-## [31] AnnotationFilter_1.17.1      IRanges_2.27.2              
-## [33] ellipsis_0.3.2               cachem_1.0.6                
-## [35] SummarizedExperiment_1.23.5  lazyeval_0.2.2              
-## [37] cli_3.0.1                    magrittr_2.0.1              
-## [39] crayon_1.4.1                 memoise_2.0.0               
-## [41] evaluate_0.14                fs_1.5.0                    
-## [43] ncdf4_1.17                   fansi_0.5.0                 
-## [45] doParallel_1.0.16            MASS_7.3-54                 
-## [47] QFeatures_1.3.6              mzR_2.27.1                  
-## [49] textshaping_0.3.6            tools_4.1.1                 
-## [51] lifecycle_1.0.1              matrixStats_0.61.0          
-## [53] stringr_1.4.0                cluster_2.1.2               
-## [55] DelayedArray_0.19.4          compiler_4.1.1              
-## [57] pkgdown_1.9000.9000.9000     jquerylib_0.1.4             
-## [59] GenomeInfoDb_1.29.10         mzID_1.31.0                 
-## [61] systemfonts_1.0.3            rlang_0.99.0.9000           
-## [63] grid_4.1.1                   RCurl_1.98-1.5              
-## [65] iterators_1.0.13             MsCoreUtils_1.5.0           
-## [67] igraph_1.2.7                 bitops_1.0-7                
-## [69] rmarkdown_2.11               codetools_0.2-18            
-## [71] DBI_1.1.1                    R6_2.5.1                    
-## [73] knitr_1.36                   fastmap_1.1.0               
-## [75] utf8_1.2.2                   clue_0.3-60                 
-## [77] rprojroot_2.0.2              ragg_1.1.3                  
-## [79] ProtGenerics_1.25.2          desc_1.4.0                  
-## [81] stringi_1.7.5                parallel_4.1.1              
-## [83] Rcpp_1.0.7                   vctrs_0.3.8                 
-## [85] tidyselect_1.1.1             xfun_0.27</code></pre>
+##  [3] sass_0.4.0                   foreach_1.5.1               
+##  [5] jsonlite_1.7.2               bslib_0.3.1                 
+##  [7] assertthat_0.2.1             BiocManager_1.30.16         
+##  [9] msdata_0.33.2                GenomeInfoDbData_1.2.7      
+## [11] yaml_2.2.1                   pillar_1.6.4                
+## [13] lattice_0.20-45              glue_1.4.2                  
+## [15] digest_0.6.28                GenomicRanges_1.45.0        
+## [17] XVector_0.33.0               plyr_1.8.6                  
+## [19] htmltools_0.5.2              Matrix_1.3-4                
+## [21] XML_3.99-0.8                 pkgconfig_2.0.3             
+## [23] bookdown_0.24                zlibbioc_1.39.0             
+## [25] purrr_0.3.4                  MultiAssayExperiment_1.19.16
+## [27] BiocParallel_1.27.17         tibble_3.1.5                
+## [29] generics_0.1.0               AnnotationFilter_1.17.1     
+## [31] IRanges_2.27.2               ellipsis_0.3.2              
+## [33] cachem_1.0.6                 SummarizedExperiment_1.23.5 
+## [35] lazyeval_0.2.2               cli_3.0.1                   
+## [37] magrittr_2.0.1               crayon_1.4.1                
+## [39] memoise_2.0.0                evaluate_0.14               
+## [41] fs_1.5.0                     ncdf4_1.17                  
+## [43] fansi_0.5.0                  doParallel_1.0.16           
+## [45] MASS_7.3-54                  QFeatures_1.3.6             
+## [47] mzR_2.27.1                   textshaping_0.3.6           
+## [49] tools_4.1.1                  lifecycle_1.0.1             
+## [51] matrixStats_0.61.0           stringr_1.4.0               
+## [53] cluster_2.1.2                DelayedArray_0.19.4         
+## [55] compiler_4.1.1               pkgdown_1.9000.9000.9000    
+## [57] jquerylib_0.1.4              GenomeInfoDb_1.29.10        
+## [59] mzID_1.31.0                  systemfonts_1.0.3           
+## [61] rlang_0.99.0.9000            grid_4.1.1                  
+## [63] RCurl_1.98-1.5               iterators_1.0.13            
+## [65] MsCoreUtils_1.5.0            igraph_1.2.7                
+## [67] bitops_1.0-7                 rmarkdown_2.11              
+## [69] codetools_0.2-18             DBI_1.1.1                   
+## [71] R6_2.5.1                     knitr_1.36                  
+## [73] fastmap_1.1.0                utf8_1.2.2                  
+## [75] clue_0.3-60                  rprojroot_2.0.2             
+## [77] ragg_1.1.3                   ProtGenerics_1.25.2         
+## [79] desc_1.4.0                   stringi_1.7.5               
+## [81] parallel_4.1.1               Rcpp_1.0.7                  
+## [83] vctrs_0.3.8                  tidyselect_1.1.1            
+## [85] xfun_0.27</code></pre>
 </div>
 <div class="footnotes">
 <hr>

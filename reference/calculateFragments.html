@@ -83,25 +83,23 @@ package that implements a method for objects of class
   verbose <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>sequence</th>
-      <td><p>character() providing a peptide sequence.</p></td>
-    </tr><tr><th>type</th>
-      <td><p><code>character</code> vector of target ions; possible values:
-<code>c("a", "b", "c", "x", "y", "z")</code>. Default is <code>type = c("b", "y")</code>.</p></td>
-    </tr><tr><th>z</th>
-      <td><p><code>numeric</code> with desired charge state; default is 1.</p></td>
-    </tr><tr><th>modifications</th>
-      <td><p>A named <code>numeric</code> vector of used
+    
+
+<dl><dt>sequence</dt><dd><p>character() providing a peptide sequence.</p></dd>
+</dl><dl><dt>type</dt><dd><p><code>character</code> vector of target ions; possible values:
+<code>c("a", "b", "c", "x", "y", "z")</code>. Default is <code>type = c("b", "y")</code>.</p></dd>
+</dl><dl><dt>z</dt><dd><p><code>numeric</code> with desired charge state; default is 1.</p></dd>
+</dl><dl><dt>modifications</dt><dd><p>A named <code>numeric</code> vector of used
 modifications. The name must correspond to the one-letter-code
 of the modified amino acid and the <code>numeric</code> value must
 represent the mass that should be added to the original amino
 accid mass, default: Carbamidomethyl <code>modifications = c(C = 57.02146)</code>. Use <code>Nterm</code> or <code>Cterm</code> as names for modifications
 that should be added to the amino respectively
-carboxyl-terminus.</p></td>
-    </tr><tr><th>neutralLoss</th>
-      <td><p><code>list</code>, it has to have two named elments,
+carboxyl-terminus.</p></dd>
+</dl><dl><dt>neutralLoss</dt><dd><p><code>list</code>, it has to have two named elments,
 namely <code>water</code> and <code>ammonia</code> that contain a <code>character</code> vector
 which type of neutral loss should be calculated.  Currently
 neutral loss on the C terminal <code>"Cterm"</code>, at the amino acids
@@ -111,13 +109,10 @@ supported.</p><pre><code>There is a helper function `defaultNeutralLoss()` that 
 the correct list. It has two arguments `disableWaterLoss` and
 `disableAmmoniaLoss` to remove single neutral loss options. See
 the example section for use cases.
-</code></pre></td>
-    </tr><tr><th>verbose</th>
-      <td><p><code>logical(1)</code>. If <code>TRUE</code> (default) the used
-modifications are printed.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+</code></pre></dd>
+</dl><dl><dt>verbose</dt><dd><p><code>logical(1)</code>. If <code>TRUE</code> (default) the used
+modifications are printed.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>The methods with <code>oject = "missing"</code> returns a

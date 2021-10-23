@@ -107,36 +107,30 @@ apparent differences in their outputs.</p>
 
 <span class="fu">reducePSMs</span><span class="op">(</span><span class="va">x</span>, <span class="va">k</span><span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>files</th>
-      <td><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> of <code>mzid</code> file names.</p></td>
-    </tr><tr><th>parser</th>
-      <td><p><code>character(1)</code> defining the parser to be used to
+    
+
+<dl><dt>files</dt><dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> of <code>mzid</code> file names.</p></dd>
+</dl><dl><dt>parser</dt><dd><p><code>character(1)</code> defining the parser to be used to
 read the <code>mzIdentML</code> files. One of <code>"mzR"</code> (default) or
-<code>"mzID"</code>.</p></td>
-    </tr><tr><th>BPPARAM</th>
-      <td><p>an object inheriting from BiocParallelParam to
+<code>"mzID"</code>.</p></dd>
+</dl><dl><dt>BPPARAM</dt><dd><p>an object inheriting from BiocParallelParam to
 control parallel processing. The default value is
-<code>SerialParam()</code> to read files in series.</p></td>
-    </tr><tr><th>x</th>
-      <td><p>An instance of class <code>PSM</code>.</p></td>
-    </tr><tr><th>spectrumID</th>
-      <td><p><code>character(1)</code> with the column name referring to
+<code>SerialParam()</code> to read files in series.</p></dd>
+</dl><dl><dt>x</dt><dd><p>An instance of class <code>PSM</code>.</p></dd>
+</dl><dl><dt>spectrumID</dt><dd><p><code>character(1)</code> with the column name referring to
 the spectrum identifier or any other unique key for the <code>PSM</code>
 object <code>x</code>. This parameter can be set to calculate the reduced
-state explicitly by by-passing the <code>reduced</code> metadata flag.</p></td>
-    </tr><tr><th>value</th>
-      <td><p><code>logical(1)</code> to set the reduced state of the <code>PSM</code>
-object.</p></td>
-    </tr><tr><th>k</th>
-      <td><p>A <code>vector</code> or <code>factor</code> of length equal to <code>nrow(x)</code> that
+state explicitly by by-passing the <code>reduced</code> metadata flag.</p></dd>
+</dl><dl><dt>value</dt><dd><p><code>logical(1)</code> to set the reduced state of the <code>PSM</code>
+object.</p></dd>
+</dl><dl><dt>k</dt><dd><p>A <code>vector</code> or <code>factor</code> of length equal to <code>nrow(x)</code> that
 defines the primary key used to reduce <code>x</code>. This typically
 corresponds to the spectrum identifier, often names
-<code>spectrumID</code>.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+<code>spectrumID</code>.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p><code>PSM()</code> returns a <code>PSM</code> object containing the
@@ -255,8 +249,8 @@ peptide-spectrum matches stored in <code>files</code>.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz from cache.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz from cache.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/d5b4d327ec9_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/d5b3915a2ab_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/cda7e13c596_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/cda4d8367aa_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
 <span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">mzids</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psm</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 50314 rows and 31 columns.</span>
@@ -303,8 +297,8 @@ peptide-spectrum matches stored in <code>files</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2         387 MNVLLLLVLC...       Q58D62|FET...       32.788864          12894</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     spectrumFile        idFile MetaMorpheus.score PSM.level.q.value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;character&gt;   &lt;character&gt;          &lt;numeric&gt;         &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... d5b4d327ec...            31.2586                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... d5b4d327ec...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... cda7e13c59...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... cda7e13c59...            31.2586                 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   modPeptideRef       modName   modMass modLocation subOriginalResidue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;   &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          P_19 Carbamidom...   57.0215           6                 NA</span>

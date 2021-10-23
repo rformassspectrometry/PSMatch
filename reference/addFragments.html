@@ -54,23 +54,21 @@
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">addFragments</span><span class="op">(</span><span class="va">x</span>, tolerance <span class="op">=</span> <span class="fl">0</span>, ppm <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>An instance of class <code>Spectra</code> of length 1, containing a
-spectra variable <code>"sequence"</code> with a <code>character(1)</code>
-representing a valid peptide sequence.</p></td>
-    </tr><tr><th>tolerance</th>
-      <td><p>absolute acceptable difference of m/z values for
-peaks to be considered matching (see <code><a href="https://rdrr.io/pkg/MsCoreUtils/man/matching.html" class="external-link">MsCoreUtils::common()</a></code>
-for more details).</p></td>
-    </tr><tr><th>ppm</th>
-      <td><p>m/z relative acceptable difference (in ppm) for peaks
-to be considered matching (see <code><a href="https://rdrr.io/pkg/MsCoreUtils/man/matching.html" class="external-link">MsCoreUtils::common()</a></code> for
-more #' details).</p></td>
-    </tr></table></div>
+    
 
-    <div id="ref-sections">
+<dl><dt>x</dt><dd><p>An instance of class <code>Spectra</code> of length 1, containing a
+spectra variable <code>"sequence"</code> with a <code>character(1)</code>
+representing a valid peptide sequence.</p></dd>
+</dl><dl><dt>tolerance</dt><dd><p>absolute acceptable difference of m/z values for
+peaks to be considered matching (see <code><a href="https://rdrr.io/pkg/MsCoreUtils/man/matching.html" class="external-link">MsCoreUtils::common()</a></code>
+for more details).</p></dd>
+</dl><dl><dt>ppm</dt><dd><p>m/z relative acceptable difference (in ppm) for peaks
+to be considered matching (see <code><a href="https://rdrr.io/pkg/MsCoreUtils/man/matching.html" class="external-link">MsCoreUtils::common()</a></code> for
+more #' details).</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>Return a <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> with fragment ion labels.</p>

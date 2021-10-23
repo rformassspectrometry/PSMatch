@@ -61,26 +61,23 @@ character or an instance of class PSM."><!-- mathjax --><script src="https://cdn
   proteins <span class="op">=</span> <span class="st">"DatabaseAccess"</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>Either an instance of class <code>PSM</code> or a <code>character</code>. See
-example below for details.</p></td>
-    </tr><tr><th>split</th>
-      <td><p><code>character(1)</code> defining how to split the string of
-protein identifiers (using <code><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit()</a></code>). Default is ";". If
-<code>NULL</code>, splitting is ignored.</p></td>
-    </tr><tr><th>peptides</th>
-      <td><p><code>character(1)</code> indicating the name of the variable
-that defines peptides in the <code>PSM</code> object. Default is
-<code>sequence</code>.</p></td>
-    </tr><tr><th>proteins</th>
-      <td><p><code>character(1)</code> indicating the name of the variable
-that defines proteins in the <code>PSM</code> object. Default is
-<code>DatanbaseAccess</code>.</p></td>
-    </tr></table></div>
+    
 
-    <div id="ref-sections">
+<dl><dt>x</dt><dd><p>Either an instance of class <code>PSM</code> or a <code>character</code>. See
+example below for details.</p></dd>
+</dl><dl><dt>split</dt><dd><p><code>character(1)</code> defining how to split the string of
+protein identifiers (using <code><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit()</a></code>). Default is ";". If
+<code>NULL</code>, splitting is ignored.</p></dd>
+</dl><dl><dt>peptides</dt><dd><p><code>character(1)</code> indicating the name of the variable
+that defines peptides in the <code>PSM</code> object. Default is
+<code>sequence</code>.</p></dd>
+</dl><dl><dt>proteins</dt><dd><p><code>character(1)</code> indicating the name of the variable
+that defines proteins in the <code>PSM</code> object. Default is
+<code>DatanbaseAccess</code>.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A peptide-by-protein adjacency matrix.</p>
