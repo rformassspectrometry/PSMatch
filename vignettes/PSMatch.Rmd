@@ -129,32 +129,18 @@ annotate an raw mass spectrometry `Spectra` object.
 Often, the PSM data is filtered to only retain reliable matches. The
 `MSnID` package can be used to set thresholds to attain user-defined
 PSM, peptide or protein-level FDRs. Here, we will simply filter out
-wrong identification manually.
-
-Here, the `filter()` from the `dplyr` package comes very handy. We
-will thus start by convering the `DataFrame` to a `tibble`.
-
-```{r}
-id_tbl <- tidyr::as_tibble(id)
-id_tbl
-```
-
+wrong identification.
 
 ### Remove decoy hits
 
 ```{r, message = FALSE}
-library("dplyr")
-id_tbl <- id_tbl %>%
-    filter(!isDecoy)
-id_tbl
+id <- filterPsmDecoy(id)
 ```
 
 ### Keep first rank matches
 
 ```{r}
-id_tbl <- id_tbl %>%
-    filter(rank == 1)
-id_tbl
+id <- filterPsmRank(id)
 ```
 
 ### Remove non-proteotypic peptides
@@ -164,30 +150,16 @@ example QKTRCATRAFKANKGRAR (the two first rows) matches proteins
 `ECA2869` and `ECA4278`.
 
 ```{r}
-mltm <-
-    id_tbl %>%
-    group_by(sequence) %>%
-    mutate(nProts = length(unique(DatabaseAccess))) %>%
-    filter(nProts > 1) %>%
-    select(DatabaseAccess, nProts)
-mltm
+id <- filterPsmNonProteotypic(id)
 ```
 
-We can now remove the scane with
-
-```{r}
-id_tbl <-
-    id_tbl %>%
-    filter(!sequence %in% mltm$sequence)
-id_tbl
-```
-
-Which leaves us with `r nrow(id_tbl)` PSMs.
+Which leaves us with `r nrow(id)` PSMs.
 
 This can also be achieved with the `filterPSMs()` function:
 
 ```{r}
-id_filtered <- filterPSMs(id)
+id <- PSM(f)
+filterPSMs(id)
 ```
 # The `mzR` and `mzID` parsers
 
