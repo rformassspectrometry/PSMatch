@@ -252,3 +252,20 @@ reduced <- function(x, spectrumID) {
     metadata(x)[["reduced"]] <- value
     x
 }
+
+##' @param object An instance of class `PSM`.
+##'
+##' @param which `character()` with the PSM variable name to
+##'     retrieve. If `"all"` (default), all named variables are
+##'     returned.
+##'
+##' @name PSM
+##'
+##' @return
+psmVariable <- function(x, which = "all") {
+    psmVariables <- metadata(x)$variables
+    if (length(which) == 1 && which == "all")
+        return(psmVariables)
+    stopifnot(which %in% names(psmVariables))
+    unname(psmVariables[which])
+}
