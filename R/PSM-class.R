@@ -223,8 +223,6 @@ PSM <- function(x,
     psm
 }
 
-
-
 ##' @param spectrumID `character(1)` with the column name referring to
 ##'     the spectrum identifier or any other unique key for the `PSM`
 ##'     object `x`. This parameter can be set to calculate the reduced

@@ -13,7 +13,7 @@ filterPSMs(
   x,
   decoy = "isDecoy",
   rank = "rank",
-  accession = "DatabaseAccess",
+  protein = "DatabaseAccess",
   spectrumID = "spectrumID",
   peptide = "sequence",
   verbose = TRUE
@@ -25,7 +25,7 @@ filterPsmRank(x, rank = "rank", verbose = TRUE)
 
 filterPsmNonProteotypic(
   x,
-  accession = "DatabaseAccess",
+  protein = "DatabaseAccess",
   peptide = "sequence",
   verbose = TRUE
 )
@@ -48,8 +48,8 @@ of the PSM. Default is \code{"rank"}. This column should be a
 \code{numeric} and only PSMs having rank equal to 1 are
 retained. Filtering is ignored if set to \code{NULL}.}
 
-\item{accession}{\code{character(1)} with the column name holding the
-protein (groups) accession. Default is
+\item{protein}{\code{character(1)} with the column name holding the
+protein (groups) protein. Default is
 \code{"DatabaseAccess"}. Filtering is ignored if set to \code{NULL}.}
 
 \item{spectrumID}{\code{character(1)} with the name of the spectrum

@@ -5,11 +5,23 @@
 \alias{PSM-class}
 \alias{reducePSMs}
 \alias{readPSMs}
+\alias{PSM,character}
+\alias{PSM,data.frame}
+\alias{PSM,PSM}
 \alias{reduced}
 \alias{reduced<-}
 \title{A class for peptide-spectrum matches}
 \usage{
-PSM(files, parser = c("mzR", "mzID"), BPPARAM = SerialParam())
+PSM(
+  x,
+  spectrum = NA,
+  peptide = NA,
+  protein = NA,
+  decoy = "isDecoy",
+  rank = "rank",
+  parser = c("mzR", "mzID"),
+  BPPARAM = SerialParam()
+)
 
 reduced(x, spectrumID)
 
@@ -18,7 +30,23 @@ reduced(x) <- value
 reducePSMs(x, k)
 }
 \arguments{
-\item{files}{\code{character()} of \code{mzid} file names.}
+\item{x}{An instance of class \code{PSM}.}
+
+\item{spectrum}{\code{character(1)} that defines a spectrum in the PSM
+data. Typically \code{"spectrumID"}.}
+
+\item{peptide}{\code{character(1)} that defines a peptide in the PSM
+data. Typically \code{"spequence"}.}
+
+\item{protein}{\code{character(1)} that defines a protein in the PSM
+data. Typically \code{"DatabaseAccess"}.}
+
+\item{decoy}{\code{character(1)} that defines a decoy hit in the PSM
+data. Default is \code{"isDecoy"}. This variable is named
+\code{"isdecoy"} if you use the \code{mzID} parser.}
+
+\item{rank}{\code{character(1)} that defines the rank of the petide
+spetrum match in the PSM data. Default is \code{"rank"}.}
 
 \item{parser}{\code{character(1)} defining the parser to be used to
 read the \code{mzIdentML} files. One of \code{"mzR"} (default) or
@@ -27,8 +55,6 @@ read the \code{mzIdentML} files. One of \code{"mzR"} (default) or
 \item{BPPARAM}{an object inheriting from \link{BiocParallelParam} to
 control parallel processing. The default value is
 \code{SerialParam()} to read files in series.}
-
-\item{x}{An instance of class \code{PSM}.}
 
 \item{spectrumID}{\code{character(1)} with the column name referring to
 the spectrum identifier or any other unique key for the \code{PSM}
