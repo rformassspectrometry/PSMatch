@@ -78,8 +78,7 @@ corresponds to the spectrum identifier. The defauls is to use
 the spectrum PSM variable.}
 }
 \value{
-\code{PSM()} returns a \code{PSM} object containing the
-peptide-spectrum matches stored in \code{files}.
+\code{PSM()} returns a \code{PSM} object.
 
 \code{reducePSMs()} returns a reduced version of the \code{x} input.
 }

@@ -256,8 +256,7 @@ setMethod("show", "PSM",
 ##'     control parallel processing. The default value is
 ##'     `SerialParam()` to read files in series.
 ##'
-##' @return `PSM()` returns a `PSM` object containing the
-##'     peptide-spectrum matches stored in `files`.
+##' @return `PSM()` returns a `PSM` object.
 ##'
 ##' @export PSM
 ##'
