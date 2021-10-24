@@ -149,8 +149,8 @@ showDetails <- function(object) {
     n_pe <- length(unique(object[[.psmVariables["peptide"]]]))
     n_pr <- length(unique(object[[.psmVariables["protein"]]]))
     tabDecoy <- object[[.psmVariables["decoy"]]]
-    cat("Spectra: ")
-    cat(sum(!tabDecoy), " target, ",
+    cat("Spectra:", n_sp, "unique\n")
+    cat("  db: ", sum(!tabDecoy), " target, ",
         sum(tabDecoy), " decoy\n", sep = "")
     tabRank <- table(object[[.psmVariables["rank"]]])
     cat("  ranks:", paste0(names(tabRank),":", tabRank), "\n")
