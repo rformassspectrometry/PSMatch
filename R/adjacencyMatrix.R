@@ -24,13 +24,14 @@
 ##'     protein identifiers (using [strsplit()]). Default is ";". If
 ##'     `NULL`, splitting is ignored.
 ##'
-##' @param peptides `character(1)` indicating the name of the variable
-##'     that defines peptides in the `PSM` object. Default is
-##'     `sequence`.
+##' @param peptide `character(1)` indicating the name of the variable
+##'     that defines peptides in the `PSM` object. Default is the
+##'     `peptide` PSM variable as defined in [psmVariables()].
 ##'
-##' @param proteins `character(1)` indicating the name of the variable
-##'     that defines proteins in the `PSM` object. Default is
-##'     `DatanbaseAccess`.
+##' @param protein `character(1)` indicating the name of the variable
+##'     that defines proteins in the `PSM` object. Default is the
+##'     `peptide` PSM variable as defined in [psmVariables()].Default
+##'     is `DatanbaseAccess`.
 ##'
 ##' @return A peptide-by-protein adjacency matrix.
 ##'
@@ -61,8 +62,8 @@
 ##' ## Use filterPsmNonProteotypic() to filter these out.
 ##' table(rowSums(adj))
 makeAdjacencyMatrix <- function(x, split = ";",
-                                peptides = "sequence",
-                                proteins = "DatabaseAccess") {
+                                peptide = psmVariables(x)["peptide"],
+                                protein = psmVariables(x)["protein"]) {
     if (inherits(x, "PSM"))
         return(.makeAdjacencyMatrixFromPSM(x, peptides, proteins))
     if (is.character(x))
@@ -90,7 +91,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
     adj
 }
 
-.makeAdjacencyMatrixFromPSM <- function(x, peptides, proteins) {
+.makeAdjacencyMatrixFromPSM <- function(x, peptide, protein) {
     n <- length(nx <- unique(x[[peptides]]))
     m <- length(mx <- unique(x[[proteins]]))
     adj <- matrix(0, nrow = n, ncol = m,

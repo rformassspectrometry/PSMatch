@@ -142,6 +142,16 @@ NULL
 setClass("PSM",
          contains = "DFrame")
 
+## showDetails <- function(object) {
+##     .psmVariables <- psmVariables(object)
+##     tabDecoy <- table(object[[.psmVariables["decoy"]]])
+##     cat(" Hits decoy:", tabDecoy["TRUE"],
+##         " target:", tabDecoy["FALSE"], "\n", sep = "")
+##     tabRank <- table(object[[.psmVariables["rank"]]])
+##     cat(" Ranks", paste0(names(tabRank),":", tabRank), "\n")
+##     invisible(NULL)
+## }
+
 setMethod("show", "PSM",
           function(object) {
               cl <- classNameForDisplay(object)
@@ -149,6 +159,7 @@ setMethod("show", "PSM",
                   cl <- paste("Reduced", cl)
               cat(cl, "with", nrow(object), "rows and",
                   ncol(object), "columns.\n")
+              ## showDetails(object)
               if (ncol(object) <= 4)
                   cat("names(", ncol(object), "): ",
                       paste(names(object), collapse = " "), "\n",
@@ -161,6 +172,8 @@ setMethod("show", "PSM",
                       sep = "")
               invisible(NULL)
           })
+
+
 
 
 ##' @param x `character()` of `mzid` file names or an instance of

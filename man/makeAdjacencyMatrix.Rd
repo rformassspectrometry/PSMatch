@@ -7,8 +7,8 @@
 makeAdjacencyMatrix(
   x,
   split = ";",
-  peptides = "sequence",
-  proteins = "DatabaseAccess"
+  peptide = psmVariables(x)["peptide"],
+  protein = psmVariables(x)["protein"]
 )
 }
 \arguments{
@@ -19,13 +19,14 @@ example below for details.}
 protein identifiers (using \code{\link[=strsplit]{strsplit()}}). Default is ";". If
 \code{NULL}, splitting is ignored.}
 
-\item{peptides}{\code{character(1)} indicating the name of the variable
-that defines peptides in the \code{PSM} object. Default is
-\code{sequence}.}
+\item{peptide}{\code{character(1)} indicating the name of the variable
+that defines peptides in the \code{PSM} object. Default is the
+\code{peptide} PSM variable as defined in \code{\link[=psmVariables]{psmVariables()}}.}
 
-\item{proteins}{\code{character(1)} indicating the name of the variable
-that defines proteins in the \code{PSM} object. Default is
-\code{DatanbaseAccess}.}
+\item{protein}{\code{character(1)} indicating the name of the variable
+that defines proteins in the \code{PSM} object. Default is the
+\code{peptide} PSM variable as defined in \code{\link[=psmVariables]{psmVariables()}}.Default
+is \code{DatanbaseAccess}.}
 }
 \value{
 A peptide-by-protein adjacency matrix.
