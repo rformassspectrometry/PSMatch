@@ -154,7 +154,9 @@
 ##'                     protein = sample(paste0("Prot", LETTERS[1:7]), 10,
 ##'                                      replace = TRUE),
 ##'                     decoy = rep(FALSE, 10),
-##'                     rank = rep(1, 10))
+##'                     rank = rep(1, 10),
+##'                     score = runif(10))
+##' psmdf
 ##'
 ##' psm <- PSM(psmdf)
 ##' psm
