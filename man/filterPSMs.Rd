@@ -11,26 +11,31 @@
 \usage{
 filterPSMs(
   x,
-  decoy = "isDecoy",
-  rank = "rank",
-  protein = "DatabaseAccess",
-  spectrumID = "spectrumID",
-  peptide = "sequence",
+  decoy = psmVariables(x)["decoy"],
+  rank = psmVariables(x)["rank"],
+  protein = psmVariables(x)["protein"],
+  spectrum = psmVariables(x)["spectrum"],
+  peptide = psmVariables(x)["peptide"],
   verbose = TRUE
 )
 
-filterPsmDecoy(x, decoy = "isDecoy", verbose = TRUE)
+filterPsmDecoy(x, decoy = psmVariables(x)["decoy"], verbose = TRUE)
 
-filterPsmRank(x, rank = "rank", verbose = TRUE)
+filterPsmRank(x, rank = psmVariables(x)["rank"], verbose = TRUE)
 
 filterPsmNonProteotypic(
   x,
-  protein = "DatabaseAccess",
-  peptide = "sequence",
+  protein = psmVariables(x)["protein"],
+  peptide = psmVariables(x)["peptide"],
   verbose = TRUE
 )
 
-filterPsmBestScore(x, score, spectrumID = "spectrumID", verbose = TRUE)
+filterPsmBestScore(
+  x,
+  score,
+  spectrum = psmVariables(x)["spectrum"],
+  verbose = TRUE
+)
 
 filterPsmMods(x, mod = "modName", verbose = TRUE)
 }
@@ -39,26 +44,30 @@ filterPsmMods(x, mod = "modName", verbose = TRUE)
 
 \item{decoy}{\code{character(1)} with the column name specifying
 whether entries match the decoy database or not. Default is
-\code{"isDecoy"}. The column should be a \code{logical} and only PSMs
-holding a \code{FALSE} are retained. Filtering is ignored if set to
-\code{NULL}.}
+the \code{decoy} PSM variable as defined in \code{\link[=psmVariables]{psmVariables()}}. The
+column should be a \code{logical} and only PSMs holding a \code{FALSE}
+are retained. Filtering is ignored if set to \code{NULL}.}
 
 \item{rank}{\code{character(1)} with the column name holding the rank
-of the PSM. Default is \code{"rank"}. This column should be a
-\code{numeric} and only PSMs having rank equal to 1 are
-retained. Filtering is ignored if set to \code{NULL}.}
+of the PSM. Default is the \code{rank} PSM variable as defined in
+\code{\link[=psmVariables]{psmVariables()}}. This column should be a \code{numeric} and only
+PSMs having rank equal to 1 are retained. Filtering is ignored
+if set to \code{NULL}.}
 
 \item{protein}{\code{character(1)} with the column name holding the
-protein (groups) protein. Default is
-\code{"DatabaseAccess"}. Filtering is ignored if set to \code{NULL}.}
+protein (groups) protein. Default is the \code{protein} PSM
+variable as defined in \code{\link[=psmVariables]{psmVariables()}}. Filtering is ignored
+if set to \code{NULL}.}
 
-\item{spectrumID}{\code{character(1)} with the name of the spectrum
-identifier column. Default is \code{spectrumID}. Filtering is
-ignored if set to \code{NULL}.}
+\item{spectrum}{\code{character(1)} with the name of the spectrum
+identifier column. Default is the \code{spectrum} PSM variable as
+defined in \code{\link[=psmVariables]{psmVariables()}}. Filtering is ignored if set to
+\code{NULL}.}
 
 \item{peptide}{\code{character(1)} with the name of the peptide
-identifier column. Default is \code{sequence}. Filtering is ignored
-if set to \code{NULL}.}
+identifier column. Default is the \code{peptide} PSM variable as
+defined in \code{\link[=psmVariables]{psmVariables()}}. Filtering is ignored if set to
+\code{NULL}.}
 
 \item{verbose}{\code{logical(1)} setting the verbosity flag.}
 

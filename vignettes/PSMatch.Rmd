@@ -218,11 +218,7 @@ set to work with the `mzR` parser.
 ```{r}
 id1_filtered <- filterPSMs(id1)
 
-id2_filtered <-
-    filterPSMs(id2, decoy = "isdecoy",
-           protein = "accession",
-           spectrumID = "spectrumid",
-           peptide = "pepseq")
+id2_filtered <- filterPSMs(id2)
 ```
 
 As can be seen, we are also left with `r nrow(id1_filtered)` vs

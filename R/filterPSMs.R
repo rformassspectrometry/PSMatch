@@ -9,26 +9,30 @@
 ##'
 ##' @param decoy `character(1)` with the column name specifying
 ##'     whether entries match the decoy database or not. Default is
-##'     `"isDecoy"`. The column should be a `logical` and only PSMs
-##'     holding a `FALSE` are retained. Filtering is ignored if set to
-##'     `NULL`.
+##'     the `decoy` PSM variable as defined in [psmVariables()]. The
+##'     column should be a `logical` and only PSMs holding a `FALSE`
+##'     are retained. Filtering is ignored if set to `NULL`.
 ##'
 ##' @param rank `character(1)` with the column name holding the rank
-##'     of the PSM. Default is `"rank"`. This column should be a
-##'     `numeric` and only PSMs having rank equal to 1 are
-##'     retained. Filtering is ignored if set to `NULL`.
+##'     of the PSM. Default is the `rank` PSM variable as defined in
+##'     [psmVariables()]. This column should be a `numeric` and only
+##'     PSMs having rank equal to 1 are retained. Filtering is ignored
+##'     if set to `NULL`.
 ##'
 ##' @param protein `character(1)` with the column name holding the
-##'     protein (groups) protein. Default is
-##'     `"DatabaseAccess"`. Filtering is ignored if set to `NULL`.
+##'     protein (groups) protein. Default is the `protein` PSM
+##'     variable as defined in [psmVariables()]. Filtering is ignored
+##'     if set to `NULL`.
 ##'
-##' @param spectrumID `character(1)` with the name of the spectrum
-##'     identifier column. Default is `spectrumID`. Filtering is
-##'     ignored if set to `NULL`.
+##' @param spectrum `character(1)` with the name of the spectrum
+##'     identifier column. Default is the `spectrum` PSM variable as
+##'     defined in [psmVariables()]. Filtering is ignored if set to
+##'     `NULL`.
 ##'
 ##' @param peptide `character(1)` with the name of the peptide
-##'     identifier column. Default is `sequence`. Filtering is ignored
-##'     if set to `NULL`.
+##'     identifier column. Default is the `peptide` PSM variable as
+##'     defined in [psmVariables()]. Filtering is ignored if set to
+##'     `NULL`.
 ##'
 ##' @param verbose `logical(1)` setting the verbosity flag.
 ##'
@@ -47,11 +51,11 @@
 ##' id <- PSM(f)
 ##' filterPSMs(id)
 filterPSMs <- function(x,
-                       decoy = "isDecoy",
-                       rank = "rank",
-                       protein = "DatabaseAccess",
-                       spectrumID = "spectrumID",
-                       peptide = "sequence",
+                       decoy = psmVariables(x)["decoy"],
+                       rank = psmVariables(x)["rank"],
+                       protein = psmVariables(x)["protein"],
+                       spectrum = psmVariables(x)["spectrum"],
+                       peptide = psmVariables(x)["peptide"],
                        verbose = TRUE) {
     n0 <- nrow(x)
     if (verbose)
@@ -84,7 +88,7 @@ filterPSMs <- function(x,
 ##'
 ##' @export
 filterPsmDecoy <- function(x,
-                           decoy = "isDecoy",
+                           decoy = psmVariables(x)["decoy"],
                            verbose = TRUE) {
     if (is.null(decoy))
         return(x)
@@ -104,7 +108,7 @@ filterPsmDecoy <- function(x,
 ##'
 ##' @export
 filterPsmRank <- function(x,
-                          rank = "rank",
+                          rank = psmVariables(x)["rank"],
                           verbose = TRUE) {
     if (is.null(rank))
         return(x)
@@ -126,8 +130,8 @@ filterPsmRank <- function(x,
 ##'
 ##' @export
 filterPsmNonProteotypic <- function(x,
-                                    protein = "DatabaseAccess",
-                                    peptide = "sequence",
+                                    protein = psmVariables(x)["protein"],
+                                    peptide = psmVariables(x)["peptide"],
                                     verbose = TRUE) {
     if (is.null(protein) | is.null(peptide))
         return(x)
@@ -159,13 +163,13 @@ filterPsmNonProteotypic <- function(x,
 ##' @name filterPSMs
 filterPsmBestScore <- function(x,
                                score,
-                               spectrumID = "spectrumID",
+                               spectrum = psmVariables(x)["spectrum"],
                                verbose = TRUE) {
     if (missing(score))
         stop("Please provide a score variable.")
     if (!score %in% names(x))
         stop("Please provide a valid score.")
-    if (is.null(score) | is.null(spectrumID))
+    if (is.null(score) | is.null(spectrum))
         return(x)
     stop("TODO")
 }
