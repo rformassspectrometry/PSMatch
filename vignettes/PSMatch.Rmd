@@ -220,7 +220,7 @@ id1_filtered <- filterPSMs(id1)
 
 id2_filtered <-
     filterPSMs(id2, decoy = "isdecoy",
-           accession = "accession",
+           protein = "accession",
            spectrumID = "spectrumid",
            peptide = "pepseq")
 ```

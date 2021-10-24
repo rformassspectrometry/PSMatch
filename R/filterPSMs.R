@@ -22,7 +22,7 @@
 filterPSMs <- function(x,
                        decoy = "isDecoy",
                        rank = "rank",
-                       accession = "DatabaseAccess",
+                       protein = "DatabaseAccess",
                        spectrumID = "spectrumID",
                        peptide = "sequence",
                        verbose = TRUE) {
@@ -37,9 +37,9 @@ filterPSMs <- function(x,
         x <- filterPsmRank(x, rank = rank,
                            verbose = verbose)
 
-    if (!is.null(accession))
+    if (!is.null(protein))
         x <- filterPsmNonProteotypic(x,
-                                     accession = accession,
+                                     protein = protein,
                                      peptide = peptide,
                                      verbose = verbose)
     if (verbose)
@@ -110,8 +110,8 @@ filterPsmRank <- function(x,
 ##' - `filterPsmNonProteotypic()` filters out non-proteotypic PSMs,
 ##'    i.e. those that match multiple proteins.
 ##'
-##' @param accession `character(1)` with the column name holding the
-##'     protein (groups) accession. Default is
+##' @param protein `character(1)` with the column name holding the
+##'     protein (groups) protein. Default is
 ##'     `"DatabaseAccess"`. Filtering is ignored if set to `NULL`.
 ##'
 ##' @param spectrumID `character(1)` with the name of the spectrum
@@ -126,13 +126,13 @@ filterPsmRank <- function(x,
 ##'
 ##' @export
 filterPsmNonProteotypic <- function(x,
-                                    accession = "DatabaseAccess",
+                                    protein = "DatabaseAccess",
                                     peptide = "sequence",
                                     verbose = TRUE) {
-    if (is.null(accession) | is.null(peptide))
+    if (is.null(protein) | is.null(peptide))
         return(x)
     n0 <- nrow(x)
-    mlt <- tapply(x[, accession],
+    mlt <- tapply(x[, protein],
                   x[, peptide],
                   function(xx) length(unique(xx)) > 1)
     mlt <- names(which(mlt))

@@ -144,7 +144,24 @@ setMethod("show", "PSM",
           })
 
 
-##' @param files `character()` of `mzid` file names.
+##' @param x `character()` of `mzid` file names or an instance of
+##'     class `PSM`.
+##'
+##' @param spectrum `character(1)` that defines a spectrum in the PSM
+##'     data. Typically `"spectrumID"`.
+##'
+##' @param peptide `character(1)` that defines a peptide in the PSM
+##'     data. Typically `"spequence"`.
+##'
+##' @param protein `character(1)` that defines a protein in the PSM
+##'     data. Typically `"DatabaseAccess"`.
+##'
+##' @param decoy `character(1)` that defines a decoy hit in the PSM
+##'     data. Default is `"isDecoy"`. This variable is named
+##'     `"isdecoy"` if you use the `mzID` parser.
+##'
+##' @param rank `character(1)` that defines the rank of the petide
+##'     spetrum match in the PSM data. Default is `"rank"`.
 ##'
 ##' @param parser `character(1)` defining the parser to be used to
 ##'     read the `mzIdentML` files. One of `"mzR"` (default) or
@@ -159,18 +176,54 @@ setMethod("show", "PSM",
 ##'
 ##' @export PSM
 ##'
+##' @aliases PSM PSM,character PSM,data.frame PSM,PSM
+##'
 ##' @import S4Vectors BiocParallel
 ##'
 ##' @name PSM
-PSM <- function(files,
+PSM <- function(x,
+                spectrum = NA,
+                peptide = NA,
+                protein = NA,
+                decoy = "isDecoy",
+                rank = "rank",
                 parser = c("mzR", "mzID"),
                 BPPARAM = SerialParam()) {
-    if (!all(flex <- file.exists(files)))
-        stop(paste(files[!flex], collapse = ", "), " not found.")
-    parser <- match.arg(parser)
-    if (parser == "mzR") readPSMsMzR(files, BPPARAM)
-    else readPSMsMzID(files, BPPARAM)
+    if (is.character(x)) {
+        if (!all(flex <- file.exists(x)))
+            stop(paste(x[!flex], collapse = ", "), " not found.")
+        parser <- match.arg(parser)
+        if (parser == "mzR") psm <- readPSMsMzR(x, BPPARAM)
+        else psm <- readPSMsMzID(x, BPPARAM)
+    } else if (is.data.frame(x)) {
+        ## TODO - constructor for data.frame
+    } else {
+        stopifnot(inherits(x, "PSM"))
+        psm <- x
+    }
+    ## Store usefull variables if provided as part of the
+    ## constructor. There could also be an interactive function that
+    ## asks the user to set these.
+    psmVariables <- c(spectrum = NA_character_,
+                      peptide = NA_character_,
+                      protein = NA_character_,
+                      decoy = NA_character_,
+                      rank = NA_character_)
+    metadata(psm)$variables <- psmVariables
+    if (spectrum %in% names(psm))
+        metadata(psm)$variables["spectrum"] <- spectrum
+    if (peptide %in% names(psm))
+        metadata(psm)$variables["peptide"] <- peptide
+    if (protein %in% names(psm))
+        metadata(psm)$variables["protein"] <- protein
+    if (decoy %in% names(psm))
+        metadata(psm)$variables["decoy"] <- decoy
+    if (rank %in% names(psm))
+        metadata(psm)$variables["rank"] <- rank
+    psm
 }
+
+
 
 ##' @param spectrumID `character(1)` with the column name referring to
 ##'     the spectrum identifier or any other unique key for the `PSM`
