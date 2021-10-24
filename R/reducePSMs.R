@@ -1,29 +1,28 @@
-##' @param x An instance of class `PSM`.
+##' @param object An instance of class `PSM`.
 ##'
 ##' @param k A `vector` or `factor` of length equal to `nrow(x)` that
 ##'     defines the primary key used to reduce `x`. This typically
-##'     corresponds to the spectrum identifier, often names
-##'     `spectrumID`.
+##'     corresponds to the spectrum identifier. The defauls is to use
+##'     the spectrum PSM variable.
 ##'
 ##' @return `reducePSMs()` returns a reduced version of the `x` input.
 ##'
 ##' @export reducePSMs
 ##'
 ##' @name PSM
-reducePSMs <- function(x, k) {
-    if (missing(k))
-        stop("Argument k is missing")
-    x <- QFeatures::reduceDataFrame(x, k)
-    n <- ncol(x)
-    for (i in seq_along(x)) {
-        .x <- x[[i]]
+reducePSMs <- function(object,
+                       k = object[[psmVariables(object)["spectrum"]]]) {
+    object <- QFeatures::reduceDataFrame(object, k)
+    n <- ncol(object)
+    for (i in seq_along(object)) {
+        .x <- object[[i]]
         class_x <- class(.x)
         .x <- sapply(.x, unique)
         if (is.list(.x))
             .x <- as(.x, class_x)
         else .x <- unname(.x)
-        x[[i]] <- .x
+        object[[i]] <- .x
     }
-    metadata(x)[["reduced"]] <- TRUE
-    as(x, "PSM")
+    metadata(object)[["reduced"]] <- TRUE
+    as(object, "PSM")
 }

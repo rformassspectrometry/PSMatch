@@ -27,10 +27,17 @@
 ##'   created with the `reducePSMs()` function. See examples below.
 ##'
 ##' Objects can be checked for their reduced state with the
-##' `reduced()` function which returns TRUE for reduced instances,
-##' FALSE when the spectrum identifiers are duplicated, or NA when
+##' `reduced()` function which returns `TRUE` for reduced instances,
+##' `FALSE` when the spectrum identifiers are duplicated, or NA when
 ##' unknown. The flag can also be set explicitly with the
 ##' `reduced()<-` setter.
+##'
+##' - The constructor can also be initialise some variables needed for
+##'   downstream processing, notably filtering (See
+##'   [filterPSMs()]). These variables can be extracted with the
+##'   [psmVariables()] function. They represent the columns in the PSM
+##'   table that identify spectra, peptides, proteins, decoy peptides
+##'   and hit ranks.
 ##'
 ##' The constructor uses parsers provided by the `mzR` or `mzID`
 ##' packages to read the `mzIdentML` data. See the vignette for some
@@ -49,11 +56,18 @@
 ##' psm <- PSM(f)
 ##' psm
 ##'
-##' ## mzID parser
-##' PSM(f, parser = "mzID")
+##' ## PSM variables
+##' psmVariables(psm)
 ##'
-##' i <- which(duplicated(psm$spectrumID))[1:2]
-##' i <- which(psm$spectrumID %in% psm$spectrumID[i])
+##' ## mzID parser
+##' psm_mzid <- PSM(f, parser = "mzID")
+##'
+##' ## different PSM variables
+##' psmVariables(psm_mzid)
+##'
+##' ## Reducing the PSM data
+##' (i <- which(duplicated(psm$spectrumID))[1:2])
+##' (i <- which(psm$spectrumID %in% psm$spectrumID[i]))
 ##' psm2 <- psm[i, ]
 ##' reduced(psm2)
 ##'
@@ -61,8 +75,11 @@
 ##' ## Carbamidomethyl modifications at positions 1 and 28.
 ##' DataFrame(psm2[, c("sequence", "spectrumID", "modName", "modLocation")])
 ##' reduced(psm2) <- FALSE
+##' reduced(psm2)
 ##'
-##' rpsm2 <- reducePSMs(psm2, psm2$spectrumID)
+##' ## uses by default the spectrum PSM variable, as defined during
+##' ## the construction - see psmVariables()
+##' rpsm2 <- reducePSMs(psm2)
 ##' rpsm2
 ##' DataFrame(rpsm2[, c("sequence", "spectrumID", "modName", "modLocation")])
 ##' reduced(rpsm2)
@@ -78,6 +95,7 @@
 ##' (mzids <- pxget(PXD022816, grep("mzID", pxfiles(PXD022816))[1:2]))
 ##' psm <- PSM(mzids)
 ##' psm
+##' psmVariables(psm)
 ##'
 ##' ## Here, spectrum identifiers are repeated accross files
 ##' psm[grep("scan=20000", psm$spectrumID), "spectrumFile"]
@@ -100,6 +118,7 @@
 ##' ## different modification locations
 ##' psm$modLocation[6:7]
 ##'
+##' ## here, we need to *explicitly* set pkey to reduce
 ##' rpsm <- reducePSMs(psm, psm$pkey)
 ##' rpsm
 ##' reduced(rpsm, "pkey")
@@ -148,17 +167,21 @@ setMethod("show", "PSM",
 ##'     class `PSM`.
 ##'
 ##' @param spectrum `character(1)` that defines a spectrum in the PSM
-##'     data. Typically `"spectrumID"`.
+##'     data. Default are `"spectrumID"` (mzR parser) or
+##'     `"spectrumid"` (mzID parser). It is also used to calculate the
+##'     reduced state.
 ##'
 ##' @param peptide `character(1)` that defines a peptide in the PSM
-##'     data. Typically `"spequence"`.
+##'     data. Detaults are `"spequence"` (mzR parser) or `"pepSeq"`
+##'     (mzID parser).
 ##'
 ##' @param protein `character(1)` that defines a protein in the PSM
-##'     data. Typically `"DatabaseAccess"`.
+##'     data. Detaults are `"DatabaseAccess"` (mzR parser) or
+##'     `"accession"` (mzID parser).
 ##'
 ##' @param decoy `character(1)` that defines a decoy hit in the PSM
-##'     data. Default is `"isDecoy"`. This variable is named
-##'     `"isdecoy"` if you use the `mzID` parser.
+##'     data. Detaults are `"isDecoy"` (mzR parser) or `"isdecoy"`
+##'     (mzID parser).
 ##'
 ##' @param rank `character(1)` that defines the rank of the petide
 ##'     spetrum match in the PSM data. Default is `"rank"`.
@@ -185,87 +208,96 @@ PSM <- function(x,
                 spectrum = NA,
                 peptide = NA,
                 protein = NA,
-                decoy = "isDecoy",
-                rank = "rank",
+                decoy = NA,
+                rank = NA,
                 parser = c("mzR", "mzID"),
                 BPPARAM = SerialParam()) {
     if (is.character(x)) {
         if (!all(flex <- file.exists(x)))
             stop(paste(x[!flex], collapse = ", "), " not found.")
         parser <- match.arg(parser)
-        if (parser == "mzR") psm <- readPSMsMzR(x, BPPARAM)
-        else psm <- readPSMsMzID(x, BPPARAM)
+        if (parser == "mzR") {
+            psm <- readPSMsMzR(x, BPPARAM)
+            ## Default PSM variables for mzR parser
+            .psmVariables <- c(spectrum = "spectrumID",
+                               peptide = "sequence",
+                               protein = "DatabaseAccess",
+                               decoy = "isDecoy",
+                               rank = "rank")
+        } else {
+            psm <- readPSMsMzID(x, BPPARAM)
+            ## Default PSM variables for mzID parser
+            .psmVariables <- c(spectrum = "spectrumid",
+                               peptide = "pepseq",
+                               protein = "accession",
+                               decoy = "isdecoy",
+                               rank = "rank")
+        }
     } else if (is.data.frame(x)) {
         ## TODO - constructor for data.frame
     } else {
         stopifnot(inherits(x, "PSM"))
-        psm <- x
+        psm <- x ## use as is
     }
-    ## Store usefull variables if provided as part of the
-    ## constructor. There could also be an interactive function that
-    ## asks the user to set these.
-    psmVariables <- c(spectrum = NA_character_,
-                      peptide = NA_character_,
-                      protein = NA_character_,
-                      decoy = NA_character_,
-                      rank = NA_character_)
-    metadata(psm)$variables <- psmVariables
+    ## Update PSM variables based on contstructor inputs
     if (spectrum %in% names(psm))
-        metadata(psm)$variables["spectrum"] <- spectrum
+        .psmVariables["spectrum"] <- spectrum
     if (peptide %in% names(psm))
-        metadata(psm)$variables["peptide"] <- peptide
+        .psmVariables["peptide"] <- peptide
     if (protein %in% names(psm))
-        metadata(psm)$variables["protein"] <- protein
+        .psmVariables["protein"] <- protein
     if (decoy %in% names(psm))
-        metadata(psm)$variables["decoy"] <- decoy
+        .psmVariables["decoy"] <- decoy
     if (rank %in% names(psm))
-        metadata(psm)$variables["rank"] <- rank
+        psmVariables["rank"] <- rank
+    metadata(psm)$variables <- .psmVariables
     psm
 }
 
-##' @param spectrumID `character(1)` with the column name referring to
-##'     the spectrum identifier or any other unique key for the `PSM`
-##'     object `x`. This parameter can be set to calculate the reduced
-##'     state explicitly by by-passing the `reduced` metadata flag.
-##'
-##' @param x An instance of class `PSM`.
-##'
 ##' @name PSM
 ##'
 ##' @export
-reduced <- function(x, spectrumID) {
-    if (!missing(spectrumID))
-        return(!is.list(x[[spectrumID]]) & !anyDuplicated(x[[spectrumID]]))
-    if (is.null(metadata(x)[["reduced"]]))
+reduced <- function(object, spectrum = psmVariables(object)["spectrum"]) {
+    if (!missing(spectrum))
+        return(!is.list(object[[spectrum]]) & !anyDuplicated(object[[spectrum]]))
+    if (is.null(metadata(object)[["reduced"]]))
         return(NA)
-    else metadata(x)[["reduced"]]
+    else metadata(object)[["reduced"]]
 }
 
-##' @param value `logical(1)` to set the reduced state of the `PSM`
-##'     object.
+##' @param value new value to be passed to setter.
 ##'
 ##' @name PSM
 ##'
 ##' @export
-"reduced<-" <- function(x, value) {
+"reduced<-" <- function(object, value) {
     stopifnot(is.logical(value))
-    metadata(x)[["reduced"]] <- value
-    x
+    metadata(object)[["reduced"]] <- value
+    object
 }
 
 ##' @param object An instance of class `PSM`.
 ##'
 ##' @param which `character()` with the PSM variable name to
 ##'     retrieve. If `"all"` (default), all named variables are
-##'     returned.
+##'     returned. See [PSM()] for valid PSM variables.
 ##'
 ##' @name PSM
 ##'
-##' @return
-psmVariable <- function(x, which = "all") {
-    psmVariables <- metadata(x)$variables
+##' @export
+psmVariables <- function(object, which = "all") {
+    .psmVariables <- metadata(object)[["variables"]]
     if (length(which) == 1 && which == "all")
-        return(psmVariables)
-    stopifnot(which %in% names(psmVariables))
-    unname(psmVariables[which])
+        return(.psmVariables)
+    stopifnot(which %in% names(.psmVariables))
+    .psmVariables[which]
+}
+
+##' @name PSM
+##'
+##' @export
+"psmVariables<-" <- function(object, value) {
+    value <- as.character(value)
+    metadata(object)[["variables"]] <- value
+    object
 }

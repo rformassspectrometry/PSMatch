@@ -10,6 +10,8 @@
 \alias{PSM,PSM}
 \alias{reduced}
 \alias{reduced<-}
+\alias{psmVariables}
+\alias{psmVariables<-}
 \title{A class for peptide-spectrum matches}
 \usage{
 PSM(
@@ -17,33 +19,42 @@ PSM(
   spectrum = NA,
   peptide = NA,
   protein = NA,
-  decoy = "isDecoy",
-  rank = "rank",
+  decoy = NA,
+  rank = NA,
   parser = c("mzR", "mzID"),
   BPPARAM = SerialParam()
 )
 
-reduced(x, spectrumID)
+reduced(object, spectrum = psmVariables(object)["spectrum"])
 
-reduced(x) <- value
+reduced(object) <- value
 
-reducePSMs(x, k)
+psmVariables(object, which = "all")
+
+psmVariables(object) <- value
+
+reducePSMs(object, k = object[[psmVariables(object)["spectrum"]]])
 }
 \arguments{
-\item{x}{An instance of class \code{PSM}.}
+\item{x}{\code{character()} of \code{mzid} file names or an instance of
+class \code{PSM}.}
 
 \item{spectrum}{\code{character(1)} that defines a spectrum in the PSM
-data. Typically \code{"spectrumID"}.}
+data. Default are \code{"spectrumID"} (mzR parser) or
+\code{"spectrumid"} (mzID parser). It is also used to calculate the
+reduced state.}
 
 \item{peptide}{\code{character(1)} that defines a peptide in the PSM
-data. Typically \code{"spequence"}.}
+data. Detaults are \code{"spequence"} (mzR parser) or \code{"pepSeq"}
+(mzID parser).}
 
 \item{protein}{\code{character(1)} that defines a protein in the PSM
-data. Typically \code{"DatabaseAccess"}.}
+data. Detaults are \code{"DatabaseAccess"} (mzR parser) or
+\code{"accession"} (mzID parser).}
 
 \item{decoy}{\code{character(1)} that defines a decoy hit in the PSM
-data. Default is \code{"isDecoy"}. This variable is named
-\code{"isdecoy"} if you use the \code{mzID} parser.}
+data. Detaults are \code{"isDecoy"} (mzR parser) or \code{"isdecoy"}
+(mzID parser).}
 
 \item{rank}{\code{character(1)} that defines the rank of the petide
 spetrum match in the PSM data. Default is \code{"rank"}.}
@@ -56,18 +67,18 @@ read the \code{mzIdentML} files. One of \code{"mzR"} (default) or
 control parallel processing. The default value is
 \code{SerialParam()} to read files in series.}
 
-\item{spectrumID}{\code{character(1)} with the column name referring to
-the spectrum identifier or any other unique key for the \code{PSM}
-object \code{x}. This parameter can be set to calculate the reduced
-state explicitly by by-passing the \code{reduced} metadata flag.}
+\item{object}{An instance of class \code{PSM}.}
 
-\item{value}{\code{logical(1)} to set the reduced state of the \code{PSM}
-object.}
+\item{value}{new value to be passed to setter.}
+
+\item{which}{\code{character()} with the PSM variable name to
+retrieve. If \code{"all"} (default), all named variables are
+returned. See \code{\link[=PSM]{PSM()}} for valid PSM variables.}
 
 \item{k}{A \code{vector} or \code{factor} of length equal to \code{nrow(x)} that
 defines the primary key used to reduce \code{x}. This typically
-corresponds to the spectrum identifier, often names
-\code{spectrumID}.}
+corresponds to the spectrum identifier. The defauls is to use
+the spectrum PSM variable.}
 }
 \value{
 \code{PSM()} returns a \code{PSM} object containing the
@@ -97,10 +108,18 @@ created with the \code{reducePSMs()} function. See examples below.
 }
 
 Objects can be checked for their reduced state with the
-\code{reduced()} function which returns TRUE for reduced instances,
-FALSE when the spectrum identifiers are duplicated, or NA when
+\code{reduced()} function which returns \code{TRUE} for reduced instances,
+\code{FALSE} when the spectrum identifiers are duplicated, or NA when
 unknown. The flag can also be set explicitly with the
 \verb{reduced()<-} setter.
+\itemize{
+\item The constructor can also be initialise some variables needed for
+downstream processing, notably filtering (See
+\code{\link[=filterPSMs]{filterPSMs()}}). These variables can be extracted with the
+\code{\link[=psmVariables]{psmVariables()}} function. They represent the columns in the PSM
+table that identify spectra, peptides, proteins, decoy peptides
+and hit ranks.
+}
 
 The constructor uses parsers provided by the \code{mzR} or \code{mzID}
 packages to read the \code{mzIdentML} data. See the vignette for some
@@ -119,11 +138,18 @@ basename(f)
 psm <- PSM(f)
 psm
 
-## mzID parser
-PSM(f, parser = "mzID")
+## PSM variables
+psmVariables(psm)
 
-i <- which(duplicated(psm$spectrumID))[1:2]
-i <- which(psm$spectrumID \%in\% psm$spectrumID[i])
+## mzID parser
+psm_mzid <- PSM(f, parser = "mzID")
+
+## different PSM variables
+psmVariables(psm_mzid)
+
+## Reducing the PSM data
+(i <- which(duplicated(psm$spectrumID))[1:2])
+(i <- which(psm$spectrumID \%in\% psm$spectrumID[i]))
 psm2 <- psm[i, ]
 reduced(psm2)
 
@@ -131,8 +157,11 @@ reduced(psm2)
 ## Carbamidomethyl modifications at positions 1 and 28.
 DataFrame(psm2[, c("sequence", "spectrumID", "modName", "modLocation")])
 reduced(psm2) <- FALSE
+reduced(psm2)
 
-rpsm2 <- reducePSMs(psm2, psm2$spectrumID)
+## uses by default the spectrum PSM variable, as defined during
+## the construction - see psmVariables()
+rpsm2 <- reducePSMs(psm2)
 rpsm2
 DataFrame(rpsm2[, c("sequence", "spectrumID", "modName", "modLocation")])
 reduced(rpsm2)
@@ -148,6 +177,7 @@ PXD022816
 (mzids <- pxget(PXD022816, grep("mzID", pxfiles(PXD022816))[1:2]))
 psm <- PSM(mzids)
 psm
+psmVariables(psm)
 
 ## Here, spectrum identifiers are repeated accross files
 psm[grep("scan=20000", psm$spectrumID), "spectrumFile"]
@@ -170,6 +200,7 @@ psm$pkey[6:7]
 ## different modification locations
 psm$modLocation[6:7]
 
+## here, we need to *explicitly* set pkey to reduce
 rpsm <- reducePSMs(psm, psm$pkey)
 rpsm
 reduced(rpsm, "pkey")
