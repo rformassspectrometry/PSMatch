@@ -142,15 +142,26 @@ NULL
 setClass("PSM",
          contains = "DFrame")
 
-## showDetails <- function(object) {
-##     .psmVariables <- psmVariables(object)
-##     tabDecoy <- table(object[[.psmVariables["decoy"]]])
-##     cat(" Hits decoy:", tabDecoy["TRUE"],
-##         " target:", tabDecoy["FALSE"], "\n", sep = "")
-##     tabRank <- table(object[[.psmVariables["rank"]]])
-##     cat(" Ranks", paste0(names(tabRank),":", tabRank), "\n")
-##     invisible(NULL)
-## }
+showDetails <- function(object) {
+    .psmVariables <- psmVariables(object)
+    tabDecoy <- table(object[[.psmVariables["decoy"]]])
+    n_sp <- length(unique(object[[.psmVariables["spectrum"]]]))
+    n_pe <- length(unique(object[[.psmVariables["peptide"]]]))
+    n_pr <- length(unique(object[[.psmVariables["protein"]]]))
+    cat("Spectra:", n_sp, "\n")
+    cat("  target:", tabDecoy["FALSE"],
+        " decoy:", tabDecoy["TRUE"], "\n", sep = "")
+    tabRank <- table(object[[.psmVariables["rank"]]])
+    cat("  ranks", paste0(names(tabRank),":", tabRank), "\n")
+    cat("Peptides:", n_pe, "\n")
+    mlt <- tapply(object[[psmVariables(object)["protein"]]],
+                  object[[psmVariables(object)["peptide"]]],
+                  function(xx) length(unique(xx)) > 1)
+    cat("  unique:", sum(!mlt),
+        " multiple:", sum(mlt), "\n", sep = "")
+    cat("Proteins:", n_pr, "\n")
+    invisible(NULL)
+}
 
 setMethod("show", "PSM",
           function(object) {
@@ -159,7 +170,7 @@ setMethod("show", "PSM",
                   cl <- paste("Reduced", cl)
               cat(cl, "with", nrow(object), "rows and",
                   ncol(object), "columns.\n")
-              ## showDetails(object)
+              showDetails(object)
               if (ncol(object) <= 4)
                   cat("names(", ncol(object), "): ",
                       paste(names(object), collapse = " "), "\n",
