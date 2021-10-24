@@ -103,7 +103,7 @@ values[^rownames]:
 [^rownames]: The rownames aren't needed here are are removed to reduce
     to output in the the next code chunk display parts of `id2`.
 
-```{r}
+```{r, warning = FALSE}
 id2 <- reducePSMs(id, id$spectrumID)
 rownames(id2) <- NULL ## rownames not needed here
 dim(id2)
@@ -133,14 +133,16 @@ wrong identification.
 
 ### Remove decoy hits
 
-```{r, message = FALSE}
+```{r}
 id <- filterPsmDecoy(id)
+id
 ```
 
 ### Keep first rank matches
 
 ```{r}
 id <- filterPsmRank(id)
+id
 ```
 
 ### Remove non-proteotypic peptides
@@ -151,9 +153,12 @@ example QKTRCATRAFKANKGRAR (the two first rows) matches proteins
 
 ```{r}
 id <- filterPsmNonProteotypic(id)
+id
 ```
 
 Which leaves us with `r nrow(id)` PSMs.
+
+### All filters in one function
 
 This can also be achieved with the `filterPSMs()` function:
 
