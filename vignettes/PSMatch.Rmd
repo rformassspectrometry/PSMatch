@@ -42,8 +42,8 @@ f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 basename(f)
 ```
 
-The `readPSMs()` function parses one of multiple `mzid` files and
-returns an object of class `DFrame`.
+The `PSM()` function parses one of multiple `mzid` files and returns
+an object of class `DFrame`.
 
 
 ```{r}
@@ -163,9 +163,9 @@ filterPSMs(id)
 ```
 # The `mzR` and `mzID` parsers
 
-The `readPSMs()` function can take two different values for the
-`parser` parameter, namely `"mzR"` (which is also the default value)
-and `"mzID"`.
+The `PSM()` function can take two different values for the `parser`
+parameter, namely `"mzR"` (which is also the default value) and
+`"mzID"`.
 
 - **mzR** uses the `openIDfile()` function from the
    `r BiocStyle::Biocpkg("mzR")` to parse the `mzId` file(s), and then
@@ -184,8 +184,8 @@ and `"mzID"`.
   backup when the `mzR` approach fails with errors.
 
 ```{r, warning = FALSE}
-system.time(id1 <- readPSMs(f, parser = "mzR"))
-system.time(id2 <- readPSMs(f, parser = "mzID"))
+system.time(id1 <- PSM(f, parser = "mzR"))
+system.time(id2 <- PSM(f, parser = "mzID"))
 ```
 
 Other differences in the two parsers include the columns that are
