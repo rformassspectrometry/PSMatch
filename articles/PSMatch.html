@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.14/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-10-24 18:17:35<br><strong>Compiled</strong>: Sun Oct 24 18:22:44 2021</p>
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.14/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-10-24 18:28:22<br><strong>Compiled</strong>: Sun Oct 24 18:33:47 2021</p>
 <div class="section level1">
 <h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h1>
@@ -157,24 +157,17 @@ document.addEventListener("DOMContentLoaded", function() {
 ## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 <p>If the goal is to keep all the matches, but arranged by scan/spectrum, one can <em>reduce</em> the <code>DataFrame</code> object by the <code>spectrumID</code> variable, so that each scan correponds to a single row that still stores all values<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">reducePSMs</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">id</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: The dim() method for DataFrameList objects is deprecated. Please use
-##   dims() on these objects instead.</code></pre>
-<pre><code>## Warning: The nrow() method for DataFrameList objects is deprecated. Please use
-##   nrows() on these objects instead.</code></pre>
-<pre><code>## Warning: The ncol() method for CompressedSplitDataFrameList objects is
-##   deprecated. Please use ncols() on these objects instead.</code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co">## rownames not needed here</span>
+<code class="sourceCode R"><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">reducePSMs</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">id</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co">## rownames not needed here</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 5343   35</code></pre>
 <p>The resulting object contains a single entrie for scan 1774 with information for the multiple matches stored as lists within the cells.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">j</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">id2</span><span class="op">$</span><span class="va">spectrumID</span> <span class="op">==</span> <span class="st">"controllerType=0 controllerNumber=1 scan=1774"</span><span class="op">)</span>
 <span class="va">id2</span><span class="op">[</span><span class="va">j</span>, <span class="op">]</span></code></pre></div>
 <pre><code>## Reduced PSM with 1 rows and 35 columns.
 ## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id2</span><span class="op">[</span><span class="va">j</span>, <span class="st">"DatabaseAccess"</span><span class="op">]</span></code></pre></div>
 <pre><code>## CharacterList of length 1
 ## [["controllerType=0 controllerNumber=1 scan=1774"]] ECA2104 ECA2867 ECA3427 ECA4142</code></pre>
@@ -187,26 +180,58 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="section level3">
 <h3 id="remove-decoy-hits">Remove decoy hits<a class="anchor" aria-label="anchor" href="#remove-decoy-hits"></a>
 </h3>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPsmDecoy</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></code></pre></div>
+<pre><code>## Removed 2896 decoy hits.</code></pre>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">id</span></code></pre></div>
+<pre><code>## PSM with 2906 rows and 35 columns.
+## Spectra: 2761 unique
+##   db: 2906 target, 0 decoy
+##   ranks: 1:2751 2:148 3:6 4:1 
+## Peptides: 2452 unique, 34 multiple
+## Proteins: 1563 
+## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 </div>
 <div class="section level3">
 <h3 id="keep-first-rank-matches">Keep first rank matches<a class="anchor" aria-label="anchor" href="#keep-first-rank-matches"></a>
 </h3>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPsmRank</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></code></pre></div>
 <pre><code>## Removed 155 PSMs with rank &gt; 1.</code></pre>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">id</span></code></pre></div>
+<pre><code>## PSM with 2751 rows and 35 columns.
+## Spectra: 2685 unique
+##   db: 2751 target, 0 decoy
+##   ranks: 1:2751 
+## Peptides: 2324 unique, 33 multiple
+## Proteins: 1504 
+## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 </div>
 <div class="section level3">
 <h3 id="remove-non-proteotypic-peptides">Remove non-proteotypic peptides<a class="anchor" aria-label="anchor" href="#remove-non-proteotypic-peptides"></a>
 </h3>
 <p>The peptides below are those that match different proteins. For example QKTRCATRAFKANKGRAR (the two first rows) matches proteins <code>ECA2869</code> and <code>ECA4278</code>.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPsmNonProteotypic</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></code></pre></div>
 <pre><code>## Removed 85 non-proteotypic peptides.</code></pre>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">id</span></code></pre></div>
+<pre><code>## PSM with 2666 rows and 35 columns.
+## Spectra: 2646 unique
+##   db: 2666 target, 0 decoy
+##   ranks: 1:2666 
+## Peptides: 2324 unique, 0 multiple
+## Proteins: 1466 
+## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 <p>Which leaves us with 2666 PSMs.</p>
+</div>
+<div class="section level3">
+<h3 id="all-filters-in-one-function">All filters in one function<a class="anchor" aria-label="anchor" href="#all-filters-in-one-function"></a>
+</h3>
 <p>This can also be achieved with the <code><a href="../reference/filterPSMs.html">filterPSMs()</a></code> function:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span>
 <span class="fu"><a href="../reference/filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
@@ -232,18 +257,18 @@ document.addEventListener("DOMContentLoaded", function() {
 <li><p><strong>mzR</strong> uses the <code><a href="https://rdrr.io/pkg/mzR/man/openMSfile.html" class="external-link">openIDfile()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.14/mzR" class="external-link">mzR</a></em> to parse the <code>mzId</code> file(s), and then coerces the data to a <code>data.frame</code> which is eventually returned as a <code>DataFrame</code>. The parser function uses dedicated code from the Proteowizard project (included in <code>mzR</code>) and is generally the fastest approach.</p></li>
 <li><p><strong>mzID</strong> parses the <code>mzId</code> file with <code>mzID()</code> function from the <em><a href="https://bioconductor.org/packages/3.14/mzID" class="external-link">mzID</a></em> package, and the flattens the data to a <code>data.frame</code> with <code><a href="https://rdrr.io/pkg/mzID/man/flatten.html" class="external-link">mzID::flatten()</a></code> and eventuelly returns a <code>DataFrame</code>. The <code>mzID</code> package relies on the <em><a href="https://CRAN.R-project.org/package=XML" class="external-link">XML</a></em> package. Is is slower but is is more robust to variations in the <code>mzID</code> implementation, as is a useful backup when the <code>mzR</code> approach fails with errors.</p></li>
 </ul>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.343   0.004   0.347</code></pre>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+##   0.285   0.004   0.289</code></pre>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required namespace: mzID</code></pre>
 <pre><code>## reading TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid... DONE!</code></pre>
 <pre><code>##    user  system elapsed 
-##   9.771   0.116   9.888</code></pre>
+##   8.509   0.141   8.650</code></pre>
 <p>Other differences in the two parsers include the columns that are returned, way they name them, and, as will shown below the matches that are returned. Below, note for instance (and this will be important later), that there is not equivalent of <code>"modLocation"</code> in <code>id2</code>.</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1] "sequence"                 "spectrumID"              
 ##  [3] "chargeState"              "rank"                    
@@ -263,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## [31] "modMass"                  "modLocation"             
 ## [33] "subOriginalResidue"       "subReplacementResidue"   
 ## [35] "subLocation"</code></pre>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1] "spectrumid"                "scan number(s)"           
 ##  [3] "acquisitionnum"            "passthreshold"            
@@ -281,31 +306,31 @@ document.addEventListener("DOMContentLoaded", function() {
 ## [27] "modification"              "idFile"                   
 ## [29] "spectrumFile"              "databaseFile"</code></pre>
 <p>We also have different number of matches in the two tables:</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 5802</code></pre>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 5759</code></pre>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id1</span><span class="op">$</span><span class="va">isDecoy</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## FALSE  TRUE 
 ##  2906  2896</code></pre>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id2</span><span class="op">$</span><span class="va">isdecoy</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## FALSE  TRUE 
 ##  2886  2873</code></pre>
 <p>Let’s first filter the PSM tables to facilitate focus the comparison of relevant scans. Note that the default <code><a href="../reference/filterPSMs.html">filterPSMs()</a></code> arguments are set to work with the <code>mzR</code> parser.</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id1_filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
 <pre><code>## Removed 2896 decoy hits.</code></pre>
 <pre><code>## Removed 155 PSMs with rank &gt; 1.</code></pre>
 <pre><code>## Removed 85 non-proteotypic peptides.</code></pre>
 <pre><code>## 2666 PSMs left.</code></pre>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id2_filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span></code></pre></div>
 <pre><code>## Starting with 5759 PSMs:</code></pre>
 <pre><code>## Removed 2873 decoy hits.</code></pre>
@@ -314,22 +339,22 @@ document.addEventListener("DOMContentLoaded", function() {
 <pre><code>## 2646 PSMs left.</code></pre>
 <p>As can be seen, we are also left with 2666 vs 2646 PSMs after filtering.</p>
 <p>The difference doesn’t stem from different scans, given that the spectum identifiers are identical in both tables:</p>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span><span class="op">)</span>,
           <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id2_filtered</span><span class="op">$</span><span class="va">spectrumid</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>The difference is obvious when we tally a table of spectrum ids occurences in the filtered tables. In <code>id2_filtered</code>, each scan is unique, i.e matched only once.</p>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">anyDuplicated</a></span><span class="op">(</span><span class="va">id2_filtered</span><span class="op">$</span><span class="va">spectrumid</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>However, for <code>id1_filtered</code>, we see that some scans are still repeat up to 4 times in the table:</p>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ##    1    2    3    4 
 ## 2630   13    2    1</code></pre>
 <p>The example below shows that these differences stem from the modification location (<code>"modLocation"</code>), that is not report by the <code>mzID</code> parser:</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
 <span class="va">id1_filtered</span><span class="op">[</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span> <span class="op">==</span> <span class="va">k</span>, <span class="op">]</span></code></pre></div>
 <pre><code>## PSM with 4 rows and 35 columns.
@@ -340,7 +365,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ## Proteins: 1 
 ## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 <p>If we remove the <code>"modLocation"</code> column, we recoved the same number of PSMs than with the <code>mzID</code> parser.</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id1_filtered</span><span class="op">$</span><span class="va">modLocation</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 2646</code></pre>
@@ -348,7 +373,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="section level1">
 <h1 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h1>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## R version 4.1.1 (2021-08-10)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
