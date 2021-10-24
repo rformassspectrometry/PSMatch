@@ -91,7 +91,7 @@ defined by non-missing (i.e. non-<code>NA</code>) modification name.</p></li>
   <span class="va">x</span>,
   decoy <span class="op">=</span> <span class="st">"isDecoy"</span>,
   rank <span class="op">=</span> <span class="st">"rank"</span>,
-  accession <span class="op">=</span> <span class="st">"DatabaseAccess"</span>,
+  protein <span class="op">=</span> <span class="st">"DatabaseAccess"</span>,
   spectrumID <span class="op">=</span> <span class="st">"spectrumID"</span>,
   peptide <span class="op">=</span> <span class="st">"sequence"</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>
@@ -103,7 +103,7 @@ defined by non-missing (i.e. non-<code>NA</code>) modification name.</p></li>
 
 <span class="fu">filterPsmNonProteotypic</span><span class="op">(</span>
   <span class="va">x</span>,
-  accession <span class="op">=</span> <span class="st">"DatabaseAccess"</span>,
+  protein <span class="op">=</span> <span class="st">"DatabaseAccess"</span>,
   peptide <span class="op">=</span> <span class="st">"sequence"</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
@@ -127,8 +127,8 @@ holding a <code>FALSE</code> are retained. Filtering is ignored if set to
 of the PSM. Default is <code>"rank"</code>. This column should be a
 <code>numeric</code> and only PSMs having rank equal to 1 are
 retained. Filtering is ignored if set to <code>NULL</code>.</p></dd>
-</dl><dl><dt>accession</dt><dd><p><code>character(1)</code> with the column name holding the
-protein (groups) accession. Default is
+</dl><dl><dt>protein</dt><dd><p><code>character(1)</code> with the column name holding the
+protein (groups) protein. Default is
 <code>"DatabaseAccess"</code>. Filtering is ignored if set to <code>NULL</code>.</p></dd>
 </dl><dl><dt>spectrumID</dt><dd><p><code>character(1)</code> with the name of the spectrum
 identifier column. Default is <code>spectrumID</code>. Filtering is

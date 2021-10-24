@@ -99,7 +99,16 @@ packages to read the <code>mzIdentML</code> data. See the vignette for some
 apparent differences in their outputs.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">PSM</span><span class="op">(</span><span class="va">files</span>, parser <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mzR"</span>, <span class="st">"mzID"</span><span class="op">)</span>, BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">PSM</span><span class="op">(</span>
+  <span class="va">x</span>,
+  spectrum <span class="op">=</span> <span class="cn">NA</span>,
+  peptide <span class="op">=</span> <span class="cn">NA</span>,
+  protein <span class="op">=</span> <span class="cn">NA</span>,
+  decoy <span class="op">=</span> <span class="st">"isDecoy"</span>,
+  rank <span class="op">=</span> <span class="st">"rank"</span>,
+  parser <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mzR"</span>, <span class="st">"mzID"</span><span class="op">)</span>,
+  BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span>
+<span class="op">)</span>
 
 <span class="fu">reduced</span><span class="op">(</span><span class="va">x</span>, <span class="va">spectrumID</span><span class="op">)</span>
 
@@ -112,14 +121,24 @@ apparent differences in their outputs.</p>
     <h2>Arguments</h2>
     
 
-<dl><dt>files</dt><dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> of <code>mzid</code> file names.</p></dd>
+<dl><dt>x</dt><dd><p>An instance of class <code>PSM</code>.</p></dd>
+</dl><dl><dt>spectrum</dt><dd><p><code>character(1)</code> that defines a spectrum in the PSM
+data. Typically <code>"spectrumID"</code>.</p></dd>
+</dl><dl><dt>peptide</dt><dd><p><code>character(1)</code> that defines a peptide in the PSM
+data. Typically <code>"spequence"</code>.</p></dd>
+</dl><dl><dt>protein</dt><dd><p><code>character(1)</code> that defines a protein in the PSM
+data. Typically <code>"DatabaseAccess"</code>.</p></dd>
+</dl><dl><dt>decoy</dt><dd><p><code>character(1)</code> that defines a decoy hit in the PSM
+data. Default is <code>"isDecoy"</code>. This variable is named
+<code>"isdecoy"</code> if you use the <code>mzID</code> parser.</p></dd>
+</dl><dl><dt>rank</dt><dd><p><code>character(1)</code> that defines the rank of the petide
+spetrum match in the PSM data. Default is <code>"rank"</code>.</p></dd>
 </dl><dl><dt>parser</dt><dd><p><code>character(1)</code> defining the parser to be used to
 read the <code>mzIdentML</code> files. One of <code>"mzR"</code> (default) or
 <code>"mzID"</code>.</p></dd>
 </dl><dl><dt>BPPARAM</dt><dd><p>an object inheriting from BiocParallelParam to
 control parallel processing. The default value is
 <code>SerialParam()</code> to read files in series.</p></dd>
-</dl><dl><dt>x</dt><dd><p>An instance of class <code>PSM</code>.</p></dd>
 </dl><dl><dt>spectrumID</dt><dd><p><code>character(1)</code> with the column name referring to
 the spectrum identifier or any other unique key for the <code>PSM</code>
 object <code>x</code>. This parameter can be set to calculate the reduced
@@ -249,8 +268,8 @@ peptide-spectrum matches stored in <code>files</code>.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz from cache.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz from cache.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/cda7e13c596_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/cda4d8367aa_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/cd13f466667_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/cd1203f97a6_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
 <span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">mzids</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psm</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 50314 rows and 31 columns.</span>
@@ -297,8 +316,8 @@ peptide-spectrum matches stored in <code>files</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2         387 MNVLLLLVLC...       Q58D62|FET...       32.788864          12894</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     spectrumFile        idFile MetaMorpheus.score PSM.level.q.value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;character&gt;   &lt;character&gt;          &lt;numeric&gt;         &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... cda7e13c59...            31.2586                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... cda7e13c59...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... cd13f46666...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... cd13f46666...            31.2586                 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   modPeptideRef       modName   modMass modLocation subOriginalResidue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;   &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          P_19 Carbamidom...   57.0215           6                 NA</span>

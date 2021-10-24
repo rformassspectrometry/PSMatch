@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.14/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-10-23 21:58:58<br><strong>Compiled</strong>: Sat Oct 23 22:03:31 2021</p>
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.14/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-10-24 10:08:21<br><strong>Compiled</strong>: Sun Oct 24 10:12:33 2021</p>
 <div class="section level1">
 <h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h1>
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">ident</a></span><span class="op">(</span>full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">"TMT"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid"</code></pre>
-<p>The <code><a href="../reference/PSM.html">readPSMs()</a></code> function parses one of multiple <code>mzid</code> files and returns an object of class <code>DFrame</code>.</p>
+<p>The <code><a href="../reference/PSM.html">PSM()</a></code> function parses one of multiple <code>mzid</code> files and returns an object of class <code>DFrame</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/RforMassSpectrometry/PSM" class="external-link">"PSMatch"</a></span><span class="op">)</span>
 <span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></code></pre></div>
@@ -212,21 +212,21 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="section level1">
 <h1 id="the-mzr-and-mzid-parsers">The <code>mzR</code> and <code>mzID</code> parsers<a class="anchor" aria-label="anchor" href="#the-mzr-and-mzid-parsers"></a>
 </h1>
-<p>The <code><a href="../reference/PSM.html">readPSMs()</a></code> function can take two different values for the <code>parser</code> parameter, namely <code>"mzR"</code> (which is also the default value) and <code>"mzID"</code>.</p>
+<p>The <code><a href="../reference/PSM.html">PSM()</a></code> function can take two different values for the <code>parser</code> parameter, namely <code>"mzR"</code> (which is also the default value) and <code>"mzID"</code>.</p>
 <ul>
 <li><p><strong>mzR</strong> uses the <code><a href="https://rdrr.io/pkg/mzR/man/openMSfile.html" class="external-link">openIDfile()</a></code> function from the <em><a href="https://bioconductor.org/packages/3.14/mzR" class="external-link">mzR</a></em> to parse the <code>mzId</code> file(s), and then coerces the data to a <code>data.frame</code> which is eventually returned as a <code>DataFrame</code>. The parser function uses dedicated code from the Proteowizard project (included in <code>mzR</code>) and is generally the fastest approach.</p></li>
 <li><p><strong>mzID</strong> parses the <code>mzId</code> file with <code>mzID()</code> function from the <em><a href="https://bioconductor.org/packages/3.14/mzID" class="external-link">mzID</a></em> package, and the flattens the data to a <code>data.frame</code> with <code><a href="https://rdrr.io/pkg/mzID/man/flatten.html" class="external-link">mzID::flatten()</a></code> and eventuelly returns a <code>DataFrame</code>. The <code>mzID</code> package relies on the <em><a href="https://CRAN.R-project.org/package=XML" class="external-link">XML</a></em> package. Is is slower but is is more robust to variations in the <code>mzID</code> implementation, as is a useful backup when the <code>mzR</code> approach fails with errors.</p></li>
 </ul>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.256   0.008   0.263</code></pre>
+##   0.256   0.008   0.264</code></pre>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">readPSMs</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required namespace: mzID</code></pre>
 <pre><code>## reading TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid... DONE!</code></pre>
 <pre><code>##    user  system elapsed 
-##   6.590   0.096   6.687</code></pre>
+##   6.696   0.104   6.804</code></pre>
 <p>Other differences in the two parsers include the columns that are returned, way they name them, and, as will shown below the matches that are returned. Below, note for instance (and this will be important later), that there is not equivalent of <code>"modLocation"</code> in <code>id2</code>.</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></code></pre></div>
@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">id2_filtered</span> <span class="op">&lt;-</span>
     <span class="fu"><a href="../reference/filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="va">id2</span>, decoy <span class="op">=</span> <span class="st">"isdecoy"</span>,
-           accession <span class="op">=</span> <span class="st">"accession"</span>,
+           protein <span class="op">=</span> <span class="st">"accession"</span>,
            spectrumID <span class="op">=</span> <span class="st">"spectrumid"</span>,
            peptide <span class="op">=</span> <span class="st">"pepseq"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Starting with 5759 PSMs:</code></pre>
