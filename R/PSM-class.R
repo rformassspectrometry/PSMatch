@@ -144,21 +144,20 @@ setClass("PSM",
 
 showDetails <- function(object) {
     .psmVariables <- psmVariables(object)
-    tabDecoy <- table(object[[.psmVariables["decoy"]]])
     n_sp <- length(unique(object[[.psmVariables["spectrum"]]]))
     n_pe <- length(unique(object[[.psmVariables["peptide"]]]))
     n_pr <- length(unique(object[[.psmVariables["protein"]]]))
-    cat("Spectra:", n_sp, "\n")
-    cat("  target:", tabDecoy["FALSE"],
-        " decoy:", tabDecoy["TRUE"], "\n", sep = "")
+    tabDecoy <- object[[.psmVariables["decoy"]]]
+    cat("Spectra: ")
+    cat(sum(!tabDecoy), " target, ",
+        sum(tabDecoy), " decoy\n", sep = "")
     tabRank <- table(object[[.psmVariables["rank"]]])
-    cat("  ranks", paste0(names(tabRank),":", tabRank), "\n")
-    cat("Peptides:", n_pe, "\n")
+    cat("  ranks:", paste0(names(tabRank),":", tabRank), "\n")
+    cat("Peptides: ")
     mlt <- tapply(object[[psmVariables(object)["protein"]]],
                   object[[psmVariables(object)["peptide"]]],
                   function(xx) length(unique(xx)) > 1)
-    cat("  unique:", sum(!mlt),
-        " multiple:", sum(mlt), "\n", sep = "")
+    cat(sum(!mlt), "unique,", sum(mlt), "multiple\n")
     cat("Proteins:", n_pr, "\n")
     invisible(NULL)
 }
