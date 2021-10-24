@@ -22,6 +22,14 @@ reduced() function which returns TRUE for reduced instances,
 FALSE when the spectrum identifiers are duplicated, or NA when
 unknown. The flag can also be set explicitly with the
 reduced()&amp;lt;- setter.
+The constructor can also be initialise some variables needed for
+downstream processing, notably filtering (See
+filterPSMs()). These variables can be extracted with the
+psmVariables() function. They represent the columns in the PSM
+table that identify spectra, peptides, proteins, decoy peptides
+and hit ranks.
+
+
 The constructor uses parsers provided by the mzR or mzID
 packages to read the mzIdentML data. See the vignette for some
 apparent differences in their outputs."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -42,7 +50,7 @@ apparent differences in their outputs."><!-- mathjax --><script src="https://cdn
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.0</span>
       </span>
     </div>
 
@@ -90,11 +98,16 @@ table. Matches to the same scan/spectrum in each raw data file
 are merged into a single data row. Reduced <code>PSM</code> object are
 created with the <code>reducePSMs()</code> function. See examples below.</p></li>
 </ul><p>Objects can be checked for their reduced state with the
-<code>reduced()</code> function which returns TRUE for reduced instances,
-FALSE when the spectrum identifiers are duplicated, or NA when
+<code>reduced()</code> function which returns <code>TRUE</code> for reduced instances,
+<code>FALSE</code> when the spectrum identifiers are duplicated, or NA when
 unknown. The flag can also be set explicitly with the
-<code>reduced()&lt;-</code> setter.</p>
-<p>The constructor uses parsers provided by the <code>mzR</code> or <code>mzID</code>
+<code>reduced()&lt;-</code> setter.</p><ul><li><p>The constructor can also be initialise some variables needed for
+downstream processing, notably filtering (See
+<code><a href="filterPSMs.html">filterPSMs()</a></code>). These variables can be extracted with the
+<code>psmVariables()</code> function. They represent the columns in the PSM
+table that identify spectra, peptides, proteins, decoy peptides
+and hit ranks.</p></li>
+</ul><p>The constructor uses parsers provided by the <code>mzR</code> or <code>mzID</code>
 packages to read the <code>mzIdentML</code> data. See the vignette for some
 apparent differences in their outputs.</p>
     </div>
@@ -104,33 +117,42 @@ apparent differences in their outputs.</p>
   spectrum <span class="op">=</span> <span class="cn">NA</span>,
   peptide <span class="op">=</span> <span class="cn">NA</span>,
   protein <span class="op">=</span> <span class="cn">NA</span>,
-  decoy <span class="op">=</span> <span class="st">"isDecoy"</span>,
-  rank <span class="op">=</span> <span class="st">"rank"</span>,
+  decoy <span class="op">=</span> <span class="cn">NA</span>,
+  rank <span class="op">=</span> <span class="cn">NA</span>,
   parser <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mzR"</span>, <span class="st">"mzID"</span><span class="op">)</span>,
   BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span>
 <span class="op">)</span>
 
-<span class="fu">reduced</span><span class="op">(</span><span class="va">x</span>, <span class="va">spectrumID</span><span class="op">)</span>
+<span class="fu">reduced</span><span class="op">(</span><span class="va">object</span>, spectrum <span class="op">=</span> <span class="fu">psmVariables</span><span class="op">(</span><span class="va">object</span><span class="op">)</span><span class="op">[</span><span class="st">"spectrum"</span><span class="op">]</span><span class="op">)</span>
 
-<span class="fu">reduced</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span>
+<span class="fu">reduced</span><span class="op">(</span><span class="va">object</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span>
 
-<span class="fu">reducePSMs</span><span class="op">(</span><span class="va">x</span>, <span class="va">k</span><span class="op">)</span></code></pre></div>
+<span class="fu">psmVariables</span><span class="op">(</span><span class="va">object</span>, which <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
+
+<span class="fu">psmVariables</span><span class="op">(</span><span class="va">object</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span>
+
+<span class="fu">reducePSMs</span><span class="op">(</span><span class="va">object</span>, k <span class="op">=</span> <span class="va">object</span><span class="op">[[</span><span class="fu">psmVariables</span><span class="op">(</span><span class="va">object</span><span class="op">)</span><span class="op">[</span><span class="st">"spectrum"</span><span class="op">]</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     
 
-<dl><dt>x</dt><dd><p>An instance of class <code>PSM</code>.</p></dd>
+<dl><dt>x</dt><dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> of <code>mzid</code> file names or an instance of
+class <code>PSM</code>.</p></dd>
 </dl><dl><dt>spectrum</dt><dd><p><code>character(1)</code> that defines a spectrum in the PSM
-data. Typically <code>"spectrumID"</code>.</p></dd>
+data. Default are <code>"spectrumID"</code> (mzR parser) or
+<code>"spectrumid"</code> (mzID parser). It is also used to calculate the
+reduced state.</p></dd>
 </dl><dl><dt>peptide</dt><dd><p><code>character(1)</code> that defines a peptide in the PSM
-data. Typically <code>"spequence"</code>.</p></dd>
+data. Detaults are <code>"spequence"</code> (mzR parser) or <code>"pepSeq"</code>
+(mzID parser).</p></dd>
 </dl><dl><dt>protein</dt><dd><p><code>character(1)</code> that defines a protein in the PSM
-data. Typically <code>"DatabaseAccess"</code>.</p></dd>
+data. Detaults are <code>"DatabaseAccess"</code> (mzR parser) or
+<code>"accession"</code> (mzID parser).</p></dd>
 </dl><dl><dt>decoy</dt><dd><p><code>character(1)</code> that defines a decoy hit in the PSM
-data. Default is <code>"isDecoy"</code>. This variable is named
-<code>"isdecoy"</code> if you use the <code>mzID</code> parser.</p></dd>
+data. Detaults are <code>"isDecoy"</code> (mzR parser) or <code>"isdecoy"</code>
+(mzID parser).</p></dd>
 </dl><dl><dt>rank</dt><dd><p><code>character(1)</code> that defines the rank of the petide
 spetrum match in the PSM data. Default is <code>"rank"</code>.</p></dd>
 </dl><dl><dt>parser</dt><dd><p><code>character(1)</code> defining the parser to be used to
@@ -139,16 +161,15 @@ read the <code>mzIdentML</code> files. One of <code>"mzR"</code> (default) or
 </dl><dl><dt>BPPARAM</dt><dd><p>an object inheriting from BiocParallelParam to
 control parallel processing. The default value is
 <code>SerialParam()</code> to read files in series.</p></dd>
-</dl><dl><dt>spectrumID</dt><dd><p><code>character(1)</code> with the column name referring to
-the spectrum identifier or any other unique key for the <code>PSM</code>
-object <code>x</code>. This parameter can be set to calculate the reduced
-state explicitly by by-passing the <code>reduced</code> metadata flag.</p></dd>
-</dl><dl><dt>value</dt><dd><p><code>logical(1)</code> to set the reduced state of the <code>PSM</code>
-object.</p></dd>
+</dl><dl><dt>object</dt><dd><p>An instance of class <code>PSM</code>.</p></dd>
+</dl><dl><dt>value</dt><dd><p>new value to be passed to setter.</p></dd>
+</dl><dl><dt>which</dt><dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> with the PSM variable name to
+retrieve. If <code>"all"</code> (default), all named variables are
+returned. See <code>PSM()</code> for valid PSM variables.</p></dd>
 </dl><dl><dt>k</dt><dd><p>A <code>vector</code> or <code>factor</code> of length equal to <code>nrow(x)</code> that
 defines the primary key used to reduce <code>x</code>. This typically
-corresponds to the spectrum identifier, often names
-<code>spectrumID</code>.</p></dd>
+corresponds to the spectrum identifier. The defauls is to use
+the spectrum PSM variable.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -176,8 +197,15 @@ peptide-spectrum matches stored in <code>files</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 5802 rows and 35 columns.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names(35): sequence spectrumID ... subReplacementResidue subLocation</span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co">## PSM variables</span></span>
+<span class="r-in"><span class="fu">psmVariables</span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         spectrum          peptide          protein            decoy </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     "spectrumID"       "sequence" "DatabaseAccess"        "isDecoy" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             rank </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           "rank" </span>
+<span class="r-in"></span>
 <span class="r-in"><span class="co">## mzID parser</span></span>
-<span class="r-in"><span class="fu">PSM</span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">psm_mzid</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: mzID</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'as.is' should be specified by the caller; using TRUE</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'as.is' should be specified by the caller; using TRUE</span>
@@ -193,11 +221,17 @@ peptide-spectrum matches stored in <code>files</code>.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'as.is' should be specified by the caller; using TRUE</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'as.is' should be specified by the caller; using TRUE</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> reading TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid... DONE!</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 5759 rows and 30 columns.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> names(30): spectrumid scan number(s) ... spectrumFile databaseFile</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">psm</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
-<span class="r-in"><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">psm</span><span class="op">$</span><span class="va">spectrumID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">psm</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span class="co">## different PSM variables</span></span>
+<span class="r-in"><span class="fu">psmVariables</span><span class="op">(</span><span class="va">psm_mzid</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     spectrum      peptide      protein        decoy         rank </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "spectrumid"     "pepseq"  "accession"    "isdecoy"       "rank" </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## Reducing the PSM data</span></span>
+<span class="r-in"><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="va">psm</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  9 24</span>
+<span class="r-in"><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">psm</span><span class="op">$</span><span class="va">spectrumID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">psm</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  8  9 23 24 25 26</span>
 <span class="r-in"><span class="va">psm2</span> <span class="op">&lt;-</span> <span class="va">psm</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span></span>
 <span class="r-in"><span class="fu">reduced</span><span class="op">(</span><span class="va">psm2</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
@@ -215,8 +249,12 @@ peptide-spectrum matches stored in <code>files</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5       KCNQCLKVACTLFYCK controllerType=0 con.. Carbamidomethyl          10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6       KCNQCLKVACTLFYCK controllerType=0 con.. Carbamidomethyl          15</span>
 <span class="r-in"><span class="fu">reduced</span><span class="op">(</span><span class="va">psm2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
+<span class="r-in"><span class="fu">reduced</span><span class="op">(</span><span class="va">psm2</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">rpsm2</span> <span class="op">&lt;-</span> <span class="fu">reducePSMs</span><span class="op">(</span><span class="va">psm2</span>, <span class="va">psm2</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span></span>
+<span class="r-in"><span class="co">## uses by default the spectrum PSM variable, as defined during</span></span>
+<span class="r-in"><span class="co">## the construction - see psmVariables()</span></span>
+<span class="r-in"><span class="va">rpsm2</span> <span class="op">&lt;-</span> <span class="fu">reducePSMs</span><span class="op">(</span><span class="va">psm2</span><span class="op">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The dim() method for DataFrameList objects is deprecated. Please use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   dims() on these objects instead.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The nrow() method for DataFrameList objects is deprecated. Please use</span>
@@ -268,12 +306,17 @@ peptide-spectrum matches stored in <code>files</code>.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz from cache.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz from cache.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/cd13f466667_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/cd1203f97a6_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/cd0439c17b2_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/cd057edb6dd_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
 <span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">mzids</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psm</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 50314 rows and 31 columns.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names(31): sequence spectrumID ... subReplacementResidue subLocation</span>
+<span class="r-in"><span class="fu">psmVariables</span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         spectrum          peptide          protein            decoy </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     "spectrumID"       "sequence" "DatabaseAccess"        "isDecoy" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             rank </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           "rank" </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Here, spectrum identifiers are repeated accross files</span></span>
 <span class="r-in"><span class="va">psm</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"scan=20000"</span>, <span class="va">psm</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span>, <span class="st">"spectrumFile"</span><span class="op">]</span></span>
@@ -316,8 +359,8 @@ peptide-spectrum matches stored in <code>files</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2         387 MNVLLLLVLC...       Q58D62|FET...       32.788864          12894</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     spectrumFile        idFile MetaMorpheus.score PSM.level.q.value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;character&gt;   &lt;character&gt;          &lt;numeric&gt;         &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... cd13f46666...            31.2586                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... cd13f46666...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... cd0439c17b...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... cd0439c17b...            31.2586                 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   modPeptideRef       modName   modMass modLocation subOriginalResidue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;   &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          P_19 Carbamidom...   57.0215           6                 NA</span>
@@ -338,6 +381,7 @@ peptide-spectrum matches stored in <code>files</code>.</p>
 <span class="r-in"><span class="va">psm</span><span class="op">$</span><span class="va">modLocation</span><span class="op">[</span><span class="fl">6</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  6 19</span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co">## here, we need to *explicitly* set pkey to reduce</span></span>
 <span class="r-in"><span class="va">rpsm</span> <span class="op">&lt;-</span> <span class="fu">reducePSMs</span><span class="op">(</span><span class="va">psm</span>, <span class="va">psm</span><span class="op">$</span><span class="va">pkey</span><span class="op">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The dim() method for DataFrameList objects is deprecated. Please use</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   dims() on these objects instead.</span>
