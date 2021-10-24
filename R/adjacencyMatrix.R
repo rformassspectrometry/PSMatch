@@ -65,7 +65,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
                                 peptide = psmVariables(x)["peptide"],
                                 protein = psmVariables(x)["protein"]) {
     if (inherits(x, "PSM"))
-        return(.makeAdjacencyMatrixFromPSM(x, peptides, proteins))
+        return(.makeAdjacencyMatrixFromPSM(x, peptide, protein))
     if (is.character(x))
         return(.makeAdjacencyMatrixFromChar(x, split))
     stop("'x' must be a character or a PSM object.")
@@ -92,14 +92,14 @@ makeAdjacencyMatrix <- function(x, split = ";",
 }
 
 .makeAdjacencyMatrixFromPSM <- function(x, peptide, protein) {
-    n <- length(nx <- unique(x[[peptides]]))
-    m <- length(mx <- unique(x[[proteins]]))
+    n <- length(nx <- unique(x[[peptide]]))
+    m <- length(mx <- unique(x[[protein]]))
     adj <- matrix(0, nrow = n, ncol = m,
                   dimnames = list(rownames = nx,
                                   colnames = mx))
     for (k in nx) {
-        i <- which(x[[peptides]] %in% k)
-        adj[k, x[[proteins]][i]] <- 1
+        i <- which(x[[peptide]] %in% k)
+        adj[k, x[[protein]][i]] <- 1
     }
     adj
 }
