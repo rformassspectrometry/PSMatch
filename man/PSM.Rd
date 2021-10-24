@@ -143,6 +143,7 @@ psmVariables(psm)
 
 ## mzID parser
 psm_mzid <- PSM(f, parser = "mzID")
+psm_mzid
 
 ## different PSM variables
 psmVariables(psm_mzid)

@@ -61,6 +61,7 @@
 ##'
 ##' ## mzID parser
 ##' psm_mzid <- PSM(f, parser = "mzID")
+##' psm_mzid
 ##'
 ##' ## different PSM variables
 ##' psmVariables(psm_mzid)
@@ -169,7 +170,8 @@ setMethod("show", "PSM",
                   cl <- paste("Reduced", cl)
               cat(cl, "with", nrow(object), "rows and",
                   ncol(object), "columns.\n")
-              showDetails(object)
+              if (!isTRUE(reduced(object)))
+                  showDetails(object)
               if (ncol(object) <= 4)
                   cat("names(", ncol(object), "): ",
                       paste(names(object), collapse = " "), "\n",
