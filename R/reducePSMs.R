@@ -12,6 +12,7 @@
 ##' @name PSM
 reducePSMs <- function(object,
                        k = object[[psmVariables(object)["spectrum"]]]) {
+    md <- metadata(object)
     object <- QFeatures::reduceDataFrame(object, k)
     n <- ncol(object)
     for (i in seq_along(object)) {
@@ -23,6 +24,7 @@ reducePSMs <- function(object,
         else .x <- unname(.x)
         object[[i]] <- .x
     }
+    metadata(object) <- md
     metadata(object)[["reduced"]] <- TRUE
     as(object, "PSM")
 }
