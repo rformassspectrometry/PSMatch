@@ -11,7 +11,6 @@
 \alias{reduced}
 \alias{reduced<-}
 \alias{psmVariables}
-\alias{psmVariables<-}
 \title{A class for peptide-spectrum matches}
 \usage{
 PSM(
@@ -31,13 +30,11 @@ reduced(object) <- value
 
 psmVariables(object, which = "all")
 
-psmVariables(object) <- value
-
 reducePSMs(object, k = object[[psmVariables(object)["spectrum"]]])
 }
 \arguments{
-\item{x}{\code{character()} of \code{mzid} file names or an instance of
-class \code{PSM}.}
+\item{x}{\code{character()} of mzid file names, an instance of class
+\code{PSM}, or a \code{data.frame}.}
 
 \item{spectrum}{\code{character(1)} that defines a spectrum in the PSM
 data. Default are \code{"spectrumID"} (mzR parser) or
@@ -100,11 +97,11 @@ sequences or the same sequence with or without a
 post-translational modification. Such objects are typically
 created with the \code{PSM()} constructor starting from \code{mzIdentML}
 files.
-\item Reduced object where the spectrum identifiers (or any equivalent
-column - see example below) are unique keys within the PSM
-table. Matches to the same scan/spectrum in each raw data file
-are merged into a single data row. Reduced \code{PSM} object are
-created with the \code{reducePSMs()} function. See examples below.
+\item Reduced objects where the spectrum identifiers (or any
+equivalent column) are unique keys within the PSM table. Matches
+to the same scan/spectrum are merged into a single PSM data
+row. Reduced \code{PSM} object are created with the \code{reducePSMs()}
+function. See examples below.
 }
 
 Objects can be checked for their reduced state with the
@@ -112,19 +109,32 @@ Objects can be checked for their reduced state with the
 \code{FALSE} when the spectrum identifiers are duplicated, or NA when
 unknown. The flag can also be set explicitly with the
 \verb{reduced()<-} setter.
+}
+\section{Creating PSM objects}{
+
 \itemize{
-\item The constructor can also be initialise some variables needed for
-downstream processing, notably filtering (See
-\code{\link[=filterPSMs]{filterPSMs()}}). These variables can be extracted with the
+\item The \code{\link[=PSM]{PSM()}} constructor uses parsers provided by the \code{mzR} or
+\code{mzID} packages to read the \code{mzIdentML} data. The vignette
+describes some apparent differences in their outputs. The input
+in this case is a character of one more multiple file names.
+\item \code{PSM} objects can also be created from a \code{data.frame} object (or
+any variable that can be coerced into a \link{DataFrame}.
+\item Finally, \code{\link[=PSM]{PSM()}} can also take a \code{PSM} object as input, which
+leaves the PSM data as is and is used to set/update the PSM
+variables.
+\item The constructor can also initialise variables (called \emph{PSM
+variables}) needed for downstream processing, notably filtering
+(see \code{\link[=filterPSMs]{filterPSMs()}}). These variables can be extracted with the
 \code{\link[=psmVariables]{psmVariables()}} function. They represent the columns in the PSM
 table that identify spectra, peptides, proteins, decoy peptides
-and hit ranks.
+and hit ranks. The value of these variables will depend on the
+backend used to create the object, or left blank (i.e. encoded
+as \code{NA}) when building an object by hand from a \code{data.frame}. In
+such situation, they need to be passed explicitly by the user as
+arguments to \code{\link[=PSM]{PSM()}}.
+}
 }
 
-The constructor uses parsers provided by the \code{mzR} or \code{mzID}
-packages to read the \code{mzIdentML} data. See the vignette for some
-apparent differences in their outputs.
-}
 \examples{
 
 ## ---------------------------------
@@ -210,4 +220,27 @@ reduced(rpsm, "pkey")
 ## modification locations are preserved.
 (i <- which(rpsm$pkey == "QEP2LC6_HeLa_50ng_251120_01-calib.mzML::12894"))
 DataFrame(rpsm[i, c("sequence", "pkey", "modName", "modLocation")])
+
+## ---------------------------------
+## PSM from a data.frame
+## ---------------------------------
+
+psmdf <- data.frame(spectrum = paste0("sp", 1:10),
+                    sequence = replicate(10,
+                                         paste(sample(getAminoAcids()[-1, "AA"], 10),
+                                               collapse = "")),
+                    protein = sample(paste0("Prot", LETTERS[1:7]), 10,
+                                     replace = TRUE),
+                    decoy = rep(FALSE, 10),
+                    rank = rep(1, 10))
+
+psm <- PSM(psmdf)
+psm
+psmVariables(psm)
+
+
+psm <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
+           protein = "protein", decoy = "decoy", rank = "rank")
+psm
+psmVariables(psm)
 }

@@ -20,11 +20,11 @@
 ##'   created with the `PSM()` constructor starting from `mzIdentML`
 ##'   files.
 ##'
-##' - Reduced object where the spectrum identifiers (or any equivalent
-##'   column - see example below) are unique keys within the PSM
-##'   table. Matches to the same scan/spectrum in each raw data file
-##'   are merged into a single data row. Reduced `PSM` object are
-##'   created with the `reducePSMs()` function. See examples below.
+##' - Reduced objects where the spectrum identifiers (or any
+##'   equivalent column) are unique keys within the PSM table. Matches
+##'   to the same scan/spectrum are merged into a single PSM data
+##'   row. Reduced `PSM` object are created with the `reducePSMs()`
+##'   function. See examples below.
 ##'
 ##' Objects can be checked for their reduced state with the
 ##' `reduced()` function which returns `TRUE` for reduced instances,
@@ -32,16 +32,30 @@
 ##' unknown. The flag can also be set explicitly with the
 ##' `reduced()<-` setter.
 ##'
-##' - The constructor can also be initialise some variables needed for
-##'   downstream processing, notably filtering (See
-##'   [filterPSMs()]). These variables can be extracted with the
+##' @section Creating PSM objects:
+##'
+##' - The [PSM()] constructor uses parsers provided by the `mzR` or
+##'   `mzID` packages to read the `mzIdentML` data. The vignette
+##'   describes some apparent differences in their outputs. The input
+##'   in this case is a character of one more multiple file names.
+##'
+##' - `PSM` objects can also be created from a `data.frame` object (or
+##'   any variable that can be coerced into a [DataFrame].
+##'
+##' - Finally, [PSM()] can also take a `PSM` object as input, which
+##'   leaves the PSM data as is and is used to set/update the PSM
+##'   variables.
+##'
+##' - The constructor can also initialise variables (called *PSM
+##'   variables*) needed for downstream processing, notably filtering
+##'   (see [filterPSMs()]). These variables can be extracted with the
 ##'   [psmVariables()] function. They represent the columns in the PSM
 ##'   table that identify spectra, peptides, proteins, decoy peptides
-##'   and hit ranks.
-##'
-##' The constructor uses parsers provided by the `mzR` or `mzID`
-##' packages to read the `mzIdentML` data. See the vignette for some
-##' apparent differences in their outputs.
+##'   and hit ranks. The value of these variables will depend on the
+##'   backend used to create the object, or left blank (i.e. encoded
+##'   as `NA`) when building an object by hand from a `data.frame`. In
+##'   such situation, they need to be passed explicitly by the user as
+##'   arguments to [PSM()].
 ##'
 ##' @examples
 ##'
@@ -128,6 +142,29 @@
 ##' ## modification locations are preserved.
 ##' (i <- which(rpsm$pkey == "QEP2LC6_HeLa_50ng_251120_01-calib.mzML::12894"))
 ##' DataFrame(rpsm[i, c("sequence", "pkey", "modName", "modLocation")])
+##'
+##' ## ---------------------------------
+##' ## PSM from a data.frame
+##' ## ---------------------------------
+##'
+##' psmdf <- data.frame(spectrum = paste0("sp", 1:10),
+##'                     sequence = replicate(10,
+##'                                          paste(sample(getAminoAcids()[-1, "AA"], 10),
+##'                                                collapse = "")),
+##'                     protein = sample(paste0("Prot", LETTERS[1:7]), 10,
+##'                                      replace = TRUE),
+##'                     decoy = rep(FALSE, 10),
+##'                     rank = rep(1, 10))
+##'
+##' psm <- PSM(psmdf)
+##' psm
+##' psmVariables(psm)
+##'
+##'
+##' psm <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
+##'            protein = "protein", decoy = "decoy", rank = "rank")
+##' psm
+##' psmVariables(psm)
 NULL
 
 
@@ -170,7 +207,7 @@ setMethod("show", "PSM",
                   cl <- paste("Reduced", cl)
               cat(cl, "with", nrow(object), "rows and",
                   ncol(object), "columns.\n")
-              if (!isTRUE(reduced(object)))
+              if (!any(is.na(psmVariables(object))) & !isTRUE(reduced(object)) & nrow(object) > 0)
                   showDetails(object)
               if (ncol(object) <= 4)
                   cat("names(", ncol(object), "): ",
@@ -188,8 +225,8 @@ setMethod("show", "PSM",
 
 
 
-##' @param x `character()` of `mzid` file names or an instance of
-##'     class `PSM`.
+##' @param x `character()` of mzid file names, an instance of class
+##'     `PSM`, or a `data.frame`.
 ##'
 ##' @param spectrum `character(1)` that defines a spectrum in the PSM
 ##'     data. Default are `"spectrumID"` (mzR parser) or
@@ -259,9 +296,15 @@ PSM <- function(x,
                                rank = "rank")
         }
     } else if (is.data.frame(x)) {
-        ## TODO - constructor for data.frame
+        psm <- as(DataFrame(x), "PSM")
+        .psmVariables <- c(spectrum = NA_character_,
+                           peptide = NA_character_,
+                           protein = NA_character_,
+                           decoy = NA_character_,
+                           rank = NA_character_)
     } else {
         stopifnot(inherits(x, "PSM"))
+        .psmVariables <- psmVariables(x)
         psm <- x ## use as is
     }
     ## Update PSM variables based on contstructor inputs
@@ -274,7 +317,7 @@ PSM <- function(x,
     if (decoy %in% names(psm))
         .psmVariables["decoy"] <- decoy
     if (rank %in% names(psm))
-        psmVariables["rank"] <- rank
+        .psmVariables["rank"] <- rank
     metadata(psm)$variables <- .psmVariables
     psm
 }
@@ -318,11 +361,9 @@ psmVariables <- function(object, which = "all") {
     .psmVariables[which]
 }
 
-##' @name PSM
-##'
-##' @export
-"psmVariables<-" <- function(object, value) {
-    value <- as.character(value)
-    metadata(object)[["variables"]] <- value
-    object
-}
+## ##' @name PSM
+## "psmVariables<-" <- function(object, value) {
+##     value <- as.character(value)
+##     metadata(object)[["variables"]] <- value
+##     object
+## }
