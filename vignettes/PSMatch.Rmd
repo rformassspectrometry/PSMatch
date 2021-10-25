@@ -98,7 +98,7 @@ one can *reduce* the `DataFrame` object by the `spectrumID` variable,
 so that each scan correponds to a single row that still stores all
 values[^rownames]:
 
-[^rownames]: The rownames aren't needed here are are removed to reduce
+[^rownames]: The rownames aren't needed here and are removed to reduce
     to output in the the next code chunk display parts of `id2`.
 
 ```{r, warning = FALSE}
