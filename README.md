@@ -8,7 +8,7 @@ to (1) make them more general and (2) integrate with the
 infrastructure.
 
 Find out more about the package in the
-[vignette](https://rformassspectrometry.github.io/PSM/articles/PSMatch.html).
+[vignette](https://rformassspectrometry.github.io/PSMatch/articles/PSMatch.html).
 
 This package will eventually be moved to the [*R for Mass
 Spectrometry* organisation](https://github.com/rformassspectrometry)
