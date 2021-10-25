@@ -1,11 +1,16 @@
-##' @title Create an adjacency matrix.
+##' @title Convert to/from an adjacency matrix.
 ##'
 ##' @description
 ##'
-##' This function created a peptide-by-protein adjacency matrix from a
-##' `character` or an instance of class `PSM`.
+##' There are two ways that peptide/protein matches are commonly
+##' stored: either as a vector or an adjacency matrix. The functions
+##' described below convert between these two format.
 ##'
 ##' @details
+##'
+##' The [makeAdjacencyMatrix()] function creates a peptide-by-protein
+##' adjacency matrix from a `character` or an instance of class
+##' [PSM()].
 ##'
 ##' The character is formatted as `x <- c("ProtA", "ProtB",
 ##' "ProtA;ProtB", ...)`, as commonly encoutered in proteomics data
@@ -14,8 +19,14 @@
 ##' to "ProtA" and "ProtB", and so on. The resulting matrix contain
 ##' `length(x)` rows an as many columns as there are unique protein
 ##' idenifiers in `x`. The column are always named after the protein
-##' idenifiers. If the protein identifier vector is named and the
-##' names are unique, these are then used to name to matrix rows.
+##' idenifiers. If the peptide/protein vector is named and the names
+##' are unique, these are then used to name to matrix rows.
+##'
+##' The [makePeptideProteinVector()] function does the opposite
+##' operation, taking an adjacency matrix as input and retruning a
+##' peptide/protein vector. The matrix colnames are used to populate
+##' the vector and the matrix rownames are used to name the vector
+##' elements.
 ##'
 ##' @param x Either an instance of class `PSM` or a `character`. See
 ##'     example below for details.
@@ -33,22 +44,40 @@
 ##'     `peptide` PSM variable as defined in [psmVariables()].Default
 ##'     is `DatanbaseAccess`.
 ##'
-##' @return A peptide-by-protein adjacency matrix.
+##' @return A peptide-by-protein adjacency matrix or peptide/protein
+##'     vector.
 ##'
 ##' @author Laurent Gatto
+##'
+##' @name adjacencyMatrix
 ##'
 ##' @export
 ##'
 ##' @examples
+##'
+##' ## -----------------------
+##' ## From a character
+##' ## -----------------------
+##'
 ##' ## Protein vector without names
 ##' prots <- c("ProtA", "ProtB", "ProtA;ProtB")
 ##' makeAdjacencyMatrix(prots)
 ##'
 ##' ## Named protein vector
 ##' names(prots) <- c("pep1", "pep2", "pep3")
-##' makeAdjacencyMatrix(prots)
+##' prots
+##' m <- makeAdjacencyMatrix(prots)
+##' m
 ##'
+##' ## Back to vector
+##' vec <- makePeptideProteinVector(m)
+##' vec
+##' identical(prots, vec)
+##'
+##' ## -----------------------
 ##' ## From a PSM object
+##' ## -----------------------
+##'
 ##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 ##' psm <- PSM(f) |>
 ##'        filterPsmDecoy() |>
@@ -101,4 +130,20 @@ makeAdjacencyMatrix <- function(x, split = ";",
         adj[k, x[[protein]][i]] <- 1
     }
     adj
+}
+
+##' @param m An adjacency matrix.
+##'
+##' @param collapse `character(1)` indicating how to collapse protein
+##'     names for non-proteotypic peptides. Default is `";"`.
+##'
+##' @name adjacencyMatrix
+##'
+##' @export
+makePeptideProteinVector <- function(m, collapse = ";") {
+    vec <- rep(NA_character_, nrow(m))
+    for (i in seq_len(nrow(m)))
+        vec[i] <- paste(names(which(m[i, ] != 0)), collapse = collapse)
+    names(vec) <- rownames(m)
+    vec
 }
