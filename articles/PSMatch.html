@@ -87,11 +87,11 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.14/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-10-24 22:08:03<br><strong>Compiled</strong>: Sun Oct 24 22:12:33 2021</p>
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.14/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-10-25 06:04:40<br><strong>Compiled</strong>: Mon Oct 25 06:12:36 2021</p>
 <div class="section level1">
 <h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h1>
-<p>This vignette demonstrates how the handle and process proteomics identification data using the <code>PSM</code> package and general handling packages such <code>dplyr</code>.</p>
+<p>This vignette demonstrates how the handle and process proteomics identification data using the <code>PSM</code> package.</p>
 </div>
 <div class="section level1">
 <h1 id="handling-and-processing-identification-data">Handling and processing identification data<a class="anchor" aria-label="anchor" href="#handling-and-processing-identification-data"></a>
@@ -260,13 +260,13 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.278   0.008   0.286</code></pre>
+##   0.269   0.012   0.282</code></pre>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required namespace: mzID</code></pre>
 <pre><code>## reading TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid... DONE!</code></pre>
 <pre><code>##    user  system elapsed 
-##   7.130   0.096   7.226</code></pre>
+##   9.352   0.100   9.453</code></pre>
 <p>Other differences in the two parsers include the columns that are returned, way they name them, and, as will shown below the matches that are returned. Below, note for instance (and this will be important later), that there is not equivalent of <code>"modLocation"</code> in <code>id2</code>.</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></code></pre></div>
@@ -395,53 +395,46 @@ document.addEventListener("DOMContentLoaded", function() {
 ## [8] base     
 ## 
 ## other attached packages:
-## [1] dplyr_1.0.7         PSMatch_0.5.0       S4Vectors_0.31.5   
-## [4] BiocGenerics_0.39.2 BiocStyle_2.21.4   
+## [1] PSMatch_0.5.0       S4Vectors_0.31.5    BiocGenerics_0.39.2
+## [4] BiocStyle_2.21.4   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] MatrixGenerics_1.5.4         Biobase_2.53.0              
-##  [3] sass_0.4.0                   foreach_1.5.1               
-##  [5] jsonlite_1.7.2               bslib_0.3.1                 
-##  [7] assertthat_0.2.1             BiocManager_1.30.16         
-##  [9] msdata_0.33.2                GenomeInfoDbData_1.2.7      
-## [11] yaml_2.2.1                   pillar_1.6.4                
-## [13] lattice_0.20-45              glue_1.4.2                  
-## [15] digest_0.6.28                GenomicRanges_1.45.0        
-## [17] XVector_0.33.0               plyr_1.8.6                  
-## [19] htmltools_0.5.2              Matrix_1.3-4                
-## [21] XML_3.99-0.8                 pkgconfig_2.0.3             
-## [23] bookdown_0.24                zlibbioc_1.39.0             
-## [25] purrr_0.3.4                  MultiAssayExperiment_1.19.16
-## [27] BiocParallel_1.27.17         tibble_3.1.5                
-## [29] generics_0.1.0               AnnotationFilter_1.17.1     
-## [31] IRanges_2.27.2               ellipsis_0.3.2              
-## [33] cachem_1.0.6                 SummarizedExperiment_1.23.5 
-## [35] lazyeval_0.2.2               cli_3.0.1                   
-## [37] magrittr_2.0.1               crayon_1.4.1                
-## [39] memoise_2.0.0                evaluate_0.14               
-## [41] fs_1.5.0                     ncdf4_1.17                  
-## [43] fansi_0.5.0                  doParallel_1.0.16           
-## [45] MASS_7.3-54                  QFeatures_1.3.6             
-## [47] mzR_2.27.1                   textshaping_0.3.6           
-## [49] tools_4.1.1                  lifecycle_1.0.1             
-## [51] matrixStats_0.61.0           stringr_1.4.0               
-## [53] cluster_2.1.2                DelayedArray_0.19.4         
-## [55] compiler_4.1.1               pkgdown_1.9000.9000.9000    
-## [57] jquerylib_0.1.4              GenomeInfoDb_1.29.10        
-## [59] mzID_1.31.0                  systemfonts_1.0.3           
-## [61] rlang_0.99.0.9000            grid_4.1.1                  
-## [63] RCurl_1.98-1.5               iterators_1.0.13            
-## [65] MsCoreUtils_1.5.0            igraph_1.2.7                
-## [67] bitops_1.0-7                 rmarkdown_2.11              
-## [69] codetools_0.2-18             DBI_1.1.1                   
-## [71] R6_2.5.1                     knitr_1.36                  
-## [73] fastmap_1.1.0                utf8_1.2.2                  
-## [75] clue_0.3-60                  rprojroot_2.0.2             
-## [77] ragg_1.1.3                   ProtGenerics_1.25.2         
-## [79] desc_1.4.0                   stringi_1.7.5               
-## [81] parallel_4.1.1               Rcpp_1.0.7                  
-## [83] vctrs_0.3.8                  tidyselect_1.1.1            
-## [85] xfun_0.27</code></pre>
+##  [1] Rcpp_1.0.7                   msdata_0.33.2               
+##  [3] lattice_0.20-45              foreach_1.5.1               
+##  [5] rprojroot_2.0.2              digest_0.6.28               
+##  [7] plyr_1.8.6                   R6_2.5.1                    
+##  [9] GenomeInfoDb_1.29.10         mzID_1.31.0                 
+## [11] evaluate_0.14                zlibbioc_1.39.0             
+## [13] rlang_0.99.0.9000            lazyeval_0.2.2              
+## [15] jquerylib_0.1.4              Matrix_1.3-4                
+## [17] rmarkdown_2.11               mzR_2.27.1                  
+## [19] pkgdown_1.9000.9000.9000     textshaping_0.3.6           
+## [21] desc_1.4.0                   BiocParallel_1.27.17        
+## [23] stringr_1.4.0                ProtGenerics_1.25.2         
+## [25] igraph_1.2.7                 RCurl_1.98-1.5              
+## [27] DelayedArray_0.19.4          compiler_4.1.1              
+## [29] xfun_0.27                    pkgconfig_2.0.3             
+## [31] systemfonts_1.0.3            htmltools_0.5.2             
+## [33] SummarizedExperiment_1.23.5  GenomeInfoDbData_1.2.7      
+## [35] bookdown_0.24                IRanges_2.27.2              
+## [37] codetools_0.2-18             matrixStats_0.61.0          
+## [39] XML_3.99-0.8                 crayon_1.4.1                
+## [41] MASS_7.3-54                  bitops_1.0-7                
+## [43] grid_4.1.1                   jsonlite_1.7.2              
+## [45] AnnotationFilter_1.17.1      magrittr_2.0.1              
+## [47] MsCoreUtils_1.5.0            ncdf4_1.17                  
+## [49] cli_3.0.1                    stringi_1.7.5               
+## [51] cachem_1.0.6                 XVector_0.33.0              
+## [53] fs_1.5.0                     doParallel_1.0.16           
+## [55] MultiAssayExperiment_1.19.16 bslib_0.3.1                 
+## [57] ragg_1.1.3                   iterators_1.0.13            
+## [59] tools_4.1.1                  QFeatures_1.3.6             
+## [61] Biobase_2.53.0               MatrixGenerics_1.5.4        
+## [63] parallel_4.1.1               fastmap_1.1.0               
+## [65] yaml_2.2.1                   clue_0.3-60                 
+## [67] cluster_2.1.2                BiocManager_1.30.16         
+## [69] GenomicRanges_1.45.0         memoise_2.0.0               
+## [71] knitr_1.36                   sass_0.4.0</code></pre>
 </div>
 <div class="footnotes">
 <hr>
