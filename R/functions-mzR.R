@@ -20,9 +20,9 @@
 ##'
 ##' @author Laurent Gatto
 ##'
-##' @rdname mzRident2dfr
-##'
 ##' @importFrom BiocGenerics fileName
+##'
+##' @noRd
 ##'
 ##' @examples
 ##' ## find path to an mzIdentML file
