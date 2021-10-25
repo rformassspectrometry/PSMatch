@@ -50,9 +50,8 @@
 ##'
 ##' ## From a PSM object
 ##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
-##' library(magrittr)
-##' psm <- PSM(f) %>%
-##'        filterPsmDecoy() %>%
+##' psm <- PSM(f) |>
+##'        filterPsmDecoy() |>
 ##'        filterPsmRank()
 ##' psm
 ##' adj <- makeAdjacencyMatrix(psm)

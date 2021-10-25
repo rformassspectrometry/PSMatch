@@ -8,7 +8,7 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
     %\VignettePackage{PSMatch}
-    %\VignetteDepends{mzR,mzID,BiocStyle,msdata,magrittr,dplyr,tidyr,msdata,QFeatures}
+    %\VignetteDepends{mzR,mzID,BiocStyle,msdata,msdata}
 ---
 
 ```{r style, echo = FALSE, results = 'asis', message=FALSE}
@@ -22,14 +22,12 @@ BiocStyle::markdown()
 
 ```{r setup, message = FALSE, echo = FALSE}
 library("PSMatch")
-library("dplyr")
 ```
 
 # Introduction
 
 This vignette demonstrates how the handle and process proteomics
-identification data using the `PSM` package and general handling
-packages such `dplyr`.
+identification data using the `PSM` package.
 
 # Handling and processing identification data
 

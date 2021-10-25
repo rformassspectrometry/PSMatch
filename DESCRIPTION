@@ -21,18 +21,15 @@ Imports:
     methods,
     BiocParallel,
     BiocGenerics,
-    ProtGenerics (>= 1.23.1)
+    ProtGenerics (>= 1.23.1),
+    QFeatures,
+    MsCoreUtils
 Suggests:
     msdata,
     rpx,
     mzID,
     mzR,
-    dplyr,
-    magrittr,
-    tidyr,
-    QFeatures,
     Spectra,
-    MsCoreUtils,
     BiocStyle,
     rmarkdown,
     knitr,

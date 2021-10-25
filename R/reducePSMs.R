@@ -7,6 +7,8 @@
 ##'
 ##' @return `reducePSMs()` returns a reduced version of the `x` input.
 ##'
+##' @importFrom QFeatures reduceDataFrame
+##'
 ##' @export reducePSMs
 ##'
 ##' @name PSM

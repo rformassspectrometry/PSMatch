@@ -1,27 +1,29 @@
 ##' @title Adds MS2 Fragments
-##' 
+##'
 ##' @param x An instance of class `Spectra` of length 1, containing a
 ##'     spectra variable `"sequence"` with a `character(1)`
 ##'     representing a valid peptide sequence.
-##' 
+##'
 ##' @param ppm m/z relative acceptable difference (in ppm) for peaks
 ##'     to be considered matching (see [MsCoreUtils::common()] for
 ##'     more #' details).
-##' 
+##'
 ##' @param tolerance absolute acceptable difference of m/z values for
 ##'     peaks to be considered matching (see [MsCoreUtils::common()]
 ##'     for more details).
 ##'
 ##' @return Return a `character()` with fragment ion labels.
 ##'
-##' @export 
-##' 
+##' @importFrom MsCoreUtils common
+##'
+##' @export
+##'
 ##' @author Johannes Rainer, Sebastian Gibb, Laurent Gatto
 ##'
 ##' @examples
 ##'
 ##' library("Spectra")
-##' 
+##'
 ##' sp <- DataFrame(msLevel = 2L, rtime = 2345, sequence = "SIGFEGDSIGR")
 ##' sp$mz <- list(c(100.048614501953, 110.069030761719, 112.085876464844,
 ##'                 117.112571716309, 158.089569091797, 163.114898681641,
@@ -68,7 +70,7 @@ addFragments <- function(x,
               length(x) == 1)
     stopifnot("sequence" %in% Spectra::spectraVariables(x))
     y <- Spectra::spectraData(x)[["sequence"]]
-    
+
     ## Prepare x and y data
     x_data <- Spectra::peaksData(x)[[1L]]
     y_data <- calculateFragments(y, verbose = FALSE)
@@ -83,5 +85,5 @@ addFragments <- function(x,
     ## Prepare labels
     labels <- rep(NA_character_, nrow(x_data))
     labels[idx] <- y_data[idy, "ion"]
-    labels    
+    labels
 }
