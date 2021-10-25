@@ -26,6 +26,25 @@ test_that("Compare makeAjacendyMatrix() makePeptideProteinVector() outputs on te
     expect_identical(vec, vec2)
 })
 
+test_that("Check makeAjacendyMatrix() works without split", {
+    vec <- LETTERS[1:3]
+    names(vec) <- letters[1:3]
+    adj0 <- diag(3)
+    colnames(adj0) <- LETTERS[1:3]
+    rownames(adj0) <- letters[1:3]
+    adj1 <- makeAdjacencyMatrix(vec)
+    adj2 <- makeAdjacencyMatrix(vec, split = NULL)
+    expect_identical(adj0, adj2)
+    expect_identical(adj1, adj2)
+})
+
+test_that("Check makeAjacendyMatrix() fails with wrong input", {
+    adjdf <- data.frame(m)
+    adjlist <- as.list(adjdf)
+    expect_error(makeAjacendyMatrix(adjdf))
+    expect_error(makeAjacendyMatrix(adjlist))
+})
+
 test_that("makeAjacendyMatrix() works on PMS data (1)", {
     f <- msdata::ident(full.names = TRUE, pattern = "TMT")
     psm <- filterPSMs(PSM(f))
