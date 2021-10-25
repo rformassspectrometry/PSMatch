@@ -1,16 +1,11 @@
 # Handling peptide-spectrum matches
 
-A simple package to load, manage and process PSMs (peptide-spectrum
-matches). Code in this package is partly composed of functions ported
-from [`MSnbase`](http://lgatto.github.io/MSnbase/) with the goal
-to (1) make them more general and (2) integrate with the
-[`Spectra`](https://rformassspectrometry.github.io/Spectra/)
+A simple package to load, process and analyse PSMs (Peptide-Spectrum
+Matches). Code in this package is partly composed of functions ported
+from [`MSnbase`](http://lgatto.github.io/MSnbase/) with the goal to
+(1) make them more general and (2) integrate them with the [*R for
+Mass Spectrometry*](https://github.com/rformassspectrometry)
 infrastructure.
 
 Find out more about the package in the
 [vignette](https://rformassspectrometry.github.io/PSMatch/articles/PSMatch.html).
-
-This package will eventually be moved to the [*R for Mass
-Spectrometry* organisation](https://github.com/rformassspectrometry)
-and most likely renamed. It is very much work-in-progress at the
-moment.
