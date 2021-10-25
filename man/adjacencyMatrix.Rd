@@ -56,9 +56,9 @@ spreadsheets. It defines that the first peptide is mapped to
 protein "ProtA", the second one to protein "ProtB", the third one
 to "ProtA" and "ProtB", and so on. The resulting matrix contain
 \code{length(x)} rows an as many columns as there are unique protein
-idenifiers in \code{x}. The column are always named after the protein
-idenifiers. If the peptide/protein vector is named and the names
-are unique, these are then used to name to matrix rows.
+idenifiers in \code{x}. The columns are named after the protein
+idenifiers and the peptide/protein vector namesa are used to name
+to matrix rows (even if these aren't unique).
 
 The \code{\link[=makePeptideProteinVector]{makePeptideProteinVector()}} function does the opposite
 operation, taking an adjacency matrix as input and retruning a

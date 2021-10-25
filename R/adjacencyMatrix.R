@@ -18,9 +18,9 @@
 ##' protein "ProtA", the second one to protein "ProtB", the third one
 ##' to "ProtA" and "ProtB", and so on. The resulting matrix contain
 ##' `length(x)` rows an as many columns as there are unique protein
-##' idenifiers in `x`. The column are always named after the protein
-##' idenifiers. If the peptide/protein vector is named and the names
-##' are unique, these are then used to name to matrix rows.
+##' idenifiers in `x`. The columns are named after the protein
+##' idenifiers and the peptide/protein vector namesa are used to name
+##' to matrix rows (even if these aren't unique).
 ##'
 ##' The [makePeptideProteinVector()] function does the opposite
 ##' operation, taking an adjacency matrix as input and retruning a
@@ -110,9 +110,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
     }
     adj <- matrix(0, nrow = n, ncol = m)
     colnames(adj) <- cnames
-    if (!is.null(names(x)) & !anyDuplicated(names(x))) {
-        rownames(adj) <- names(x)
-    }
+    rownames(adj) <- names(x)
     for (i in seq_along(col_list)) {
         adj[i, col_list[[i]]] <- 1
     }
@@ -141,6 +139,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
 ##'
 ##' @export
 makePeptideProteinVector <- function(m, collapse = ";") {
+    stopifnot(is.matrix(m))
     vec <- rep(NA_character_, nrow(m))
     for (i in seq_len(nrow(m)))
         vec[i] <- paste(names(which(m[i, ] != 0)), collapse = collapse)
