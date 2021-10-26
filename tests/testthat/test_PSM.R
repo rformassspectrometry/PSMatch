@@ -15,7 +15,11 @@ psmdf0 <- data.frame(spectrum = paste0("sp", 1:10),
                      score = runif(10))
 
 
-## Filtering will have an effect here
+## Filtering will have an effect here. There will be 12 PSMs left
+## after filtering for decoys , 10 PSMs after filtering for rank, 5
+## when keeping proteotypic peptides. When filtering decoy and high
+## rank PSMs, we also get rid of all the non-unique peptides, which
+## leaves 10 PSMs.
 psmdf1 <- data.frame(spectrum = paste0("sp", 1:15),
                      sequence = c(psmdf0$sequence,
                                   psmdf0$sequence[1:5]),
@@ -23,7 +27,9 @@ psmdf1 <- data.frame(spectrum = paste0("sp", 1:15),
                      decoy = c(rep(FALSE, 12), rep(TRUE, 3)),
                      rank = c(rep(1, 10), rep(2, 5)),
                      score = runif(15))
-
+not_decoy <- sum(!psmdf1$decoy)   ## 12
+rank_one <- sum(psmdf1$rank == 1) ## 10
+unique_pep <- sum(table(psmdf1$sequence) == 1) ## 5
 
 test_that("Test PSM construction from data.frame", {
     psm <- PSM(psmdf0)
@@ -74,14 +80,10 @@ test_that("Test PSM filtering", {
                spectrum = "spectrum", peptide = "sequence",
                protein = "protein")
     expect_true(validObject(psm))
-    not_decoy <- !psm$decoy
-    rank_one <- psm$rank == 1
-    unique_pep <- duplicated(psm$sequence)
-    expect_identical(nrow(filterPsmDecoy(psm)), sum(not_decoy))
-    expect_identical(nrow(filterPsmRank(psm)), sum(rank_one))
-    expect_identical(nrow(filterPsmNonProteotypic(psm)),
-                     sum(unique_pep))
-    ## expect_identical(nrow(filterPSMs(psm)), sum(left))
+    expect_identical(nrow(filterPsmDecoy(psm)), not_decoy)
+    expect_identical(nrow(filterPsmRank(psm)), rank_one)
+    expect_identical(nrow(filterPsmNonProteotypic(psm)), unique_pep)
+    expect_identical(nrow(filterPSMs(psm)), 10L)
 })
 
 test_that("Test PSM construction from mzid", {
