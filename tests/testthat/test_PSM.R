@@ -1,3 +1,6 @@
+## Data for construction from mzid. Strangely, the test fails when
+## creating the object with the mzID parser due to parallel
+## processing.
 f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 psm_mzR <- PSM(f, parser = "mzR")
 psm_mzID <- PSM(f, parser = "mzID")
@@ -13,7 +16,6 @@ psmdf0 <- data.frame(spectrum = paste0("sp", 1:10),
                      decoy = rep(FALSE, 10),
                      rank = rep(1, 10),
                      score = runif(10))
-
 
 ## Filtering will have an effect here. There will be 12 PSMs left
 ## after filtering for decoys , 10 PSMs after filtering for rank, 5
@@ -31,6 +33,7 @@ not_decoy <- sum(!psmdf1$decoy)   ## 12
 rank_one <- sum(psmdf1$rank == 1) ## 10
 unique_pep <- sum(table(psmdf1$sequence) == 1) ## 5
 
+
 test_that("Test PSM construction from data.frame", {
     psm <- PSM(psmdf0)
     expect_true(validObject(psm))
@@ -42,7 +45,6 @@ test_that("Test PSM construction from data.frame", {
                 protein = "protein")
     expect_true(sum(is.na(psmVariables(psm2))) == 0)
 })
-
 
 test_that("Test PSM filtering (no change)", {
     psm <- PSM(psmdf0)
