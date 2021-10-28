@@ -140,16 +140,16 @@ test_that("reducePSMs works", {
     expect_identical(rpsm[["spectrum"]], unique(psm[["spectrum"]]))
     expect_identical(rpsm[["decoy"]], rep(FALSE, 5))
     expect_identical(rpsm[["rank"]], rep(1, 5))
-    ## expect_equal(rpsm[["protein"]],
-    ##              CharacterList(list(sp1 = psmdf2$protein[1:2],
-    ##                                 sp2 = psmdf2$protein[3],
-    ##                                 sp3 = psmdf2$protein[5],
-    ##                                 sp4 = psmdf2$protein[6],
-    ##                                 sp5 = psmdf2$protein[7])))
-    ## expect_equal(rpsm[["sequence"]],
-    ##              CharacterList(list(sp1 = psmdf2$sequence[1:2],
-    ##                                 sp2 = psmdf2$sequence[3:4],
-    ##                                 sp3 = psmdf2$sequence[5],
-    ##                                 sp4 = psmdf2$sequence[6],
-    ##                                 sp5 = psmdf2$sequence[7])))
+    expect_equal(rpsm[["protein"]],
+                 IRanges::CharacterList(list(sp1 = psmdf2$protein[1:2],
+                                             sp2 = psmdf2$protein[3],
+                                             sp3 = psmdf2$protein[5],
+                                             sp4 = psmdf2$protein[6],
+                                             sp5 = psmdf2$protein[7])))
+    expect_equal(rpsm[["sequence"]],
+                 IRanges::CharacterList(list(sp1 = psmdf2$sequence[1:2],
+                                             sp2 = psmdf2$sequence[3:4],
+                                             sp3 = psmdf2$sequence[5],
+                                             sp4 = psmdf2$sequence[6],
+                                             sp5 = psmdf2$sequence[7])))
 })
