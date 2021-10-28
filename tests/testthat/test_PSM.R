@@ -34,6 +34,16 @@ rank_one <- sum(psmdf1$rank == 1) ## 10
 unique_pep <- sum(table(psmdf1$sequence) == 1) ## 5
 
 
+psmdf2 <- data.frame(spectrum = rep(paste0("sp", 1:5),
+                                   c(2, 2, 1, 1, 1)),
+                    sequence = psmdf0$sequence[1:7],
+                    protein = c("ProtA", "ProtB",
+                                "ProtA", "ProtA",
+                                paste0("Prot", LETTERS[3:5])),
+                    decoy = rep(FALSE, 7),
+                    rank = rep(1, 7))
+
+
 test_that("Test PSM construction from data.frame", {
     psm <- PSM(psmdf0)
     expect_true(validObject(psm))
@@ -44,6 +54,8 @@ test_that("Test PSM construction from data.frame", {
                 spectrum = "spectrum", peptide = "sequence",
                 protein = "protein")
     expect_true(sum(is.na(psmVariables(psm2))) == 0)
+    expect_error(psmVariables(psm, "error"))
+    expect_error(psmVariables(psm2, "error"))
 })
 
 test_that("Test PSM filtering (no change)", {
@@ -97,4 +109,47 @@ test_that("Test PSM construction from mzid", {
     expect_equal(sum(is.na(psmVariables(psm_mzID))), 0)
     expect_identical(names(psmVariables(psm_mzID)),
                      names(psmVariables(psm_mzR)))
+})
+
+
+test_that("Test PSM show", {
+    expect_null(show(psm_mzR))
+    expect_null(show(psm_mzID))
+    expect_null(show(PSM(psmdf0)))
+    expect_null(show(PSM(psmdf1)))
+})
+
+test_that("psmVariables accessor works", {
+    expect_null(show(psm_mzID))
+    expect_null(show(psm_mzID))
+    expect_null(show(PSM(psmdf0)))
+    expect_null(show(PSM(psmdf1)))
+})
+
+
+test_that("reducePSMs works", {
+    psm <- PSM(psmdf2)
+    expect_identical(nrow(psm), 7L)
+    expect_true(is.na(reduced(psm)))
+    reduced(psm) <- FALSE
+    expect_false(reduced(psm))
+    rpsm <- reducePSMs(psm, psm[["spectrum"]])
+    expect_null(show(rpsm))
+    expect_true(reduced(rpsm))
+    expect_identical(nrow(rpsm), 5L)
+    expect_identical(rpsm[["spectrum"]], unique(psm[["spectrum"]]))
+    expect_identical(rpsm[["decoy"]], rep(FALSE, 5))
+    expect_identical(rpsm[["rank"]], rep(1, 5))
+    ## expect_equal(rpsm[["protein"]],
+    ##              CharacterList(list(sp1 = psmdf2$protein[1:2],
+    ##                                 sp2 = psmdf2$protein[3],
+    ##                                 sp3 = psmdf2$protein[5],
+    ##                                 sp4 = psmdf2$protein[6],
+    ##                                 sp5 = psmdf2$protein[7])))
+    ## expect_equal(rpsm[["sequence"]],
+    ##              CharacterList(list(sp1 = psmdf2$sequence[1:2],
+    ##                                 sp2 = psmdf2$sequence[3:4],
+    ##                                 sp3 = psmdf2$sequence[5],
+    ##                                 sp4 = psmdf2$sequence[6],
+    ##                                 sp5 = psmdf2$sequence[7])))
 })
