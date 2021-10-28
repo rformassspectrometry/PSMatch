@@ -66,7 +66,7 @@ reduced()&amp;lt;- setter."><!-- mathjax --><script src="https://cdnjs.cloudflar
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>A class for peptide-spectrum matches</h1>
-    <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/master/R/PSM-class.R" class="external-link"><code>R/PSM-class.R</code></a>, <a href="https://github.com/RforMassSpectrometry/PSM/blob/master/R/reducePSMs.R" class="external-link"><code>R/reducePSMs.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/HEAD/R/PSM-class.R" class="external-link"><code>R/PSM-class.R</code></a>, <a href="https://github.com/RforMassSpectrometry/PSM/blob/HEAD/R/reducePSMs.R" class="external-link"><code>R/reducePSMs.R</code></a></small>
     <div class="hidden name"><code>PSM.Rd</code></div>
     </div>
 
@@ -115,45 +115,55 @@ unknown. The flag can also be set explicitly with the
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>x</dt><dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> of mzid file names, an instance of class
+    <dl><dt>x</dt>
+<dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> of mzid file names, an instance of class
 <code>PSM</code>, or a <code>data.frame</code>.</p></dd>
-</dl><dl><dt>spectrum</dt><dd><p><code>character(1)</code> that defines a spectrum in the PSM
+<dt>spectrum</dt>
+<dd><p><code>character(1)</code> that defines a spectrum in the PSM
 data. Default are <code>"spectrumID"</code> (mzR parser) or
 <code>"spectrumid"</code> (mzID parser). It is also used to calculate the
 reduced state.</p></dd>
-</dl><dl><dt>peptide</dt><dd><p><code>character(1)</code> that defines a peptide in the PSM
+<dt>peptide</dt>
+<dd><p><code>character(1)</code> that defines a peptide in the PSM
 data. Detaults are <code>"spequence"</code> (mzR parser) or <code>"pepSeq"</code>
 (mzID parser).</p></dd>
-</dl><dl><dt>protein</dt><dd><p><code>character(1)</code> that defines a protein in the PSM
+<dt>protein</dt>
+<dd><p><code>character(1)</code> that defines a protein in the PSM
 data. Detaults are <code>"DatabaseAccess"</code> (mzR parser) or
 <code>"accession"</code> (mzID parser).</p></dd>
-</dl><dl><dt>decoy</dt><dd><p><code>character(1)</code> that defines a decoy hit in the PSM
+<dt>decoy</dt>
+<dd><p><code>character(1)</code> that defines a decoy hit in the PSM
 data. Detaults are <code>"isDecoy"</code> (mzR parser) or <code>"isdecoy"</code>
 (mzID parser).</p></dd>
-</dl><dl><dt>rank</dt><dd><p><code>character(1)</code> that defines the rank of the petide
+<dt>rank</dt>
+<dd><p><code>character(1)</code> that defines the rank of the petide
 spetrum match in the PSM data. Default is <code>"rank"</code>.</p></dd>
-</dl><dl><dt>parser</dt><dd><p><code>character(1)</code> defining the parser to be used to
+<dt>parser</dt>
+<dd><p><code>character(1)</code> defining the parser to be used to
 read the <code>mzIdentML</code> files. One of <code>"mzR"</code> (default) or
 <code>"mzID"</code>.</p></dd>
-</dl><dl><dt>BPPARAM</dt><dd><p>an object inheriting from BiocParallelParam to
+<dt>BPPARAM</dt>
+<dd><p>an object inheriting from BiocParallelParam to
 control parallel processing. The default value is
 <code>SerialParam()</code> to read files in series.</p></dd>
-</dl><dl><dt>object</dt><dd><p>An instance of class <code>PSM</code>.</p></dd>
-</dl><dl><dt>value</dt><dd><p>new value to be passed to setter.</p></dd>
-</dl><dl><dt>which</dt><dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> with the PSM variable name to
+<dt>object</dt>
+<dd><p>An instance of class <code>PSM</code>.</p></dd>
+<dt>value</dt>
+<dd><p>new value to be passed to setter.</p></dd>
+<dt>which</dt>
+<dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> with the PSM variable name to
 retrieve. If <code>"all"</code> (default), all named variables are
 returned. See <code>PSM()</code> for valid PSM variables.</p></dd>
-</dl><dl><dt>k</dt><dd><p>A <code>vector</code> or <code>factor</code> of length equal to <code>nrow(x)</code> that
+<dt>k</dt>
+<dd><p>A <code>vector</code> or <code>factor</code> of length equal to <code>nrow(x)</code> that
 defines the primary key used to reduce <code>x</code>. This typically
 corresponds to the spectrum identifier. The defauls is to use
 the spectrum PSM variable.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>PSM()</code> returns a <code>PSM</code> object.</p>
-<p><code>reducePSMs()</code> returns a reduced version of the <code>x</code> input.</p>
+    <p><code>PSM()</code> returns a <code>PSM</code> object.
+<code>reducePSMs()</code> returns a reduced version of the <code>x</code> input.</p>
     </div>
     <div id="creating-psm-objects">
     <h2>Creating PSM objects</h2>
@@ -321,8 +331,8 @@ arguments to <code>PSM()</code>.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz from cache.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz from cache.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/d127310255e_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/d123ca3dd15_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/60cc4e79b195_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/60ccb92eca7_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz" </span>
 <span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">mzids</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psm</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 50314 rows and 31 columns.</span>
@@ -379,8 +389,8 @@ arguments to <code>PSM()</code>.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2         387 MNVLLLLVLC...       Q58D62|FET...       32.788864          12894</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     spectrumFile        idFile MetaMorpheus.score PSM.level.q.value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;character&gt;   &lt;character&gt;          &lt;numeric&gt;         &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... d127310255...            31.2586                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... d127310255...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... 60cc4e79b1...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... 60cc4e79b1...            31.2586                 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   modPeptideRef       modName   modMass modLocation subOriginalResidue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;   &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          P_19 Carbamidom...   57.0215           6                 NA</span>
@@ -442,17 +452,17 @@ arguments to <code>PSM()</code>.</p></li>
 <span class="r-in">                    rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>,</span>
 <span class="r-in">                    score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psmdf</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    spectrum   sequence protein decoy rank      score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       sp1 VEGDPYNMSH   ProtE FALSE    1 0.88936133</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       sp2 HNLCVTQRYW   ProtE FALSE    1 0.80508794</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       sp3 PSKVYLHFTR   ProtE FALSE    1 0.61019346</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       sp4 GRYMCPFETH   ProtD FALSE    1 0.27927807</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       sp5 VDGIACLEWF   ProtG FALSE    1 0.69923633</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       sp6 QMTKLVEDGA   ProtE FALSE    1 0.49436165</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       sp7 WDVYLIKASG   ProtF FALSE    1 0.45325405</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       sp8 MADSNLTVGE   ProtA FALSE    1 0.55295711</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       sp9 FTSEMAVKRH   ProtF FALSE    1 0.93631435</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     sp10 SWLETHGRMP   ProtD FALSE    1 0.06651487</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    spectrum   sequence protein decoy rank     score</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       sp1 MTCVFYSIAQ   ProtD FALSE    1 0.3483819</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       sp2 VADERCSNYT   ProtA FALSE    1 0.2538523</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       sp3 PFCDYHEMKQ   ProtC FALSE    1 0.6822408</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       sp4 RQDGTNWSAC   ProtA FALSE    1 0.6759918</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       sp5 WFKCQEGYTP   ProtA FALSE    1 0.1392042</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       sp6 INVFCADLSG   ProtC FALSE    1 0.9148304</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       sp7 KPTIMFHNSD   ProtB FALSE    1 0.9743542</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       sp8 TQGWKASCVF   ProtC FALSE    1 0.4732972</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       sp9 DGWQRCLSEV   ProtE FALSE    1 0.6699113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     sp10 DLGMNRACKV   ProtA FALSE    1 0.5553284</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">psmdf</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psm</span></span>

@@ -69,7 +69,7 @@ defined by non-missing (i.e. non-NA) modification name.
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Filter out unreliable PSMs.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/master/R/filterPSMs.R" class="external-link"><code>R/filterPSMs.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/HEAD/R/filterPSMs.R" class="external-link"><code>R/filterPSMs.R</code></a></small>
     <div class="hidden name"><code>filterPSMs.Rd</code></div>
     </div>
 
@@ -120,35 +120,42 @@ defined by non-missing (i.e. non-<code>NA</code>) modification name.</p></li>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>x</dt><dd><p>An instance of class <code>PSM</code>.</p></dd>
-</dl><dl><dt>decoy</dt><dd><p><code>character(1)</code> with the column name specifying
+    <dl><dt>x</dt>
+<dd><p>An instance of class <code>PSM</code>.</p></dd>
+<dt>decoy</dt>
+<dd><p><code>character(1)</code> with the column name specifying
 whether entries match the decoy database or not. Default is
 the <code>decoy</code> PSM variable as defined in <code><a href="PSM.html">psmVariables()</a></code>. The
 column should be a <code>logical</code> and only PSMs holding a <code>FALSE</code>
 are retained. Filtering is ignored if set to <code>NULL</code>.</p></dd>
-</dl><dl><dt>rank</dt><dd><p><code>character(1)</code> with the column name holding the rank
+<dt>rank</dt>
+<dd><p><code>character(1)</code> with the column name holding the rank
 of the PSM. Default is the <code>rank</code> PSM variable as defined in
 <code><a href="PSM.html">psmVariables()</a></code>. This column should be a <code>numeric</code> and only
 PSMs having rank equal to 1 are retained. Filtering is ignored
 if set to <code>NULL</code>.</p></dd>
-</dl><dl><dt>protein</dt><dd><p><code>character(1)</code> with the column name holding the
+<dt>protein</dt>
+<dd><p><code>character(1)</code> with the column name holding the
 protein (groups) protein. Default is the <code>protein</code> PSM
 variable as defined in <code><a href="PSM.html">psmVariables()</a></code>. Filtering is ignored
 if set to <code>NULL</code>.</p></dd>
-</dl><dl><dt>spectrum</dt><dd><p><code>character(1)</code> with the name of the spectrum
+<dt>spectrum</dt>
+<dd><p><code>character(1)</code> with the name of the spectrum
 identifier column. Default is the <code>spectrum</code> PSM variable as
 defined in <code><a href="PSM.html">psmVariables()</a></code>. Filtering is ignored if set to
 <code>NULL</code>.</p></dd>
-</dl><dl><dt>peptide</dt><dd><p><code>character(1)</code> with the name of the peptide
+<dt>peptide</dt>
+<dd><p><code>character(1)</code> with the name of the peptide
 identifier column. Default is the <code>peptide</code> PSM variable as
 defined in <code><a href="PSM.html">psmVariables()</a></code>. Filtering is ignored if set to
 <code>NULL</code>.</p></dd>
-</dl><dl><dt>verbose</dt><dd><p><code>logical(1)</code> setting the verbosity flag.</p></dd>
-</dl><dl><dt>score</dt><dd><p><code>character(1)</code> with the name of a score column to be
+<dt>verbose</dt>
+<dd><p><code>logical(1)</code> setting the verbosity flag.</p></dd>
+<dt>score</dt>
+<dd><p><code>character(1)</code> with the name of a score column to be
 used. Filtering is ignored if set to <code>NULL</code>.</p></dd>
-</dl><dl><dt>mod</dt><dd><p><code>character(1)</code> with the column name holding the
+<dt>mod</dt>
+<dd><p><code>character(1)</code> with the column name holding the
 modification name. Default is <code>"modName"</code>. Filtering is
 ignored if set to <code>NULL</code>.</p></dd>
 </dl></div>

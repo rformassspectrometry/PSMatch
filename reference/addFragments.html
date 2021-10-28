@@ -44,7 +44,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Adds MS2 Fragments</h1>
-    <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/master/R/addFragments.R" class="external-link"><code>R/addFragments.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/HEAD/R/addFragments.R" class="external-link"><code>R/addFragments.R</code></a></small>
     <div class="hidden name"><code>addFragments.Rd</code></div>
     </div>
 
@@ -57,15 +57,16 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>x</dt><dd><p>An instance of class <code>Spectra</code> of length 1, containing a
+    <dl><dt>x</dt>
+<dd><p>An instance of class <code>Spectra</code> of length 1, containing a
 spectra variable <code>"sequence"</code> with a <code>character(1)</code>
 representing a valid peptide sequence.</p></dd>
-</dl><dl><dt>tolerance</dt><dd><p>absolute acceptable difference of m/z values for
+<dt>tolerance</dt>
+<dd><p>absolute acceptable difference of m/z values for
 peaks to be considered matching (see <code><a href="https://rdrr.io/pkg/MsCoreUtils/man/matching.html" class="external-link">MsCoreUtils::common()</a></code>
 for more details).</p></dd>
-</dl><dl><dt>ppm</dt><dd><p>m/z relative acceptable difference (in ppm) for peaks
+<dt>ppm</dt>
+<dd><p>m/z relative acceptable difference (in ppm) for peaks
 to be considered matching (see <code><a href="https://rdrr.io/pkg/MsCoreUtils/man/matching.html" class="external-link">MsCoreUtils::common()</a></code> for
 more #' details).</p></dd>
 </dl></div>
