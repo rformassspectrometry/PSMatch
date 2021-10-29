@@ -43,7 +43,6 @@ psmdf2 <- data.frame(spectrum = rep(paste0("sp", 1:5),
                     decoy = rep(FALSE, 7),
                     rank = rep(1, 7))
 
-
 test_that("Test PSM construction from data.frame", {
     psm <- PSM(psmdf0)
     expect_true(validObject(psm))
@@ -89,18 +88,7 @@ test_that("Test PSM filtering (no change)", {
                                                    protein = "protein"))
 })
 
-test_that("Test PSM filtering", {
-    psm <- PSM(psmdf1, decoy = "decoy", rank = "rank",
-               spectrum = "spectrum", peptide = "sequence",
-               protein = "protein")
-    expect_true(validObject(psm))
-    expect_identical(nrow(filterPsmDecoy(psm)), not_decoy)
-    expect_identical(nrow(filterPsmRank(psm)), rank_one)
-    expect_identical(nrow(filterPsmNonProteotypic(psm)), unique_pep)
-    expect_identical(nrow(filterPSMs(psm)), 10L)
-})
-
-test_that("Test PSM construction from mzid", {
+test_that("Test PSM construction from mzid files", {
     ## Valid objects
     expect_true(validObject(psm_mzR))
     expect_true(validObject(psm_mzID))
@@ -117,13 +105,24 @@ test_that("Test PSM show", {
     expect_null(show(psm_mzID))
     expect_null(show(PSM(psmdf0)))
     expect_null(show(PSM(psmdf1)))
+    ## show object with ncol() <= 4
+    expect_null(show(PSM(psmdf0[, 1:3])))
 })
 
 test_that("psmVariables accessor works", {
-    expect_null(show(psm_mzID))
-    expect_null(show(psm_mzID))
-    expect_null(show(PSM(psmdf0)))
-    expect_null(show(PSM(psmdf1)))
+    expect_identical(psmVariables(psm_mzR)["peptide"],
+                     psmVariables(psm_mzR, "peptide"))
+})
+
+test_that("Test PSM filtering", {
+    psm <- PSM(psmdf1, decoy = "decoy", rank = "rank",
+               spectrum = "spectrum", peptide = "sequence",
+               protein = "protein")
+    expect_true(validObject(psm))
+    expect_identical(nrow(filterPsmDecoy(psm)), not_decoy)
+    expect_identical(nrow(filterPsmRank(psm)), rank_one)
+    expect_identical(nrow(filterPsmNonProteotypic(psm)), unique_pep)
+    expect_identical(nrow(filterPSMs(psm)), 10L)
 })
 
 
