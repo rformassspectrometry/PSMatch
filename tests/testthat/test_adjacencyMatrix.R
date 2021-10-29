@@ -41,8 +41,8 @@ test_that("Check makeAjacendyMatrix() works without split", {
 test_that("Check makeAjacendyMatrix() fails with wrong input", {
     adjdf <- data.frame(m)
     adjlist <- as.list(adjdf)
-    expect_error(makeAjacendyMatrix(adjdf))
-    expect_error(makeAjacendyMatrix(adjlist))
+    expect_error(makeAdjacencyMatrix(adjdf))
+    expect_error(makeAdjacencyMatrix(adjlist))
 })
 
 test_that("makeAjacendyMatrix() works on PMS data (1)", {
