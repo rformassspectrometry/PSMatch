@@ -152,29 +152,6 @@ filterPsmNonProteotypic <- function(x,
 ##                                verbose = TRUE) {}
 
 
-##' @description
-##'
-##' - `filterPsmBestScore()` filters out PSMs but those with he
-##'    highest score when matching the same spectrum identifier.
-##'
-##' @param score `character(1)` with the name of a score column to be
-##'     used. Filtering is ignored if set to `NULL`.
-##'
-##' @name filterPSMs
-filterPsmBestScore <- function(x,
-                               score,
-                               spectrum = psmVariables(x)["spectrum"],
-                               verbose = TRUE) {
-    if (missing(score))
-        stop("Please provide a score variable.")
-    if (!score %in% names(x))
-        stop("Please provide a valid score.")
-    if (is.null(score) | is.null(spectrum))
-        return(x)
-    stop("TODO")
-}
-
-
 
 ##' @description
 ##'
