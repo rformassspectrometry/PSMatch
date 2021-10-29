@@ -146,34 +146,3 @@ filterPsmNonProteotypic <- function(x,
         message("Removed ", n0 - n1, " non-proteotypic peptides.")
     x
 }
-
-## filterPsmUniqueSeq <- function(x,
-##                                sequence = "sequence",
-##                                verbose = TRUE) {}
-
-
-
-##' @description
-##'
-##' - `filterPsmMods()` filters out PSMs that contain any PTM, as
-##'    defined by non-missing (i.e. non-`NA`) modification name.
-##'
-##' @param mod `character(1)` with the column name holding the
-##'     modification name. Default is `"modName"`. Filtering is
-##'     ignored if set to `NULL`.
-##'
-##' @name filterPSMs
-##'
-##' @export
-filterPsmMods <- function(x,
-                          mod = "modName",
-                          verbose = TRUE) {
-    if (is.null(mod))
-        return(x)
-    n0 <- nrow(x)
-    x <- x[is.na(x[, mod]), ]
-    n1 <- nrow(x)
-    if (verbose)
-        message("Removed ", n0 - n1, " modified peptides.")
-    x
-}
