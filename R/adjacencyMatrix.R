@@ -122,7 +122,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
     if (binary)
         adj[adj > 1] <- 1
     if (!sparse)
-        adj <- Matrix(adj)
+        adj <- Matrix(adj, sparse = FALSE)
     return(adj)
 }
 
