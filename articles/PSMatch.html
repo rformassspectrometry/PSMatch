@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.0</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.15/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-11-09 22:49:26<br><strong>Compiled</strong>: Tue Nov 9 22:57:38 2021</p>
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.15/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut]<br><strong>Last modified:</strong> 2021-11-09 23:24:21<br><strong>Compiled</strong>: Tue Nov 9 23:31:56 2021</p>
 <div class="section level1">
 <h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h1>
@@ -260,13 +260,13 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##    user  system elapsed </span>
-<span class="co">##   0.273   0.008   0.281</span></code></pre>
+<span class="co">##   0.263   0.008   0.272</span></code></pre>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## Loading required namespace: mzID</span></code></pre>
 <pre><code><span class="co">## reading TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid... DONE!</span></code></pre>
 <pre><code><span class="co">##    user  system elapsed </span>
-<span class="co">##   7.440   0.080   7.521</span></code></pre>
+<span class="co">##   7.181   0.117   7.301</span></code></pre>
 <p>Other differences in the two parsers include the columns that are returned, way they name them, and, as will shown below the matches that are returned. Below, note for instance (and this will be important later), that there is not equivalent of <code>"modLocation"</code> in <code>id2</code>.</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></code></pre></div>
@@ -395,7 +395,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <span class="co">## [8] base     </span>
 <span class="co">## </span>
 <span class="co">## other attached packages:</span>
-<span class="co">## [1] PSMatch_0.5.2       S4Vectors_0.33.2    BiocGenerics_0.41.1</span>
+<span class="co">## [1] PSMatch_0.6.0       S4Vectors_0.33.2    BiocGenerics_0.41.1</span>
 <span class="co">## [4] BiocStyle_2.23.0   </span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
@@ -416,8 +416,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <span class="co">## [29] xfun_0.28                   pkgconfig_2.0.3            </span>
 <span class="co">## [31] systemfonts_1.0.3           htmltools_0.5.2            </span>
 <span class="co">## [33] SummarizedExperiment_1.25.2 GenomeInfoDbData_1.2.7     </span>
-<span class="co">## [35] bookdown_0.24               IRanges_2.29.0             </span>
-<span class="co">## [37] codetools_0.2-18            matrixStats_0.61.0         </span>
+<span class="co">## [35] bookdown_0.24               codetools_0.2-18           </span>
+<span class="co">## [37] IRanges_2.29.0              matrixStats_0.61.0         </span>
 <span class="co">## [39] XML_3.99-0.8                crayon_1.4.2               </span>
 <span class="co">## [41] MASS_7.3-54                 bitops_1.0-7               </span>
 <span class="co">## [43] grid_4.2.0                  jsonlite_1.7.2             </span>
