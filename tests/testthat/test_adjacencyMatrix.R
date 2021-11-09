@@ -11,7 +11,7 @@ vec <- c("A;C", "B", "B", "C;D", "A;C")
 names(vec) <- letters[1:5]
 
 test_that("Compare makeAjacendyMatrix() makePeptideProteinVector() outputs on test data", {
-    m2 <- makeAdjacencyMatrix(vec)
+    m2 <- makeAdjacencyMatrix(vec, sparse = FALSE)
     ## first check that row/colnames as same
     expect_identical(sort(colnames(m)),
                      sort(colnames(m2)))
@@ -32,8 +32,8 @@ test_that("Check makeAjacendyMatrix() works without split", {
     adj0 <- diag(3)
     colnames(adj0) <- LETTERS[1:3]
     rownames(adj0) <- letters[1:3]
-    adj1 <- makeAdjacencyMatrix(vec)
-    adj2 <- makeAdjacencyMatrix(vec, split = NULL)
+    adj1 <- makeAdjacencyMatrix(vec, sparse = FALSE)
+    adj2 <- makeAdjacencyMatrix(vec, split = NULL, sparse = FALSE)
     expect_identical(adj0, adj2)
     expect_identical(adj1, adj2)
 })
@@ -53,7 +53,7 @@ test_that("makeAjacendyMatrix() works on PMS data (1)", {
     expect_identical(nrow(adj), n_pep)
     n_prot <- length(unique(psm[[psmVariables(psm)["protein"]]]))
     expect_identical(ncol(adj), n_prot)
-    adj2 <- makeAdjacencyMatrix(psm, binary = TRUE)
+    adj2 <- makeAdjacencyMatrix(psm, binary = TRUE, sparse = FALSE)
     expect_true(all(adj2 %in% c(0, 1)))
     expect_identical(dimnames(adj), dimnames(adj2))
 })
@@ -66,7 +66,18 @@ test_that("makeAjacendyMatrix() works on PMS data (2)", {
     expect_identical(nrow(adj), n_pep)
     n_prot <- length(unique(psm[[psmVariables(psm)["protein"]]]))
     expect_identical(ncol(adj), n_prot)
-    adj2 <- makeAdjacencyMatrix(psm, binary = TRUE)
+    adj2 <- makeAdjacencyMatrix(psm, binary = TRUE, sparse = FALSE)
     expect_true(all(adj2 %in% c(0, 1)))
     expect_identical(dimnames(adj), dimnames(adj2))
+})
+
+test_that("makeAjacendyMatrix() sparse and dense", {
+    f <- msdata::ident(full.names = TRUE, pattern = "TMT")
+    psm <- PSM(f) |>
+    filterPsmDecoy() |>
+    filterPsmRank()
+    adj <- makeAdjacencyMatrix(psm, sparse = FALSE)
+    spadj <- makeAdjacencyMatrix(psm)
+    expect_identical(as(spadj, "matrix"), adj)
+    expect_identical(spadj, as(adj, "sparseMatrix"))
 })

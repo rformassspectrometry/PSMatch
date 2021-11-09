@@ -11,7 +11,8 @@ makeAdjacencyMatrix(
   split = ";",
   peptide = psmVariables(x)["peptide"],
   protein = psmVariables(x)["protein"],
-  binary = FALSE
+  binary = FALSE,
+  sparse = TRUE
 )
 
 makePeptideProteinVector(m, collapse = ";")
@@ -38,6 +39,9 @@ should be strictly binary. In such case, PSMs matching the
 same peptide but from different precursors (for example charge
 2 and 3) or carrying different PTMs, are counted only
 once. Default if \code{FALSE}.}
+
+\item{sparse}{\code{logical(1)} defining whether a sparse or a dense
+matrix should be returned. Default is \code{TRUE}.}
 
 \item{m}{An adjacency matrix.}
 

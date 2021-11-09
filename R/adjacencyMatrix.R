@@ -50,6 +50,9 @@
 ##'     2 and 3) or carrying different PTMs, are counted only
 ##'     once. Default if `FALSE`.
 ##'
+##' @param sparse `logical(1)` defining whether a sparse or a dense
+##'     matrix should be returned. Default is `TRUE`.
+##'
 ##' @return A peptide-by-protein adjacency matrix or peptide/protein
 ##'     vector.
 ##'
@@ -58,6 +61,8 @@
 ##' @name adjacencyMatrix
 ##'
 ##' @export
+##'
+##' @importFrom Matrix sparseMatrix
 ##'
 ##' @examples
 ##'
@@ -103,44 +108,45 @@
 makeAdjacencyMatrix <- function(x, split = ";",
                                 peptide = psmVariables(x)["peptide"],
                                 protein = psmVariables(x)["protein"],
-                                binary = FALSE) {
-    if (inherits(x, "PSM"))
-        return(.makeAdjacencyMatrixFromPSM(x, peptide, protein, binary))
-    if (is.character(x))
-        return(.makeAdjacencyMatrixFromChar(x, split))
-    stop("'x' must be a character or a PSM object.")
-}
-
-.makeAdjacencyMatrixFromChar <- function(x, split = ";") {
-    n <- length(x)
-    if (is.null(split)) {
-        col_list <- x
-        m <- length(cnames <- unique(x))
-    } else {
-        col_list <- strsplit(x, split)
-        m <- length(cnames <- unique(unlist(col_list)))
-    }
-    adj <- matrix(0, nrow = n, ncol = m,
-                  dimnames = list(names(x), cnames))
-    for (i in seq_along(col_list)) {
-        adj[i, col_list[[i]]] <- 1
-    }
-    adj
-}
-
-.makeAdjacencyMatrixFromPSM <- function(x, peptide, protein, binary) {
-    stopifnot(peptide %in% names(x))
-    stopifnot(protein %in% names(x))
-    n <- length(nx <- unique(x[[peptide]]))
-    m <- length(mx <- unique(x[[protein]]))
-    adj <- matrix(0, nrow = n, ncol = m,
-                  dimnames = list(nx, mx))
-    for (i in seq_len(nrow(x)))
-        adj[x[[peptide]][i], x[[protein]][i]] <- adj[x[[peptide]][i], x[[protein]][i]] + 1
+                                binary = FALSE,
+                                sparse = TRUE) {
+    if (inherits(x, "PSM")) {
+        adj <- .makeSparseAdjacencyMatrixFromPSM(x, peptide, protein)
+    } else if (is.character(x)) {
+        adj <- .makeSparseAdjacencyMatrixFromChar(x, split)
+    } else stop("'x' must be a character or a PSM object.")
     if (binary)
         adj[adj > 1] <- 1
-    adj
+    if (!sparse)
+        adj <- as(adj, "matrix")
+    return(adj)
 }
+
+.makeSparseAdjacencyMatrixFromChar <- function(x, split = ";") {
+    if (is.null(split)) col_list <- x
+    else col_list <- strsplit(x, split)
+    if (is.null(names(col_list))) {
+        row_names <- seq_along(col_list)
+    } else row_names <- names(col_list)
+    col_names <- unique(unlist(col_list))
+    i <- rep(seq_along(col_list), lengths(col_list))
+    j <- unname(unlist(sapply(col_list, match, col_names)))
+    sparseMatrix(i, j, x = 1, dimnames = list(row_names, col_names))
+}
+
+.makeSparseAdjacencyMatrixFromPSM <- function(x, peptide = "sequence",
+                                              protein = "DatabaseAccess") {
+    stopifnot(peptide %in% names(x))
+    stopifnot(protein %in% names(x))
+    peptide <- "sequence"
+    protein <- "DatabaseAccess"
+    row_names <- unique(x[[peptide]])
+    col_names <- unique(x[[protein]])
+    i <- match(x[[peptide]], row_names)
+    j <- match(x[[protein]], col_names)
+    sparseMatrix(i, j, x = 1, dimnames = list(row_names, col_names))
+}
+
 
 ##' @param m An adjacency matrix.
 ##'
@@ -151,7 +157,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
 ##'
 ##' @export
 makePeptideProteinVector <- function(m, collapse = ";") {
-    stopifnot(is.matrix(m))
+    stopifnot(is.matrix(m) | inherits(m, "Matrix"))
     vec <- rep(NA_character_, nrow(m))
     for (i in seq_len(nrow(m)))
         vec[i] <- paste(names(which(m[i, ] != 0)), collapse = collapse)
