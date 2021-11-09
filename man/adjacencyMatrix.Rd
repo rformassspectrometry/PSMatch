@@ -10,7 +10,8 @@ makeAdjacencyMatrix(
   x,
   split = ";",
   peptide = psmVariables(x)["peptide"],
-  protein = psmVariables(x)["protein"]
+  protein = psmVariables(x)["protein"],
+  binary = FALSE
 )
 
 makePeptideProteinVector(m, collapse = ";")
@@ -31,6 +32,12 @@ that defines peptides in the \code{PSM} object. Default is the
 that defines proteins in the \code{PSM} object. Default is the
 \code{peptide} PSM variable as defined in \code{\link[=psmVariables]{psmVariables()}}.Default
 is \code{DatanbaseAccess}.}
+
+\item{binary}{\code{logical(1)} indicates if the adjacency matrix
+should be strictly binary. In such case, PSMs matching the
+same peptide but from different precursors (for example charge
+2 and 3) or carrying different PTMs, are counted only
+once. Default if \code{FALSE}.}
 
 \item{m}{An adjacency matrix.}
 
@@ -99,6 +106,11 @@ psm
 adj <- makeAdjacencyMatrix(psm)
 dim(adj)
 adj[1:10, 1:4]
+
+## Binary adjacency matrix
+adj <- makeAdjacencyMatrix(psm, binary = TRUE)
+adj[1:10, 1:4]
+
 ## Peptides with rowSums > 1 match multiple proteins.
 ## Use filterPsmShared() to filter these out.
 table(rowSums(adj))

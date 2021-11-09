@@ -53,7 +53,9 @@ test_that("makeAjacendyMatrix() works on PMS data (1)", {
     expect_identical(nrow(adj), n_pep)
     n_prot <- length(unique(psm[[psmVariables(psm)["protein"]]]))
     expect_identical(ncol(adj), n_prot)
-    expect_true(all(adj %in% c(0, 1)))
+    adj2 <- makeAdjacencyMatrix(psm, binary = TRUE)
+    expect_true(all(adj2 %in% c(0, 1)))
+    expect_identical(dimnames(adj), dimnames(adj2))
 })
 
 test_that("makeAjacendyMatrix() works on PMS data (2)", {
@@ -64,5 +66,7 @@ test_that("makeAjacendyMatrix() works on PMS data (2)", {
     expect_identical(nrow(adj), n_pep)
     n_prot <- length(unique(psm[[psmVariables(psm)["protein"]]]))
     expect_identical(ncol(adj), n_prot)
-    expect_true(all(adj %in% c(0, 1)))
+    adj2 <- makeAdjacencyMatrix(psm, binary = TRUE)
+    expect_true(all(adj2 %in% c(0, 1)))
+    expect_identical(dimnames(adj), dimnames(adj2))
 })
