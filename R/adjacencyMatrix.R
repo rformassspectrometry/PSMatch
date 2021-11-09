@@ -129,14 +129,14 @@ makeAdjacencyMatrix <- function(x, split = ";",
 }
 
 .makeAdjacencyMatrixFromPSM <- function(x, peptide, protein, binary) {
+    stopifnot(peptide %in% names(x))
+    stopifnot(protein %in% names(x))
     n <- length(nx <- unique(x[[peptide]]))
     m <- length(mx <- unique(x[[protein]]))
     adj <- matrix(0, nrow = n, ncol = m,
                   dimnames = list(nx, mx))
-    for (k in x[[peptide]]) {
-        i <- which(x[[peptide]] %in% k)
-        adj[k, x[[protein]][i]] <- adj[k, x[[protein]][i]] + 1
-    }
+    for (i in seq_len(nrow(x)))
+        adj[x[[peptide]][i], x[[protein]][i]] <- adj[x[[peptide]][i], x[[protein]][i]] + 1
     if (binary)
         adj[adj > 1] <- 1
     adj
