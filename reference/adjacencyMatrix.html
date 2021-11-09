@@ -19,7 +19,7 @@ described below convert between these two format."><!-- mathjax --><script src="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.1</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ is <code>DatanbaseAccess</code>.</p></dd>
 <dd><p>An adjacency matrix.</p></dd>
 <dt>collapse</dt>
 <dd><p><code>character(1)</code> indicating how to collapse protein
-names for non-proteotypic peptides. Default is <code>";"</code>.</p></dd>
+names for shared peptides. Default is <code>";"</code>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -190,7 +190,7 @@ elements.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   TLIIERCR                                0       0       0       0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   QEVESCTTIEKIWVIDLKIK                    0       0       0       0</span>
 <span class="r-in"><span class="co">## Peptides with rowSums &gt; 1 match multiple proteins.</span></span>
-<span class="r-in"><span class="co">## Use filterPsmNonProteotypic() to filter these out.</span></span>
+<span class="r-in"><span class="co">## Use filterPsmShared() to filter these out.</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1    2    3    4 </span>
