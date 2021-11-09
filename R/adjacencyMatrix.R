@@ -50,7 +50,8 @@
 ##'     2 and 3) or carrying different PTMs, are counted only
 ##'     once. Default if `FALSE`.
 ##'
-##' @param sparse `logical(1)` defining whether a sparse or a dense
+##' @param sparse `logical(1)` defining whether a sparse (i.e. of
+##'     class `dgCMatrix`) or a dense (i.e. of class `dgeMatrix`)
 ##'     matrix should be returned. Default is `TRUE`.
 ##'
 ##' @return A peptide-by-protein adjacency matrix or peptide/protein
@@ -62,7 +63,7 @@
 ##'
 ##' @export
 ##'
-##' @importFrom Matrix sparseMatrix
+##' @importFrom Matrix Matrix sparseMatrix
 ##'
 ##' @examples
 ##'
@@ -77,7 +78,10 @@
 ##' ## Named protein vector
 ##' names(prots) <- c("pep1", "pep2", "pep3")
 ##' prots
-##' m <- makeAdjacencyMatrix(prots)
+##' makeAdjacencyMatrix(prots)
+##'
+##' ##' ## Dense matrix
+##' m <- makeAdjacencyMatrix(prots, sparse = FALSE)
 ##' m
 ##'
 ##' ## Back to vector
@@ -118,7 +122,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
     if (binary)
         adj[adj > 1] <- 1
     if (!sparse)
-        adj <- as(adj, "matrix")
+        adj <- Matrix(adj)
     return(adj)
 }
 

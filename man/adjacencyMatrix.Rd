@@ -40,7 +40,8 @@ same peptide but from different precursors (for example charge
 2 and 3) or carrying different PTMs, are counted only
 once. Default if \code{FALSE}.}
 
-\item{sparse}{\code{logical(1)} defining whether a sparse or a dense
+\item{sparse}{\code{logical(1)} defining whether a sparse (i.e. of
+class \code{dgCMatrix}) or a dense (i.e. of class \code{dgeMatrix})
 matrix should be returned. Default is \code{TRUE}.}
 
 \item{m}{An adjacency matrix.}
@@ -90,7 +91,10 @@ makeAdjacencyMatrix(prots)
 ## Named protein vector
 names(prots) <- c("pep1", "pep2", "pep3")
 prots
-m <- makeAdjacencyMatrix(prots)
+makeAdjacencyMatrix(prots)
+
+##' ## Dense matrix
+m <- makeAdjacencyMatrix(prots, sparse = FALSE)
 m
 
 ## Back to vector
