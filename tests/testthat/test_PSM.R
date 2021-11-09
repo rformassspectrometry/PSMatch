@@ -19,9 +19,9 @@ psmdf0 <- data.frame(spectrum = paste0("sp", 1:10),
 
 ## Filtering will have an effect here. There will be 12 PSMs left
 ## after filtering for decoys , 10 PSMs after filtering for rank, 5
-## when keeping proteotypic peptides. When filtering decoy and high
-## rank PSMs, we also get rid of all the non-unique peptides, which
-## leaves 10 PSMs.
+## when keeping shared peptides. When filtering decoy and high rank
+## PSMs, we also get rid of all the non-unique peptides, which leaves
+## 10 PSMs.
 psmdf1 <- data.frame(spectrum = paste0("sp", 1:15),
                      sequence = c(psmdf0$sequence,
                                   psmdf0$sequence[1:5]),
@@ -77,15 +77,15 @@ test_that("Test PSM filtering (no change)", {
     expect_identical(psm2, filterPsmRank(psm2, rank = NULL))
     expect_identical(psm2, filterPsmRank(psm2, rank = "rank"))
     ## none of these filters on uniqueness of hits should change the data
-    expect_identical(psm, filterPsmNonProteotypic(psm, peptide = NULL))
-    expect_identical(psm, filterPsmNonProteotypic(psm, protein = NULL))
-    expect_identical(psm, filterPsmNonProteotypic(psm, peptide = "sequence",
-                                                  protein = "protein"))
-    expect_identical(psm2, filterPsmNonProteotypic(psm2))
-    expect_identical(psm2, filterPsmNonProteotypic(psm2, peptide = NULL))
-    expect_identical(psm2, filterPsmNonProteotypic(psm2, protein = NULL))
-    expect_identical(psm2, filterPsmNonProteotypic(psm2, peptide = "sequence",
-                                                   protein = "protein"))
+    expect_identical(psm, filterPsmShared(psm, peptide = NULL))
+    expect_identical(psm, filterPsmShared(psm, protein = NULL))
+    expect_identical(psm, filterPsmShared(psm, peptide = "sequence",
+                                          protein = "protein"))
+    expect_identical(psm2, filterPsmShared(psm2))
+    expect_identical(psm2, filterPsmShared(psm2, peptide = NULL))
+    expect_identical(psm2, filterPsmShared(psm2, protein = NULL))
+    expect_identical(psm2, filterPsmShared(psm2, peptide = "sequence",
+                                           protein = "protein"))
 })
 
 test_that("Test PSM construction from mzid files", {
@@ -121,7 +121,7 @@ test_that("Test PSM filtering", {
     expect_true(validObject(psm))
     expect_identical(nrow(filterPsmDecoy(psm)), not_decoy)
     expect_identical(nrow(filterPsmRank(psm)), rank_one)
-    expect_identical(nrow(filterPsmNonProteotypic(psm)), unique_pep)
+    expect_identical(nrow(filterPsmShared(psm)), unique_pep)
     expect_identical(nrow(filterPSMs(psm)), 10L)
 })
 

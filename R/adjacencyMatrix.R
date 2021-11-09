@@ -87,7 +87,7 @@
 ##' dim(adj)
 ##' adj[1:10, 1:4]
 ##' ## Peptides with rowSums > 1 match multiple proteins.
-##' ## Use filterPsmNonProteotypic() to filter these out.
+##' ## Use filterPsmShared() to filter these out.
 ##' table(rowSums(adj))
 makeAdjacencyMatrix <- function(x, split = ";",
                                 peptide = psmVariables(x)["peptide"],
@@ -133,7 +133,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
 ##' @param m An adjacency matrix.
 ##'
 ##' @param collapse `character(1)` indicating how to collapse protein
-##'     names for non-proteotypic peptides. Default is `";"`.
+##'     names for shared peptides. Default is `";"`.
 ##'
 ##' @name adjacencyMatrix
 ##'

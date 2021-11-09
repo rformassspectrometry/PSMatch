@@ -35,7 +35,7 @@ is \code{DatanbaseAccess}.}
 \item{m}{An adjacency matrix.}
 
 \item{collapse}{\code{character(1)} indicating how to collapse protein
-names for non-proteotypic peptides. Default is \code{";"}.}
+names for shared peptides. Default is \code{";"}.}
 }
 \value{
 A peptide-by-protein adjacency matrix or peptide/protein
@@ -100,7 +100,7 @@ adj <- makeAdjacencyMatrix(psm)
 dim(adj)
 adj[1:10, 1:4]
 ## Peptides with rowSums > 1 match multiple proteins.
-## Use filterPsmNonProteotypic() to filter these out.
+## Use filterPsmShared() to filter these out.
 table(rowSums(adj))
 }
 \author{

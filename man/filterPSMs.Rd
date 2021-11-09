@@ -4,7 +4,7 @@
 \alias{filterPSMs}
 \alias{filterPsmDecoy}
 \alias{filterPsmRank}
-\alias{filterPsmNonProteotypic}
+\alias{filterPsmShared}
 \title{Filter out unreliable PSMs.}
 \usage{
 filterPSMs(
@@ -21,7 +21,7 @@ filterPsmDecoy(x, decoy = psmVariables(x)["decoy"], verbose = TRUE)
 
 filterPsmRank(x, rank = psmVariables(x)["rank"], verbose = TRUE)
 
-filterPsmNonProteotypic(
+filterPsmShared(
   x,
   protein = psmVariables(x)["protein"],
   peptide = psmVariables(x)["peptide"],
@@ -78,8 +78,8 @@ as \code{isDecoy}.
 }
 
 \itemize{
-\item \code{filterPsmNonProteotypic()} filters out non-proteotypic PSMs,
-i.e. those that match multiple proteins.
+\item \code{filterPsmShared()} filters out shared PSMs, i.e. those that
+match multiple proteins.
 }
 }
 \examples{

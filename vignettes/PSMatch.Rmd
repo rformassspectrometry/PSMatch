@@ -143,14 +143,14 @@ id <- filterPsmRank(id)
 id
 ```
 
-### Remove non-proteotypic peptides
+### Remove shared peptides
 
 The peptides below are those that match different proteins. For
 example QKTRCATRAFKANKGRAR (the two first rows) matches proteins
 `ECA2869` and `ECA4278`.
 
 ```{r}
-id <- filterPsmNonProteotypic(id)
+id <- filterPsmShared(id)
 id
 ```
 

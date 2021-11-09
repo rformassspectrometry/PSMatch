@@ -69,10 +69,10 @@ filterPSMs <- function(x,
                            verbose = verbose)
 
     if (!is.null(protein))
-        x <- filterPsmNonProteotypic(x,
-                                     protein = protein,
-                                     peptide = peptide,
-                                     verbose = verbose)
+        x <- filterPsmShared(x,
+                             protein = protein,
+                             peptide = peptide,
+                             verbose = verbose)
     if (verbose)
         message(nrow(x), " PSMs left.")
     x
@@ -123,16 +123,16 @@ filterPsmRank <- function(x,
 
 ##' @description
 ##'
-##' - `filterPsmNonProteotypic()` filters out non-proteotypic PSMs,
-##'    i.e. those that match multiple proteins.
+##' - `filterPsmShared()` filters out shared PSMs, i.e. those that
+##'    match multiple proteins.
 ##'
 ##' @name filterPSMs
 ##'
 ##' @export
-filterPsmNonProteotypic <- function(x,
-                                    protein = psmVariables(x)["protein"],
-                                    peptide = psmVariables(x)["peptide"],
-                                    verbose = TRUE) {
+filterPsmShared <- function(x,
+                            protein = psmVariables(x)["protein"],
+                            peptide = psmVariables(x)["peptide"],
+                            verbose = TRUE) {
     if (is.null(protein) | is.null(peptide))
         return(x)
     n0 <- nrow(x)
@@ -143,6 +143,6 @@ filterPsmNonProteotypic <- function(x,
     x <- x[!x[[peptide]] %in% mlt, ]
     n1 <- nrow(x)
     if (verbose)
-        message("Removed ", n0 - n1, " non-proteotypic peptides.")
+        message("Removed ", n0 - n1, " shared peptides.")
     x
 }
