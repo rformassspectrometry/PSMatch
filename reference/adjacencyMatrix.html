@@ -19,7 +19,7 @@ described below convert between these two format."><!-- mathjax --><script src="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -61,8 +61,7 @@ described below convert between these two format.</p>
   split <span class="op">=</span> <span class="st">";"</span>,
   peptide <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"peptide"</span><span class="op">]</span>,
   protein <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"protein"</span><span class="op">]</span>,
-  binary <span class="op">=</span> <span class="cn">FALSE</span>,
-  sparse <span class="op">=</span> <span class="cn">TRUE</span>
+  binary <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span>
 
 <span class="fu">makePeptideProteinVector</span><span class="op">(</span><span class="va">m</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span></code></pre></div>
@@ -92,10 +91,6 @@ should be strictly binary. In such case, PSMs matching the
 same peptide but from different precursors (for example charge
 2 and 3) or carrying different PTMs, are counted only
 once. Default if <code>FALSE</code>.</p></dd>
-<dt>sparse</dt>
-<dd><p><code>logical(1)</code> defining whether a sparse (i.e. of
-class <code>dgCMatrix</code>) or a dense (i.e. of class <code>dgeMatrix</code>)
-matrix should be returned. Default is <code>TRUE</code>.</p></dd>
 <dt>m</dt>
 <dd><p>An adjacency matrix.</p></dd>
 <dt>collapse</dt>
@@ -104,8 +99,9 @@ names for shared peptides. Default is <code>";"</code>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A peptide-by-protein adjacency matrix or peptide/protein
-vector.</p>
+    <p>A peptide-by-protein sparce adjacency matrix (or class
+<code>dgCMatrix</code> as defined in the <code>Matrix</code> package) or
+peptide/protein vector.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -153,20 +149,12 @@ elements.</p>
 <span class="r-in"><span class="va">prots</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          pep1          pep2          pep3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       "ProtA"       "ProtB" "ProtA;ProtB" </span>
-<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">prots</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">prots</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">m</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 x 2 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      ProtA ProtB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep1     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep2     .     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pep3     1     1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">##' ## Dense matrix</span></span>
-<span class="r-in"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">prots</span>, sparse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">m</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 x 2 Matrix of class "dgeMatrix"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      ProtA ProtB</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pep1     1     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pep2     0     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep3     1     1</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Back to vector</span></span>
