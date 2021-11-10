@@ -361,10 +361,3 @@ psmVariables <- function(object, which = "all") {
     stopifnot(which %in% names(.psmVariables))
     .psmVariables[which]
 }
-
-## ##' @name PSM
-## "psmVariables<-" <- function(object, value) {
-##     value <- as.character(value)
-##     metadata(object)[["variables"]] <- value
-##     object
-## }
