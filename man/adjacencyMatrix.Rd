@@ -11,8 +11,7 @@ makeAdjacencyMatrix(
   split = ";",
   peptide = psmVariables(x)["peptide"],
   protein = psmVariables(x)["protein"],
-  binary = FALSE,
-  sparse = TRUE
+  binary = FALSE
 )
 
 makePeptideProteinVector(m, collapse = ";")
@@ -40,18 +39,15 @@ same peptide but from different precursors (for example charge
 2 and 3) or carrying different PTMs, are counted only
 once. Default if \code{FALSE}.}
 
-\item{sparse}{\code{logical(1)} defining whether a sparse (i.e. of
-class \code{dgCMatrix}) or a dense (i.e. of class \code{dgeMatrix})
-matrix should be returned. Default is \code{TRUE}.}
-
 \item{m}{An adjacency matrix.}
 
 \item{collapse}{\code{character(1)} indicating how to collapse protein
 names for shared peptides. Default is \code{";"}.}
 }
 \value{
-A peptide-by-protein adjacency matrix or peptide/protein
-vector.
+A peptide-by-protein sparce adjacency matrix (or class
+\code{dgCMatrix} as defined in the \code{Matrix} package) or
+peptide/protein vector.
 }
 \description{
 There are two ways that peptide/protein matches are commonly
@@ -91,10 +87,7 @@ makeAdjacencyMatrix(prots)
 ## Named protein vector
 names(prots) <- c("pep1", "pep2", "pep3")
 prots
-makeAdjacencyMatrix(prots)
-
-##' ## Dense matrix
-m <- makeAdjacencyMatrix(prots, sparse = FALSE)
+m <- makeAdjacencyMatrix(prots)
 m
 
 ## Back to vector

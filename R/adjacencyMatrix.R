@@ -50,12 +50,9 @@
 ##'     2 and 3) or carrying different PTMs, are counted only
 ##'     once. Default if `FALSE`.
 ##'
-##' @param sparse `logical(1)` defining whether a sparse (i.e. of
-##'     class `dgCMatrix`) or a dense (i.e. of class `dgeMatrix`)
-##'     matrix should be returned. Default is `TRUE`.
-##'
-##' @return A peptide-by-protein adjacency matrix or peptide/protein
-##'     vector.
+##' @return A peptide-by-protein sparce adjacency matrix (or class
+##'     `dgCMatrix` as defined in the `Matrix` package) or
+##'     peptide/protein vector.
 ##'
 ##' @author Laurent Gatto
 ##'
@@ -78,10 +75,7 @@
 ##' ## Named protein vector
 ##' names(prots) <- c("pep1", "pep2", "pep3")
 ##' prots
-##' makeAdjacencyMatrix(prots)
-##'
-##' ##' ## Dense matrix
-##' m <- makeAdjacencyMatrix(prots, sparse = FALSE)
+##' m <- makeAdjacencyMatrix(prots)
 ##' m
 ##'
 ##' ## Back to vector
@@ -112,8 +106,7 @@
 makeAdjacencyMatrix <- function(x, split = ";",
                                 peptide = psmVariables(x)["peptide"],
                                 protein = psmVariables(x)["protein"],
-                                binary = FALSE,
-                                sparse = TRUE) {
+                                binary = FALSE) {
     if (inherits(x, "PSM")) {
         adj <- .makeSparseAdjacencyMatrixFromPSM(x, peptide, protein)
     } else if (is.character(x)) {
@@ -121,8 +114,6 @@ makeAdjacencyMatrix <- function(x, split = ";",
     } else stop("'x' must be a character or a PSM object.")
     if (binary)
         adj[adj > 1] <- 1
-    if (!sparse)
-        adj <- Matrix(adj, sparse = FALSE)
     return(adj)
 }
 
