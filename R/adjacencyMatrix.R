@@ -138,12 +138,9 @@ makeAdjacencyMatrix <- function(x, split = ";",
     sparseMatrix(i, j, x = 1, dimnames = list(row_names, col_names))
 }
 
-.makeSparseAdjacencyMatrixFromPSM <- function(x, peptide = "sequence",
-                                              protein = "DatabaseAccess") {
+.makeSparseAdjacencyMatrixFromPSM <- function(x, peptide, protein) {
     stopifnot(peptide %in% names(x))
     stopifnot(protein %in% names(x))
-    peptide <- "sequence"
-    protein <- "DatabaseAccess"
     row_names <- unique(x[[peptide]])
     col_names <- unique(x[[protein]])
     i <- match(x[[peptide]], row_names)
