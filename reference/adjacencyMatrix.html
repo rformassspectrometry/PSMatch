@@ -93,7 +93,8 @@ same peptide but from different precursors (for example charge
 2 and 3) or carrying different PTMs, are counted only
 once. Default if <code>FALSE</code>.</p></dd>
 <dt>sparse</dt>
-<dd><p><code>logical(1)</code> defining whether a sparse or a dense
+<dd><p><code>logical(1)</code> defining whether a sparse (i.e. of
+class <code>dgCMatrix</code>) or a dense (i.e. of class <code>dgeMatrix</code>)
 matrix should be returned. Default is <code>TRUE</code>.</p></dd>
 <dt>m</dt>
 <dd><p>An adjacency matrix.</p></dd>
@@ -152,12 +153,20 @@ elements.</p>
 <span class="r-in"><span class="va">prots</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          pep1          pep2          pep3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       "ProtA"       "ProtB" "ProtA;ProtB" </span>
-<span class="r-in"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">prots</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">m</span></span>
+<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">prots</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 x 2 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      ProtA ProtB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep1     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep2     .     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep3     1     1</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">##' ## Dense matrix</span></span>
+<span class="r-in"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">prots</span>, sparse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">m</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 x 2 Matrix of class "dgeMatrix"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      ProtA ProtB</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep1     1     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep2     0     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep3     1     1</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Back to vector</span></span>
