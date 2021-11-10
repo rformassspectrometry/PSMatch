@@ -325,8 +325,8 @@ arguments to <code>PSM()</code>.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz from cache.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz from cache.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/d123599b7db_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/d126f946a94_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/d0e226aa038_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/d0e543175ae_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
 <span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">mzids</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psm</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 50314 rows and 31 columns.</span>
@@ -383,8 +383,8 @@ arguments to <code>PSM()</code>.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2         387 MNVLLLLVLC...       Q58D62|FET...       32.788864          12894</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     spectrumFile        idFile MetaMorpheus.score PSM.level.q.value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;character&gt;   &lt;character&gt;          &lt;numeric&gt;         &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... d123599b7d...            31.2586                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... d123599b7d...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... d0e226aa03...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... d0e226aa03...            31.2586                 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   modPeptideRef       modName   modMass modLocation subOriginalResidue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;   &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          P_19 Carbamidom...   57.0215           6                 NA</span>
@@ -440,17 +440,17 @@ arguments to <code>PSM()</code>.</p></li>
 <span class="r-in">                    rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>,</span>
 <span class="r-in">                    score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psmdf</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    spectrum   sequence protein decoy rank     score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       sp1 GQADRHSNMF   ProtE FALSE    1 0.7747985</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       sp2 TDGIMLAWEP   ProtD FALSE    1 0.8199403</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       sp3 NCRKYIVWAQ   ProtF FALSE    1 0.1137033</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       sp4 ATYIQCVGHW   ProtD FALSE    1 0.5995725</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       sp5 ESYPTNGRLQ   ProtA FALSE    1 0.3245011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       sp6 ANYTCPEWVR   ProtB FALSE    1 0.7908653</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       sp7 VCFPIYKSHE   ProtD FALSE    1 0.2827665</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       sp8 NLFDIRKAMY   ProtC FALSE    1 0.5234417</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       sp9 GMFPNERQKL   ProtA FALSE    1 0.5240378</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     sp10 CMGSHWETVD   ProtE FALSE    1 0.8147179</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    spectrum   sequence protein decoy rank      score</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       sp1 EDCYINKQVW   ProtB FALSE    1 0.44392339</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       sp2 YIHQNMSFLR   ProtG FALSE    1 0.70306809</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       sp3 HKMLFATIQV   ProtF FALSE    1 0.28883156</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       sp4 WMPKIVGHDE   ProtG FALSE    1 0.03184923</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       sp5 MNVSDPYKCH   ProtE FALSE    1 0.83307227</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       sp6 GATHNEQLKS   ProtA FALSE    1 0.89213806</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       sp7 GNMPHQKWED   ProtF FALSE    1 0.55697163</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       sp8 GRVSKWNHME   ProtD FALSE    1 0.14568040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       sp9 CPKTVGYFWL   ProtD FALSE    1 0.56411768</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     sp10 TIPSKYGWDV   ProtE FALSE    1 0.21067229</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">psmdf</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psm</span></span>
