@@ -73,6 +73,13 @@ operation, taking an adjacency matrix as input and retruning a
 peptide/protein vector. The matrix colnames are used to populate
 the vector and the matrix rownames are used to name the vector
 elements.
+
+Note that when creating an adjacency matrix from PSMs, the matrix
+is not necessarily binary, as multiple PSMs can match the same
+peptide (sequence), such as for example precursors with different
+charge states. A binary matrix can either be generated with the
+\code{binary} argument (setting all non-0 values to 1) or by reducing
+the PSM object accordingly (see example below).
 }
 \examples{
 
@@ -95,9 +102,29 @@ vec <- makePeptideProteinVector(m)
 vec
 identical(prots, vec)
 
-## -----------------------
-## From a PSM object
-## -----------------------
+## ---------------------------
+## PSM object from a dat.frame
+## ---------------------------
+
+psmdf <- data.frame(psm = paste0("psm", 1:10),
+                    peptide = paste0("pep", c(1, 1, 2, 2, 3, 4, 6, 7, 8, 8)),
+                    protein = paste0("Prot", LETTERS[c(1, 1, 2, 2, 3, 4, 3, 5, 6, 6)]))
+psmdf
+psm <- PSM(psmdf, peptide = "peptide", protein = "protein")
+psm
+makeAdjacencyMatrix(psm)
+
+## Reduce PSM object to peptides
+rpsm <- reducePSMs(psm, k = psm$peptide)
+rpsm
+makeAdjacencyMatrix(rpsm)
+
+## Or set binary to TRUE
+makeAdjacencyMatrix(psm, binary = TRUE)
+
+## ----------------------------
+## PSM object from an mzid file
+## ----------------------------
 
 f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 psm <- PSM(f) |>
