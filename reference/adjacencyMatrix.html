@@ -19,7 +19,7 @@ described below convert between these two format."><!-- mathjax --><script src="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.1</span>
       </span>
     </div>
 
@@ -121,6 +121,12 @@ operation, taking an adjacency matrix as input and retruning a
 peptide/protein vector. The matrix colnames are used to populate
 the vector and the matrix rownames are used to name the vector
 elements.</p>
+<p>Note that when creating an adjacency matrix from PSMs, the matrix
+is not necessarily binary, as multiple PSMs can match the same
+peptide (sequence), such as for example precursors with different
+charge states. A binary matrix can either be generated with the
+<code>binary</code> argument (setting all non-0 values to 1) or by reducing
+the PSM object accordingly (see example below).</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -165,9 +171,71 @@ elements.</p>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">prots</span>, <span class="va">vec</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">## -----------------------</span></span>
-<span class="r-in"><span class="co">## From a PSM object</span></span>
-<span class="r-in"><span class="co">## -----------------------</span></span>
+<span class="r-in"><span class="co">## ---------------------------</span></span>
+<span class="r-in"><span class="co">## PSM object from a dat.frame</span></span>
+<span class="r-in"><span class="co">## ---------------------------</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">psmdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>psm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"psm"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span class="r-in">                    peptide <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"pep"</span>, <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>,</span>
+<span class="r-in">                    protein <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Prot"</span>, <span class="va">LETTERS</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">psmdf</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      psm peptide protein</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   psm1    pep1   ProtA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   psm2    pep1   ProtA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   psm3    pep2   ProtB</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   psm4    pep2   ProtB</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   psm5    pep3   ProtC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   psm6    pep4   ProtD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   psm7    pep6   ProtC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   psm8    pep7   ProtE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   psm9    pep8   ProtF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 psm10    pep8   ProtF</span>
+<span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psmdf</span>, peptide <span class="op">=</span> <span class="st">"peptide"</span>, protein <span class="op">=</span> <span class="st">"protein"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">psm</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 10 rows and 3 columns.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names(3): psm peptide protein</span>
+<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 x 6 sparse Matrix of class "dgCMatrix"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      ProtA ProtB ProtC ProtD ProtE ProtF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep1     2     .     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep2     .     2     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep3     .     .     1     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep4     .     .     .     1     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep6     .     .     1     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep7     .     .     .     .     1     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep8     .     .     .     .     .     2</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## Reduce PSM object to peptides</span></span>
+<span class="r-in"><span class="va">rpsm</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">reducePSMs</a></span><span class="op">(</span><span class="va">psm</span>, k <span class="op">=</span> <span class="va">psm</span><span class="op">$</span><span class="va">peptide</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rpsm</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced PSM with 7 rows and 3 columns.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names(3): psm peptide protein</span>
+<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">rpsm</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 x 6 sparse Matrix of class "dgCMatrix"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      ProtA ProtB ProtC ProtD ProtE ProtF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep1     1     .     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep2     .     1     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep3     .     .     1     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep4     .     .     .     1     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep6     .     .     1     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep7     .     .     .     .     1     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep8     .     .     .     .     .     1</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## Or set binary to TRUE</span></span>
+<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span>, binary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 x 6 sparse Matrix of class "dgCMatrix"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      ProtA ProtB ProtC ProtD ProtE ProtF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep1     1     .     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep2     .     1     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep3     .     .     1     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep4     .     .     .     1     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep6     .     .     1     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep7     .     .     .     .     1     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pep8     .     .     .     .     .     1</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## ----------------------------</span></span>
+<span class="r-in"><span class="co">## PSM object from an mzid file</span></span>
+<span class="r-in"><span class="co">## ----------------------------</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">ident</a></span><span class="op">(</span>full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">"TMT"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span> |&gt;</span>
