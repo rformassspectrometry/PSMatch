@@ -1,9 +1,41 @@
+##' @title Describe protein and peptide compositions
+##'
+##' @description
+##'
+##' It is important to explore PSM results prior to any further
+##' downstream analysies. Two functions, that work on [PSM()] and
+##' [ConnectedComponents()] objects can be used for this:
+##'
+##' - The `describeProteins()` function describe protein composition
+##'   in terms of unique and shared peptides.
+##'
+##' - The `describePeptides()` function describe unique/shared peptide
+##'   composition.
+##'
+##' @name describeProteins
+##'
+##' @aliases describePeptides
+##'
+##' @rdname describeProteins
+##'
+##' @examples
+##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
+##' basename(f)
+##' psm <- PSM(f) |>
+##'        filterPsmDecoy() |>
+##'        filterPsmRank()
+##'
+##' describePeptides(psm)
+##' describeProteins(psm)
+NULL
+
 ## --------------------------------------------------------------------
 ## Describe protein composition in terms of unique and shared peptides
 ## --------------------------------------------------------------------
 
+##' @importFrom Matrix rowSums
 .describeProteins <- function(adj) {
-    unique_peps <- names(which(rowSums(adj) == 1))
+    unique_peps <- names(which(Matrix::rowSums(adj) == 1))
     ans_unique <- ans_shared <- rep(NA, ncol(adj))
     for (i in seq_along(ans_unique)) {
         peps_i <- names(which(adj[, i] != 0))
@@ -22,23 +54,31 @@
     invisible(ans)
 }
 
+
+##' @export
+##'
+##' @importFrom methods is
+##'
+##' @rdname describeProteins
+##'
+##' @param object Either an instance of class `Matrix`, [PSM()] or
+##'     [ConnectedComponents()].
 describeProteins <- function(object) {
     if (is(object, "PSM")) {
-        if (is.null(metadata(object)$adjacencyMatrix))
-            metadata(object)$adjacencyMatrix <- makeAdjacencyMatrix(object)
-        ans <- .describeProteins(metadata(object)$adjacencyMatrix)
+        adj <- makeAdjacencyMatrix(object)
     } else if (is(object, "ConnectedComponents")) {
-        ans <- .describeProteins(object@adjacencyMatrix)
-    } else stop("Object must be of class 'PSM' or 'ConnectedComponents'")
-    ans
+        adj <- object@adjacencyMatrix
+    } else if (is(object, "Matrix")) {
+        adj <- object
+    } else stop("Object must be of class 'Matrix', 'PSM' or 'ConnectedComponents'")
+    .describeProteins(adj)
 }
 
 ## -------------------------------------------
 ## Describe unique/shared peptide composition
 ## -------------------------------------------
-
 .describePeptides <- function(adj) {
-    tab <- table(rowSums(adj))
+    tab <- table(Matrix::rowSums(adj))
     message(nrow(adj), " peptides composed of")
     message(" unique peptides: ", tab[1])
     message(" shared peptides (among protein):")
@@ -48,13 +88,16 @@ describeProteins <- function(object) {
     invisible(tab)
 }
 
+##' @export
+##'
+##' @rdname describeProteins
 describePeptides <- function(object) {
     if (is(object, "PSM")) {
-        if (is.null(metadata(object)$adjacencyMatrix))
-            metadata(object)$adjacencyMatrix <- makeAdjacencyMatrix(object)
-        ans <- .describePeptides(metadata(object)$adjacencyMatrix)
+        adj <- makeAdjacencyMatrix(object)
     } else if (is(object, "ConnectedComponents")) {
-        ans <- .describePeptides(object@adjacencyMatrix)
-    } else stop("Object must be of class 'PSM' or 'ConnectedComponents'")
-    ans
+        adj <- object@adjacencyMatrix
+    } else if (is(object, "Matrix")) {
+        adj <- object
+    } else stop("Object must be of class 'Matrix', 'PSM' or 'ConnectedComponents'")
+ .describePeptides(adj)
 }

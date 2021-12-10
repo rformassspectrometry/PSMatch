@@ -320,7 +320,6 @@ PSM <- function(x,
     if (rank %in% names(psm))
         .psmVariables["rank"] <- rank
     metadata(psm)$variables <- .psmVariables
-    ## metadata(psm)$adjacencyMatrix <- makeAdjacencyMatrix(psm)
     psm
 }
 
