@@ -11,6 +11,7 @@
 \alias{reduced}
 \alias{reduced<-}
 \alias{psmVariables}
+\alias{adjacencyMatrix,PSM-method}
 \title{A class for peptide-spectrum matches}
 \usage{
 PSM(
@@ -29,6 +30,8 @@ reduced(object, spectrum = psmVariables(object)["spectrum"])
 reduced(object) <- value
 
 psmVariables(object, which = "all")
+
+\S4method{adjacencyMatrix}{PSM}(object)
 
 reducePSMs(object, k = object[[psmVariables(object)["spectrum"]]])
 }
@@ -109,7 +112,7 @@ Objects can be checked for their reduced state with the
 unknown. The flag can also be set explicitly with the
 \verb{reduced()<-} setter.
 }
-\section{Creating PSM objects}{
+\section{Creating and using PSM objects}{
 
 \itemize{
 \item The \code{\link[=PSM]{PSM()}} constructor uses parsers provided by the \code{mzR} or
@@ -131,6 +134,9 @@ backend used to create the object, or left blank (i.e. encoded
 as \code{NA}) when building an object by hand from a \code{data.frame}. In
 such situation, they need to be passed explicitly by the user as
 arguments to \code{\link[=PSM]{PSM()}}.
+\item The \code{adjacencyMatrix()} function can generate a sparse
+peptide-by-protein adjacency matrix from the PSM object. It also
+relies on PSM variables which thus need to be set beforehand.
 }
 }
 
@@ -239,9 +245,14 @@ psm <- PSM(psmdf)
 psm
 psmVariables(psm)
 
+## no PSM variables set
+try(adjacencyMatrix(psm))
+
 
 psm <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
            protein = "protein", decoy = "decoy", rank = "rank")
 psm
 psmVariables(psm)
+
+adjacencyMatrix(psm)
 }

@@ -3,35 +3,128 @@
 \name{ConnectedComponents}
 \alias{ConnectedComponents}
 \alias{ConnectedComponents-class}
+\alias{length,ConnectedComponents}
+\alias{lengths,ConnectedComponents}
+\alias{adjacencyMatrix,ConnectedComponents}
+\alias{ccMatrix}
+\alias{ccList}
+\alias{ccPeptides}
+\alias{show,ConnectedComponents}
+\alias{connectedComponents}
+\alias{adjacencyMatrix,ConnectedComponents-method}
+\alias{length,ConnectedComponents-method}
+\alias{lengths,ConnectedComponents-method}
 \title{Connected components}
 \usage{
 ConnectedComponents(object)
+
+\S4method{adjacencyMatrix}{ConnectedComponents}(object)
+
+ccMatrix(x)
+
+ccPeptides(x)
+
+ccList(x)
+
+connectedComponents(x, i, simplify = TRUE)
+
+\S4method{length}{ConnectedComponents}(x)
+
+\S4method{lengths}{ConnectedComponents}(x)
 }
 \arguments{
-\item{object}{An adjacency matrix class \code{Matrix} or an instance of
-class \code{PSM}.}
+\item{object}{For the \code{ConnectedComponents} class constructor,
+either a sparse adjacency matrix of class \code{Matrix} or an
+instance of class \code{PSM}.}
+
+\item{x}{An object of class \code{ConnectedComponents}.}
 }
 \description{
 Connected components are a useful representation when exploring
 identification data. They represent the relation between proteins
-(the connected components) and how they form groups of proteins
+(the connected components) and how they form groups of proteins as
 defined by shared peptides.
 
-Connected components are stored as \code{Connectedcomponents} that can
-be generated using the \code{ConnectedComponents()} function.
+Connected components are stored as \code{ConnectedComponents} objects
+that can be generated using the \code{ConnectedComponents()}
+function.
 }
+\section{Slots}{
+
+\describe{
+\item{\code{adjMatrix}}{The sparse adjacency matrix (class \code{Matrix}) of
+dimension \emph{p} peptides by \emph{m} proteins that was used to
+generate the object.}
+
+\item{\code{ccMatrix}}{The sparse connected components matrix (class
+\code{Matrix}) of dimension \emph{m} by \emph{m} proteins.}
+
+\item{\code{ccList}}{A \code{List} containing the protein names composing the
+respective connected composing.}
+
+\item{\code{ccPeptides}}{A \code{List} containing the peptide names found in
+the proteins composing the respective connected composing.}
+}}
+
+\section{Creating and manipulating objects}{
+
+\itemize{
+\item Instances of the class are created with the
+\code{ConnectedComponent()} constructor from a \code{\link[=PSM]{PSM()}} object or
+directly from a sparse adjacency matrix of class \code{Matrix}. Note
+that if using the latter, the rows and columns must be named.
+\item The sparse peptide-by-protein adjacency matrix is stored in the
+\code{ConnectedComponent} instance and can be accessed with the
+\code{adjacencyMatrix()} function.
+\item The protein-by-protein connected components sparse matrix of
+object \code{x} can be accessed with the \code{ccMatrix(x)} function.
+\item The \code{ccList(x)} function returns a \code{List} with the proteins
+connected components of object \code{x}.
+\item The \code{ccPeptides(x)} functions returns a \code{List} with the peptides
+that defined the connected components of object \code{x}.
+\item The number of connected components of object \code{x} can be
+retrieved with \code{length(x)}.
+\item The size of the connected components of object \code{x}, i.e the
+number of proteins in each component, can be retrieved with
+\code{lengths(x)}.
+\item The \code{connectedComponents(x, i, simplify = TRUE)} function
+returns the peptide-by-protein sparse matrix (or \code{List} of
+matrices, if \code{length(i) > 1}), i.e. the subset of the adjacency
+matrix defined by the proteins in connected component(s)
+\code{i}. \code{i} is the numeric index (between 1 and \code{length(x)}) of the
+connected connected. If simplify is \code{TRUE} (default), then a
+matrix is returned instead of a \code{List} of matrices of length
+\enumerate{
+\item If set to \code{FALSE}, a \code{List} is always returned, irrespective
+of its length.
+}
+}
+}
+
 \examples{
 
 ## --------------------------------
 ## From an adjacency matrix
 ## --------------------------------
 library(Matrix)
-adj <- sparseMatrix(i = c(1, 2, 3, 3), j = c(1, 2, 3, 4), x = 1,
-       dimnames = list(paste0("Pep", 1:3),
-                       paste0("Prot", 1:4)))
+adj <- sparseMatrix(i = c(1, 2, 3, 3, 4, 4, 5),
+                    j = c(1, 2, 3, 4, 3, 4, 5),
+                    x = 1,
+                    dimnames = list(paste0("Pep", 1:5),
+                                   paste0("Prot", 1:5)))
 adj
 cc <- ConnectedComponents(adj)
 cc
+
+length(cc)
+lengths(cc)
+
+adjacencyMatrix(cc) ## same as adj
+ccMatrix(cc)
+ccList(cc)
+ccPeptides(cc)
+connectedComponents(cc, 3) ## a singel matrix
+connectedComponents(cc, 1:2) ## a List
 
 ## --------------------------------
 ## From an PSM object
@@ -45,4 +138,19 @@ psm <- PSM(f) |>
 
 cc <- ConnectedComponents(psm)
 cc
+
+length(cc)
+table(lengths(cc))
+
+(i <- which(lengths(cc)  == 4))
+ccomp <- connectedComponents(cc, i)
+
+## A group of 4 proteins that all share peptide RTRYQAEVR
+ccomp[[1]]
+
+## A group of 4 proteins formed by 7 peptides: THPAERKPRRRKKR is
+## found in the two first proteins, KPTARRRKRK was found twice in
+## ECA3389, VVPVGLRALVWVQR was found in all 4 proteins, KLKPRRR
+## is specific to ECA3399, ...
+ccomp[[2]]
 }

@@ -22,7 +22,7 @@ Imports:
     Matrix,
     BiocParallel,
     BiocGenerics,
-    ProtGenerics (>= 1.23.1),
+    ProtGenerics (>= 1.27.1),
     QFeatures,
     MsCoreUtils
 Suggests:

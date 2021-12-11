@@ -32,7 +32,7 @@
 ##' unknown. The flag can also be set explicitly with the
 ##' `reduced()<-` setter.
 ##'
-##' @section Creating PSM objects:
+##' @section Creating and using PSM objects:
 ##'
 ##' - The [PSM()] constructor uses parsers provided by the `mzR` or
 ##'   `mzID` packages to read the `mzIdentML` data. The vignette
@@ -56,6 +56,10 @@
 ##'   as `NA`) when building an object by hand from a `data.frame`. In
 ##'   such situation, they need to be passed explicitly by the user as
 ##'   arguments to [PSM()].
+##'
+##' - The `adjacencyMatrix()` function can generate a sparse
+##'   peptide-by-protein adjacency matrix from the PSM object. It also
+##'   relies on PSM variables which thus need to be set beforehand.
 ##'
 ##' @examples
 ##'
@@ -162,11 +166,16 @@
 ##' psm
 ##' psmVariables(psm)
 ##'
+##' ## no PSM variables set
+##' try(adjacencyMatrix(psm))
+##'
 ##'
 ##' psm <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
 ##'            protein = "protein", decoy = "decoy", rank = "rank")
 ##' psm
 ##' psmVariables(psm)
+##'
+##' adjacencyMatrix(psm)
 NULL
 
 
@@ -361,3 +370,18 @@ psmVariables <- function(object, which = "all") {
     stopifnot(which %in% names(.psmVariables))
     .psmVariables[which]
 }
+
+
+##' @export
+##'
+##' @rdname PSM
+##'
+##' @importFrom ProtGenerics adjacencyMatrix
+setMethod("adjacencyMatrix", "PSM",
+          function(object) {
+              if (psmVariables(object)[["protein"]] | psmVariables(object)[["peptide"]])
+                  stop("Please define the 'protein' and 'peptide' PSM variables.")
+              vec <- psm[[psmVariables(psm)[["protein"]]]]
+              names(vec) <- psm[[psmVariables(psm)[["peptide"]]]]
+              makeAdjacencyMatrix(vec)
+          })
