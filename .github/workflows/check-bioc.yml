@@ -214,6 +214,10 @@ jobs:
           BiocManager::install("BiocCheck")
         shell: Rscript {0}
 
+      - name: Install ProtGenerics from Github (to get version 1.27.1)
+        run: BiocManager::install("RforMassSpectrometry/ProtGenerics")
+        shell: Rscript {0}
+
       - name: Session info
         run: |
           options(width = 100)
