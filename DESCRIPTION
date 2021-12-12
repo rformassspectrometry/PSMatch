@@ -1,6 +1,6 @@
 Package: PSMatch
 Title: Handling and Managing Peptide Spectrum Matches
-Version: 0.8.0
+Version: 0.9.0
 Authors@R:
    c(person(given = "Laurent", family = "Gatto",
             email = "laurent.gatto@uclouvain.be",
@@ -18,6 +18,7 @@ Description: A simple package to load, handle and manage
 Depends:
     S4Vectors
 Imports:
+    igraph,
     methods,
     Matrix,
     BiocParallel,
