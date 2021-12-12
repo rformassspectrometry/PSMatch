@@ -1,10 +1,8 @@
 ##' @title Connected components
 ##'
-##' @aliases ConnectedComponents ConnectedComponents-class
-##'
 ##' @name ConnectedComponents
 ##'
-##' @aliases ConnectedComponents-class ConnectedComponents length,ConnectedComponents lengths,ConnectedComponents adjacencyMatrix,ConnectedComponents ccMatrix ccList ccPeptides show,ConnectedComponents connectedComponents
+##' @aliases ConnectedComponents ConnectedComponents-class ConnectedComponents length,ConnectedComponents lengths,ConnectedComponents adjacencyMatrix,ConnectedComponents ccMatrix show,ConnectedComponents connectedComponents [,ConnectedComponents,numeric,ANY,ANY [,ConnectedComponents,logical,ANY,ANY [,ConnectedComponents,integer,ANY,ANY
 ##'
 ##' @description
 ##'
@@ -24,11 +22,8 @@
 ##' @slot ccMatrix The sparse connected components matrix (class
 ##'     `Matrix`) of dimension *m* by *m* proteins.
 ##'
-##' @slot ccList A `List` containing the protein names composing the
-##'     respective connected composing.
-##'
-##' @slot ccPeptides A `List` containing the peptide names found in
-##'     the proteins composing the respective connected composing.
+##' @slot adjMatrices A `List` containing adjacency matrices of each
+##'     connected components.
 ##'
 ##' @section Creating and manipulating objects:
 ##'
@@ -44,12 +39,6 @@
 ##' - The protein-by-protein connected components sparse matrix of
 ##'   object `x` can be accessed with the `ccMatrix(x)` function.
 ##'
-##' - The `ccList(x)` function returns a `List` with the proteins
-##'   connected components of object `x`.
-##'
-##' - The `ccPeptides(x)` functions returns a `List` with the peptides
-##'   that defined the connected components of object `x`.
-##'
 ##' - The number of connected components of object `x` can be
 ##'   retrieved with `length(x)`.
 ##'
@@ -58,14 +47,14 @@
 ##'   `lengths(x)`.
 ##'
 ##' - The `connectedComponents(x, i, simplify = TRUE)` function
-##'   returns the peptide-by-protein sparse matrix (or `List` of
-##'   matrices, if `length(i) > 1`), i.e. the subset of the adjacency
-##'   matrix defined by the proteins in connected component(s)
-##'   `i`. `i` is the numeric index (between 1 and `length(x)`) of the
-##'   connected connected. If simplify is `TRUE` (default), then a
-##'   matrix is returned instead of a `List` of matrices of length
-##'   1. If set to `FALSE`, a `List` is always returned, irrespective
-##'   of its length.
+##'   returns the peptide-by-protein sparse adjacency matrix (or
+##'   `List` of matrices, if `length(i) > 1`), i.e. the subset of the
+##'   adjacency matrix defined by the proteins in connected
+##'   component(s) `i`. `i` is the numeric index (between 1 and
+##'   `length(x)`) of the connected connected. If simplify is `TRUE`
+##'   (default), then a matrix is returned instead of a `List` of
+##'   matrices of length 1. If set to `FALSE`, a `List` is always
+##'   returned, irrespective of its length.
 ##'
 ##' @examples
 ##'
@@ -85,10 +74,10 @@
 ##' length(cc)
 ##' lengths(cc)
 ##'
-##' adjacencyMatrix(cc) ## same as adj
+##' adjacencyMatrix(cc) ## same as adj above
 ##' ccMatrix(cc)
-##' ccList(cc)
-##' ccPeptides(cc)
+##'
+##' connectedComponents(cc)
 ##' connectedComponents(cc, 3) ## a singel matrix
 ##' connectedComponents(cc, 1:2) ## a List
 ##'
@@ -108,7 +97,7 @@
 ##' length(cc)
 ##' table(lengths(cc))
 ##'
-##' (i <- which(lengths(cc)  == 4))
+##' (i <- which(lengths(cc) == 4))
 ##' ccomp <- connectedComponents(cc, i)
 ##'
 ##' ## A group of 4 proteins that all share peptide RTRYQAEVR
@@ -118,18 +107,19 @@
 ##' ## found in the two first proteins, KPTARRRKRK was found twice in
 ##' ## ECA3389, VVPVGLRALVWVQR was found in all 4 proteins, KLKPRRR
 ##' ## is specific to ECA3399, ...
-##' ccomp[[2]]
+##' ccomp[[3]]
 NULL
 
 setClass("ConnectedComponents",
          slots = c(adjMatrix = "Matrix",
                    ccMatrix = "Matrix",
-                   ccList = "List",
-                   ccPeptides = "List"))
+                   adjMatrices = "List"))
 
 ##' @importFrom methods new
 ##'
 ##' @importFrom Matrix t tcrossprod rowSums
+##'
+##' @importFrom igraph graph_from_adjacency_matrix components groups
 ##'
 ##' @rdname ConnectedComponents
 ##'
@@ -146,28 +136,17 @@ ConnectedComponents <- function(object) {
     } else stop("'object' must be of class 'PSM' or 'Matrix.")
     if (is.null(colnames(adj)) | is.null(rownames(adj)))
         stop("The adjacency matrix used to create the object must have row and column names.")
-    getCCpeptides <- function(cc, adj) {
-        res <- adj[, cc, drop = FALSE]
-        res <- res[Matrix::rowSums(res) > 0, , drop = FALSE]
-        res
-    }
     cc <- Matrix::tcrossprod(t(adj))
-    n <- ncol(cc)
-    cc_pep <- cc_list <- vector("list", length = n)
-    i <- 1
-    while (i <= n) {
-        j <- i:n
-        k <- which(cc[i, j] != 0)
-        cc_list[[i]] <- colnames(adj)[j][k]
-        cc_pep[[i]] <- rownames(getCCpeptides(cc_list[[i]], adj))
-        i <- i + length(k)
-    }
-    sel <- lengths(cc_list) > 0
+    clu <- components(graph_from_adjacency_matrix(cc))
+    adj_matrices <- lapply(unname(groups(clu)),
+                           function(x) {
+                               ans <- adj[, x, drop = FALSE]
+                               ans[Matrix::rowSums(ans) > 0, , drop = FALSE]
+                           })
     new("ConnectedComponents",
         adjMatrix = adj,
         ccMatrix = cc,
-        ccList = List(cc_list[sel]),
-        ccPeptides = List(cc_pep[sel]))
+        adjMatrices = List(adj_matrices))
 }
 
 
@@ -175,7 +154,7 @@ setMethod("show", "ConnectedComponents",
           function(object) {
               cat(sprintf("An instance of class %s", class(object)), "\n")
               cat(" Number of proteins:", nrow(object@ccMatrix), "\n")
-              cat(" Number of components:", length(object), "\n")
+              cat(" Number of components:", length(object@adjMatrices), "\n")
               cat(" Number of components by size:\n")
               tab <- table(lengths(object))
               msg <- strwrap(paste(paste0(tab, "(", names(tab), ")"),
@@ -201,21 +180,6 @@ ccMatrix <- function(x) {
     x@ccMatrix
 }
 
-##' @export
-##'
-##' @rdname ConnectedComponents
-ccPeptides <- function(x) {
-    stopifnot(is(x, "ConnectedComponents"))
-    x@ccPeptides
-}
-
-##' @export
-##'
-##' @rdname ConnectedComponents
-ccList <- function(x) {
-    stopifnot(is(x, "ConnectedComponents"))
-    x@ccList
-}
 
 ##' @export
 ##'
@@ -227,25 +191,77 @@ ccList <- function(x) {
 ##'     simplified to sparse matrix if `i` was of length 1, otherwise
 ##'     a `List` is returned. Always a `List` if `FALSE`.
 connectedComponents <- function(x, i, simplify = TRUE) {
-    if (any(i > length(x@ccList)))
+    if (missing(i))
+        return(x@adjMatrices)
+    stopifnot(is.numeric(i))
+    if (any(i > length(x)))
         stop("Subscript out of bounds.")
-    ans <- lapply(i, function(ii)
-        x@adjMatrix[x@ccPeptides[[ii]],
-                    x@ccList[[ii]],
-                    drop = FALSE])
+    ans <- x@adjMatrices[i]
     if (length(ans) == 1 & simplify)
         return(ans[[1]])
-    else return(List(ans))
+    else return(ans)
 }
 
-##' ##' @export
+##' @export
 ##'
 ##' @rdname ConnectedComponents
 setMethod("length", "ConnectedComponents",
-          function(x) length(x@ccList))
+          function(x) length(x@adjMatrices))
 
 ##' ##' @export
 ##'
 ##' @rdname ConnectedComponents
 setMethod("lengths", "ConnectedComponents",
-          function(x) lengths(x@ccList))
+          function(x) sapply(x@adjMatrices, ncol))
+
+##' @export
+##'
+##' @rdname ConnectedComponents
+##'
+##' @param i `numeric()`, `integer()` or `logical()` to subset the
+##'     `ConnectedComponents` instance. If a `logical()`, it must be
+##'     of same length as the object is subsets.
+##'
+##' @param j ignored
+##'
+##' @param ... ignored
+##'
+##' @param drop ignore
+setMethod("[", c("ConnectedComponents", "integer"),
+          function(x, i, j, ..., drop = FALSE) {
+    if (!missing(j))
+        stop("Subsetting ConnectedComponents by 'i' only.")
+    if (missing(i))
+        return(x)
+    subsetConnectedComponents(x, as.integer(i))
+})
+
+##' @export
+##'
+##' @rdname ConnectedComponents
+setMethod("[", c("ConnectedComponents", "logical"),
+          function(x, i, j, ..., drop = FALSE) {
+              if (length(i) != length(x))
+                  stop("'i' must be of same length than 'x'.")
+              x[which(i)]
+          })
+
+##' @export
+##'
+##' @rdname ConnectedComponents
+setMethod("[", c("ConnectedComponents", "numeric"),
+          function(x, i, j, ..., drop = FALSE) x[as.integer(i)])
+
+##' @importFrom Matrix colSums
+subsetConnectedComponents <- function(object, i) {
+    stopifnot(is.integer(i))
+    stopifnot(is(object, "ConnectedComponents"))
+    stopifnot(max(i) <= length(object))
+    ## peptides in connected components to be kept
+    keep_peptides <- unique(unlist(lapply(object@adjMatrices[i], rownames)))
+    adj <- object@adjMatrix[keep_peptides, , drop = FALSE]
+    ## remove protein without any peptides
+    adj <- adj[, Matrix::colSums(adj) > 0, drop = FALSE]
+    ## New object from updated adjacency matrix
+    ConnectedComponents(adj)
+}

@@ -7,13 +7,17 @@
 \alias{lengths,ConnectedComponents}
 \alias{adjacencyMatrix,ConnectedComponents}
 \alias{ccMatrix}
-\alias{ccList}
-\alias{ccPeptides}
 \alias{show,ConnectedComponents}
 \alias{connectedComponents}
+\alias{[,ConnectedComponents,numeric,ANY,ANY}
+\alias{[,ConnectedComponents,logical,ANY,ANY}
+\alias{[,ConnectedComponents,integer,ANY,ANY}
 \alias{adjacencyMatrix,ConnectedComponents-method}
 \alias{length,ConnectedComponents-method}
 \alias{lengths,ConnectedComponents-method}
+\alias{[,ConnectedComponents,integer,ANY,ANY-method}
+\alias{[,ConnectedComponents,logical,ANY,ANY-method}
+\alias{[,ConnectedComponents,numeric,ANY,ANY-method}
 \title{Connected components}
 \usage{
 ConnectedComponents(object)
@@ -22,15 +26,17 @@ ConnectedComponents(object)
 
 ccMatrix(x)
 
-ccPeptides(x)
-
-ccList(x)
-
 connectedComponents(x, i, simplify = TRUE)
 
 \S4method{length}{ConnectedComponents}(x)
 
 \S4method{lengths}{ConnectedComponents}(x)
+
+\S4method{[}{ConnectedComponents,integer,ANY,ANY}(x, i, j, ..., drop = FALSE)
+
+\S4method{[}{ConnectedComponents,logical,ANY,ANY}(x, i, j, ..., drop = FALSE)
+
+\S4method{[}{ConnectedComponents,numeric,ANY,ANY}(x, i, j, ..., drop = FALSE)
 }
 \arguments{
 \item{object}{For the \code{ConnectedComponents} class constructor,
@@ -39,11 +45,19 @@ instance of class \code{PSM}.}
 
 \item{x}{An object of class \code{ConnectedComponents}.}
 
-\item{i}{\code{integer()} with the index of the component(s) to return.}
+\item{i}{\code{numeric()}, \code{integer()} or \code{logical()} to subset the
+\code{ConnectedComponents} instance. If a \code{logical()}, it must be
+of same length as the object is subsets.}
 
 \item{simplify}{\code{logical(1)} if \code{TRUE} (default), the output is
 simplified to sparse matrix if \code{i} was of length 1, otherwise
 a \code{List} is returned. Always a \code{List} if \code{FALSE}.}
+
+\item{j}{ignored}
+
+\item{...}{ignored}
+
+\item{drop}{ignore}
 }
 \description{
 Connected components are a useful representation when exploring
@@ -65,11 +79,8 @@ generate the object.}
 \item{\code{ccMatrix}}{The sparse connected components matrix (class
 \code{Matrix}) of dimension \emph{m} by \emph{m} proteins.}
 
-\item{\code{ccList}}{A \code{List} containing the protein names composing the
-respective connected composing.}
-
-\item{\code{ccPeptides}}{A \code{List} containing the peptide names found in
-the proteins composing the respective connected composing.}
+\item{\code{adjMatrices}}{A \code{List} containing adjacency matrices of each
+connected components.}
 }}
 
 \section{Creating and manipulating objects}{
@@ -84,26 +95,20 @@ that if using the latter, the rows and columns must be named.
 \code{adjacencyMatrix()} function.
 \item The protein-by-protein connected components sparse matrix of
 object \code{x} can be accessed with the \code{ccMatrix(x)} function.
-\item The \code{ccList(x)} function returns a \code{List} with the proteins
-connected components of object \code{x}.
-\item The \code{ccPeptides(x)} functions returns a \code{List} with the peptides
-that defined the connected components of object \code{x}.
 \item The number of connected components of object \code{x} can be
 retrieved with \code{length(x)}.
 \item The size of the connected components of object \code{x}, i.e the
 number of proteins in each component, can be retrieved with
 \code{lengths(x)}.
 \item The \code{connectedComponents(x, i, simplify = TRUE)} function
-returns the peptide-by-protein sparse matrix (or \code{List} of
-matrices, if \code{length(i) > 1}), i.e. the subset of the adjacency
-matrix defined by the proteins in connected component(s)
-\code{i}. \code{i} is the numeric index (between 1 and \code{length(x)}) of the
-connected connected. If simplify is \code{TRUE} (default), then a
-matrix is returned instead of a \code{List} of matrices of length
-\enumerate{
-\item If set to \code{FALSE}, a \code{List} is always returned, irrespective
-of its length.
-}
+returns the peptide-by-protein sparse adjacency matrix (or
+\code{List} of matrices, if \code{length(i) > 1}), i.e. the subset of the
+adjacency matrix defined by the proteins in connected
+component(s) \code{i}. \code{i} is the numeric index (between 1 and
+\code{length(x)}) of the connected connected. If simplify is \code{TRUE}
+(default), then a matrix is returned instead of a \code{List} of
+matrices of length 1. If set to \code{FALSE}, a \code{List} is always
+returned, irrespective of its length.
 }
 }
 
@@ -125,10 +130,10 @@ cc
 length(cc)
 lengths(cc)
 
-adjacencyMatrix(cc) ## same as adj
+adjacencyMatrix(cc) ## same as adj above
 ccMatrix(cc)
-ccList(cc)
-ccPeptides(cc)
+
+connectedComponents(cc)
 connectedComponents(cc, 3) ## a singel matrix
 connectedComponents(cc, 1:2) ## a List
 
@@ -148,7 +153,7 @@ cc
 length(cc)
 table(lengths(cc))
 
-(i <- which(lengths(cc)  == 4))
+(i <- which(lengths(cc) == 4))
 ccomp <- connectedComponents(cc, i)
 
 ## A group of 4 proteins that all share peptide RTRYQAEVR
@@ -158,5 +163,5 @@ ccomp[[1]]
 ## found in the two first proteins, KPTARRRKRK was found twice in
 ## ECA3389, VVPVGLRALVWVQR was found in all 4 proteins, KLKPRRR
 ## is specific to ECA3399, ...
-ccomp[[2]]
+ccomp[[3]]
 }
