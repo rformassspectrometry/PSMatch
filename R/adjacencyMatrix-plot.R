@@ -1,4 +1,4 @@
-##' @importFrom igraph layout_nicely graph_from_incidence_matrix V plot.igraph
+##' @importFrom igraph layout_nicely graph_from_incidence_matrix V<- plot.igraph
 ##'
 ##' @export
 ##'
