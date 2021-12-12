@@ -164,4 +164,8 @@ ccomp[[1]]
 ## ECA3389, VVPVGLRALVWVQR was found in all 4 proteins, KLKPRRR
 ## is specific to ECA3399, ...
 ccomp[[3]]
+
+## To select non-trivial components of size > 1
+cc2 <- cc[lengths(cc) > 1]
+cc2
 }
