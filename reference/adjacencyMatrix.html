@@ -46,7 +46,7 @@ described below convert between these two format."><!-- mathjax --><script src="
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Convert to/from an adjacency matrix.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/HEAD/R/adjacencyMatrix.R" class="external-link"><code>R/adjacencyMatrix.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/HEAD/R/adjacencyMatrix-create.R" class="external-link"><code>R/adjacencyMatrix-create.R</code></a>, <a href="https://github.com/RforMassSpectrometry/PSM/blob/HEAD/R/adjacencyMatrix-plot.R" class="external-link"><code>R/adjacencyMatrix-plot.R</code></a></small>
     <div class="hidden name"><code>adjacencyMatrix.Rd</code></div>
     </div>
 
@@ -65,14 +65,15 @@ described below convert between these two format.</p>
   binary <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span>
 
-<span class="fu">makePeptideProteinVector</span><span class="op">(</span><span class="va">m</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span></code></pre></div>
+<span class="fu">makePeptideProteinVector</span><span class="op">(</span><span class="va">m</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span>
+
+<span class="fu">plotAdjacencyMatrix</span><span class="op">(</span><span class="va">x</span>, layout <span class="op">=</span> <span class="fu">igraph</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/igraph/man/layout_as_bipartite.html" class="external-link">layout_as_bipartite</a></span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
-<dd><p>Either an instance of class <code>PSM</code> or a <code>character</code>. See
-example below for details.</p></dd>
+<dd><p>A peptide-by-protein adjacency matrix.</p></dd>
 <dt>split</dt>
 <dd><p><code>character(1)</code> defining how to split the string of
 protein identifiers (using <code><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit()</a></code>). Default is ";". If
@@ -97,6 +98,9 @@ once. Default if <code>FALSE</code>.</p></dd>
 <dt>collapse</dt>
 <dd><p><code>character(1)</code> indicating how to collapse protein
 names for shared peptides. Default is <code>";"</code>.</p></dd>
+<dt>layout</dt>
+<dd><p>A graph layout, as defined in the <code>ipgraph</code>
+package. Default is <code>layout_as_bipartite()</code>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -128,6 +132,10 @@ peptide (sequence), such as for example precursors with different
 charge states. A binary matrix can either be generated with the
 <code>binary</code> argument (setting all non-0 values to 1) or by reducing
 the PSM object accordingly (see example below).</p>
+<p>The <code>plotAdjacencyMatrix()</code> function is useful to visualise small
+adjacency matrices, such as those representing protein groups
+modelled as connected components, as described and illustrated in
+<code><a href="ConnectedComponents.html">ConnectedComponents()</a></code>.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

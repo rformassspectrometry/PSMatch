@@ -50,7 +50,7 @@ function."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/m
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Connected components</h1>
-    <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/HEAD/R/ConnectedComponent-class.R" class="external-link"><code>R/ConnectedComponent-class.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/HEAD/R/ConnectedComponent-class.R" class="external-link"><code>R/ConnectedComponent-class.R</code></a>, <a href="https://github.com/RforMassSpectrometry/PSM/blob/HEAD/R/adjacencyMatrix-accessors.R" class="external-link"><code>R/adjacencyMatrix-accessors.R</code></a></small>
     <div class="hidden name"><code>ConnectedComponents.Rd</code></div>
     </div>
 
@@ -66,9 +66,6 @@ function.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre><code>ConnectedComponents(object)
-
-# S4 method for ConnectedComponents
-adjacencyMatrix(object)
 
 ccMatrix(x)
 
@@ -87,7 +84,10 @@ lengths(x)
 [(x, i, j, ..., drop = FALSE)
 
 # S4 method for ConnectedComponents,numeric,ANY,ANY
-[(x, i, j, ..., drop = FALSE)</code></pre></div>
+[(x, i, j, ..., drop = FALSE)
+
+# S4 method for ConnectedComponents
+adjacencyMatrix(object)</code></pre></div>
     </div>
 
     <div id="arguments">
@@ -267,6 +267,11 @@ returned, irrespective of its length.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           ECA2104 ECA2867 ECA3427 ECA4142</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> RTRYQAEVR       1       1       1       1</span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co">## Visualise the adjacency matrix - here, we see how the single</span></span>
+<span class="r-in"><span class="co">## peptides 'unites' the fous proteins.</span></span>
+<span class="r-in"><span class="fu"><a href="adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">ccomp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="ConnectedComponents-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="co">## A group of 4 proteins formed by 7 peptides: THPAERKPRRRKKR is</span></span>
 <span class="r-in"><span class="co">## found in the two first proteins, KPTARRRKRK was found twice in</span></span>
 <span class="r-in"><span class="co">## ECA3389, VVPVGLRALVWVQR was found in all 4 proteins, KLKPRRR</span></span>
@@ -281,6 +286,13 @@ returned, irrespective of its length.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> KPRRRK                    1       1       .       .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> VVPVGLRALVWVQR            1       1       1       1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> KLKPRRR                   .       .       .       1</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## See how VVPVGLRALVWVQR is shared by ECA3406 ECA3415 ECA3389 and</span></span>
+<span class="r-in"><span class="co">## links the three other componennts, namely ECA3399, ECA3389 and</span></span>
+<span class="r-in"><span class="co">## (ECA3415, ECA3406). Filtering that peptide out would split that</span></span>
+<span class="r-in"><span class="co">## protein group in three.</span></span>
+<span class="r-in"><span class="fu"><a href="adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">ccomp</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="ConnectedComponents-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## To select non-trivial components of size &gt; 1</span></span>
 <span class="r-in"><span class="va">cc2</span> <span class="op">&lt;-</span> <span class="va">cc</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">]</span></span>
