@@ -166,13 +166,6 @@ setMethod("show", "ConnectedComponents",
               message(paste(" ", msg, collapse = "\n"))
           })
 
-##' @importFrom ProtGenerics adjacencyMatrix
-##'
-##' @export
-##'
-##' @rdname ConnectedComponents
-setMethod("adjacencyMatrix", "ConnectedComponents",
-          function(object) object@adjMatrix)
 
 ##' @export
 ##'
@@ -204,6 +197,12 @@ connectedComponents <- function(x, i, simplify = TRUE) {
     if (length(ans) == 1 & simplify)
         return(ans[[1]])
     else return(ans)
+}
+
+plotAdjacencyMatrix <- function(x, layout = layout_nicely) {
+    g <- graph_from_incidence_matrix(x)
+    V(g)$color <- ifelse(names(V(g)) %in% colnames(x), "steelblue", "orange")
+    plot(g, layout = layout_nicely)
 }
 
 ##' @export

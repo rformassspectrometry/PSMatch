@@ -370,18 +370,3 @@ psmVariables <- function(object, which = "all") {
     stopifnot(which %in% names(.psmVariables))
     .psmVariables[which]
 }
-
-
-##' @export
-##'
-##' @rdname PSM
-##'
-##' @importFrom ProtGenerics adjacencyMatrix
-setMethod("adjacencyMatrix", "PSM",
-          function(object) {
-              if (is.na(psmVariables(object)[["protein"]]) | is.na(psmVariables(object)[["peptide"]]))
-                  stop("Please define the 'protein' and 'peptide' PSM variables.")
-              vec <- object[[psmVariables(object)[["protein"]]]]
-              names(vec) <- object[[psmVariables(object)[["peptide"]]]]
-              makeAdjacencyMatrix(vec)
-          })
