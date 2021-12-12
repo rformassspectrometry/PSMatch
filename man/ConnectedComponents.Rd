@@ -38,6 +38,12 @@ either a sparse adjacency matrix of class \code{Matrix} or an
 instance of class \code{PSM}.}
 
 \item{x}{An object of class \code{ConnectedComponents}.}
+
+\item{i}{\code{integer()} with the index of the component(s) to return.}
+
+\item{simplify}{\code{logical(1)} if \code{TRUE} (default), the output is
+simplified to sparse matrix if \code{i} was of length 1, otherwise
+a \code{List} is returned. Always a \code{List} if \code{FALSE}.}
 }
 \description{
 Connected components are a useful representation when exploring

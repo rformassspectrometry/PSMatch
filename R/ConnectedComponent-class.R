@@ -220,6 +220,12 @@ ccList <- function(x) {
 ##' @export
 ##'
 ##' @rdname ConnectedComponents
+##'
+##' @param i `integer()` with the index of the component(s) to return.
+##'
+##' @param simplify `logical(1)` if `TRUE` (default), the output is
+##'     simplified to sparse matrix if `i` was of length 1, otherwise
+##'     a `List` is returned. Always a `List` if `FALSE`.
 connectedComponents <- function(x, i, simplify = TRUE) {
     if (any(i > length(x@ccList)))
         stop("Subscript out of bounds.")

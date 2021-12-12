@@ -379,9 +379,9 @@ psmVariables <- function(object, which = "all") {
 ##' @importFrom ProtGenerics adjacencyMatrix
 setMethod("adjacencyMatrix", "PSM",
           function(object) {
-              if (psmVariables(object)[["protein"]] | psmVariables(object)[["peptide"]])
+              if (is.na(psmVariables(object)[["protein"]]) | is.na(psmVariables(object)[["peptide"]]))
                   stop("Please define the 'protein' and 'peptide' PSM variables.")
-              vec <- psm[[psmVariables(psm)[["protein"]]]]
-              names(vec) <- psm[[psmVariables(psm)[["peptide"]]]]
+              vec <- object[[psmVariables(object)[["protein"]]]]
+              names(vec) <- object[[psmVariables(object)[["peptide"]]]]
               makeAdjacencyMatrix(vec)
           })
