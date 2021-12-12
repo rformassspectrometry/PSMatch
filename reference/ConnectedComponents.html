@@ -23,7 +23,7 @@ function."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.0</span>
       </span>
     </div>
 
@@ -65,24 +65,29 @@ function.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ConnectedComponents</span><span class="op">(</span><span class="va">object</span><span class="op">)</span>
+    <div class="sourceCode"><pre><code>ConnectedComponents(object)
 
-<span class="co"># S4 method for ConnectedComponents</span>
-<span class="fu"><a href="adjacencyMatrix.html">adjacencyMatrix</a></span><span class="op">(</span><span class="va">object</span><span class="op">)</span>
+# S4 method for ConnectedComponents
+adjacencyMatrix(object)
 
-<span class="fu">ccMatrix</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+ccMatrix(x)
 
-<span class="fu">ccPeptides</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+connectedComponents(x, i, simplify = TRUE)
 
-<span class="fu">ccList</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+# S4 method for ConnectedComponents
+length(x)
 
-<span class="fu">connectedComponents</span><span class="op">(</span><span class="va">x</span>, <span class="va">i</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+# S4 method for ConnectedComponents
+lengths(x)
 
-<span class="co"># S4 method for ConnectedComponents</span>
-<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+# S4 method for ConnectedComponents,integer,ANY,ANY
+[(x, i, j, ..., drop = FALSE)
 
-<span class="co"># S4 method for ConnectedComponents</span>
-<span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+# S4 method for ConnectedComponents,logical,ANY,ANY
+[(x, i, j, ..., drop = FALSE)
+
+# S4 method for ConnectedComponents,numeric,ANY,ANY
+[(x, i, j, ..., drop = FALSE)</code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,11 +99,19 @@ instance of class <code>PSM</code>.</p></dd>
 <dt>x</dt>
 <dd><p>An object of class <code>ConnectedComponents</code>.</p></dd>
 <dt>i</dt>
-<dd><p><code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code> with the index of the component(s) to return.</p></dd>
+<dd><p><code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code>, <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code> or <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical()</a></code> to subset the
+<code>ConnectedComponents</code> instance. If a <code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical()</a></code>, it must be
+of same length as the object is subsets.</p></dd>
 <dt>simplify</dt>
 <dd><p><code>logical(1)</code> if <code>TRUE</code> (default), the output is
 simplified to sparse matrix if <code>i</code> was of length 1, otherwise
 a <code>List</code> is returned. Always a <code>List</code> if <code>FALSE</code>.</p></dd>
+<dt>j</dt>
+<dd><p>ignored</p></dd>
+<dt>...</dt>
+<dd><p>ignored</p></dd>
+<dt>drop</dt>
+<dd><p>ignore</p></dd>
 </dl></div>
     <div id="slots">
     <h2>Slots</h2>
@@ -115,14 +128,9 @@ generate the object.</p></dd>
 <code>Matrix</code>) of dimension <em>m</em> by <em>m</em> proteins.</p></dd>
 
 
-<dt><code>ccList</code></dt>
-<dd><p>A <code>List</code> containing the protein names composing the
-respective connected composing.</p></dd>
-
-
-<dt><code>ccPeptides</code></dt>
-<dd><p>A <code>List</code> containing the peptide names found in
-the proteins composing the respective connected composing.</p></dd>
+<dt><code>adjMatrices</code></dt>
+<dd><p>A <code>List</code> containing adjacency matrices of each
+connected components.</p></dd>
 
 
 </dl></div>
@@ -139,24 +147,20 @@ that if using the latter, the rows and columns must be named.</p></li>
 <code><a href="adjacencyMatrix.html">adjacencyMatrix()</a></code> function.</p></li>
 <li><p>The protein-by-protein connected components sparse matrix of
 object <code>x</code> can be accessed with the <code>ccMatrix(x)</code> function.</p></li>
-<li><p>The <code>ccList(x)</code> function returns a <code>List</code> with the proteins
-connected components of object <code>x</code>.</p></li>
-<li><p>The <code>ccPeptides(x)</code> functions returns a <code>List</code> with the peptides
-that defined the connected components of object <code>x</code>.</p></li>
 <li><p>The number of connected components of object <code>x</code> can be
 retrieved with <code>length(x)</code>.</p></li>
 <li><p>The size of the connected components of object <code>x</code>, i.e the
 number of proteins in each component, can be retrieved with
 <code>lengths(x)</code>.</p></li>
 <li><p>The <code>connectedComponents(x, i, simplify = TRUE)</code> function
-returns the peptide-by-protein sparse matrix (or <code>List</code> of
-matrices, if <code>length(i) &gt; 1</code>), i.e. the subset of the adjacency
-matrix defined by the proteins in connected component(s)
-<code>i</code>. <code>i</code> is the numeric index (between 1 and <code>length(x)</code>) of the
-connected connected. If simplify is <code>TRUE</code> (default), then a
-matrix is returned instead of a <code>List</code> of matrices of length</p><ol><li><p>If set to <code>FALSE</code>, a <code>List</code> is always returned, irrespective
-of its length.</p></li>
-</ol></li>
+returns the peptide-by-protein sparse adjacency matrix (or
+<code>List</code> of matrices, if <code>length(i) &gt; 1</code>), i.e. the subset of the
+adjacency matrix defined by the proteins in connected
+component(s) <code>i</code>. <code>i</code> is the numeric index (between 1 and
+<code>length(x)</code>) of the connected connected. If simplify is <code>TRUE</code>
+(default), then a matrix is returned instead of a <code>List</code> of
+matrices of length 1. If set to <code>FALSE</code>, a <code>List</code> is always
+returned, irrespective of its length.</p></li>
 </ul></div>
 
     <div id="ref-examples">
@@ -197,7 +201,7 @@ of its length.</p></li>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 1 2 1</span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="adjacencyMatrix.html">adjacencyMatrix</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="co">## same as adj</span></span>
+<span class="r-in"><span class="fu"><a href="adjacencyMatrix.html">adjacencyMatrix</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="co">## same as adj above</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 x 5 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Prot1 Prot2 Prot3 Prot4 Prot5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Pep1     1     .     .     .     .</span>
@@ -213,18 +217,9 @@ of its length.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Prot3     .     .     2     2     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Prot4     .     .     2     2     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Prot5     .     .     .     .     1</span>
-<span class="r-in"><span class="fu">ccList</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CharacterList of length 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]] Prot1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]] Prot2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]] Prot3 Prot4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[4]] Prot5</span>
-<span class="r-in"><span class="fu">ccPeptides</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CharacterList of length 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]] Pep1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]] Pep2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[3]] Pep3 Pep4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[4]] Pep5</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">connectedComponents</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of length 4</span>
 <span class="r-in"><span class="fu">connectedComponents</span><span class="op">(</span><span class="va">cc</span>, <span class="fl">3</span><span class="op">)</span> <span class="co">## a singel matrix</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 x 2 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Prot3 Prot4</span>
@@ -253,17 +248,17 @@ of its length.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of proteins: 1504 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of components: 1476 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of components by size:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   1454(1) 18(2) 2(3) 2(4)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   1455(1) 17(2) 1(3) 3(4)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1476</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1    2    3    4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1454   18    2    2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1455   17    1    3 </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span>  <span class="op">==</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 527 670</span>
+<span class="r-in"><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 528 576 672</span>
 <span class="r-in"><span class="va">ccomp</span> <span class="op">&lt;-</span> <span class="fu">connectedComponents</span><span class="op">(</span><span class="va">cc</span>, <span class="va">i</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## A group of 4 proteins that all share peptide RTRYQAEVR</span></span>
@@ -276,7 +271,7 @@ of its length.</p></li>
 <span class="r-in"><span class="co">## found in the two first proteins, KPTARRRKRK was found twice in</span></span>
 <span class="r-in"><span class="co">## ECA3389, VVPVGLRALVWVQR was found in all 4 proteins, KLKPRRR</span></span>
 <span class="r-in"><span class="co">## is specific to ECA3399, ...</span></span>
-<span class="r-in"><span class="va">ccomp</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
+<span class="r-in"><span class="va">ccomp</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7 x 4 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     ECA3406 ECA3415 ECA3389 ECA3399</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> THPAERKPRRRKKR            1       1       .       .</span>
