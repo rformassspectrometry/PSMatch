@@ -16,6 +16,9 @@
     <loc>/index.html</loc>
   </url>
   <url>
+    <loc>/reference/ConnectedComponents.html</loc>
+  </url>
+  <url>
     <loc>/reference/PSM.html</loc>
   </url>
   <url>
@@ -26,6 +29,9 @@
   </url>
   <url>
     <loc>/reference/calculateFragments.html</loc>
+  </url>
+  <url>
+    <loc>/reference/describeProteins.html</loc>
   </url>
   <url>
     <loc>/reference/filterPSMs.html</loc>

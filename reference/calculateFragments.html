@@ -29,7 +29,7 @@ Spectrum2.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.8.0</span>
       </span>
     </div>
 
@@ -56,7 +56,7 @@ Spectrum2.
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculate ions produced by fragmentation</h1>
-    <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/HEAD/R/fragments.R" class="external-link"><code>R/fragments.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/HEAD/R/fragments-calculate.R" class="external-link"><code>R/fragments-calculate.R</code></a></small>
     <div class="hidden name"><code>calculateFragments.Rd</code></div>
     </div>
 
@@ -73,7 +73,8 @@ package that implements a method for objects of class
 <code>Spectrum2</code>.</p></li>
 </ul></div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S4 method for character,missing</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S4 method for character,missing</span>
 <span class="fu">calculateFragments</span><span class="op">(</span>
   <span class="va">sequence</span>,
   type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="st">"y"</span><span class="op">)</span>,
@@ -82,8 +83,8 @@ package that implements a method for objects of class
   neutralLoss <span class="op">=</span> <span class="fu">defaultNeutralLoss</span><span class="op">(</span><span class="op">)</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
+    </div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>sequence</dt>
@@ -108,11 +109,11 @@ which type of neutral loss should be calculated.  Currently
 neutral loss on the C terminal <code>"Cterm"</code>, at the amino acids
 <code>c("D", "E", "S", "T")</code> for <code>"water"</code> (shown with an <code>_</code>) and
 <code>c("K", "N", "Q", "R")</code> for <code>"ammonia"</code> (shown with an <code>*</code>) are
-supported.</p><pre><code>There is a helper function `defaultNeutralLoss()` that returns
+supported.</p><div class="sourceCode"><pre><code>There is a helper function `defaultNeutralLoss()` that returns
 the correct list. It has two arguments `disableWaterLoss` and
 `disableAmmoniaLoss` to remove single neutral loss options. See
 the example section for use cases.
-</code></pre></dd>
+</code></pre></div></dd>
 <dt>verbose</dt>
 <dd><p><code>logical(1)</code>. If <code>TRUE</code> (default) the used
 modifications are printed.</p></dd>
@@ -126,11 +127,10 @@ modifications are printed.</p></dd>
     <h2>Author</h2>
     <p>Sebastian Gibb <a href="mailto:mail@sebastiangibb.de">mail@sebastiangibb.de</a></p>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="co">## calculate fragments for ACE with default modification</span></span>
 <span class="r-in"><span class="fu">calculateFragments</span><span class="op">(</span><span class="st">"ACE"</span>, modifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span>C <span class="op">=</span> <span class="fl">57.02146</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Modifications used: C=57.02146</span>
@@ -739,7 +739,7 @@ modifications are printed.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
 </div>
 
       </footer></div>
