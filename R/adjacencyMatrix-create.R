@@ -35,6 +35,11 @@
 ##' `binary` argument (setting all non-0 values to 1) or by reducing
 ##' the PSM object accordingly (see example below).
 ##'
+##' The `plotAdjacencyMatrix()` function is useful to visualise small
+##' adjacency matrices, such as those representing protein groups
+##' modelled as connected components, as described and illustrated in
+##' [ConnectedComponents()].
+##'
 ##' @param x Either an instance of class `PSM` or a `character`. See
 ##'     example below for details.
 ##'

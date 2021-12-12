@@ -103,11 +103,21 @@
 ##' ## A group of 4 proteins that all share peptide RTRYQAEVR
 ##' ccomp[[1]]
 ##'
+##' ## Visualise the adjacency matrix - here, we see how the single
+##' ## peptides 'unites' the fous proteins.
+##' plotAdjacencyMatrix(ccomp[[1]])
+##'
 ##' ## A group of 4 proteins formed by 7 peptides: THPAERKPRRRKKR is
 ##' ## found in the two first proteins, KPTARRRKRK was found twice in
 ##' ## ECA3389, VVPVGLRALVWVQR was found in all 4 proteins, KLKPRRR
 ##' ## is specific to ECA3399, ...
 ##' ccomp[[3]]
+##'
+##' ## See how VVPVGLRALVWVQR is shared by ECA3406 ECA3415 ECA3389 and
+##' ## links the three other componennts, namely ECA3399, ECA3389 and
+##' ## (ECA3415, ECA3406). Filtering that peptide out would split that
+##' ## protein group in three.
+##' plotAdjacencyMatrix(ccomp[[3]])
 ##'
 ##' ## To select non-trivial components of size > 1
 ##' cc2 <- cc[lengths(cc) > 1]

@@ -1,6 +1,8 @@
-##' @importFrom igraph layout_nicely graph_from_incidence_matrix V plot
+##' @importFrom igraph layout_nicely graph_from_incidence_matrix V plot.igraph
 ##'
 ##' @export
+##'
+##' @name adjacencyMatrix
 ##'
 ##' @param x A peptide-by-protein adjacency matrix.
 ##'
@@ -9,5 +11,6 @@
 plotAdjacencyMatrix <- function(x, layout = igraph::layout_as_bipartite) {
     g <- graph_from_incidence_matrix(x)
     V(g)$color <- ifelse(names(V(g)) %in% colnames(x), "steelblue", "orange")
-    plot(g, layout = layout_nicely)
+    plot.igraph(g, layout = layout_nicely)
+    invisible(g)
 }
