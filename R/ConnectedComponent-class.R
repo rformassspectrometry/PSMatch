@@ -254,6 +254,8 @@ setMethod("[", c("ConnectedComponents", "integer"),
 ##' @rdname ConnectedComponents
 setMethod("[", c("ConnectedComponents", "logical"),
           function(x, i, j, ..., drop = FALSE) {
+              if (!missing(j))
+                  stop("Subsetting ConnectedComponents by 'i' only.")
               if (length(i) != length(x))
                   stop("'i' must be of same length than 'x'.")
               x[which(i)]
@@ -263,7 +265,11 @@ setMethod("[", c("ConnectedComponents", "logical"),
 ##'
 ##' @rdname ConnectedComponents
 setMethod("[", c("ConnectedComponents", "numeric"),
-          function(x, i, j, ..., drop = FALSE) x[as.integer(i)])
+          function(x, i, j, ..., drop = FALSE) {
+              if (!missing(j))
+                  stop("Subsetting ConnectedComponents by 'i' only.")
+              x[as.integer(i)]
+          })
 
 ##' @importFrom Matrix colSums
 subsetConnectedComponents <- function(object, i) {
