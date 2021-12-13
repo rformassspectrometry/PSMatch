@@ -92,3 +92,15 @@ test_that("ajacendyMatrix() accessor works", {
     adj2 <- adjacencyMatrix(cc)
     expect_identical(adj1, adj2)
 })
+
+
+test_that("ajacendyMatrix() accessor works", {
+    cc <-  msdata::ident(full.names = TRUE, pattern = "TMT") |>
+    PSM() |>
+    filterPsmDecoy() |>
+    filterPsmRank() |>
+    ConnectedComponents()
+    g <- plotAdjacencyMatrix(connectedComponents(cc, 672))
+    dev.off()
+    expect_true(is(g, "igraph"))
+})
