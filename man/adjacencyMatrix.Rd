@@ -90,7 +90,8 @@ the PSM object accordingly (see example below).
 The \code{plotAdjacencyMatrix()} function is useful to visualise small
 adjacency matrices, such as those representing protein groups
 modelled as connected components, as described and illustrated in
-\code{\link[=ConnectedComponents]{ConnectedComponents()}}.
+\code{\link[=ConnectedComponents]{ConnectedComponents()}}. The function invisibly returns the graph
+\code{igraph} object for additional tuning.
 }
 \examples{
 
