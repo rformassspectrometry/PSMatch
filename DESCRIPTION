@@ -12,7 +12,13 @@ Authors@R:
             comment = c(ORCID = "0000-0002-6977-7147")),
      person(given = "Sebastian", family = "Gibb",
             email = "mail@sebastiangibb.de",
-            role = "aut"))
+            role = "aut"),
+     person(given = "Samuel", family = "Wieczorek",
+            email = "samuel.wieczorek@cea.fr",
+            role = "ctb"),
+     person(given = "Thomas", family = "Burger",
+            email = "thomas.burger@cea.fr",
+            role = "ctb"))
 Description: A simple package to load, handle and manage
     Peptide-Spectrum Matches (PSMs).
 Depends:
