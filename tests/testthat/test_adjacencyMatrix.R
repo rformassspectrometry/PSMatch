@@ -69,3 +69,26 @@ test_that("makeAjacendyMatrix() works on PMS data (2)", {
     expect_true(all(as.vector(adj2) %in% c(0, 1)))
     expect_identical(dimnames(adj), dimnames(adj2))
 })
+
+
+test_that("ajacendyMatrix() accessor works", {
+    psm <-  msdata::ident(full.names = TRUE, pattern = "TMT") |>
+    PSM() |>
+    filterPsmDecoy() |>
+    filterPsmRank()
+    cc <- ConnectedComponents(psm)
+    ## not identical, a multiple PSMs per peptide
+    adj1 <- adjacencyMatrix(psm)
+    adj2 <- adjacencyMatrix(cc)
+    expect_true(is(adj1, "sparseMatrix"))
+    expect_true(is(adj2, "sparseMatrix"))
+    expect_identical(sum(adj1@x), sum(adj2@x))
+    expect_identical(colnames(adj1), colnames(adj2))
+    ## remove duplicated sequences to make adjacency matrices
+    ## identical
+    psm <- psm[!duplicated(psm$sequence), ]
+    cc <- ConnectedComponents(psm)
+    adj1 <- adjacencyMatrix(psm)
+    adj2 <- adjacencyMatrix(cc)
+    expect_identical(adj1, adj2)
+})
