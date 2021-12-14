@@ -55,6 +55,16 @@ test_that("makeAjacendyMatrix() works on PMS data (1)", {
     adj2 <- makeAdjacencyMatrix(psm, binary = TRUE)
     expect_true(all(as.vector(adj2) %in% c(0, 1)))
     expect_identical(dimnames(adj), dimnames(adj2))
+    ## try again without psmVariables
+    metadata(psm)$variables["protein"] <- "NOTVALID"
+    expect_error(makeAdjacencyMatrix(psm))
+    expect_error(adjacencyMatrix(psm))
+    metadata(psm)$variables["protein"] <- "DatabaseAccess"
+    metadata(psm)$variables["peptide"] <- "NOTVALID"
+    expect_error(makeAdjacencyMatrix(psm))
+    metadata(psm)$variables["peptide"] <- NA_character_
+    expect_error(makeAdjacencyMatrix(psm))
+    expect_error(adjacencyMatrix(psm))
 })
 
 test_that("makeAjacendyMatrix() works on PMS data (2)", {
