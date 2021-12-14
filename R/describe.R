@@ -80,9 +80,10 @@ describeProteins <- function(object) {
 .describePeptides <- function(adj) {
     tab <- table(Matrix::rowSums(adj))
     message(nrow(adj), " peptides composed of")
-    message(" unique peptides: ", tab[1])
+    message(" unique peptides: ", tab["1"])
     message(" shared peptides (among protein):")
-    msg <- strwrap(paste(paste0(tab[-1], "(", names(tab[-1]), ")"),
+    tab2 <- tab[names(tab) != "1"]
+    msg <- strwrap(paste(paste0(tab2, "(", names(tab2), ")"),
                          collapse = " "))
     message(paste(" ", msg, collapse = "\n"))
     invisible(tab)
