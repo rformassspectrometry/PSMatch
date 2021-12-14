@@ -3,6 +3,9 @@
 # revert this when that issue in R is fixed.
 Sys.setenv("R_TESTS" = "")
 
+library("testthat")
+library("PSMatch")
+
 adj <- Matrix::sparseMatrix(
     i = c(1, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 8),
     j = c(1, 2, 3, 4, 3, 4, 5, 6, 6, 7, 7, 1),
@@ -20,7 +23,7 @@ cc <- Matrix::sparseMatrix(
         paste0("P", 1:7)))
 
 adjMatrices <-
-    List(
+    S4Vectors::List(
         Matrix::sparseMatrix(
                     i = c(1, 2), j = c(1, 1), x = 1,
                     dimnames = list(c("p1", "p8"),
@@ -43,11 +46,8 @@ adjMatrices <-
                         c("p5", "p6", "p7"),
                         c("P5", "P6", "P7"))))
 
-psm <- PMS(data.frame(peptide = paste0("p", c(1, 8, 2, 3, 4, 3, 4, 5, 5, 6, 6, 7)),
-                      protein = rep(colnames(adj), Matrix::colSums(adj))),
-           protein = "protein", peptide = "peptide")
-
-library("testthat")
-library("PSMatch")
+psmdf <- PSM(data.frame(peptide = paste0("p", c(1, 8, 2, 3, 4, 3, 4, 5, 5, 6, 6, 7)),
+                        protein = rep(colnames(adj), Matrix::colSums(adj))),
+             protein = "protein", peptide = "peptide")
 
 test_check("PSMatch")
