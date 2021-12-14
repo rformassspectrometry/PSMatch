@@ -23,7 +23,7 @@ function."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1</span>
       </span>
     </div>
 
@@ -75,7 +75,13 @@ connectedComponents(x, i, simplify = TRUE)
 length(x)
 
 # S4 method for ConnectedComponents
-lengths(x)
+dims(x)
+
+# S4 method for ConnectedComponents
+ncols(x)
+
+# S4 method for ConnectedComponents
+nrows(x)
 
 # S4 method for ConnectedComponents,integer,ANY,ANY
 [(x, i, j, ..., drop = FALSE)
@@ -151,7 +157,9 @@ object <code>x</code> can be accessed with the <code>ccMatrix(x)</code> function
 retrieved with <code>length(x)</code>.</p></li>
 <li><p>The size of the connected components of object <code>x</code>, i.e the
 number of proteins in each component, can be retrieved with
-<code>lengths(x)</code>.</p></li>
+<code>ncols(x)</code>. The number of peptides defining the connected
+components can be retrieved with <code>nrows(x)</code>. Both can be
+accessed with <code>dims(x)</code>.</p></li>
 <li><p>The <code>connectedComponents(x, i, simplify = TRUE)</code> function
 returns the peptide-by-protein sparse adjacency matrix (or
 <code>List</code> of matrices, if <code>length(i) &gt; 1</code>), i.e. the subset of the
@@ -194,11 +202,12 @@ returned, irrespective of its length.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of proteins: 5 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of components: 4 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of components by size:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   3(1) 1(2)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   3(1, with 1 peptide) 0(1, with &gt; 1 peptides)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   1(2)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">ncols</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 1 2 1</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="adjacencyMatrix.html">adjacencyMatrix</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="co">## same as adj above</span></span>
@@ -248,16 +257,17 @@ returned, irrespective of its length.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of proteins: 1504 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of components: 1476 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of components by size:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   1455(1) 17(2) 1(3) 3(4)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   954(1, with 1 peptide) 501(1, with &gt; 1 peptides)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   17(2) 1(3) 3(4)</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1476</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu">ncols</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1    2    3    4 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1455   17    1    3 </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu">ncols</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 528 576 672</span>
 <span class="r-in"><span class="va">ccomp</span> <span class="op">&lt;-</span> <span class="fu">connectedComponents</span><span class="op">(</span><span class="va">cc</span>, <span class="va">i</span><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -295,12 +305,13 @@ returned, irrespective of its length.</p></li>
 <span class="r-plt img"><img src="ConnectedComponents-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## To select non-trivial components of size &gt; 1</span></span>
-<span class="r-in"><span class="va">cc2</span> <span class="op">&lt;-</span> <span class="va">cc</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">]</span></span>
+<span class="r-in"><span class="va">cc2</span> <span class="op">&lt;-</span> <span class="va">cc</span><span class="op">[</span><span class="fu">ncols</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">]</span></span>
 <span class="r-in"><span class="va">cc2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> An instance of class ConnectedComponents </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of proteins: 49 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of components: 21 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of components by size:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   0(1, with 1 peptide) 0(1, with &gt; 1 peptides)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   17(2) 1(3) 3(4)</span>
 </code></pre></div>
     </div>
