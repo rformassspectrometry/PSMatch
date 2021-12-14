@@ -2,7 +2,7 @@
 ##'
 ##' @name ConnectedComponents
 ##'
-##' @aliases ConnectedComponents ConnectedComponents-class ConnectedComponents length,ConnectedComponents lengths,ConnectedComponents adjacencyMatrix,ConnectedComponents ccMatrix show,ConnectedComponents connectedComponents [,ConnectedComponents,numeric,ANY,ANY [,ConnectedComponents,logical,ANY,ANY [,ConnectedComponents,integer,ANY,ANY
+##' @aliases ConnectedComponents ConnectedComponents-class ConnectedComponents length,ConnectedComponents adjacencyMatrix,ConnectedComponents ccMatrix show,ConnectedComponents connectedComponents [,ConnectedComponents,numeric,ANY,ANY [,ConnectedComponents,logical,ANY,ANY [,ConnectedComponents,integer,ANY,ANY dims,ConnectedComponents ncols,ConnectedComponents nrows,ConnectedComponents
 ##'
 ##' @description
 ##'
@@ -44,7 +44,9 @@
 ##'
 ##' - The size of the connected components of object `x`, i.e the
 ##'   number of proteins in each component, can be retrieved with
-##'   `lengths(x)`.
+##'   `ncols(x)`. The number of peptides defining the connected
+##'   components can be retrieved with `nrows(x)`. Both can be
+##'   accessed with `dims(x)`.
 ##'
 ##' - The `connectedComponents(x, i, simplify = TRUE)` function
 ##'   returns the peptide-by-protein sparse adjacency matrix (or
@@ -72,7 +74,7 @@
 ##' cc
 ##'
 ##' length(cc)
-##' lengths(cc)
+##' ncols(cc)
 ##'
 ##' adjacencyMatrix(cc) ## same as adj above
 ##' ccMatrix(cc)
@@ -95,9 +97,9 @@
 ##' cc
 ##'
 ##' length(cc)
-##' table(lengths(cc))
+##' table(ncols(cc))
 ##'
-##' (i <- which(lengths(cc) == 4))
+##' (i <- which(ncols(cc) == 4))
 ##' ccomp <- connectedComponents(cc, i)
 ##'
 ##' ## A group of 4 proteins that all share peptide RTRYQAEVR
@@ -120,7 +122,7 @@
 ##' plotAdjacencyMatrix(ccomp[[3]])
 ##'
 ##' ## To select non-trivial components of size > 1
-##' cc2 <- cc[lengths(cc) > 1]
+##' cc2 <- cc[ncols(cc) > 1]
 ##' cc2
 NULL
 
@@ -170,10 +172,13 @@ setMethod("show", "ConnectedComponents",
               cat(" Number of proteins:", nrow(object@ccMatrix), "\n")
               cat(" Number of components:", length(object@adjMatrices), "\n")
               cat(" Number of components by size:\n")
-              tab <- table(lengths(object))
-              msg <- strwrap(paste(paste0(tab, "(", names(tab), ")"),
-                                   collapse = " "))
-              message(paste(" ", msg, collapse = "\n"))
+              dim_mat <- dims(object)
+              k1 <- sum(apply(dim_mat, 1, function(x) x[1] == 1L & x[2] == 1L))
+              k2 <-  sum(apply(dim_mat, 1, function(x) x[1] > 1L & x[2] == 1L))
+              tab <- table(dim_mat[dim_mat[, "ncol"] > 1, "ncol"])
+              msg <- strwrap(paste(paste0(tab, "(", names(tab), ")"), collapse = " "))
+              message("  ", k1, "(1, with 1 peptide) ", k2, "(1, with > 1 peptides)")
+              message("  ", msg)
           })
 
 
@@ -221,11 +226,33 @@ plotAdjacencyMatrix <- function(x, layout = layout_nicely) {
 setMethod("length", "ConnectedComponents",
           function(x) length(x@adjMatrices))
 
-##' ##' @export
+##' @export
+##'
+##' @importFrom BiocGenerics dims
 ##'
 ##' @rdname ConnectedComponents
-setMethod("lengths", "ConnectedComponents",
+setMethod("dims", "ConnectedComponents",
+          function(x) {
+              ans <- t(sapply(x@adjMatrices, dim))
+              colnames(ans) <- c("nrow", "ncol")
+              ans
+          })
+
+##' @export
+##'
+##' @importFrom BiocGenerics ncols
+##'
+##' @rdname ConnectedComponents
+setMethod("ncols", "ConnectedComponents",
           function(x) sapply(x@adjMatrices, ncol))
+
+##' @export
+##'
+##' @importFrom BiocGenerics nrows
+##'
+##' @rdname ConnectedComponents
+setMethod("nrows", "ConnectedComponents",
+          function(x) sapply(x@adjMatrices, nrow))
 
 ##' @export
 ##'

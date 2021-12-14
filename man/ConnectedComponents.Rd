@@ -5,7 +5,6 @@
 \alias{ConnectedComponents}
 \alias{ConnectedComponents-class}
 \alias{length,ConnectedComponents}
-\alias{lengths,ConnectedComponents}
 \alias{adjacencyMatrix,ConnectedComponents}
 \alias{ccMatrix}
 \alias{show,ConnectedComponents}
@@ -13,8 +12,13 @@
 \alias{[,ConnectedComponents,numeric,ANY,ANY}
 \alias{[,ConnectedComponents,logical,ANY,ANY}
 \alias{[,ConnectedComponents,integer,ANY,ANY}
+\alias{dims,ConnectedComponents}
+\alias{ncols,ConnectedComponents}
+\alias{nrows,ConnectedComponents}
 \alias{length,ConnectedComponents-method}
-\alias{lengths,ConnectedComponents-method}
+\alias{dims,ConnectedComponents-method}
+\alias{ncols,ConnectedComponents-method}
+\alias{nrows,ConnectedComponents-method}
 \alias{[,ConnectedComponents,integer,ANY,ANY-method}
 \alias{[,ConnectedComponents,logical,ANY,ANY-method}
 \alias{[,ConnectedComponents,numeric,ANY,ANY-method}
@@ -29,7 +33,11 @@ connectedComponents(x, i, simplify = TRUE)
 
 \S4method{length}{ConnectedComponents}(x)
 
-\S4method{lengths}{ConnectedComponents}(x)
+\S4method{dims}{ConnectedComponents}(x)
+
+\S4method{ncols}{ConnectedComponents}(x)
+
+\S4method{nrows}{ConnectedComponents}(x)
 
 \S4method{[}{ConnectedComponents,integer,ANY,ANY}(x, i, j, ..., drop = FALSE)
 
@@ -100,7 +108,9 @@ object \code{x} can be accessed with the \code{ccMatrix(x)} function.
 retrieved with \code{length(x)}.
 \item The size of the connected components of object \code{x}, i.e the
 number of proteins in each component, can be retrieved with
-\code{lengths(x)}.
+\code{ncols(x)}. The number of peptides defining the connected
+components can be retrieved with \code{nrows(x)}. Both can be
+accessed with \code{dims(x)}.
 \item The \code{connectedComponents(x, i, simplify = TRUE)} function
 returns the peptide-by-protein sparse adjacency matrix (or
 \code{List} of matrices, if \code{length(i) > 1}), i.e. the subset of the
@@ -129,7 +139,7 @@ cc <- ConnectedComponents(adj)
 cc
 
 length(cc)
-lengths(cc)
+ncols(cc)
 
 adjacencyMatrix(cc) ## same as adj above
 ccMatrix(cc)
@@ -152,9 +162,9 @@ cc <- ConnectedComponents(psm)
 cc
 
 length(cc)
-table(lengths(cc))
+table(ncols(cc))
 
-(i <- which(lengths(cc) == 4))
+(i <- which(ncols(cc) == 4))
 ccomp <- connectedComponents(cc, i)
 
 ## A group of 4 proteins that all share peptide RTRYQAEVR
@@ -177,6 +187,6 @@ ccomp[[3]]
 plotAdjacencyMatrix(ccomp[[3]])
 
 ## To select non-trivial components of size > 1
-cc2 <- cc[lengths(cc) > 1]
+cc2 <- cc[ncols(cc) > 1]
 cc2
 }
