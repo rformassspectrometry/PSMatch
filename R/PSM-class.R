@@ -1,6 +1,6 @@
 ##' @title A class for peptide-spectrum matches
 ##'
-##' @aliases PSM-class PSM reducePSMs readPSMs
+##' @aliases PSM-class PSM reducePSMs readPSMs psmVariables
 ##'
 ##' @name PSM
 ##'
@@ -50,18 +50,22 @@
 ##' - The constructor can also initialise variables (called *PSM
 ##'   variables*) needed for downstream processing, notably filtering
 ##'   (see [filterPSMs()]) and to generate a peptide-by-protein
-##'   [adjacencyMatrix()]. These variables can be extracted with the
-##'   [psmVariables()] function. They represent the columns in the PSM
-##'   table that identify spectra, peptides, proteins, decoy peptides
-##'   hit ranks and, optionally, a PSM score. The value of these
-##'   variables will depend on the backend used to create the object,
-##'   or left blank (i.e. encoded as `NA`) when building an object by
-##'   hand from a `data.frame`. In such situation, they need to be
-##'   passed explicitly by the user as arguments to [PSM()].
+##'   adjacency matrix (see [makeAdjacencyMatrix()]). These variables
+##'   can be extracted with the [psmVariables()] function. They
+##'   represent the columns in the PSM table that identify spectra,
+##'   peptides, proteins, decoy peptides hit ranks and, optionally, a
+##'   PSM score. The value of these variables will depend on the
+##'   backend used to create the object, or left blank (i.e. encoded
+##'   as `NA`) when building an object by hand from a `data.frame`. In
+##'   such situation, they need to be passed explicitly by the user as
+##'   arguments to [PSM()].
 ##'
-##' - The `adjacencyMatrix()` function can generate a sparse
-##'   peptide-by-protein adjacency matrix from the PSM object. It also
-##'   relies on PSM variables which thus need to be set beforehand.
+##' - The `adjacencyMatrix()` accessor can be used to retrieve the
+##'   binary sparse peptide-by-protein adjacency matrix from the PSM
+##'   object. It also relies on PSM variables which thus need to be
+##'   set beforehand. For more flexibility in the generation of the
+##'   adjacency matrix (for non-binary matrices), use
+##'   [makeAdjacencyMatrix()].
 ##'
 ##' @examples
 ##'

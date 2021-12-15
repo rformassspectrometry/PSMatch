@@ -35,6 +35,11 @@
 ##' `binary` argument (setting all non-0 values to 1) or by reducing
 ##' the PSM object accordingly (see example below).
 ##'
+##' It is also possible to generate adjacency matrices populated with
+##' identification scores or probabilites by setting the "score" PSM
+##' variable upon construction of the PSM object (see [PSM()] for
+##' details).
+##'
 ##' The `plotAdjacencyMatrix()` function is useful to visualise small
 ##' adjacency matrices, such as those representing protein groups
 ##' modelled as connected components, as described and illustrated in
@@ -142,6 +147,63 @@
 ##' ## Peptides with rowSums > 1 match multiple proteins.
 ##' ## Use filterPsmShared() to filter these out.
 ##' table(rowSums(adj))
+##'
+##' ## -----------------------------------------------
+##' ## Binary, non-binary and score adjacency matrices
+##' ## -----------------------------------------------
+##'
+##' ## Case 1: no scores, 1 PSM per peptides
+##' psmdf <- data.frame(spectrum = c("sp1", "sp2", "sp3", "sp4", "sp5",
+##'                                  "sp6", "sp7", "sp8", "sp9", "sp10"),
+##'                     sequence = c("NKAVRTYHEQ", "IYNHSQGFCA", "YHWRLPVSEF",
+##'                                  "YEHNGFPLKD", "WAQFDVYNLS", "EDHINCTQWP",
+##'                                  "WSMKVDYEQT", "GWTSKMRYPL", "PMAYIWEKLC",
+##'                                  "HWAEYFNDVT"),
+##'                     protein = c("ProtB", "ProtB", "ProtA", "ProtD", "ProtD",
+##'                                 "ProtG", "ProtF", "ProtE", "ProtC", "ProtF"),
+##'                     decoy = rep(FALSE, 10),
+##'                     rank = rep(1, 10),
+##'                     score = c(0.082, 0.310, 0.133, 0.174, 0.944, 0.0261,
+##'                               0.375, 0.741, 0.254, 0.058))
+##' psmdf
+##'
+##' psm <- PSM(psmdf, spectrum = "spectrum", peptide = "sequence",
+##'            protein = "protein", decoy = "decoy", rank = "rank")
+##'
+##' ## binary matrix
+##' makeAdjacencyMatrix(psm)
+##'
+##'
+##' ## Case 2: sp1 and sp11 match the same peptide (NKAVRTYHEQ)
+##' psmdf2 <- rbind(psmdf,
+##'                 data.frame(spectrum = "sp11",
+##'                            sequence = psmdf$sequence[1],
+##'                            protein = psmdf$protein[1],
+##'                            decoy = FALSE,
+##'                            rank = 1,
+##'                            score = 0.011))
+##' psmdf2
+##' psm2 <- PSM(psmdf2, spectrum = "spectrum", peptide = "sequence",
+##'             protein = "protein", decoy = "decoy", rank = "rank")
+##'
+##' ## Now NKAVRTYHEQ/ProtB counts 2 PSMs
+##' makeAdjacencyMatrix(psm2)
+##'
+##' ## Force a binary matrix
+##' makeAdjacencyMatrix(psm2, binary = TRUE)
+##'
+##' ## Case 3: set the score PSM values
+##' psmVariables(psm) ## no score defined
+##' psm3 <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
+##'             protein = "protein", decoy = "decoy", rank = "rank",
+##'             score = "score")
+##' psmVariables(psm3) ## score defined
+##'
+##' ## adjacency matrix with scores
+##' makeAdjacencyMatrix(psm3)
+##'
+##' ## Force a binary matrix
+##' makeAdjacencyMatrix(psm3, binary = TRUE)
 makeAdjacencyMatrix <- function(x, split = ";",
                                 peptide = psmVariables(x)["peptide"],
                                 protein = psmVariables(x)["protein"],
@@ -178,10 +240,10 @@ makeAdjacencyMatrix <- function(x, split = ";",
     col_names <- unique(x[[protein]])
     i <- match(x[[peptide]], row_names)
     j <- match(x[[protein]], col_names)
-    x <- 1
-    if (!is.na(score))
-        x <- x[[score]]
-    sparseMatrix(i, j, x = x, dimnames = list(row_names, col_names))
+    adj_values <- 1
+     if (!is.na(score))
+        adj_values <- x[[score]]
+    sparseMatrix(i, j, x = adj_values, dimnames = list(row_names, col_names))
 }
 
 
