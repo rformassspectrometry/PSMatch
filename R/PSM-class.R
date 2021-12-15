@@ -36,8 +36,9 @@
 ##'
 ##' - The [PSM()] constructor uses parsers provided by the `mzR` or
 ##'   `mzID` packages to read the `mzIdentML` data. The vignette
-##'   describes some apparent differences in their outputs. The input
-##'   in this case is a character of one more multiple file names.
+##'   describes some apparent differences in their outputs. The
+##'   constructor input is a character of one more multiple file
+##'   names.
 ##'
 ##' - `PSM` objects can also be created from a `data.frame` object (or
 ##'   any variable that can be coerced into a [DataFrame].
@@ -48,14 +49,15 @@
 ##'
 ##' - The constructor can also initialise variables (called *PSM
 ##'   variables*) needed for downstream processing, notably filtering
-##'   (see [filterPSMs()]). These variables can be extracted with the
+##'   (see [filterPSMs()]) and to generate a peptide-by-protein
+##'   [adjacencyMatrix()]. These variables can be extracted with the
 ##'   [psmVariables()] function. They represent the columns in the PSM
 ##'   table that identify spectra, peptides, proteins, decoy peptides
-##'   and hit ranks. The value of these variables will depend on the
-##'   backend used to create the object, or left blank (i.e. encoded
-##'   as `NA`) when building an object by hand from a `data.frame`. In
-##'   such situation, they need to be passed explicitly by the user as
-##'   arguments to [PSM()].
+##'   hit ranks and, optionally, a PSM score. The value of these
+##'   variables will depend on the backend used to create the object,
+##'   or left blank (i.e. encoded as `NA`) when building an object by
+##'   hand from a `data.frame`. In such situation, they need to be
+##'   passed explicitly by the user as arguments to [PSM()].
 ##'
 ##' - The `adjacencyMatrix()` function can generate a sparse
 ##'   peptide-by-protein adjacency matrix from the PSM object. It also
@@ -169,7 +171,7 @@
 ##' ## no PSM variables set
 ##' try(adjacencyMatrix(psm))
 ##'
-##'
+##' ## set PSM variables
 ##' psm <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
 ##'            protein = "protein", decoy = "decoy", rank = "rank")
 ##' psm
@@ -239,25 +241,29 @@ setMethod("show", "PSM",
 ##' @param x `character()` of mzid file names, an instance of class
 ##'     `PSM`, or a `data.frame`.
 ##'
-##' @param spectrum `character(1)` that defines a spectrum in the PSM
-##'     data. Default are `"spectrumID"` (mzR parser) or
-##'     `"spectrumid"` (mzID parser). It is also used to calculate the
-##'     reduced state.
+##' @param spectrum `character(1)` variable name that defines a
+##'     spectrum in the PSM data. Default are `"spectrumID"` (mzR
+##'     parser) or `"spectrumid"` (mzID parser). It is also used to
+##'     calculate the reduced state.
 ##'
-##' @param peptide `character(1)` that defines a peptide in the PSM
-##'     data. Detaults are `"spequence"` (mzR parser) or `"pepSeq"`
-##'     (mzID parser).
+##' @param peptide `character(1)` variable name that defines a peptide
+##'     in the PSM data. Detaults are `"spequence"` (mzR parser) or
+##'     `"pepSeq"` (mzID parser).
 ##'
-##' @param protein `character(1)` that defines a protein in the PSM
-##'     data. Detaults are `"DatabaseAccess"` (mzR parser) or
-##'     `"accession"` (mzID parser).
+##' @param protein `character(1)` variable name that defines a protein
+##'     in the PSM data. Detaults are `"DatabaseAccess"` (mzR parser)
+##'     or `"accession"` (mzID parser).
 ##'
-##' @param decoy `character(1)` that defines a decoy hit in the PSM
-##'     data. Detaults are `"isDecoy"` (mzR parser) or `"isdecoy"`
-##'     (mzID parser).
+##' @param decoy `character(1)` variable name that defines a decoy hit
+##'     in the PSM data. Detaults are `"isDecoy"` (mzR parser) or
+##'     `"isdecoy"` (mzID parser).
 ##'
-##' @param rank `character(1)` that defines the rank of the petide
-##'     spetrum match in the PSM data. Default is `"rank"`.
+##' @param rank `character(1)` variable name that defines the rank of
+##'     the peptide spectrum match in the PSM data. Default is `"rank"`.
+##'
+##' @param score `character(1)` variable name that defines the PSM
+##'     score. This value isn't set by default as it depends on the
+##'     search engine and application. Default is `NA`.
 ##'
 ##' @param parser `character(1)` defining the parser to be used to
 ##'     read the `mzIdentML` files. One of `"mzR"` (default) or
@@ -282,6 +288,7 @@ PSM <- function(x,
                 protein = NA,
                 decoy = NA,
                 rank = NA,
+                score = NA,
                 parser = c("mzR", "mzID"),
                 BPPARAM = SerialParam()) {
     if (is.character(x)) {
@@ -295,7 +302,8 @@ PSM <- function(x,
                                peptide = "sequence",
                                protein = "DatabaseAccess",
                                decoy = "isDecoy",
-                               rank = "rank")
+                               rank = "rank",
+                               score = NA_character_)
         } else {
             psm <- readPSMsMzID(x, BPPARAM)
             ## Default PSM variables for mzID parser
@@ -303,7 +311,8 @@ PSM <- function(x,
                                peptide = "pepseq",
                                protein = "accession",
                                decoy = "isdecoy",
-                               rank = "rank")
+                               rank = "rank",
+                               score = NA_character_)
         }
     } else if (is.data.frame(x)) {
         psm <- as(DataFrame(x), "PSM")
@@ -311,7 +320,8 @@ PSM <- function(x,
                            peptide = NA_character_,
                            protein = NA_character_,
                            decoy = NA_character_,
-                           rank = NA_character_)
+                           rank = NA_character_,
+                           score = NA_character_)
     } else {
         stopifnot(inherits(x, "PSM"))
         .psmVariables <- psmVariables(x)
@@ -328,6 +338,8 @@ PSM <- function(x,
         .psmVariables["decoy"] <- decoy
     if (rank %in% names(psm))
         .psmVariables["rank"] <- rank
+    if (score %in% names(psm))
+        .psmVariables["score"] <- score
     metadata(psm)$variables <- .psmVariables
     psm
 }

@@ -22,6 +22,7 @@ PSM(
   protein = NA,
   decoy = NA,
   rank = NA,
+  score = NA,
   parser = c("mzR", "mzID"),
   BPPARAM = SerialParam()
 )
@@ -40,25 +41,29 @@ reducePSMs(object, k = object[[psmVariables(object)["spectrum"]]])
 \item{x}{\code{character()} of mzid file names, an instance of class
 \code{PSM}, or a \code{data.frame}.}
 
-\item{spectrum}{\code{character(1)} that defines a spectrum in the PSM
-data. Default are \code{"spectrumID"} (mzR parser) or
-\code{"spectrumid"} (mzID parser). It is also used to calculate the
-reduced state.}
+\item{spectrum}{\code{character(1)} variable name that defines a
+spectrum in the PSM data. Default are \code{"spectrumID"} (mzR
+parser) or \code{"spectrumid"} (mzID parser). It is also used to
+calculate the reduced state.}
 
-\item{peptide}{\code{character(1)} that defines a peptide in the PSM
-data. Detaults are \code{"spequence"} (mzR parser) or \code{"pepSeq"}
-(mzID parser).}
+\item{peptide}{\code{character(1)} variable name that defines a peptide
+in the PSM data. Detaults are \code{"spequence"} (mzR parser) or
+\code{"pepSeq"} (mzID parser).}
 
-\item{protein}{\code{character(1)} that defines a protein in the PSM
-data. Detaults are \code{"DatabaseAccess"} (mzR parser) or
-\code{"accession"} (mzID parser).}
+\item{protein}{\code{character(1)} variable name that defines a protein
+in the PSM data. Detaults are \code{"DatabaseAccess"} (mzR parser)
+or \code{"accession"} (mzID parser).}
 
-\item{decoy}{\code{character(1)} that defines a decoy hit in the PSM
-data. Detaults are \code{"isDecoy"} (mzR parser) or \code{"isdecoy"}
-(mzID parser).}
+\item{decoy}{\code{character(1)} variable name that defines a decoy hit
+in the PSM data. Detaults are \code{"isDecoy"} (mzR parser) or
+\code{"isdecoy"} (mzID parser).}
 
-\item{rank}{\code{character(1)} that defines the rank of the petide
-spetrum match in the PSM data. Default is \code{"rank"}.}
+\item{rank}{\code{character(1)} variable name that defines the rank of
+the peptide spectrum match in the PSM data. Default is \code{"rank"}.}
+
+\item{score}{\code{character(1)} variable name that defines the PSM
+score. This value isn't set by default as it depends on the
+search engine and application. Default is \code{NA}.}
 
 \item{parser}{\code{character(1)} defining the parser to be used to
 read the \code{mzIdentML} files. One of \code{"mzR"} (default) or
@@ -118,8 +123,9 @@ unknown. The flag can also be set explicitly with the
 \itemize{
 \item The \code{\link[=PSM]{PSM()}} constructor uses parsers provided by the \code{mzR} or
 \code{mzID} packages to read the \code{mzIdentML} data. The vignette
-describes some apparent differences in their outputs. The input
-in this case is a character of one more multiple file names.
+describes some apparent differences in their outputs. The
+constructor input is a character of one more multiple file
+names.
 \item \code{PSM} objects can also be created from a \code{data.frame} object (or
 any variable that can be coerced into a \link{DataFrame}.
 \item Finally, \code{\link[=PSM]{PSM()}} can also take a \code{PSM} object as input, which
@@ -127,14 +133,15 @@ leaves the PSM data as is and is used to set/update the PSM
 variables.
 \item The constructor can also initialise variables (called \emph{PSM
 variables}) needed for downstream processing, notably filtering
-(see \code{\link[=filterPSMs]{filterPSMs()}}). These variables can be extracted with the
+(see \code{\link[=filterPSMs]{filterPSMs()}}) and to generate a peptide-by-protein
+\code{\link[=adjacencyMatrix]{adjacencyMatrix()}}. These variables can be extracted with the
 \code{\link[=psmVariables]{psmVariables()}} function. They represent the columns in the PSM
 table that identify spectra, peptides, proteins, decoy peptides
-and hit ranks. The value of these variables will depend on the
-backend used to create the object, or left blank (i.e. encoded
-as \code{NA}) when building an object by hand from a \code{data.frame}. In
-such situation, they need to be passed explicitly by the user as
-arguments to \code{\link[=PSM]{PSM()}}.
+hit ranks and, optionally, a PSM score. The value of these
+variables will depend on the backend used to create the object,
+or left blank (i.e. encoded as \code{NA}) when building an object by
+hand from a \code{data.frame}. In such situation, they need to be
+passed explicitly by the user as arguments to \code{\link[=PSM]{PSM()}}.
 \item The \code{adjacencyMatrix()} function can generate a sparse
 peptide-by-protein adjacency matrix from the PSM object. It also
 relies on PSM variables which thus need to be set beforehand.
@@ -249,7 +256,7 @@ psmVariables(psm)
 ## no PSM variables set
 try(adjacencyMatrix(psm))
 
-
+## set PSM variables
 psm <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
            protein = "protein", decoy = "decoy", rank = "rank")
 psm

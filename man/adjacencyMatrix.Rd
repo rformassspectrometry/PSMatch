@@ -18,7 +18,7 @@ makeAdjacencyMatrix(
 
 makePeptideProteinVector(m, collapse = ";")
 
-plotAdjacencyMatrix(x, layout = igraph::layout_as_bipartite)
+plotAdjacencyMatrix(x, layout = igraph::layout_nicely)
 }
 \arguments{
 \item{x}{A peptide-by-protein adjacency matrix.}
