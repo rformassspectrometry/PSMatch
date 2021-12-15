@@ -93,8 +93,13 @@ test_that("Test PSM construction from mzid files", {
     expect_true(validObject(psm_mzR))
     expect_true(validObject(psm_mzID))
     ## No missing PSM variables
-    expect_equal(sum(is.na(psmVariables(psm_mzR))), 0)
-    expect_equal(sum(is.na(psmVariables(psm_mzID))), 0)
+    expect_equal(sum(is.na(psmVariables(psm_mzR))), 1)
+    expect_equal(sum(is.na(psmVariables(psm_mzID))), 1)
+    nms <- c("spectrum", "peptide", "protein", "decoy", "rank")
+    expect_equal(sum(is.na(psmVariables(psm_mzR)[nms])), 0)
+    expect_equal(sum(is.na(psmVariables(psm_mzID)[nms])), 0)
+    expect_true(is.na(psmVariables(psm_mzR)["score"]))
+    expect_true(is.na(psmVariables(psm_mzID)["score"]))
     expect_identical(names(psmVariables(psm_mzID)),
                      names(psmVariables(psm_mzR)))
 })
