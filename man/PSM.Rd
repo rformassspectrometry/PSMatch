@@ -6,12 +6,12 @@
 \alias{PSM-class}
 \alias{reducePSMs}
 \alias{readPSMs}
+\alias{psmVariables}
 \alias{PSM,character}
 \alias{PSM,data.frame}
 \alias{PSM,PSM}
 \alias{reduced}
 \alias{reduced<-}
-\alias{psmVariables}
 \alias{adjacencyMatrix,PSM-method}
 \title{A class for peptide-spectrum matches}
 \usage{
@@ -134,17 +134,21 @@ variables.
 \item The constructor can also initialise variables (called \emph{PSM
 variables}) needed for downstream processing, notably filtering
 (see \code{\link[=filterPSMs]{filterPSMs()}}) and to generate a peptide-by-protein
-\code{\link[=adjacencyMatrix]{adjacencyMatrix()}}. These variables can be extracted with the
-\code{\link[=psmVariables]{psmVariables()}} function. They represent the columns in the PSM
-table that identify spectra, peptides, proteins, decoy peptides
-hit ranks and, optionally, a PSM score. The value of these
-variables will depend on the backend used to create the object,
-or left blank (i.e. encoded as \code{NA}) when building an object by
-hand from a \code{data.frame}. In such situation, they need to be
-passed explicitly by the user as arguments to \code{\link[=PSM]{PSM()}}.
-\item The \code{adjacencyMatrix()} function can generate a sparse
-peptide-by-protein adjacency matrix from the PSM object. It also
-relies on PSM variables which thus need to be set beforehand.
+adjacency matrix (see \code{\link[=makeAdjacencyMatrix]{makeAdjacencyMatrix()}}). These variables
+can be extracted with the \code{\link[=psmVariables]{psmVariables()}} function. They
+represent the columns in the PSM table that identify spectra,
+peptides, proteins, decoy peptides hit ranks and, optionally, a
+PSM score. The value of these variables will depend on the
+backend used to create the object, or left blank (i.e. encoded
+as \code{NA}) when building an object by hand from a \code{data.frame}. In
+such situation, they need to be passed explicitly by the user as
+arguments to \code{\link[=PSM]{PSM()}}.
+\item The \code{adjacencyMatrix()} accessor can be used to retrieve the
+binary sparse peptide-by-protein adjacency matrix from the PSM
+object. It also relies on PSM variables which thus need to be
+set beforehand. For more flexibility in the generation of the
+adjacency matrix (for non-binary matrices), use
+\code{\link[=makeAdjacencyMatrix]{makeAdjacencyMatrix()}}.
 }
 }
 
