@@ -87,17 +87,18 @@ peptide/protein vector. The matrix colnames are used to populate
 the vector and the matrix rownames are used to name the vector
 elements.
 
-Note that when creating an adjacency matrix from PSMs, the matrix
-is not necessarily binary, as multiple PSMs can match the same
-peptide (sequence), such as for example precursors with different
-charge states. A binary matrix can either be generated with the
-\code{binary} argument (setting all non-0 values to 1) or by reducing
-the PSM object accordingly (see example below).
+Note that when creating an adjacency matrix from a PSM object, the
+matrix is not necessarily binary, as multiple PSMs can match the
+same peptide (sequence), such as for example precursors with
+different charge states. A binary matrix can either be generated
+with the \code{binary} argument (setting all non-0 values to 1) or by
+reducing the PSM object accordingly (see example below).
 
 It is also possible to generate adjacency matrices populated with
 identification scores or probabilites by setting the "score" PSM
 variable upon construction of the PSM object (see \code{\link[=PSM]{PSM()}} for
-details).
+details). In case multiple PSMs occur, their respective scores get
+summed.
 
 The \code{plotAdjacencyMatrix()} function is useful to visualise small
 adjacency matrices, such as those representing protein groups
@@ -171,6 +172,7 @@ table(rowSums(adj))
 ## Binary, non-binary and score adjacency matrices
 ## -----------------------------------------------
 
+## -------------------------------------
 ## Case 1: no scores, 1 PSM per peptides
 psmdf <- data.frame(spectrum = c("sp1", "sp2", "sp3", "sp4", "sp5",
                                  "sp6", "sp7", "sp8", "sp9", "sp10"),
@@ -192,7 +194,6 @@ psm <- PSM(psmdf, spectrum = "spectrum", peptide = "sequence",
 ## binary matrix
 makeAdjacencyMatrix(psm)
 
-
 ## Case 2: sp1 and sp11 match the same peptide (NKAVRTYHEQ)
 psmdf2 <- rbind(psmdf,
                 data.frame(spectrum = "sp11",
@@ -211,6 +212,7 @@ makeAdjacencyMatrix(psm2)
 ## Force a binary matrix
 makeAdjacencyMatrix(psm2, binary = TRUE)
 
+## --------------------------------
 ## Case 3: set the score PSM values
 psmVariables(psm) ## no score defined
 psm3 <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
@@ -223,6 +225,17 @@ makeAdjacencyMatrix(psm3)
 
 ## Force a binary matrix
 makeAdjacencyMatrix(psm3, binary = TRUE)
+
+## ---------------------------------
+## Case 4: scores with multiple PSMs
+
+psm4 <- PSM(psm2, spectrum = "spectrum", peptide = "sequence",
+            protein = "protein", decoy = "decoy", rank = "rank",
+            score = "score")
+
+## Now NKAVRTYHEQ/ProtB has a summed score of 0.093 computed as
+## 0.082 (from sp1) + 0.011 (from sp11)
+makeAdjacencyMatrix(psm4)
 }
 \author{
 Laurent Gatto
