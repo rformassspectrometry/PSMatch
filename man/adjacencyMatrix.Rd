@@ -13,6 +13,7 @@ makeAdjacencyMatrix(
   split = ";",
   peptide = psmVariables(x)["peptide"],
   protein = psmVariables(x)["protein"],
+  score = psmVariables(x)["score"],
   binary = FALSE
 )
 
@@ -33,14 +34,20 @@ that defines peptides in the \code{PSM} object. Default is the
 
 \item{protein}{\code{character(1)} indicating the name of the variable
 that defines proteins in the \code{PSM} object. Default is the
-\code{peptide} PSM variable as defined in \code{\link[=psmVariables]{psmVariables()}}.Default
-is \code{DatanbaseAccess}.}
+\code{peptide} PSM variable as defined in \code{\link[=psmVariables]{psmVariables()}}.}
+
+\item{score}{\code{character(1)} indicating the name of the variable
+that defines PSM scores in the \code{PSM} object. Default is the
+\code{score} PSM variable as defined in \code{\link[=psmVariables]{psmVariables()}}. Ignored
+when \code{NA} (which is the default value unless set by the user
+when constructing the \code{PSM} object).}
 
 \item{binary}{\code{logical(1)} indicates if the adjacency matrix
-should be strictly binary. In such case, PSMs matching the
+should be strictly binary. In such a case, PSMs matching the
 same peptide but from different precursors (for example charge
 2 and 3) or carrying different PTMs, are counted only
-once. Default if \code{FALSE}.}
+once. Default if \code{FALSE}. This also overrides any \code{score} that
+would be set.}
 
 \item{m}{An adjacency matrix.}
 

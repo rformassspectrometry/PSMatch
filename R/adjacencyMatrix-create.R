@@ -54,14 +54,20 @@
 ##'
 ##' @param protein `character(1)` indicating the name of the variable
 ##'     that defines proteins in the `PSM` object. Default is the
-##'     `peptide` PSM variable as defined in [psmVariables()].Default
-##'     is `DatanbaseAccess`.
+##'     `peptide` PSM variable as defined in [psmVariables()].
+##'
+##' @param score `character(1)` indicating the name of the variable
+##'     that defines PSM scores in the `PSM` object. Default is the
+##'     `score` PSM variable as defined in [psmVariables()]. Ignored
+##'     when `NA` (which is the default value unless set by the user
+##'     when constructing the `PSM` object).
 ##'
 ##' @param binary `logical(1)` indicates if the adjacency matrix
-##'     should be strictly binary. In such case, PSMs matching the
+##'     should be strictly binary. In such a case, PSMs matching the
 ##'     same peptide but from different precursors (for example charge
 ##'     2 and 3) or carrying different PTMs, are counted only
-##'     once. Default if `FALSE`.
+##'     once. Default if `FALSE`. This also overrides any `score` that
+##'     would be set.
 ##'
 ##' @return A peptide-by-protein sparce adjacency matrix (or class
 ##'     `dgCMatrix` as defined in the `Matrix` package) or
@@ -139,14 +145,15 @@
 makeAdjacencyMatrix <- function(x, split = ";",
                                 peptide = psmVariables(x)["peptide"],
                                 protein = psmVariables(x)["protein"],
+                                score = psmVariables(x)["score"],
                                 binary = FALSE) {
     if (inherits(x, "PSM")) {
-        adj <- .makeSparseAdjacencyMatrixFromPSM(x, peptide, protein)
+        adj <- .makeSparseAdjacencyMatrixFromPSM(x, peptide, protein, score)
     } else if (is.character(x)) {
         adj <- .makeSparseAdjacencyMatrixFromChar(x, split)
     } else stop("'x' must be a character or a PSM object.")
     if (binary)
-        adj[adj > 1] <- 1
+        adj[abs(adj) > 0] <- 1
     return(adj)
 }
 
@@ -162,14 +169,19 @@ makeAdjacencyMatrix <- function(x, split = ";",
     sparseMatrix(i, j, x = 1, dimnames = list(row_names, col_names))
 }
 
-.makeSparseAdjacencyMatrixFromPSM <- function(x, peptide, protein) {
-    stopifnot(peptide %in% names(x))
-    stopifnot(protein %in% names(x))
+.makeSparseAdjacencyMatrixFromPSM <- function(x, peptide, protein, score) {
+    if (is.na(peptide) | is.na(protein))
+        stop("Please define the 'protein' and 'peptide' PSM variables.")
+    if (!protein %in% names(x) | !peptide %in% names(x))
+        stop("PSM variables 'protein' and 'peptide' must be defined.")
     row_names <- unique(x[[peptide]])
     col_names <- unique(x[[protein]])
     i <- match(x[[peptide]], row_names)
     j <- match(x[[protein]], col_names)
-    sparseMatrix(i, j, x = 1, dimnames = list(row_names, col_names))
+    x <- 1
+    if (!is.na(score))
+        x <- x[[score]]
+    sparseMatrix(i, j, x = x, dimnames = list(row_names, col_names))
 }
 
 
