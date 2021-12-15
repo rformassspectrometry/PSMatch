@@ -48,10 +48,14 @@ test_that("Test PSM construction from data.frame", {
     expect_true(validObject(psm))
     expect_identical(nrow(psm), nrow(psmdf0))
     expect_identical(ncol(psm), ncol(psmdf0))
-    expect_true(sum(is.na(psmVariables(psm))) == 5)
+    expect_true(sum(is.na(psmVariables(psm))) == 6)
     psm2 <- PSM(psm, decoy = "decoy", rank = "rank",
                 spectrum = "spectrum", peptide = "sequence",
                 protein = "protein")
+    expect_true(sum(is.na(psmVariables(psm2))) == 1)
+    psm2 <- PSM(psm, decoy = "decoy", rank = "rank",
+                spectrum = "spectrum", peptide = "sequence",
+                protein = "protein", score = "score")
     expect_true(sum(is.na(psmVariables(psm2))) == 0)
     expect_error(psmVariables(psm, "error"))
     expect_error(psmVariables(psm2, "error"))
