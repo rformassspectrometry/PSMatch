@@ -19,7 +19,7 @@ described below convert between these two format."><!-- mathjax --><script src="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.3</span>
       </span>
     </div>
 
@@ -133,16 +133,17 @@ operation, taking an adjacency matrix as input and retruning a
 peptide/protein vector. The matrix colnames are used to populate
 the vector and the matrix rownames are used to name the vector
 elements.</p>
-<p>Note that when creating an adjacency matrix from PSMs, the matrix
-is not necessarily binary, as multiple PSMs can match the same
-peptide (sequence), such as for example precursors with different
-charge states. A binary matrix can either be generated with the
-<code>binary</code> argument (setting all non-0 values to 1) or by reducing
-the PSM object accordingly (see example below).</p>
+<p>Note that when creating an adjacency matrix from a PSM object, the
+matrix is not necessarily binary, as multiple PSMs can match the
+same peptide (sequence), such as for example precursors with
+different charge states. A binary matrix can either be generated
+with the <code>binary</code> argument (setting all non-0 values to 1) or by
+reducing the PSM object accordingly (see example below).</p>
 <p>It is also possible to generate adjacency matrices populated with
 identification scores or probabilites by setting the "score" PSM
 variable upon construction of the PSM object (see <code><a href="PSM.html">PSM()</a></code> for
-details).</p>
+details). In case multiple PSMs occur, their respective scores get
+summed.</p>
 <p>The <code>plotAdjacencyMatrix()</code> function is useful to visualise small
 adjacency matrices, such as those representing protein groups
 modelled as connected components, as described and illustrated in
@@ -310,6 +311,7 @@ modelled as connected components, as described and illustrated in
 <span class="r-in"><span class="co">## Binary, non-binary and score adjacency matrices</span></span>
 <span class="r-in"><span class="co">## -----------------------------------------------</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co">## -------------------------------------</span></span>
 <span class="r-in"><span class="co">## Case 1: no scores, 1 PSM per peptides</span></span>
 <span class="r-in"><span class="va">psmdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>spectrum <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sp1"</span>, <span class="st">"sp2"</span>, <span class="st">"sp3"</span>, <span class="st">"sp4"</span>, <span class="st">"sp5"</span>,</span>
 <span class="r-in">                                 <span class="st">"sp6"</span>, <span class="st">"sp7"</span>, <span class="st">"sp8"</span>, <span class="st">"sp9"</span>, <span class="st">"sp10"</span><span class="op">)</span>,</span>
@@ -353,7 +355,6 @@ modelled as connected components, as described and illustrated in
 <span class="r-out co"><span class="r-pr">#&gt;</span> GWTSKMRYPL     .     .     .     .     .     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PMAYIWEKLC     .     .     .     .     .     .     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HWAEYFNDVT     .     .     .     .     1     .     .</span>
-<span class="r-in"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Case 2: sp1 and sp11 match the same peptide (NKAVRTYHEQ)</span></span>
 <span class="r-in"><span class="va">psmdf2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">psmdf</span>,</span>
@@ -409,6 +410,7 @@ modelled as connected components, as described and illustrated in
 <span class="r-out co"><span class="r-pr">#&gt;</span> PMAYIWEKLC     .     .     .     .     .     .     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HWAEYFNDVT     .     .     .     .     1     .     .</span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co">## --------------------------------</span></span>
 <span class="r-in"><span class="co">## Case 3: set the score PSM values</span></span>
 <span class="r-in"><span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">psm</span><span class="op">)</span> <span class="co">## no score defined</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   spectrum    peptide    protein      decoy       rank      score </span>
@@ -449,6 +451,29 @@ modelled as connected components, as described and illustrated in
 <span class="r-out co"><span class="r-pr">#&gt;</span> GWTSKMRYPL     .     .     .     .     .     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PMAYIWEKLC     .     .     .     .     .     .     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HWAEYFNDVT     .     .     .     .     1     .     .</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## ---------------------------------</span></span>
+<span class="r-in"><span class="co">## Case 4: scores with multiple PSMs</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">psm4</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psm2</span>, spectrum <span class="op">=</span> <span class="st">"spectrum"</span>, peptide <span class="op">=</span> <span class="st">"sequence"</span>,</span>
+<span class="r-in">            protein <span class="op">=</span> <span class="st">"protein"</span>, decoy <span class="op">=</span> <span class="st">"decoy"</span>, rank <span class="op">=</span> <span class="st">"rank"</span>,</span>
+<span class="r-in">            score <span class="op">=</span> <span class="st">"score"</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## Now NKAVRTYHEQ/ProtB has a summed score of 0.093 computed as</span></span>
+<span class="r-in"><span class="co">## 0.082 (from sp1) + 0.011 (from sp11)</span></span>
+<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm4</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 7 sparse Matrix of class "dgCMatrix"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            ProtB ProtA ProtD  ProtG ProtF ProtE ProtC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NKAVRTYHEQ 0.093 .     .     .      .     .     .    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IYNHSQGFCA 0.310 .     .     .      .     .     .    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> YHWRLPVSEF .     0.133 .     .      .     .     .    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> YEHNGFPLKD .     .     0.174 .      .     .     .    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> WAQFDVYNLS .     .     0.944 .      .     .     .    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> EDHINCTQWP .     .     .     0.0261 .     .     .    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> WSMKVDYEQT .     .     .     .      0.375 .     .    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GWTSKMRYPL .     .     .     .      .     0.741 .    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PMAYIWEKLC .     .     .     .      .     .     0.254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HWAEYFNDVT .     .     .     .      0.058 .     .    </span>
 </code></pre></div>
     </div>
   </div>
