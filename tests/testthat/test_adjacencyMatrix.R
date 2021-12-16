@@ -114,3 +114,49 @@ test_that("ajacendyMatrix() accessor works", {
     dev.off()
     expect_true(is(g, "igraph"))
 })
+
+
+
+test_that("ajacendyMatrix() with scores works", {
+    psmdf <- data.frame(spectrum = c("sp1", "sp2", "sp3", "sp4", "sp5"),
+                    sequence = c(c("A", LETTERS[1:4])),
+                    protein = c("ProtA", "ProtA", "ProtB", "ProtC", "ProtD"),
+                    decoy = rep(FALSE, 5),
+                    rank = rep(1, 5),
+                    score = 1:5)
+    psm1 <- PSM(psmdf[-1, ], spectrum = "spectrum", peptide = "sequence",
+                protein = "protein", decoy = "decoy", rank = "rank")
+    psm2 <- PSM(psmdf, spectrum = "spectrum", peptide = "sequence",
+                protein = "protein", decoy = "decoy", rank = "rank")
+    psm3 <- PSM(psmdf[-1, ], spectrum = "spectrum", peptide = "sequence",
+                protein = "protein", decoy = "decoy", rank = "rank", score = "score")
+    psm4 <- PSM(psmdf, spectrum = "spectrum", peptide = "sequence",
+                protein = "protein", decoy = "decoy", rank = "rank", score = "score")
+    ## binary matrix
+    adj1 <- makeAdjacencyMatrix(psm1)
+    expect_identical(dimnames(adj1), list(c("A", "B", "C", "D"),
+                                          c("ProtA", "ProtB", "ProtC", "ProtD")))
+    expect_identical(sum(adj1), 4)
+    expect_identical(adj1@x, rep(1, 4))
+    ## A/Prot2 tallies 2 PSMs
+    adj2 <- makeAdjacencyMatrix(psm2)
+    expect_identical(dimnames(adj2), list(c("A", "B", "C", "D"),
+                                          c("ProtA", "ProtB", "ProtC", "ProtD")))
+    expect_identical(sum(adj2), 5)
+    expect_identical(adj2@x, c(2, rep(1, 3)))
+    expect_identical(adj1, makeAdjacencyMatrix(psm2, binary = TRUE))
+    ## scores with single PSMs
+    adj3 <- makeAdjacencyMatrix(psm3)
+    expect_identical(dimnames(adj3), list(c("A", "B", "C", "D"),
+                                          c("ProtA", "ProtB", "ProtC", "ProtD")))
+    expect_identical(sum(adj3), 14)
+    expect_identical(adj3@x, seq(2, 5, 1))
+    expect_identical(adj1, makeAdjacencyMatrix(psm3, binary = TRUE))
+    ## scores with one double PSMs
+    adj4 <- makeAdjacencyMatrix(psm4)
+    expect_identical(dimnames(adj4), list(c("A", "B", "C", "D"),
+                                          c("ProtA", "ProtB", "ProtC", "ProtD")))
+    expect_identical(sum(adj4), 15)
+    expect_identical(adj4@x, c(3, seq(3, 5, 1)))
+    expect_identical(adj1, makeAdjacencyMatrix(psm4, binary = TRUE))
+})
