@@ -54,7 +54,7 @@ Once we model the peptide-to-protein relations explicitly, it
 becomes possible to perform computations on the proteins that are
 grouped by the peptides they share. These groups are mathematically
 defined as connected components, which are implemented as
-\code{\link[=ConnectedComponcents]{ConnectedComponcents()}} objects.
+\code{\link[=ConnectedComponents]{ConnectedComponents()}} objects.
 }
 
 \section{Fragment ions}{

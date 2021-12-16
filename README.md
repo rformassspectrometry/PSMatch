@@ -7,5 +7,10 @@ from [`MSnbase`](http://lgatto.github.io/MSnbase/) with the goal to
 Mass Spectrometry*](https://github.com/rformassspectrometry)
 infrastructure.
 
-Find out more about the package in the
-[vignette](https://rformassspectrometry.github.io/PSMatch/articles/PSMatch.html).
+The following references are a good way to get started with the
+package:
+
+- The [package manual package](https://rformassspectrometry.github.io/PSMatch/reference/PSMatch.html);
+- The [Working with PSM
+  data](https://rformassspectrometry.github.io/PSMatch/articles/PSMatch.html)
+  vignette.
