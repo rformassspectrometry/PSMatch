@@ -1,7 +1,7 @@
 pandoc: 2.14.0.3
 pkgdown: 2.0.1.9000
-pkgdown_sha: 10cd5e0bd6f282000be7ad8a460a1baa63369486
+pkgdown_sha: 83ddb78f31dfeb6491ade584a720d5f101c54389
 articles:
   PSMatch: PSMatch.html
-last_built: 2021-12-16T17:47Z
+last_built: 2021-12-17T21:51Z
 
