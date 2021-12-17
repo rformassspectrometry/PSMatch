@@ -47,9 +47,6 @@
 ##' [ConnectedComponents()]. The function invisibly returns the graph
 ##' `igraph` object for additional tuning.
 ##'
-##'
-##' @details
-##'
 ##' There is a fundamental differences in the creation of an adjacency
 ##' matrix from a PSM object or a vector, other than the input
 ##' variable itself:
