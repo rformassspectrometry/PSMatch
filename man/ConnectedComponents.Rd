@@ -25,7 +25,7 @@
 \alias{adjacencyMatrix,ConnectedComponents-method}
 \title{Connected components}
 \usage{
-ConnectedComponents(object)
+ConnectedComponents(object, ...)
 
 ccMatrix(x)
 
@@ -52,6 +52,9 @@ connectedComponents(x, i, simplify = TRUE)
 either a sparse adjacency matrix of class \code{Matrix} or an
 instance of class \code{PSM}.}
 
+\item{...}{Additional arguments passed to
+\code{\link[=makeAdjacencyMatrix]{makeAdjacencyMatrix()}} when \code{object} is of class \code{\link[=PSM]{PSM()}}.}
+
 \item{x}{An object of class \code{ConnectedComponents}.}
 
 \item{i}{\code{numeric()}, \code{integer()} or \code{logical()} to subset the
@@ -63,8 +66,6 @@ simplified to sparse matrix if \code{i} was of length 1, otherwise
 a \code{List} is returned. Always a \code{List} if \code{FALSE}.}
 
 \item{j}{ignored}
-
-\item{...}{ignored}
 
 \item{drop}{ignore}
 }

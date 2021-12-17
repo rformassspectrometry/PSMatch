@@ -144,9 +144,12 @@ setClass("ConnectedComponents",
 ##' @param object For the `ConnectedComponents` class constructor,
 ##'     either a sparse adjacency matrix of class `Matrix` or an
 ##'     instance of class `PSM`.
-ConnectedComponents <- function(object) {
+##'
+##' @param ... Additional arguments passed to
+##'     [`makeAdjacencyMatrix()`] when `object` is of class [PSM()].
+ConnectedComponents <- function(object, ...) {
     if (is(object, "PSM")) {
-        adj <- makeAdjacencyMatrix(object)
+        adj <- makeAdjacencyMatrix(object, ...)
     } else if (is(object, "Matrix")) {
         adj <- object
     } else stop("'object' must be of class 'PSM' or 'Matrix.")
@@ -265,8 +268,6 @@ setMethod("nrows", "ConnectedComponents",
 ##'     of same length as the object is subsets.
 ##'
 ##' @param j ignored
-##'
-##' @param ... ignored
 ##'
 ##' @param drop ignore
 setMethod("[", c("ConnectedComponents", "integer"),

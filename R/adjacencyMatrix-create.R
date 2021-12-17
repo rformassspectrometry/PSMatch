@@ -47,6 +47,24 @@
 ##' [ConnectedComponents()]. The function invisibly returns the graph
 ##' `igraph` object for additional tuning.
 ##'
+##'
+##' @details
+##'
+##' There is a fundamental differences in the creation of an adjacency
+##' matrix from a PSM object or a vector, other than the input
+##' variable itself:
+##'
+##' - In a `PSM` object, each row (PSM) refers to an *individual*
+##'   proteins; rows/PSMs never refer to a protein group. There is
+##'   thus no need for a `split` argument, which is used exclusively
+##'   when creating a matrix from a character.
+##'
+##' - Conversely, when using protein vectors, such as those
+##'   illustrated in the example below or retrieved from tabular
+##'   quantitative proteomics data, each row/peptide is expected to
+##'   refer to protein groups and individual proteins (groups of size
+##'   1). These have to be split accordingly.
+##'
 ##' @param x Either an instance of class `PSM` or a `character`. See
 ##'     example below for details.
 ##'
@@ -237,10 +255,12 @@ makeAdjacencyMatrix <- function(x, split = ";",
     if (is.null(split)) col_list <- x
     else col_list <- strsplit(x, split)
     if (is.null(names(col_list))) {
-        row_names <- seq_along(col_list)
-    } else row_names <- names(col_list)
+            col_list_names <- seq_along(col_list)
+    } else col_list_names <- names(col_list)
+    row_names <- unique(col_list_names)
     col_names <- unique(unlist(col_list))
-    i <- rep(seq_along(col_list), lengths(col_list))
+    i <- rep(col_list_names, lengths(col_list))
+    i <- match(i, row_names)
     j <- unname(unlist(sapply(col_list, match, col_names)))
     sparseMatrix(i, j, x = 1, dimnames = list(row_names, col_names))
 }

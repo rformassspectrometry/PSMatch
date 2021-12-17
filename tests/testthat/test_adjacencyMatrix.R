@@ -86,7 +86,9 @@ test_that("ajacendyMatrix() accessor works", {
     PSM() |>
     filterPsmDecoy() |>
     filterPsmRank()
-    cc <- ConnectedComponents(psm)
+    ## set to binary to get the same result as the adjacencyMatrix,PSM
+    ## accessor that created adj1
+    cc <- ConnectedComponents(psm, binary = TRUE)
     ## not identical, a multiple PSMs per peptide
     adj1 <- adjacencyMatrix(psm)
     adj2 <- adjacencyMatrix(cc)

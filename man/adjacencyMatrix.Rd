@@ -105,6 +105,21 @@ adjacency matrices, such as those representing protein groups
 modelled as connected components, as described and illustrated in
 \code{\link[=ConnectedComponents]{ConnectedComponents()}}. The function invisibly returns the graph
 \code{igraph} object for additional tuning.
+
+There is a fundamental differences in the creation of an adjacency
+matrix from a PSM object or a vector, other than the input
+variable itself:
+\itemize{
+\item In a \code{PSM} object, each row (PSM) refers to an \emph{individual}
+proteins; rows/PSMs never refer to a protein group. There is
+thus no need for a \code{split} argument, which is used exclusively
+when creating a matrix from a character.
+\item Conversely, when using protein vectors, such as those
+illustrated in the example below or retrieved from tabular
+quantitative proteomics data, each row/peptide is expected to
+refer to protein groups and individual proteins (groups of size
+1). These have to be split accordingly.
+}
 }
 \examples{
 
