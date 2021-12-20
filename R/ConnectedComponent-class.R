@@ -162,10 +162,15 @@ ConnectedComponents <- function(object, ...) {
                                ans <- adj[, x, drop = FALSE]
                                ans[Matrix::rowSums(ans) > 0, , drop = FALSE]
                            })
+    ## Set the order of the CC adjacency matrix list using the name of
+    ## the first protein, otherwise it will be randomly defined by
+    ## igraph::components/groups, which is very annoying when
+    ## analysing data.
+    o <- order(sapply(adj_matrices, function(x) colnames(x)[1]))
     new("ConnectedComponents",
         adjMatrix = adj,
         ccMatrix = cc,
-        adjMatrices = List(adj_matrices))
+        adjMatrices = List(adj_matrices[o]))
 }
 
 
