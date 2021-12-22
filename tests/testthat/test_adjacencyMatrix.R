@@ -113,8 +113,13 @@ test_that("ajacendyMatrix() accessor works", {
     filterPsmRank() |>
     ConnectedComponents()
     g <- plotAdjacencyMatrix(connectedComponents(cc, 672))
-    dev.off()
     expect_true(is(g, "igraph"))
+    expect_identical(V(g)$color, c("orange", "steelblue"))
+    dev.off()
+    g2 <- plotAdjacencyMatrix(connectedComponents(cc, 672), 1)
+    expect_true(is(g2, "igraph"))
+    expect_identical(V(g2)$color, c(1, 2))
+    dev.off()
 })
 
 
