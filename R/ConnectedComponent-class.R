@@ -184,7 +184,7 @@ setMethod("show", "ConnectedComponents",
               k1 <- sum(apply(dim_mat, 1, function(x) x[1] == 1L & x[2] == 1L))
               k2 <-  sum(apply(dim_mat, 1, function(x) x[1] > 1L & x[2] == 1L))
               tab <- table(dim_mat[dim_mat[, "ncol"] > 1, "ncol"])
-              message("  ", k1, "(1, with 1 peptide) ", k2, "(1, with > 1 peptides)")
+              message("  ", k1, "(1, with 1 protein) ", k2, "(1, with > 1 proteins)")
               if (length(tab) > 0) {
                   msg <- strwrap(paste(paste0(tab, "(", names(tab), ")"), collapse = " "))
                   message("  ", msg)
