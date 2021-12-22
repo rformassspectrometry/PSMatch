@@ -19,7 +19,7 @@ described below convert between these two format."><!-- mathjax --><script src="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.8</span>
       </span>
     </div>
 
@@ -68,7 +68,7 @@ described below convert between these two format.</p>
 
 <span class="fu">makePeptideProteinVector</span><span class="op">(</span><span class="va">m</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span>
 
-<span class="fu">plotAdjacencyMatrix</span><span class="op">(</span><span class="va">x</span>, layout <span class="op">=</span> <span class="fu">igraph</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/igraph/man/layout_nicely.html" class="external-link">layout_nicely</a></span><span class="op">)</span></code></pre></div>
+<span class="fu">plotAdjacencyMatrix</span><span class="op">(</span><span class="va">x</span>, colLevel <span class="op">=</span> <span class="fl">0</span>, layout <span class="op">=</span> <span class="fu">igraph</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/igraph/man/layout_nicely.html" class="external-link">layout_nicely</a></span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -105,6 +105,16 @@ would be set.</p></dd>
 <dt>collapse</dt>
 <dd><p><code>character(1)</code> indicating how to collapse protein
 names for shared peptides. Default is <code>";"</code>.</p></dd>
+<dt>colLevel</dt>
+<dd><p><code>numeric(1)</code> indicating the protein colouring
+level to use. If 0 (default), all protein nodes are labelled
+in steelblue. For values &gt; 0, approximate string distances
+(see <code><a href="https://rdrr.io/r/utils/adist.html" class="external-link">adist()</a></code>) between protein names are calculated and nodes
+of protein that have names that differ will be coloured
+differently, with higher values leading to more colours. While
+no maximum to this value is defined in the code, it shouldn't
+be higher than the number of proteins. Peptide nodes are
+always labelled in orange.</p></dd>
 <dt>layout</dt>
 <dd><p>A graph layout, as defined in the <code>ipgraph</code>
 package. Default is <code>layout_as_bipartite()</code>.</p></dd>
