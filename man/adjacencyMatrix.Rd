@@ -19,7 +19,7 @@ makeAdjacencyMatrix(
 
 makePeptideProteinVector(m, collapse = ";")
 
-plotAdjacencyMatrix(x, layout = igraph::layout_nicely)
+plotAdjacencyMatrix(x, colLevel = 0, layout = igraph::layout_nicely)
 }
 \arguments{
 \item{x}{A peptide-by-protein adjacency matrix.}
@@ -53,6 +53,16 @@ would be set.}
 
 \item{collapse}{\code{character(1)} indicating how to collapse protein
 names for shared peptides. Default is \code{";"}.}
+
+\item{colLevel}{\code{numeric(1)} indicating the protein colouring
+level to use. If 0 (default), all protein nodes are labelled
+in steelblue. For values > 0, approximate string distances
+(see \code{\link[=adist]{adist()}} between protein names are calculated and nodes
+of protein that have names that differ will be coloured
+differently, with higher values leading to more colours. While
+no maximum to this value is defined in the code, it shouldn't
+be higher than the number of proteins. Peptide nodes are
+always labelled in orange.}
 
 \item{layout}{A graph layout, as defined in the \code{ipgraph}
 package. Default is \code{\link[=layout_as_bipartite]{layout_as_bipartite()}}.}
