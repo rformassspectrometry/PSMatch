@@ -57,7 +57,7 @@ names for shared peptides. Default is \code{";"}.}
 \item{colLevel}{\code{numeric(1)} indicating the protein colouring
 level to use. If 0 (default), all protein nodes are labelled
 in steelblue. For values > 0, approximate string distances
-(see \code{\link[=adist]{adist()}} between protein names are calculated and nodes
+(see \code{\link[=adist]{adist()}}) between protein names are calculated and nodes
 of protein that have names that differ will be coloured
 differently, with higher values leading to more colours. While
 no maximum to this value is defined in the code, it shouldn't

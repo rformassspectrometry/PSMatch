@@ -187,6 +187,10 @@ ccomp[[3]]
 ## protein group in three.
 plotAdjacencyMatrix(ccomp[[3]])
 
+
+## Colour protein node based on protein names similarity
+plotAdjacencyMatrix(ccomp[[3]])
+
 ## To select non-trivial components of size > 1
 cc2 <- cc[ncols(cc) > 1]
 cc2
