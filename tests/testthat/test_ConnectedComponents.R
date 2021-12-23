@@ -32,3 +32,38 @@ test_that("ConnectedComponents works from PSM", {
     cc2@adjMatrix <- cc2@adjMatrix[order(rownames(cc2@adjMatrix)), ]
     expect_identical(cc1, cc2)
 })
+
+
+
+test_that("prioritiseConnectedComponents() works", {
+    cc <- ConnectedComponents(adj)
+    p1 <- prioritiseConnectedComponents(cc)
+    p2 <- prioritizeConnectedComponents(cc)
+    expect_identical(p1, p2)
+    ## Check CC 4
+    cc_i <- connectedComponents(cc, 4)
+    expect_identical(p1["4", "ncol"], ncol(cc_i))
+    expect_identical(p1["4", "nrow"], nrow(cc_i))
+    expect_identical(p1["4", "n"], sum(cc_i))
+    expect_identical(p1["4", "rs_min"], min(rowSums(cc_i)))
+    expect_identical(p1["4", "rs_max"], max(rowSums(cc_i)))
+    expect_identical(p1["4", "cs_min"], min(colSums(cc_i)))
+    expect_identical(p1["4", "cs_max"], max(colSums(cc_i)))
+    expect_identical(p1["4", "sparsity"], sum(cc_i == 0)/(ncol(cc_i) * nrow(cc_i)))
+    cl <- cluster_louvain(igraph::graph_from_incidence_matrix(cc_i))
+    expect_identical(p1["4", "n_coms"], as.numeric(length(cl)))
+    expect_identical(p1["4", "mod_coms"], modularity(cl))
+    ## Check CC 3
+    cc_i <- connectedComponents(cc, 3)
+    expect_identical(p1["3", "ncol"], ncol(cc_i))
+    expect_identical(p1["3", "nrow"], nrow(cc_i))
+    expect_identical(p1["3", "n"], sum(cc_i))
+    expect_identical(p1["3", "rs_min"], min(rowSums(cc_i)))
+    expect_identical(p1["3", "rs_max"], max(rowSums(cc_i)))
+    expect_identical(p1["3", "cs_min"], min(colSums(cc_i)))
+    expect_identical(p1["3", "cs_max"], max(colSums(cc_i)))
+    expect_identical(p1["3", "sparsity"], sum(cc_i == 0)/(ncol(cc_i) * nrow(cc_i)))
+    cl <- cluster_louvain(igraph::graph_from_incidence_matrix(cc_i))
+    expect_identical(p1["3", "n_coms"], as.numeric(length(cl)))
+    expect_identical(p1["3", "mod_coms"], modularity(cl))
+})
