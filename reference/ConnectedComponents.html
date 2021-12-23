@@ -92,6 +92,10 @@ nrows(x)
 # S4 method for ConnectedComponents,numeric,ANY,ANY
 [(x, i, j, ..., drop = FALSE)
 
+prioritiseConnectedComponents(x)
+
+prioritizeConnectedComponents(x)
+
 # S4 method for ConnectedComponents
 adjacencyMatrix(object)</code></pre></div>
     </div>
@@ -170,6 +174,22 @@ component(s) <code>i</code>. <code>i</code> is the numeric index (between 1 and
 (default), then a matrix is returned instead of a <code>List</code> of
 matrices of length 1. If set to <code>FALSE</code>, a <code>List</code> is always
 returned, irrespective of its length.</p></li>
+<li><p>To help with the exploration of individual connected Components,
+the <code>prioritiseConnectedComponents()</code> function will take an
+instance of <code>ConnectedComponents</code> and return a <code>data.frame</code> where
+the component indices are ordered based on their potential to
+clean up/flag some peptides and split protein groups in small
+groups or individual proteins, or simply explore them. The
+prioritisation is based on a set of metrics computed from the
+component's adjacency matrix, including its dimensions, row and
+col sums maxima and minima, its sparsity and the number of
+communities and their modularity that quantifies how well the
+communities separate (see <code>modularity.igraph()</code>. Note that
+trivial components, i.e. those composed of a single peptide and
+protein are excluded from the prioritised results. This
+<code>data.frame</code> is ideally suited for a principal component
+analysis (using for instance <code><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp()</a></code>) for further inspection
+for component visualisation with <code><a href="adjacencyMatrix.html">plotAdjacencyMatrix()</a></code>.</p></li>
 </ul></div>
 
     <div id="ref-examples">
@@ -305,9 +325,8 @@ returned, irrespective of its length.</p></li>
 <span class="r-in"><span class="fu"><a href="adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">ccomp</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="ConnectedComponents-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
-<span class="r-in"></span>
 <span class="r-in"><span class="co">## Colour protein node based on protein names similarity</span></span>
-<span class="r-in"><span class="fu"><a href="adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">ccomp</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">ccomp</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="ConnectedComponents-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## To select non-trivial components of size &gt; 1</span></span>
@@ -319,6 +338,28 @@ returned, irrespective of its length.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Number of components by size:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   0(1, with 1 protein) 0(1, with &gt; 1 proteins)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   17(2) 1(3) 3(4)</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">## Use components features to prioritise their exploration</span></span>
+<span class="r-in"><span class="va">pri_cc</span> <span class="op">&lt;-</span> <span class="fu">prioritiseConnectedComponents</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">pri_cc</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      nrow ncol n_coms  mod_coms  n rs_min rs_max cs_min cs_max  sparsity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1082    7    4      3 0.3698225 14      1      4      2      4 0.5357143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 691     3    2      2 0.2187500  4      1      2      1      3 0.3333333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1079    3    4      2 0.2040816  7      1      3      1      2 0.4166667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 920     4    2      2 0.1666667  6      1      2      3      3 0.2500000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1000    2    2      2 0.1666667  5      1      4      2      3 0.2500000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1078    2    2      2 0.1666667  3      1      2      1      2 0.2500000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1080    2    2      2 0.1666667  3      1      2      1      2 0.2500000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1359    2    2      2 0.1666667  3      1      2      1      2 0.2500000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1423    2    2      2 0.1666667  3      1      2      1      2 0.2500000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 72      2    2      2 0.0000000  6      2      4      3      3 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 526     2    2      2 0.0000000  4      2      2      2      2 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 530     3    2      1 0.0000000  8      2      4      4      4 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1406    3    2      1 0.0000000  6      2      2      3      3 0.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1407    2    2      2 0.0000000  4      2      2      2      2 0.0000000</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu"><a href="adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="fu">connectedComponents</span><span class="op">(</span><span class="va">cc</span>, <span class="fl">1082</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="ConnectedComponents-4.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>
