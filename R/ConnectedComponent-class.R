@@ -2,7 +2,7 @@
 ##'
 ##' @name ConnectedComponents
 ##'
-##' @aliases ConnectedComponents ConnectedComponents-class ConnectedComponents length,ConnectedComponents adjacencyMatrix,ConnectedComponents ccMatrix show,ConnectedComponents connectedComponents [,ConnectedComponents,numeric,ANY,ANY [,ConnectedComponents,logical,ANY,ANY [,ConnectedComponents,integer,ANY,ANY dims,ConnectedComponents ncols,ConnectedComponents nrows,ConnectedComponents
+##' @aliases ConnectedComponents ConnectedComponents-class ConnectedComponents length,ConnectedComponents adjacencyMatrix,ConnectedComponents ccMatrix show,ConnectedComponents connectedComponents [,ConnectedComponents,numeric,ANY,ANY [,ConnectedComponents,logical,ANY,ANY [,ConnectedComponents,integer,ANY,ANY dims,ConnectedComponents ncols,ConnectedComponents nrows,ConnectedComponents prioritiseConnectedComponents prioritizeConnectedComponents
 ##'
 ##' @description
 ##'
@@ -57,6 +57,23 @@
 ##'   (default), then a matrix is returned instead of a `List` of
 ##'   matrices of length 1. If set to `FALSE`, a `List` is always
 ##'   returned, irrespective of its length.
+##'
+##' - To help with the exploration of individual connected Components,
+##'   the `prioritiseConnectedComponents()` function will take an
+##'   instance of `ConnectedComponents` and return a `data.frame` where
+##'   the component indices are ordered based on their potential to
+##'   clean up/flag some peptides and split protein groups in small
+##'   groups or individual proteins, or simply explore them. The
+##'   prioritisation is based on a set of metrics computed from the
+##'   component's adjacency matrix, including its dimensions, row and
+##'   col sums maxima and minima, its sparsity and the number of
+##'   communities and their modularity that quantifies how well the
+##'   communities separate (see [modularity.igraph()]. Note that
+##'   trivial components, i.e. those composed of a single peptide and
+##'   protein are excluded from the prioritised results. This
+##'   `data.frame` is ideally suited for a principal component
+##'   analysis (using for instance [prcomp()]) for further inspection
+##'   for component visualisation with [plotAdjacencyMatrix()].
 ##'
 ##' @examples
 ##'
@@ -121,13 +138,18 @@
 ##' ## protein group in three.
 ##' plotAdjacencyMatrix(ccomp[[3]])
 ##'
-##'
 ##' ## Colour protein node based on protein names similarity
-##' plotAdjacencyMatrix(ccomp[[3]])
+##' plotAdjacencyMatrix(ccomp[[3]], 1)
 ##'
 ##' ## To select non-trivial components of size > 1
 ##' cc2 <- cc[ncols(cc) > 1]
 ##' cc2
+##'
+##' ## Use components features to prioritise their exploration
+##' pri_cc <- prioritiseConnectedComponents(cc)
+##' pri_cc
+##'
+##' plotAdjacencyMatrix(connectedComponents(cc, 1082), 1)
 NULL
 
 setClass("ConnectedComponents",
@@ -323,3 +345,42 @@ subsetConnectedComponents <- function(object, i) {
     ## New object from updated adjacency matrix
     ConnectedComponents(adj)
 }
+
+##' @export
+##'
+##' @rdname ConnectedComponents
+##'
+##' @importFrom igraph cluster_louvain modularity
+prioritiseConnectedComponents <- function(x) {
+    stopifnot(is(x, "ConnectedComponents"))
+    ans <- data.frame(dims(x))
+    cc_x <- connectedComponents(x)
+    ## community metrics
+    com_metrics <- t(sapply(cc_x,
+                     function(xx) {
+                         g <- graph_from_incidence_matrix(xx)
+                         com <- cluster_louvain(g)
+                         c(n_coms = length(com),
+                           mod_coms = modularity(com))
+                     }))
+    ans <- cbind(ans, com_metrics)
+    ## adjacency matrix metrics
+    adj_metrics <- t(sapply(cc_x,
+                            function(xx)
+                                c(n = sum(xx),
+                                  rs_min = min(rowSums(xx)),
+                                  rs_max = max(rowSums(xx)),
+                                  cs_min = min(colSums(xx)),
+                                  cs_max = max(colSums(xx)),
+                                  sparsity = sum(xx == 0)/prod(dim(xx)))))
+
+    ans <- cbind(ans, adj_metrics)
+    sel <- ans$ncol > 1 & ans$nrow > 1
+    ans <- ans[sel, ]
+    ans[order(ans$mod_coms, decreasing = TRUE), ]
+}
+
+##' @export
+##'
+##' @rdname ConnectedComponents
+prioritizeConnectedComponents <- prioritiseConnectedComponents

@@ -15,6 +15,8 @@
 \alias{dims,ConnectedComponents}
 \alias{ncols,ConnectedComponents}
 \alias{nrows,ConnectedComponents}
+\alias{prioritiseConnectedComponents}
+\alias{prioritizeConnectedComponents}
 \alias{length,ConnectedComponents-method}
 \alias{dims,ConnectedComponents-method}
 \alias{ncols,ConnectedComponents-method}
@@ -44,6 +46,10 @@ connectedComponents(x, i, simplify = TRUE)
 \S4method{[}{ConnectedComponents,logical,ANY,ANY}(x, i, j, ..., drop = FALSE)
 
 \S4method{[}{ConnectedComponents,numeric,ANY,ANY}(x, i, j, ..., drop = FALSE)
+
+prioritiseConnectedComponents(x)
+
+prioritizeConnectedComponents(x)
 
 \S4method{adjacencyMatrix}{ConnectedComponents}(object)
 }
@@ -121,6 +127,22 @@ component(s) \code{i}. \code{i} is the numeric index (between 1 and
 (default), then a matrix is returned instead of a \code{List} of
 matrices of length 1. If set to \code{FALSE}, a \code{List} is always
 returned, irrespective of its length.
+\item To help with the exploration of individual connected Components,
+the \code{prioritiseConnectedComponents()} function will take an
+instance of \code{ConnectedComponents} and return a \code{data.frame} where
+the component indices are ordered based on their potential to
+clean up/flag some peptides and split protein groups in small
+groups or individual proteins, or simply explore them. The
+prioritisation is based on a set of metrics computed from the
+component's adjacency matrix, including its dimensions, row and
+col sums maxima and minima, its sparsity and the number of
+communities and their modularity that quantifies how well the
+communities separate (see \code{\link[=modularity.igraph]{modularity.igraph()}}. Note that
+trivial components, i.e. those composed of a single peptide and
+protein are excluded from the prioritised results. This
+\code{data.frame} is ideally suited for a principal component
+analysis (using for instance \code{\link[=prcomp]{prcomp()}}) for further inspection
+for component visualisation with \code{\link[=plotAdjacencyMatrix]{plotAdjacencyMatrix()}}.
 }
 }
 
@@ -187,11 +209,16 @@ ccomp[[3]]
 ## protein group in three.
 plotAdjacencyMatrix(ccomp[[3]])
 
-
 ## Colour protein node based on protein names similarity
-plotAdjacencyMatrix(ccomp[[3]])
+plotAdjacencyMatrix(ccomp[[3]], 1)
 
 ## To select non-trivial components of size > 1
 cc2 <- cc[ncols(cc) > 1]
 cc2
+
+## Use components features to prioritise their exploration
+pri_cc <- prioritiseConnectedComponents(cc)
+pri_cc
+
+plotAdjacencyMatrix(connectedComponents(cc, 1082), 1)
 }
