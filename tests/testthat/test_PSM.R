@@ -69,24 +69,31 @@ test_that("Test PSM filtering (no change)", {
                 protein = "protein")
     expect_true(validObject(psm2))
     ## none of these filters on decoy should change the data
+    expect_identical(psm, filterPsmDecoy(psm, decoy = NA))
     expect_identical(psm, filterPsmDecoy(psm, decoy = NULL))
     expect_identical(psm, filterPsmDecoy(psm, decoy = "decoy"))
     expect_identical(psm2, filterPsmDecoy(psm2))
     expect_identical(psm2, filterPsmDecoy(psm2, decoy = "decoy"))
     expect_identical(psm2, filterPsmDecoy(psm2, decoy = NULL))
     ## none of these filters on rank should change the data
+    expect_identical(psm, filterPsmRank(psm, rank = NA))
     expect_identical(psm, filterPsmRank(psm, rank = NULL))
     expect_identical(psm, filterPsmRank(psm, rank = "rank"))
     expect_identical(psm2, filterPsmRank(psm2))
+    expect_identical(psm2, filterPsmRank(psm2, rank = NA))
     expect_identical(psm2, filterPsmRank(psm2, rank = NULL))
     expect_identical(psm2, filterPsmRank(psm2, rank = "rank"))
     ## none of these filters on uniqueness of hits should change the data
+    expect_identical(psm, filterPsmShared(psm, peptide = NA))
     expect_identical(psm, filterPsmShared(psm, peptide = NULL))
+    expect_identical(psm, filterPsmShared(psm, protein = NA))
     expect_identical(psm, filterPsmShared(psm, protein = NULL))
     expect_identical(psm, filterPsmShared(psm, peptide = "sequence",
                                           protein = "protein"))
     expect_identical(psm2, filterPsmShared(psm2))
+    expect_identical(psm2, filterPsmShared(psm2, peptide = NA))
     expect_identical(psm2, filterPsmShared(psm2, peptide = NULL))
+    expect_identical(psm2, filterPsmShared(psm2, protein = NA))
     expect_identical(psm2, filterPsmShared(psm2, protein = NULL))
     expect_identical(psm2, filterPsmShared(psm2, peptide = "sequence",
                                            protein = "protein"))

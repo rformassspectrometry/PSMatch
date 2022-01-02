@@ -11,28 +11,28 @@
 ##'     whether entries match the decoy database or not. Default is
 ##'     the `decoy` PSM variable as defined in [psmVariables()]. The
 ##'     column should be a `logical` and only PSMs holding a `FALSE`
-##'     are retained. Filtering is ignored if set to `NULL`.
+##'     are retained. Filtering is ignored if set to `NULL` or `NA`.
 ##'
 ##' @param rank `character(1)` with the column name holding the rank
 ##'     of the PSM. Default is the `rank` PSM variable as defined in
 ##'     [psmVariables()]. This column should be a `numeric` and only
 ##'     PSMs having rank equal to 1 are retained. Filtering is ignored
-##'     if set to `NULL`.
+##'     if set to `NULL` or `NA`.
 ##'
 ##' @param protein `character(1)` with the column name holding the
 ##'     protein (groups) protein. Default is the `protein` PSM
 ##'     variable as defined in [psmVariables()]. Filtering is ignored
-##'     if set to `NULL`.
+##'     if set to `NULL` or `NA`.
 ##'
 ##' @param spectrum `character(1)` with the name of the spectrum
 ##'     identifier column. Default is the `spectrum` PSM variable as
 ##'     defined in [psmVariables()]. Filtering is ignored if set to
-##'     `NULL`.
+##'     `NULL` or `NA`.
 ##'
 ##' @param peptide `character(1)` with the name of the peptide
 ##'     identifier column. Default is the `peptide` PSM variable as
 ##'     defined in [psmVariables()]. Filtering is ignored if set to
-##'     `NULL`.
+##'     `NULL` or `NA`.
 ##'
 ##' @param verbose `logical(1)` setting the verbosity flag.
 ##'
@@ -60,19 +60,16 @@ filterPSMs <- function(x,
     n0 <- nrow(x)
     if (verbose)
         message("Starting with ", n0, " PSMs:")
-    if (!is.null(decoy))
-        x <- filterPsmDecoy(x, decoy = decoy,
-                            verbose = verbose)
+    x <- filterPsmDecoy(x, decoy = decoy,
+                        verbose = verbose)
 
-    if (!is.null(rank))
-        x <- filterPsmRank(x, rank = rank,
-                           verbose = verbose)
+    x <- filterPsmRank(x, rank = rank,
+                       verbose = verbose)
 
-    if (!is.null(protein))
-        x <- filterPsmShared(x,
-                             protein = protein,
-                             peptide = peptide,
-                             verbose = verbose)
+    x <- filterPsmShared(x,
+                         protein = protein,
+                         peptide = peptide,
+                         verbose = verbose)
     if (verbose)
         message(nrow(x), " PSMs left.")
     x
@@ -90,7 +87,7 @@ filterPSMs <- function(x,
 filterPsmDecoy <- function(x,
                            decoy = psmVariables(x)["decoy"],
                            verbose = TRUE) {
-    if (is.null(decoy))
+    if (is.null(decoy) || is.na(decoy))
         return(x)
     n0 <- nrow(x)
     x <- x[!x[, decoy], ]
@@ -110,7 +107,7 @@ filterPsmDecoy <- function(x,
 filterPsmRank <- function(x,
                           rank = psmVariables(x)["rank"],
                           verbose = TRUE) {
-    if (is.null(rank))
+    if (is.null(rank) || is.na(rank))
         return(x)
     n0 <- nrow(x)
     x <- x[x[, rank] == 1, ]
@@ -133,7 +130,7 @@ filterPsmShared <- function(x,
                             protein = psmVariables(x)["protein"],
                             peptide = psmVariables(x)["peptide"],
                             verbose = TRUE) {
-    if (is.null(protein) | is.null(peptide))
+    if (is.null(protein) || is.null(peptide) || (is.na(protein) | is.na(peptide)))
         return(x)
     n0 <- nrow(x)
     mlt <- tapply(x[, protein],
