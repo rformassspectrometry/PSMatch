@@ -123,9 +123,9 @@
 ##' vec
 ##' identical(prots, vec)
 ##'
-##' ## ---------------------------
-##' ## PSM object from a dat.frame
-##' ## ---------------------------
+##' ## ----------------------------
+##' ## PSM object from a data.frame
+##' ## ----------------------------
 ##'
 ##' psmdf <- data.frame(psm = paste0("psm", 1:10),
 ##'                     peptide = paste0("pep", c(1, 1, 2, 2, 3, 4, 6, 7, 8, 8)),
@@ -278,7 +278,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
 }
 
 
-##' @param m An adjacency matrix.
+##' @param m A peptide-by-protein adjacency matrix.
 ##'
 ##' @param collapse `character(1)` indicating how to collapse protein
 ##'     names for shared peptides. Default is `";"`.

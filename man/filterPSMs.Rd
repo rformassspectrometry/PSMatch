@@ -35,28 +35,28 @@ filterPsmShared(
 whether entries match the decoy database or not. Default is
 the \code{decoy} PSM variable as defined in \code{\link[=psmVariables]{psmVariables()}}. The
 column should be a \code{logical} and only PSMs holding a \code{FALSE}
-are retained. Filtering is ignored if set to \code{NULL}.}
+are retained. Filtering is ignored if set to \code{NULL} or \code{NA}.}
 
 \item{rank}{\code{character(1)} with the column name holding the rank
 of the PSM. Default is the \code{rank} PSM variable as defined in
 \code{\link[=psmVariables]{psmVariables()}}. This column should be a \code{numeric} and only
 PSMs having rank equal to 1 are retained. Filtering is ignored
-if set to \code{NULL}.}
+if set to \code{NULL} or \code{NA}.}
 
 \item{protein}{\code{character(1)} with the column name holding the
 protein (groups) protein. Default is the \code{protein} PSM
 variable as defined in \code{\link[=psmVariables]{psmVariables()}}. Filtering is ignored
-if set to \code{NULL}.}
+if set to \code{NULL} or \code{NA}.}
 
 \item{spectrum}{\code{character(1)} with the name of the spectrum
 identifier column. Default is the \code{spectrum} PSM variable as
 defined in \code{\link[=psmVariables]{psmVariables()}}. Filtering is ignored if set to
-\code{NULL}.}
+\code{NULL} or \code{NA}.}
 
 \item{peptide}{\code{character(1)} with the name of the peptide
 identifier column. Default is the \code{peptide} PSM variable as
 defined in \code{\link[=psmVariables]{psmVariables()}}. Filtering is ignored if set to
-\code{NULL}.}
+\code{NULL} or \code{NA}.}
 
 \item{verbose}{\code{logical(1)} setting the verbosity flag.}
 }

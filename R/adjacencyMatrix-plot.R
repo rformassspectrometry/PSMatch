@@ -6,8 +6,6 @@
 ##'
 ##' @name adjacencyMatrix
 ##'
-##' @param x A peptide-by-protein adjacency matrix.
-##'
 ##' @param colLevel `numeric(1)` indicating the protein colouring
 ##'     level to use. If 0 (default), all protein nodes are labelled
 ##'     in steelblue. For values > 0, approximate string distances
@@ -20,15 +18,15 @@
 ##'
 ##' @param layout A graph layout, as defined in the `ipgraph`
 ##'     package. Default is [layout_as_bipartite()].
-plotAdjacencyMatrix <- function(x, colLevel = 0,
+plotAdjacencyMatrix <- function(m, colLevel = 0,
                                 layout = igraph::layout_nicely) {
-    g <- graph_from_incidence_matrix(x)
+    g <- graph_from_incidence_matrix(m)
     colLevel <- colLevel[1]
     if (colLevel == 0) {
-        V(g)$color <- ifelse(names(V(g)) %in% colnames(x), "steelblue", "orange")
+        V(g)$color <- ifelse(names(V(g)) %in% colnames(m), "steelblue", "orange")
     } else {
         ## distances between protein names
-        pnames0 <- colnames(x)
+        pnames0 <- colnames(m)
         ## parse swissprot identifiers to keep gene names, but keep
         ## _SPECIES suffix to take it into account proteins from
         ## different species. Identical suffixes don't affect the

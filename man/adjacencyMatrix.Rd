@@ -19,10 +19,11 @@ makeAdjacencyMatrix(
 
 makePeptideProteinVector(m, collapse = ";")
 
-plotAdjacencyMatrix(x, colLevel = 0, layout = igraph::layout_nicely)
+plotAdjacencyMatrix(m, colLevel = 0, layout = igraph::layout_nicely)
 }
 \arguments{
-\item{x}{A peptide-by-protein adjacency matrix.}
+\item{x}{Either an instance of class \code{PSM} or a \code{character}. See
+example below for details.}
 
 \item{split}{\code{character(1)} defining how to split the string of
 protein identifiers (using \code{\link[=strsplit]{strsplit()}}). Default is ";". If
@@ -49,7 +50,7 @@ same peptide but from different precursors (for example charge
 once. Default if \code{FALSE}. This also overrides any \code{score} that
 would be set.}
 
-\item{m}{An adjacency matrix.}
+\item{m}{A peptide-by-protein adjacency matrix.}
 
 \item{collapse}{\code{character(1)} indicating how to collapse protein
 names for shared peptides. Default is \code{";"}.}
@@ -152,9 +153,9 @@ vec <- makePeptideProteinVector(m)
 vec
 identical(prots, vec)
 
-## ---------------------------
-## PSM object from a dat.frame
-## ---------------------------
+## ----------------------------
+## PSM object from a data.frame
+## ----------------------------
 
 psmdf <- data.frame(psm = paste0("psm", 1:10),
                     peptide = paste0("pep", c(1, 1, 2, 2, 3, 4, 6, 7, 8, 8)),
