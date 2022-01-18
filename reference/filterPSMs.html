@@ -32,7 +32,7 @@ match multiple proteins.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.10</span>
       </span>
     </div>
 
@@ -105,28 +105,28 @@ match multiple proteins.</p></li>
 whether entries match the decoy database or not. Default is
 the <code>decoy</code> PSM variable as defined in <code><a href="PSM.html">psmVariables()</a></code>. The
 column should be a <code>logical</code> and only PSMs holding a <code>FALSE</code>
-are retained. Filtering is ignored if set to <code>NULL</code>.</p></dd>
+are retained. Filtering is ignored if set to <code>NULL</code> or <code>NA</code>.</p></dd>
 <dt>rank</dt>
 <dd><p><code>character(1)</code> with the column name holding the rank
 of the PSM. Default is the <code>rank</code> PSM variable as defined in
 <code><a href="PSM.html">psmVariables()</a></code>. This column should be a <code>numeric</code> and only
 PSMs having rank equal to 1 are retained. Filtering is ignored
-if set to <code>NULL</code>.</p></dd>
+if set to <code>NULL</code> or <code>NA</code>.</p></dd>
 <dt>protein</dt>
 <dd><p><code>character(1)</code> with the column name holding the
 protein (groups) protein. Default is the <code>protein</code> PSM
 variable as defined in <code><a href="PSM.html">psmVariables()</a></code>. Filtering is ignored
-if set to <code>NULL</code>.</p></dd>
+if set to <code>NULL</code> or <code>NA</code>.</p></dd>
 <dt>spectrum</dt>
 <dd><p><code>character(1)</code> with the name of the spectrum
 identifier column. Default is the <code>spectrum</code> PSM variable as
 defined in <code><a href="PSM.html">psmVariables()</a></code>. Filtering is ignored if set to
-<code>NULL</code>.</p></dd>
+<code>NULL</code> or <code>NA</code>.</p></dd>
 <dt>peptide</dt>
 <dd><p><code>character(1)</code> with the name of the peptide
 identifier column. Default is the <code>peptide</code> PSM variable as
 defined in <code><a href="PSM.html">psmVariables()</a></code>. Filtering is ignored if set to
-<code>NULL</code>.</p></dd>
+<code>NULL</code> or <code>NA</code>.</p></dd>
 <dt>verbose</dt>
 <dd><p><code>logical(1)</code> setting the verbosity flag.</p></dd>
 </dl></div>
