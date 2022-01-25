@@ -205,16 +205,12 @@ setMethod("show", "ConnectedComponents",
               cat(sprintf("An instance of class %s", class(object)), "\n")
               cat(" Number of proteins:", nrow(object@ccMatrix), "\n")
               cat(" Number of components:", length(object@adjMatrices), "\n")
-              cat(" Number of components by size:\n")
+              cat(" Number of components [peptide x peptides]:\n  ")
               dim_mat <- dims(object)
-              k1 <- sum(apply(dim_mat, 1, function(x) x[1] == 1L & x[2] == 1L))
-              k2 <-  sum(apply(dim_mat, 1, function(x) x[1] > 1L & x[2] == 1L))
-              tab <- table(dim_mat[dim_mat[, "ncol"] > 1, "ncol"])
-              message("  ", k1, "(1, with 1 protein) ", k2, "(1, with > 1 proteins)")
-              if (length(tab) > 0) {
-                  msg <- strwrap(paste(paste0(tab, "(", names(tab), ")"), collapse = " "))
-                  message("  ", msg)
-              }
+              cat(paste0(sum(dim_mat[, 1] == 1 & dim_mat[, 2] == 1), "[1 x 1] "))
+              cat(paste0(sum(dim_mat[, 1] == 1 & dim_mat[, 2] > 1), "[1 x n] "))
+              cat(paste0(sum(dim_mat[, 1] > 1 & dim_mat[, 2] == 1), "[n x 1] "))
+              cat(paste0(sum(dim_mat[, 1] > 1 & dim_mat[, 2] > 1), "[n x n]\n"))
           })
 
 
