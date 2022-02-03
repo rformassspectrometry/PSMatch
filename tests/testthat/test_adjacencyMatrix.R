@@ -114,14 +114,13 @@ test_that("ajacendyMatrix() accessor works", {
     ConnectedComponents()
     g <- plotAdjacencyMatrix(connectedComponents(cc, 672))
     expect_true(is(g, "igraph"))
-    expect_identical(V(g)$color, c("orange", "steelblue"))
+    expect_identical(V(g)$color, c(NA_character_, "steelblue"))
     dev.off()
     g2 <- plotAdjacencyMatrix(connectedComponents(cc, 672), 1)
     expect_true(is(g2, "igraph"))
-    expect_identical(V(g2)$color, c(1, 2))
+    expect_identical(V(g2)$color, c(0, 2))
     dev.off()
 })
-
 
 
 test_that("ajacendyMatrix() with scores works", {

@@ -19,7 +19,12 @@ makeAdjacencyMatrix(
 
 makePeptideProteinVector(m, collapse = ";")
 
-plotAdjacencyMatrix(m, colLevel = 0, layout = igraph::layout_nicely)
+plotAdjacencyMatrix(
+  m,
+  protColors = 0,
+  pepColors = NULL,
+  layout = igraph::layout_nicely
+)
 }
 \arguments{
 \item{x}{Either an instance of class \code{PSM} or a \code{character}. See
@@ -55,15 +60,30 @@ would be set.}
 \item{collapse}{\code{character(1)} indicating how to collapse protein
 names for shared peptides. Default is \code{";"}.}
 
-\item{colLevel}{\code{numeric(1)} indicating the protein colouring
-level to use. If 0 (default), all protein nodes are labelled
-in steelblue. For values > 0, approximate string distances
-(see \code{\link[=adist]{adist()}}) between protein names are calculated and nodes
-of protein that have names that differ will be coloured
-differently, with higher values leading to more colours. While
-no maximum to this value is defined in the code, it shouldn't
-be higher than the number of proteins. Peptide nodes are
-always labelled in orange.}
+\item{protColors}{Either a \code{numeric(1)} or a named \code{character()}
+of colour names. The numeric value indicates the protein
+colouring level to use. If 0 (default), all protein nodes are
+labelled in steelblue. For values > 0, approximate string
+distances (see \code{\link[=adist]{adist()}}) between protein names are calculated
+and nodes of proteins that have names that differ will be
+coloured differently, with higher values leading to more
+colours. While no maximum to this value is defined in the
+code, it shouldn't be higher than the number of proteins. If a
+character is used, it should be a character of colour names
+named by protein identifiers. That vector should provide
+colours for at least all proteins in the \code{m}, but more protein
+could be named. The latter is useful when generating a colour
+vector for all proteins in a dataset and use it for different
+adjacency matrix visualisations.}
+
+\item{pepColors}{Either \code{NULL} (default) for no peptide colouring
+(white nodes) or a named \code{character()} of colour names. It
+should be a character of colour names named by peptide
+identifiers. That vector should provide colours for at least
+all peptides in the \code{m}, but more peptides could be named. The
+latter is useful when generating a colour vector for all
+peptides in a dataset and use it for different adjacency
+matrix visualisations.}
 
 \item{layout}{A graph layout, as defined in the \code{ipgraph}
 package. Default is \code{\link[=layout_as_bipartite]{layout_as_bipartite()}}.}
