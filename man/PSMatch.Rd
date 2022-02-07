@@ -7,7 +7,7 @@
 \description{
 The PSMatch package offers functionality to load, manage and
 analyse Peptide Spectrum Matches as generated in mass
-spectrometry-based proteomics. The three main objects and concepts
+spectrometry-based proteomics. The four main objects and concepts
 that are proposed in this package are described below, and are
 aimed to proteomics practitioners to explore and understand their
 identification data better.
@@ -20,7 +20,7 @@ simple class to store and manipulate peptide-spectrum matches. The
 class encapsulates PSM data as a DataFrame (or more specifically a
 \code{DFrame}) with additional lightweight metadata annotation. PSM
 objects are typically creatd from XML-based mzID files or
-\code{data.frames} imported from spreadsheets. It is them possible to
+\code{data.frames} imported from spreadsheets. It is then possible to
 apply widely used filters (such as removal of decoy hits, PSMs of
 rank > 1, ...) as described in \code{\link[=filterPSMs]{filterPSMs()}}.
 }
@@ -29,20 +29,20 @@ rank > 1, ...) as described in \code{\link[=filterPSMs]{filterPSMs()}}.
 
 
 PSM data, as produced by all proteomics search engines, is exported
-as a table like structure where PSM are documented along the rows
+as a table-like structure where PSM are documented along the rows
 by variables such as identification scores, peptides sequences,
-modifications and the protein which that peptide comes from. There
-is always a level of ambiguity in such data, as peptides can be
-mapped to mutliple proteins; they are then called shared peptides,
-as opposed to unique peptides.
+modifications and the protein which the peptides originate
+from. There is always a level of ambiguity in such data, as
+peptides can be mapped to mutliple proteins; they are then called
+shared peptides, as opposed to unique peptides.
 
 One convenient way to store the relation between peptides and
 proteins is as a peptide-by-protein adjacency matrix. Such matrices
 can be generated from PSM object or vectors using the
-\code{\link[=makeAdjacencyMatrix]{makeAdjacencyMatrix()}}.
+\code{\link[=makeAdjacencyMatrix]{makeAdjacencyMatrix()}} function.
 
 The \code{\link[=describePeptides]{describePeptides()}} and \code{\link[=describeProteins]{describeProteins()}} functions are
-also helpful is tally the number of unique and shared peptides and
+also helpful to tally the number of unique and shared peptides and
 the number of proteins composed of unique or shared peptides, or a
 combination thereof.
 }
@@ -50,11 +50,11 @@ combination thereof.
 \section{Connected Components}{
 
 
-Once we model the peptide-to-protein relations explicitly, it
-becomes possible to perform computations on the proteins that are
-grouped by the peptides they share. These groups are mathematically
-defined as connected components, which are implemented as
-\code{\link[=ConnectedComponents]{ConnectedComponents()}} objects.
+Once we model the peptide-to-protein relations explicitly using an
+adjacency matrix, it becomes possible to perform computations on
+the proteins that are grouped by the peptides they share. These
+groups are mathematically defined as connected components, which
+are implemented as \code{\link[=ConnectedComponents]{ConnectedComponents()}} objects.
 }
 
 \section{Fragment ions}{
