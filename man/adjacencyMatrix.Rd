@@ -71,19 +71,19 @@ colours. While no maximum to this value is defined in the
 code, it shouldn't be higher than the number of proteins. If a
 character is used, it should be a character of colour names
 named by protein identifiers. That vector should provide
-colours for at least all proteins in the \code{m}, but more protein
-could be named. The latter is useful when generating a colour
-vector for all proteins in a dataset and use it for different
-adjacency matrix visualisations.}
+colours for at least all proteins in the adjacency matrix \code{m},
+but more protein could be named. The latter is useful when
+generating a colour vector for all proteins in a dataset and
+use it for different adjacency matrix visualisations.}
 
 \item{pepColors}{Either \code{NULL} (default) for no peptide colouring
 (white nodes) or a named \code{character()} of colour names. It
 should be a character of colour names named by peptide
 identifiers. That vector should provide colours for at least
-all peptides in the \code{m}, but more peptides could be named. The
-latter is useful when generating a colour vector for all
-peptides in a dataset and use it for different adjacency
-matrix visualisations.}
+all peptides in the adjacency matrix \code{m}, but more peptides
+could be named. The latter is useful when generating a colour
+vector for all peptides in a dataset and use it for different
+adjacency matrix visualisations.}
 
 \item{layout}{A graph layout, as defined in the \code{ipgraph}
 package. Default is \code{\link[=layout_as_bipartite]{layout_as_bipartite()}}.}

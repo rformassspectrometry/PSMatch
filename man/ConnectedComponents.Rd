@@ -193,8 +193,8 @@ ccomp <- connectedComponents(cc, i)
 ## A group of 4 proteins that all share peptide RTRYQAEVR
 ccomp[[1]]
 
-## Visualise the adjacency matrix - here, we see how the single #
-#peptides 'unites' the four proteins.
+## Visualise the adjacency matrix - here, we see how the single
+## peptides (white node) 'unites' the four proteins (blue nodes)
 plotAdjacencyMatrix(ccomp[[1]])
 
 ## A group of 4 proteins formed by 7 peptides: THPAERKPRRRKKR is

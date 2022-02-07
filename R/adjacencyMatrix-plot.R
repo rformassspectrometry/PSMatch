@@ -17,19 +17,19 @@
 ##'     code, it shouldn't be higher than the number of proteins. If a
 ##'     character is used, it should be a character of colour names
 ##'     named by protein identifiers. That vector should provide
-##'     colours for at least all proteins in the `m`, but more protein
-##'     could be named. The latter is useful when generating a colour
-##'     vector for all proteins in a dataset and use it for different
-##'     adjacency matrix visualisations.
+##'     colours for at least all proteins in the adjacency matrix `m`,
+##'     but more protein could be named. The latter is useful when
+##'     generating a colour vector for all proteins in a dataset and
+##'     use it for different adjacency matrix visualisations.
 ##'
 ##' @param pepColors Either `NULL` (default) for no peptide colouring
 ##'     (white nodes) or a named `character()` of colour names. It
 ##'     should be a character of colour names named by peptide
 ##'     identifiers. That vector should provide colours for at least
-##'     all peptides in the `m`, but more peptides could be named. The
-##'     latter is useful when generating a colour vector for all
-##'     peptides in a dataset and use it for different adjacency
-##'     matrix visualisations.
+##'     all peptides in the adjacency matrix `m`, but more peptides
+##'     could be named. The latter is useful when generating a colour
+##'     vector for all peptides in a dataset and use it for different
+##'     adjacency matrix visualisations.
 ##'
 ##' @param layout A graph layout, as defined in the `ipgraph`
 ##'     package. Default is [layout_as_bipartite()].
