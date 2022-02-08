@@ -19,8 +19,12 @@ Authors@R:
      person(given = "Thomas", family = "Burger",
             email = "thomas.burger@cea.fr",
             role = "ctb"))
-Description: A simple package to load, handle and manage
-    Peptide-Spectrum Matches (PSMs).
+Description: The PSMatch package helps proteomics practitioner to
+    load, handle and manage Peptide-Spectrum Matches (PSMs). It allows
+    the modelling of the peptide-protein relations as adjacency
+    matrices and connected components to identify and make informed
+    decision about shared peptides. The package also provides
+    functions to calculate and visualise MS2 fragment ions.
 Depends:
     S4Vectors
 Imports:
