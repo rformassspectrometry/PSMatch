@@ -106,7 +106,7 @@ test_that("ajacendyMatrix() accessor works", {
 })
 
 
-test_that("ajacendyMatrix() accessor works", {
+test_that("plotAjacendyMatrix() works", {
     cc <-  msdata::ident(full.names = TRUE, pattern = "TMT") |>
     PSM() |>
     filterPsmDecoy() |>
@@ -120,6 +120,54 @@ test_that("ajacendyMatrix() accessor works", {
     expect_true(is(g2, "igraph"))
     expect_identical(V(g2)$color, c(0, 2))
     dev.off()
+})
+
+test_that("plotAjacendyMatrix() colours work", {
+    adj <-  msdata::ident(full.names = TRUE, pattern = "TMT") |>
+    PSM() |>
+    filterPsmDecoy() |>
+    filterPsmRank() |>
+    ConnectedComponents() |>
+    connectedComponents(1082)
+    ## ------------------------
+    ## Test default colours
+    g <- plotAdjacencyMatrix(adj)
+    pep_nodes <- which(names(V(g)) %in% rownames(adj))
+    prot_nodes <- which(names(V(g)) %in% colnames(adj))
+    ## peptides are white/NA
+    expect_true(all(is.na(V(g)$color[pep_nodes])))
+    ## proteins are steelblue
+    expect_true(all(V(g)$color[prot_nodes] == "steelblue"))
+    ## ---------------------------
+    ## Test custom peptide colors
+    exp_pep_cols <- c("red", "blue", "green", "red", "blue", "orange", "green")
+    pep_cols <- c(rep("black", 10), exp_pep_cols)
+    names(pep_cols) <- c(LETTERS[1:10], rownames(adj))
+    pep_cols <- sample(pep_cols)
+    g <- plotAdjacencyMatrix(adj, pepColors = pep_cols)
+    ## proteins are still steelblue
+    expect_true(all(V(g)$color[prot_nodes] == "steelblue"))
+    ## peptides have set colours
+    expect_identical(V(g)$color[pep_nodes], exp_pep_cols)
+    ## ---------------------------
+    ## Test custom protein colors
+    exp_prot_cols <- c("red", "blue", "green", "orange")
+    prot_cols <- c(rep("black", 10), exp_prot_cols)
+    names(prot_cols) <- c(LETTERS[1:10], colnames(adj))
+    prot_cols <- sample(prot_cols)
+    g <- plotAdjacencyMatrix(adj, protColors = prot_cols)
+    ## peptides are still white/NA
+    expect_true(all(is.na(V(g)$color[pep_nodes])))
+    ## proteins have set colours
+    expect_identical(V(g)$color[prot_nodes], exp_prot_cols)
+    ## ---------------------------------------
+    ## Test custom protein and peptide colors
+    g <- plotAdjacencyMatrix(adj, protColors = prot_cols,
+                             pepColors = pep_cols)
+    ## proteins have set colours
+    expect_identical(V(g)$color[prot_nodes], exp_prot_cols)
+    ## peptides have set colours
+    expect_identical(V(g)$color[pep_nodes], exp_pep_cols)
 })
 
 
