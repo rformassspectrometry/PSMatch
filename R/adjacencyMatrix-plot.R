@@ -1,4 +1,4 @@
-##' @importFrom igraph layout_nicely graph_from_incidence_matrix V V<- plot.igraph
+##' @importFrom igraph layout_nicely graph_from_incidence_matrix V V<- plot.igraph set_vertex_attr
 ##'
 ##' @export
 ##'
@@ -91,6 +91,12 @@ plotAdjacencyMatrix <- function(m,
         pepColors <- pepColors[rownames(m)]
         V(g)$color[match(names(pepColors), names(V(g)))] <- pepColors
     }
+    pep_nodes <- which(names(V(g)) %in% rownames(m))
+    prot_nodes <- which(names(V(g)) %in% colnames(m))
+    v_shapes <- rep("none", sum(dim(m)))
+    v_shapes[pep_nodes] <- "circle"
+    v_shapes[prot_nodes] <- "square"
+    g <- igraph::set_vertex_attr(g, "shape", value = v_shapes)
     plot.igraph(g, layout = layout)
     invisible(g)
 }

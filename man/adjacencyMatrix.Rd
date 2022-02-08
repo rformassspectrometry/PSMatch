@@ -134,8 +134,11 @@ summed.
 The \code{plotAdjacencyMatrix()} function is useful to visualise small
 adjacency matrices, such as those representing protein groups
 modelled as connected components, as described and illustrated in
-\code{\link[=ConnectedComponents]{ConnectedComponents()}}. The function invisibly returns the graph
-\code{igraph} object for additional tuning.
+\code{\link[=ConnectedComponents]{ConnectedComponents()}}. The function generates a graph modelling
+the relation between proteins (represented as squares) and
+peptides (represented as circes), which can further be coloured
+(see the \code{protColors} and \code{pepColors} arguments). The function
+invisibly returns the graph \code{igraph} object for additional tuning.
 
 There is a fundamental differences in the creation of an adjacency
 matrix from a PSM object or a vector, other than the input

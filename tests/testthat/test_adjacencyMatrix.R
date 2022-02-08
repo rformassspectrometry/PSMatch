@@ -122,7 +122,7 @@ test_that("plotAjacendyMatrix() works", {
     dev.off()
 })
 
-test_that("plotAjacendyMatrix() colours work", {
+test_that("plotAjacendyMatrix() attributes work", {
     adj <-  msdata::ident(full.names = TRUE, pattern = "TMT") |>
     PSM() |>
     filterPsmDecoy() |>
@@ -138,6 +138,10 @@ test_that("plotAjacendyMatrix() colours work", {
     expect_true(all(is.na(V(g)$color[pep_nodes])))
     ## proteins are steelblue
     expect_true(all(V(g)$color[prot_nodes] == "steelblue"))
+    ## ------------------------
+    ## Test shapes
+    expect_true(all(V(g)$shape[prot_nodes] == "square"))
+    expect_true(all(V(g)$shape[pep_nodes] == "circle"))
     ## ---------------------------
     ## Test custom peptide colors
     exp_pep_cols <- c("red", "blue", "green", "red", "blue", "orange", "green")
