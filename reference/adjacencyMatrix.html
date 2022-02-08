@@ -19,7 +19,7 @@ described below convert between these two format."><!-- mathjax --><script src="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.14</span>
       </span>
     </div>
 
@@ -178,8 +178,11 @@ summed.</p>
 <p>The <code>plotAdjacencyMatrix()</code> function is useful to visualise small
 adjacency matrices, such as those representing protein groups
 modelled as connected components, as described and illustrated in
-<code><a href="ConnectedComponents.html">ConnectedComponents()</a></code>. The function invisibly returns the graph
-<code>igraph</code> object for additional tuning.</p>
+<code><a href="ConnectedComponents.html">ConnectedComponents()</a></code>. The function generates a graph modelling
+the relation between proteins (represented as squares) and
+peptides (represented as circes), which can further be coloured
+(see the <code>protColors</code> and <code>pepColors</code> arguments). The function
+invisibly returns the graph <code>igraph</code> object for additional tuning.</p>
 <p>There is a fundamental differences in the creation of an adjacency
 matrix from a PSM object or a vector, other than the input
 variable itself:</p><ul><li><p>In a <code>PSM</code> object, each row (PSM) refers to an <em>individual</em>
