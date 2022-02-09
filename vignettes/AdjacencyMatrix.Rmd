@@ -1,0 +1,40 @@
+---
+title: "Understanding protein groups with adjacency matrices"
+output:
+    BiocStyle::html_document:
+        toc_float: true
+vignette: >
+    %\VignetteIndexEntry{Understanding protein groups with adjacency matrices}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+    %\VignettePackage{PSMatch}
+    %\VignetteDepends{mzR,BiocStyle,msdata,SummarizedExperiment}
+---
+
+```{r style, echo = FALSE, results = 'asis', message=FALSE}
+BiocStyle::markdown()
+```
+
+**Package**: `r Biocpkg("PSMatch")`<br />
+**Authors**: `r packageDescription("PSMatch")[["Author"]] `<br />
+**Last modified:** `r file.info("AdjacencyMatrix.Rmd")$mtime`<br />
+**Compiled**: `r date()`
+
+```{r setup, message = FALSE, echo = FALSE}
+library("PSMatch")
+```
+
+# Introduction
+
+This vignette is one among several illustrating how to use the
+`PSMatch` package, focusing on the modelling peptide-protein relations
+using adjacency matrices and connected componencts. For a general
+overview of the package, see the `PSMatch` package manual page
+(`?PSMatch`) and references therein.
+
+
+# Session information
+
+```{r si}
+sessionInfo()
+```

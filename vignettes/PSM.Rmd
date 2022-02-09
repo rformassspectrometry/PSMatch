@@ -8,7 +8,7 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
     %\VignettePackage{PSMatch}
-    %\VignetteDepends{mzR,mzID,BiocStyle,msdata,msdata}
+    %\VignetteDepends{mzR,mzID,BiocStyle,msdata}
 ---
 
 ```{r style, echo = FALSE, results = 'asis', message=FALSE}
@@ -17,7 +17,7 @@ BiocStyle::markdown()
 
 **Package**: `r Biocpkg("PSMatch")`<br />
 **Authors**: `r packageDescription("PSMatch")[["Author"]] `<br />
-**Last modified:** `r file.info("PSMatch.Rmd")$mtime`<br />
+**Last modified:** `r file.info("PSM.Rmd")$mtime`<br />
 **Compiled**: `r date()`
 
 ```{r setup, message = FALSE, echo = FALSE}
