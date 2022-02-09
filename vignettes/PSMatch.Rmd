@@ -26,8 +26,11 @@ library("PSMatch")
 
 # Introduction
 
-This vignette demonstrates how the handle and process proteomics
-identification data using the `PSM` package.
+This vignette is one among several illustrating how to use the
+`PSMatch` package, focusing on the handling and processing of
+proteomics identification data using the `PSM` class. For a general
+overview of the package, see the `PSMatch` package manual page
+(`?PSMatch`) and references therein.
 
 # Handling and processing identification data
 
@@ -40,8 +43,10 @@ f <- msdata::ident(full.names = TRUE, pattern = "TMT")
 basename(f)
 ```
 
-The `PSM()` function parses one of multiple `mzid` files and returns
-an object of class `DFrame`.
+The `PSM()` function parses one or multiple `mzid` files and returns
+an object of class `PSM`. This class is a simple extension of the
+`DFrame` class, representing the peptide-spectrum matches in a tabular
+format.
 
 
 ```{r}
@@ -54,19 +59,19 @@ id
 n_matches <- nrow(id)
 n_scans <- length(unique(id$spectrumID))
 n_seqs <- length(unique(id$sequence))
+n_cols <- ncol(id)
 ```
 
 This table contains `r n_matches` matches for `r n_scans` scans and
-`r n_seqs` peptides sequences.
+`r n_seqs` peptides sequences, each annotated by `r n_cols` variables.
 
 ```{r}
 nrow(id) ## number of matches
 length(unique(id$spectrumID)) ## number of scans
 length(unique(id$sequence))   ## number of peptide sequences
+names(id)
 ```
-
-
-The PSM data are read as is, without and filtering. As we can see
+The PSM data are read as is, without any filtering. As we can see
 below, we still have all the hits from the forward and reverse (decoy)
 databases.
 
@@ -76,21 +81,22 @@ table(id$isDecoy)
 
 ## Keeping all matches
 
-The data contains also contains multiple matches for several
-spectra. The table below shows the number of number of spectra that
-have 1, 2, ... up to 5 matches.
+The data also contains multiple matches for several spectra. The table
+below shows the number of individual MS scans that have 1, 2, ... up
+to 5 matches.
 
 ```{r}
 table(table(id$spectrumID))
 ```
 
-Below, we can see how scan 1774 has 4 matches, all to sequence
-`RTRYQAEVR`, which itself matches to 4 different proteins:
+More specifically, we can see below how scan 1774 has 4 matches, all
+to sequence `RTRYQAEVR`, which itself matches to 4 different proteins:
 
 
 ```{r}
-i <- which(id$spectrumID == "controllerType=0 controllerNumber=1 scan=1774")
+i <- grep("scan=1774", id$spectrumID)
 id[i, ]
+id[i, "DatabaseAccess"]
 ```
 
 If the goal is to keep all the matches, but arranged by scan/spectrum,
@@ -99,7 +105,7 @@ so that each scan correponds to a single row that still stores all
 values[^rownames]:
 
 [^rownames]: The rownames aren't needed here and are removed to reduce
-    to output in the the next code chunk display parts of `id2`.
+    to output in the the next code chunks displaying parts of `id2`.
 
 ```{r, warning = FALSE}
 id2 <- reducePSMs(id, id$spectrumID)
@@ -108,10 +114,11 @@ dim(id2)
 ```
 
 The resulting object contains a single entrie for scan 1774 with
-information for the multiple matches stored as lists within the cells.
+information for the multiple matches stored as a list within the table
+cell.
 
 ```{r}
-j <- which(id2$spectrumID == "controllerType=0 controllerNumber=1 scan=1774")
+j <- grep("scan=1774", id2$spectrumID)
 id2[j, ]
 ```
 
@@ -127,7 +134,7 @@ annotate an raw mass spectrometry `Spectra` object.
 Often, the PSM data is filtered to only retain reliable matches. The
 `MSnID` package can be used to set thresholds to attain user-defined
 PSM, peptide or protein-level FDRs. Here, we will simply filter out
-wrong identification.
+wrong or the least reliable identifications.
 
 ### Remove decoy hits
 
@@ -145,16 +152,27 @@ id
 
 ### Remove shared peptides
 
-The peptides below are those that match different proteins. For
-example QKTRCATRAFKANKGRAR (the two first rows) matches proteins
-`ECA2869` and `ECA4278`.
+The data still contains shared peptides, i.e. those that different
+proteins. For example `QKTRCATRAFKANKGRAR` matches proteins `ECA2869`
+and `ECA4278`.
+
+```{r}
+id[id$sequence == "QKTRCATRAFKANKGRAR", "DatabaseAccess"]
+```
+
+We can filter these out to retain unique peptides.
 
 ```{r}
 id <- filterPsmShared(id)
 id
 ```
 
-Which leaves us with `r nrow(id)` PSMs.
+This last filtering leaves us with `r nrow(id)` PSMs.
+
+Note that the `ConnectedComponents` approach defined in this package
+allows one to explore protein groups defined by such shared peptides
+more thoroughly and make informed decision as to which shared peptides
+to retain and which ones to drop.
 
 ### All filters in one function
 
@@ -167,24 +185,23 @@ filterPSMs(id)
 # The `mzR` and `mzID` parsers
 
 The `PSM()` function can take two different values for the `parser`
-parameter, namely `"mzR"` (which is also the default value) and
-`"mzID"`.
+parameter, namely `"mzR"` (the default value) and `"mzID"`.
 
 - **mzR** uses the `openIDfile()` function from the
    `r BiocStyle::Biocpkg("mzR")` to parse the `mzId` file(s), and then
-  coerces the data to a `data.frame` which is eventually returned as a
-  `DataFrame`. The parser function uses dedicated code from the
-  Proteowizard project (included in `mzR`) and is generally the
-  fastest approach.
+   coerces the data to a `data.frame` which is eventually returned as
+   a `PSM` object. The parser function uses dedicated code from the
+   Proteowizard project (included in `mzR`) and is generally the
+   fastest approach.
 
 
 - **mzID** parses the `mzId` file with `mzID()` function from the
-  `r BiocStyle::Biocpkg("mzID")` package, and the flattens the data to
+  `r BiocStyle::Biocpkg("mzID")` package, and then flattens the data to
   a `data.frame` with `mzID::flatten()` and eventuelly returns a
-  `DataFrame`. The `mzID` package relies on the
-  `r BiocStyle::CRANpkg("XML")` package. Is is slower but is is more
-  robust to variations in the `mzID` implementation, as is a useful
-  backup when the `mzR` approach fails with errors.
+  `PSM` object. The `mzID` package relies on the `r BiocStyle::CRANpkg("XML")`
+  package. Is is slower but is is more robust to variations in the
+  `mzID` implementation, as is thus a useful backup when the `mzR`
+  backend fails.
 
 ```{r, warning = FALSE}
 system.time(id1 <- PSM(f, parser = "mzR"))
@@ -192,10 +209,9 @@ system.time(id2 <- PSM(f, parser = "mzID"))
 ```
 
 Other differences in the two parsers include the columns that are
-returned, way they name them, and, as will shown below the matches
-that are returned. Below, note for instance (and this will be
-important later), that there is not equivalent of `"modLocation"` in
-`id2`.
+returned, the way they name them, and, as will shown below the matches
+that are returned. Note for instance (and this will be important
+later), that there is no equivalent of `"modLocation"` in `id2`.
 
 ```{r}
 names(id1)
@@ -216,7 +232,7 @@ table(id2$isdecoy)
 
 Let's first filter the PSM tables to facilitate focus the comparison
 of relevant scans. Note that the default `filterPSMs()` arguments are
-set to work with the `mzR` parser.
+set to work with both parser.
 
 ```{r}
 id1_filtered <- filterPSMs(id1)
@@ -235,7 +251,7 @@ identical(sort(unique(id1_filtered$spectrumID)),
           sort(unique(id2_filtered$spectrumid)))
 ```
 
-The difference is obvious when we tally a table of spectrum ids
+The difference is obvious when we tally a table of spectrum id
 occurences in the filtered tables. In `id2_filtered`, each scan is
 unique, i.e matched only once.
 
@@ -256,7 +272,9 @@ modification location (`"modLocation"`), that is not report by the
 
 ```{r}
 k <- names(which(table(id1_filtered$spectrumID) == 4))
-id1_filtered[id1_filtered$spectrumID == k, ]
+id1_filtered[id1_filtered$spectrumID == k, "sequence"]
+id1_filtered[id1_filtered$spectrumID == k, "modLocation"]
+id1_filtered[id1_filtered$spectrumID == k, "modName"]
 ```
 
 If we remove the `"modLocation"` column, we recoved the same number of
@@ -265,6 +283,7 @@ PSMs than with the `mzID` parser.
 ```{r}
 id1_filtered$modLocation <- NULL
 nrow(unique(id1_filtered))
+nrow(unique(id2_filtered))
 ```
 
 # Session information
