@@ -10,7 +10,7 @@ infrastructure.
 The following references are a good way to get started with the
 package:
 
-- The [package manual package](https://rformassspectrometry.github.io/PSMatch/reference/PSMatch.html);
+- The [package manual package](https://rformassspectrometry.github.io/PSMatch/reference/PSMatch.html).
 - The [Working with PSM
   data](https://rformassspectrometry.github.io/PSMatch/articles/PSM.html)
   vignette to learn about the `PSM` to read and filter
