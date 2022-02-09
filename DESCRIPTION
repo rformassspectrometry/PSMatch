@@ -42,6 +42,7 @@ Suggests:
     mzID,
     mzR,
     Spectra,
+    SummarizedExperiment,
     BiocStyle,
     rmarkdown,
     knitr,
