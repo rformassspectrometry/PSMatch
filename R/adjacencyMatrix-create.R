@@ -48,7 +48,9 @@
 ##' the relation between proteins (represented as squares) and
 ##' peptides (represented as circes), which can further be coloured
 ##' (see the `protColors` and `pepColors` arguments). The function
-##' invisibly returns the graph `igraph` object for additional tuning.
+##' invisibly returns the graph `igraph` object for additional tuning
+##' and/or interactive visualisation using, for example
+##' [igraph::tkplot()].
 ##'
 ##' There is a fundamental differences in the creation of an adjacency
 ##' matrix from a PSM object or a vector, other than the input

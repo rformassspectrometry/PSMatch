@@ -138,7 +138,9 @@ modelled as connected components, as described and illustrated in
 the relation between proteins (represented as squares) and
 peptides (represented as circes), which can further be coloured
 (see the \code{protColors} and \code{pepColors} arguments). The function
-invisibly returns the graph \code{igraph} object for additional tuning.
+invisibly returns the graph \code{igraph} object for additional tuning
+and/or interactive visualisation using, for example
+\code{\link[igraph:tkplot]{igraph::tkplot()}}.
 
 There is a fundamental differences in the creation of an adjacency
 matrix from a PSM object or a vector, other than the input
