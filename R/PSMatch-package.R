@@ -52,6 +52,14 @@
 #' by the fragmentation of a peptides (see [calculateFragments()]) and
 #' annotated MS2 [Spectra::Spectra()] objects (see [addFragments()]).
 #'
+#' @section Vignettes:
+#'
+#' A couple of vignette describe how to several of these concepts
+#' through illustrative use-cases. Use `vignette(package = "PSMatch")`
+#' to get a list and open them directly in `R` or read them online on
+#' the package's
+#' [webpage](https://rformassspectrometry.github.io/PSMatch/).
+#'
 #' @docType package
 #'
 #' @name PSMatch

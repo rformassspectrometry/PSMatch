@@ -12,5 +12,10 @@ package:
 
 - The [package manual package](https://rformassspectrometry.github.io/PSMatch/reference/PSMatch.html);
 - The [Working with PSM
-  data](https://rformassspectrometry.github.io/PSMatch/articles/PSMatch.html)
-  vignette.
+  data](https://rformassspectrometry.github.io/PSMatch/articles/PSM.html)
+  vignette to learn about the `PSM` to read and filter
+  peptide-spectrum matches.
+- The [Understanding protein groups with adjacency
+  matrices](https://rformassspectrometry.github.io/PSMatch/articles/AdjacencyMatrix.html)
+  vignette to learn about adjaceny matrices and connected components
+  to explore and manage protein groups.
