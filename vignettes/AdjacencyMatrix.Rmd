@@ -33,6 +33,108 @@ overview of the package, see the `PSMatch` package manual page
 (`?PSMatch`) and references therein.
 
 
+# Peptide-protein relation
+
+Let's start by loading and filter PSM data as illustrated in the
+[*Working with PSM
+data*](https://rformassspectrometry.github.io/PSMatch/articles/PSM.html) vignette.
+
+```{r}
+id <- msdata::ident(full.names = TRUE, pattern = "TMT") |>
+PSM() |>
+filterPsmDecoy() |>
+filterPsmRank()
+id
+```
+
+When identification data is stored as a table, the relation between
+peptides is typically encode in two columns, once containing the
+peptide sequences and the second the protein identifiers these
+peptides stem from. Below are the 10 first observations of our
+identification data table.
+
+```{r}
+data.frame(id[1:10, c("sequence", "DatabaseAccess")])
+```
+
+This information can however also be encoded as an adjacency matrix
+with peptides along the rows and proteins along the columns, and a 1
+(or more generally a value > 0) indicating that a peptides belongs to
+the corresponding proteins. Such a matrix is created below for our
+identification data.
+
+```{r}
+adj <- makeAdjacencyMatrix(id)
+dim(adj)
+adj[1:5, 1:5]
+```
+
+This matrix models the relation between the `r length(unique(id$sequence))`
+peptides and the `r length(unique(id$DatabaseAccess))` is our identification
+data. These numbers can be verified by checking the number of unique
+peptides sequences and database accession numbers.
+
+
+```{r}
+length(unique(id$sequence))
+length(unique(id$DatabaseAccess))
+```
+
+Some values are > 1 because some peptide sequences are observed more
+than oncce, for example carrying different modification or the same
+one at different sites. The adjacency matrix can be made binary by
+setting `madeAdjacencyMatrix(id, binary = TRUE)`.
+
+This large matrix is too large to be explored manually and is anyway
+not interesting on its own. Subsets of this matrix that define
+proteins defines by a set of peptides (whether shared or unique) is
+relevant. These are represented by subsets of this large matrix named
+connected component. We can easily compute all these connected
+components to produce the multiple smaller and relevant adjacency
+matrices.
+
+```{r}
+cc <- ConnectedComponents(adj)
+length(cc)
+cc
+```
+
+Among the `r length(unique(id$sequence))` and the
+`r length(unique(id$DatabaseAccess))` proteins, we have `r length(cc)`
+connected components.
+
+954 thereof, such as the one shown below, correspond to single
+proteins identified by a single peptide:
+
+```{r}
+connectedComponents(cc, 1)
+```
+
+7 thereof represent protein groups identified by a single shared
+peptide:
+
+```{r}
+connectedComponents(cc, 527)
+```
+
+501 represent single proteins identified by multiple unique peptides:
+
+```{r}
+connectedComponents(cc, 38)
+```
+
+Finally, arguable those that warrant additional exploration are those
+that are composed of multiple peptides and multiple proteins. There
+are 14 thereof in this identification; here's an example:
+
+```{r}
+connectedComponents(cc, 920)
+```
+
+# Visualising adjacency matrices
+
+
+
 # Session information
 
 ```{r si}
