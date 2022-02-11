@@ -128,10 +128,33 @@ that are composed of multiple peptides and multiple proteins. There
 are 14 thereof in this identification; here's an example:
 
 ```{r}
-connectedComponents(cc, 920)
+plotAdjacencyMatrix(connectedComponents(cc, 920))
 ```
 
 # Visualising adjacency matrices
+
+
+Let's identify the connected components that have at least 3 peptides
+(i.e. rows in the adjacency matrix) and 3 proteins (i.e. columns in
+the adjacency matrix).
+
+```{r}
+(i <- which(nrows(cc) > 2 & ncols(cc) > 2))
+dims(cc)[i, ]
+```
+
+We will use the second one, with index 1082 to learn about the
+`plotAdjacencyMatrix()` function and explore how to inform our
+peptides filtering beyond the `filterPsm*()` functions.
+
+```{r}
+cx <- connectedComponents(cc, 1082)
+cx
+```
+
+```{r}
+plotAdjacencyMatrix(cx)
+```
 
 
 
