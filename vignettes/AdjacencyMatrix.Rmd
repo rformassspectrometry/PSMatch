@@ -286,6 +286,31 @@ cc <- ConnectedComponents(adj)
 cc
 ```
 
+# Prioritising connected components
+
+
+The `prioritiseConnectedComponents()` function can be used to help
+prioritise the most interesting connected components to
+investigate. The function computes a set of metrics describing the
+components composed of as least several peptides and proteins (150 in
+the example above) and ranks them from the most to the least
+interesting.
+
+```{r}
+head(cctab <- prioritiseConnectedComponents(cc))
+```
+
+The prioritisation table can then be further summarised using a
+principal component to identify outliers (for example component 1200
+below) or groups of *similar* components to explore.
+
+```{r, message = FALSE}
+library(factoextra)
+fviz_pca(prcomp(cctab, scale = TRUE, center = TRUE))
+```
+
+
+
 # Session information
 
 ```{r si}
