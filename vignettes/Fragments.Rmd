@@ -27,9 +27,83 @@ library("PSMatch")
 # Introduction
 
 This vignette is one among several illustrating how to use the
-`PSMatch` package, focusing on MS2 fragment ions. For a general
-overview of the package, see the `PSMatch` package manual page
-(`?PSMatch`) and references therein.
+`PSMatch` package, focusing on the calculation and visualisation of
+MS2 fragment ions. For a general overview of the package, see the
+`PSMatch` package manual page (`?PSMatch`) and references therein.
+
+
+To illustrate this vignette, we will import and merge raw and
+identification data from the `r Biocpkg("msdata")`. For details about
+this section, please visit the
+[Spectra](https://rformassspectrometry.github.io/Spectra/articles/Spectra.html)
+package webpage.
+
+Load the raw MS data:
+
+```{r, message = FALSE}
+(spf <- msdata::proteomics(pattern = "2014", full.names = TRUE))
+library(Spectra)
+sp <- Spectra(spf)
+```
+
+Load the identification data:
+
+```{r}
+(idf <- msdata::ident(pattern = "2014", full.names = TRUE))
+id <- PSM(idf) |> filterPSMs()
+id
+```
+
+Merge both:
+
+```{r}
+sp <- joinSpectraData(sp, id, by.x = "spectrumId", by.y = "spectrumID")
+sp
+```
+
+In this example, we are going to focus the MS2 scan with index 5449
+and its parent MS1 scan (index 5447, selected automatically with the
+[filterPrecursorScan()](https://rformassspectrometry.github.io/Spectra/reference/MsBackend.html)
+function).
+
+```{r}
+sp5449 <- filterPrecursorScan(sp, 5449)
+```
+
+```{r}
+plotSpectra(sp5449[1], xlim = c(550, 1200))
+abline(v = precursorMz(sp5449)[2], col = "red", lty = "dotted")
+```
+
+# Calculating fragment ions
+
+The MS2 scan was matched to `SQILQQAGTSVLSQANQVPQTVLSLLR` (there was
+obviously no match the the MS1 scan):
+
+```{r}
+sp5449$sequence
+```
+
+The `calculateFragments()` simply takes a peptide sequence as input
+and returns a `data.frame` with the fragment sequences, M/Z, ion type,
+charge and position.
+
+```{r}
+calculateFragments(sp5449$sequence[2])
+```
+
+# Visualising fragment ions
+
+We can now visualise these fragments directly on the MS
+spectrum. Let's first visualise the spectrum as is:
+
+```{r}
+plotSpectra(sp5449[2])
+```
+
+```{r}
+plotSpectra(sp5449[2], labels = addFragments, labelPos = 3)
+```
 
 # Session information
 
