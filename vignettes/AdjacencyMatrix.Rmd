@@ -254,8 +254,8 @@ part of the CPTAC data that is available in the `msdata` package.
 Once we have the path to the tsv data, we identify the columns that
 contain quantitation values (i.e. those starting with `Intensity.`)
 and them create a `SummarizedExperiment` using the
-[`readSummarizedExperiment()`]() function from the
-`r Biocpkg("QFeatures")` package.
+[`readSummarizedExperiment()`](https://rformassspectrometry.github.io/QFeatures/reference/readQFeatures.html)
+function from the `r Biocpkg("QFeatures")` package.
 
 ```{r, message = FALSE}
 basename(f <- msdata::quant(full.names = TRUE))
