@@ -8,7 +8,7 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
     %\VignettePackage{PSMatch}
-    %\VignetteDepends{mzR,BiocStyle,msdata,SummarizedExperiment}
+    %\VignetteDepends{mzR,BiocStyle,msdata,SummarizedExperiment,factoextra}
 ---
 
 ```{r style, echo = FALSE, results = 'asis', message=FALSE}

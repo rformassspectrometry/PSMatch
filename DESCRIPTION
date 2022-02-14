@@ -46,6 +46,7 @@ Suggests:
     BiocStyle,
     rmarkdown,
     knitr,
+    factoextra,
     testthat
 License: Artistic-2.0
 Encoding: UTF-8
