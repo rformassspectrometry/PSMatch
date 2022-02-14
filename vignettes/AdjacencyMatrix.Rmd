@@ -40,6 +40,7 @@ Let's start by loading and filter PSM data as illustrated in the
 data*](https://rformassspectrometry.github.io/PSMatch/articles/PSM.html) vignette.
 
 ```{r}
+library("PSMatch")
 id <- msdata::ident(full.names = TRUE, pattern = "TMT") |>
 PSM() |>
 filterPsmDecoy() |>
@@ -128,7 +129,7 @@ that are composed of multiple peptides and multiple proteins. There
 are 14 thereof in this identification; here's an example:
 
 ```{r}
-plotAdjacencyMatrix(connectedComponents(cc, 920))
+connectedComponents(cc, 920)
 ```
 
 # Visualising adjacency matrices
@@ -143,19 +144,106 @@ the adjacency matrix).
 dims(cc)[i, ]
 ```
 
-We will use the second one, with index 1082 to learn about the
-`plotAdjacencyMatrix()` function and explore how to inform our
-peptides filtering beyond the `filterPsm*()` functions.
+We will use the second adjacency matrix, with index 1082 to learn
+about the `plotAdjacencyMatrix()` function and explore how to inform
+our peptides filtering beyond the `filterPsm*()` functions.
 
 ```{r}
 cx <- connectedComponents(cc, 1082)
 cx
 ```
 
+We can now visualise the the `cx` adjacency matrix with the
+`plotAdjacencyMatrix()` function. The nodes of the graph represent
+proteins and petides - by default, proteins are shown as blue squares
+and peptides as white circles. Edge connect peptides/circles to
+proteins/squares, indicating that a peptide belongs to a protein.
+
+
 ```{r}
 plotAdjacencyMatrix(cx)
 ```
 
+We can immediately observe that peptide `VVPVGLRALVWVQR` is associated
+to all four proteins; it holds that protein group together, defines
+that connected component formed by these four proteins. If we were to
+drop that peptides, we would obtain two single proteins, `ECA3399`
+(defined by `KLKPRRR`), `ECA3398` (defined by `RRKRKPDSLKK` and
+`KPTARRRKRK`) and a protein group formed of `ECA3415` and `ECA3406`
+(defined by three shared peptides).
+
+## Colouring the graph nodes
+
+To help with the interpretation of the graph and the potential
+benefits of additional manual peptide filtering, it is possible to
+customise the node colours. Protein and peptide node colours can be
+controlled with the `protColors` and `pepColors` arguments
+respectively. Let's start with the former.
+
+### Colouring protein nodes
+
+`protColors` can either be a numeric or a character. The default value
+is 0, which produces the figure above. Any value > 0 will lead to more
+proteins being highlighted using different colours. Internally, string
+distances between protein names are computed and define if proteins
+should be coded with the same colours (if they are separated by small
+distances, i.e. they have similar names) or different colours (large
+distance, dissimilar names).
+
+By setting the argument to 1, we see that proteins starting with
+`ECA33` and those starting with `ECA34` are represented with different
+colours.
+
+```{r}
+plotAdjacencyMatrix(cx, 1)
+```
+
+We can further distinguish `ECA3406`, and `ECA314` and `ECA33*9` by
+setting `protColors` to 2.
+
+```{r}
+plotAdjacencyMatrix(cx, 2)
+```
+
+`protColors` can also be a character of colours named by protein
+names. We will illustrate this use below, as it functions the same way
+as `pepColors`.
+
+### Colouring peptide nodes
+
+`pepColors` can either be `NULL` to represent peptides as white nodes
+(as we have seen in all examples above). Alternatively, it can be set
+to a character of colours names after the peptides sequences. Let's
+use the search engine score (here `MS.GF.RawScore`) to annotate the
+peptide nodes.
+
+We can extract this metric from the PSM object we started with and
+create a colour palette representing the range of scores.
+
+The named vector of scores:
+
+```{r}
+score <- id$MS.GF.RawScore
+names(score) <- id$sequence
+head(score)
+```
+
+The matching named vector of colours:
+
+```{r}
+cls <- as.character(cut(score, 12,
+                        labels = colorRampPalette(c("white", "red"))(12)))
+names(cls) <- id$sequence
+head(cls)
+```
+
+Below, we see that all these peptides have relatively low scores
+(light red), and that two of the three of the `ECA34*` proteins have
+the highest scores.
+
+```{r}
+plotAdjacencyMatrix(cx, pepColors = cls)
+```
 
 
 # Session information
