@@ -1,14 +1,8 @@
 # Handling peptide-spectrum matches
 
-A simple package to load, process and analyse PSMs (Peptide-Spectrum
-Matches). Code in this package is partly composed of functions ported
-from [`MSnbase`](http://lgatto.github.io/MSnbase/) with the goal to
-(1) make them more general and (2) integrate them with the [*R for
-Mass Spectrometry*](https://github.com/rformassspectrometry)
-infrastructure.
-
-The following references are a good way to get started with the
-package:
+`PSMatch` is a simple package to load, process and analyse PSMs
+(Peptide-Spectrum Matches). The following references are a good way to
+get started with the package:
 
 - The [package manual
   package](https://rformassspectrometry.github.io/PSMatch/reference/PSMatch.html)
@@ -25,3 +19,26 @@ package:
 - The [MS2 fragment
   ions](https://rformassspectrometry.github.io/PSMatch/articles/Fragments.html)
   vignette to calculate and visualise MS2 fragment ions.
+
+## Installation instructions
+
+To install the package, first install (if not already available) the
+`BiocManager` and `remotes` packages:
+
+```r
+install.packages(c("remotes", "BiocManager"))
+```
+
+Then:
+
+```r
+BiocManager::install("RforMassSpectrometry/PSMatch")
+```
+
+## Credit
+
+Code in this package is partly composed of functions ported from
+[`MSnbase`](http://lgatto.github.io/MSnbase/) with the goal to (1)
+make them more general and (2) integrate them with the [*R for Mass
+Spectrometry*](https://github.com/rformassspectrometry)
+infrastructure.
