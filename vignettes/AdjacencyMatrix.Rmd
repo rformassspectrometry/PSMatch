@@ -245,6 +245,46 @@ the highest scores.
 plotAdjacencyMatrix(cx, pepColors = cls)
 ```
 
+# Using quantitative data
+
+To conclude this vignette, we show how this same data modelling and
+exploration cam be initiated from a quantitative dataset. We will use
+part of the CPTAC data that is available in the `msdata` package.
+
+Once we have the path to the tsv data, we identify the columns that
+contain quantitation values (i.e. those starting with `Intensity.`)
+and them create a `SummarizedExperiment` using the
+[`readSummarizedExperiment()`]() function from the
+`r Biocpkg("QFeatures")` package.
+
+```{r, message = FALSE}
+basename(f <- msdata::quant(full.names = TRUE))
+(i <- grep("Intensity\\.", names(read.delim(f))))
+library(QFeatures)
+se <- readSummarizedExperiment(f, ecol = i, sep = "\t")
+```
+
+Below, we create a vector of protein groups (not leading razor protein
+names) and name it using the peptide sequences.
+
+```{r}
+prots <- rowData(se)$Proteins
+names(prots) <- rowData(se)$Sequence
+head(prots)
+```
+
+Below, the `makeAdjacencyMatrix()` will split the protein groups into
+individual proteins using a `;` (used by default, so not required
+here) to construct the adjacency matrix, which itself can be used to
+compute the connected components.
+
+```{r}
+adj <- makeAdjacencyMatrix(prots, split = ";")
+dim(adj)
+adj[1:3, 1:3]
+cc <- ConnectedComponents(adj)
+cc
+```
 
 # Session information
 
