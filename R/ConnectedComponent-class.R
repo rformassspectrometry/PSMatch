@@ -203,8 +203,8 @@ ConnectedComponents <- function(object, ...) {
 setMethod("show", "ConnectedComponents",
           function(object) {
               cat(sprintf("An instance of class %s", class(object)), "\n")
-              cat(" Number of proteins:", nrow(object@ccMatrix), "\n")
-              cat(" Number of components:", length(object@adjMatrices), "\n")
+              cat(" Number of proteins:", nrow(ccMatrix(object)), "\n")
+              cat(" Number of components:", length(connectedComponents(object)), "\n")
               cat(" Number of components [peptide x peptides]:\n  ")
               dim_mat <- dims(object)
               cat(paste0(sum(dim_mat[, 1] == 1 & dim_mat[, 2] == 1), "[1 x 1] "))
@@ -250,7 +250,7 @@ connectedComponents <- function(x, i, simplify = TRUE) {
 ##'
 ##' @rdname ConnectedComponents
 setMethod("length", "ConnectedComponents",
-          function(x) length(x@adjMatrices))
+          function(x) length(connectedComponents(x)))
 
 ##' @export
 ##'
@@ -259,7 +259,7 @@ setMethod("length", "ConnectedComponents",
 ##' @rdname ConnectedComponents
 setMethod("dims", "ConnectedComponents",
           function(x) {
-              ans <- t(sapply(x@adjMatrices, dim))
+              ans <- t(sapply(connectedComponents(x), dim))
               colnames(ans) <- c("nrow", "ncol")
               ans
           })
@@ -270,7 +270,7 @@ setMethod("dims", "ConnectedComponents",
 ##'
 ##' @rdname ConnectedComponents
 setMethod("ncols", "ConnectedComponents",
-          function(x) sapply(x@adjMatrices, ncol))
+          function(x) sapply(connectedComponents(x), ncol))
 
 ##' @export
 ##'
@@ -278,7 +278,7 @@ setMethod("ncols", "ConnectedComponents",
 ##'
 ##' @rdname ConnectedComponents
 setMethod("nrows", "ConnectedComponents",
-          function(x) sapply(x@adjMatrices, nrow))
+          function(x) sapply(connectedComponents(x), nrow))
 
 ##' @export
 ##'
