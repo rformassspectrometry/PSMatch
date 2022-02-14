@@ -10,7 +10,10 @@ infrastructure.
 The following references are a good way to get started with the
 package:
 
-- The [package manual package](https://rformassspectrometry.github.io/PSMatch/reference/PSMatch.html).
+- The [package manual
+  package](https://rformassspectrometry.github.io/PSMatch/reference/PSMatch.html)
+  for a general overview of the main concepts tackled by the `PSMatch`
+  package.
 - The [Working with PSM
   data](https://rformassspectrometry.github.io/PSMatch/articles/PSM.html)
   vignette to learn about the `PSM` to read and filter
@@ -19,3 +22,6 @@ package:
   matrices](https://rformassspectrometry.github.io/PSMatch/articles/AdjacencyMatrix.html)
   vignette to learn about adjaceny matrices and connected components
   to explore and manage protein groups.
+- The [MS2 fragment
+  ions](https://rformassspectrometry.github.io/PSMatch/articles/Fragments.html)
+  vignette to calculate and visualise MS2 fragment ions.
