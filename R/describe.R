@@ -12,6 +12,13 @@
 ##' - The `describePeptides()` function describe unique/shared peptide
 ##'   composition.
 ##'
+##' @return `describePeptides()` invisibly return the table of unique
+##'     and shared peptides. `describeProteins()` invisibly returns a
+##'     `data.frame` with logicals indicating the unique/shared
+##'     peptide composition of proteins. Both functions are used for
+##'     their side effects of printing a short descriptive output
+##'     about peptides and proteins.
+##'
 ##' @name describeProteins
 ##'
 ##' @aliases describePeptides

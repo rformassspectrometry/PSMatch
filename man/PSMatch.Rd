@@ -65,3 +65,13 @@ by the fragmentation of a peptides (see \code{\link[=calculateFragments]{calcula
 annotated MS2 \code{\link[Spectra:Spectra]{Spectra::Spectra()}} objects (see \code{\link[=addFragments]{addFragments()}}).
 }
 
+\section{Vignettes}{
+
+
+A couple of vignette describe how to several of these concepts
+through illustrative use-cases. Use \code{vignette(package = "PSMatch")}
+to get a list and open them directly in \code{R} or read them online on
+the package's
+\href{https://rformassspectrometry.github.io/PSMatch/}{webpage}.
+}
+

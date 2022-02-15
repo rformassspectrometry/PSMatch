@@ -263,7 +263,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
     col_names <- unique(unlist(col_list))
     i <- rep(col_list_names, lengths(col_list))
     i <- match(i, row_names)
-    j <- unname(unlist(sapply(col_list, match, col_names)))
+    j <- unname(unlist(lapply(col_list, match, col_names)))
     sparseMatrix(i, j, x = 1, dimnames = list(row_names, col_names))
 }
 
@@ -279,7 +279,8 @@ makeAdjacencyMatrix <- function(x, split = ";",
     adj_values <- 1
      if (!is.na(score))
         adj_values <- x[[score]]
-    sparseMatrix(i, j, x = adj_values, dimnames = list(row_names, col_names))
+    sparseMatrix(i, j, x = adj_values,
+                 dimnames = list(row_names, col_names))
 }
 
 

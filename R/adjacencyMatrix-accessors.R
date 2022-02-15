@@ -5,7 +5,8 @@
 ##' @rdname PSM
 setMethod("adjacencyMatrix", "PSM",
           function(object) {
-              if (is.na(psmVariables(object)[["protein"]]) | is.na(psmVariables(object)[["peptide"]]))
+              if (is.na(psmVariables(object)[["protein"]]) |
+                  is.na(psmVariables(object)[["peptide"]]))
                   stop("Please define the 'protein' and 'peptide' PSM variables.")
               if (!psmVariables(object)[["protein"]] %in% names(object) |
                   !psmVariables(object)[["peptide"]] %in% names(object))

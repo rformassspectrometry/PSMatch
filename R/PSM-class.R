@@ -226,16 +226,17 @@ setMethod("show", "PSM",
                   ncol(object), "columns.\n")
               if (!any(is.na(psmVariables(object))) & !isTRUE(reduced(object)) & nrow(object) > 0)
                   showDetails(object)
-              if (ncol(object) <= 4)
+              if (ncol(object) <= 4) {
                   cat("names(", ncol(object), "): ",
                       paste(names(object), collapse = " "), "\n",
                       sep = "")
-              else
+              } else {
                   cat("names(", ncol(object), "): ",
                       paste(names(object)[1:2], collapse = " "),
                       " ... ", paste(names(object)[(ncol(object)-1):ncol(object)],
                                    collapse = " "), "\n",
                       sep = "")
+              }
               invisible(NULL)
           })
 

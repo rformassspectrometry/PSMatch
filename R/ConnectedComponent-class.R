@@ -192,7 +192,7 @@ ConnectedComponents <- function(object, ...) {
     ## the first protein, otherwise it will be randomly defined by
     ## igraph::components/groups, which is very annoying when
     ## analysing data.
-    o <- order(sapply(adj_matrices, function(x) colnames(x)[1]))
+    o <- order(vapply(adj_matrices, function(x) colnames(x)[1]), "")
     new("ConnectedComponents",
         adjMatrix = adj,
         ccMatrix = cc,
@@ -259,7 +259,7 @@ setMethod("length", "ConnectedComponents",
 ##' @rdname ConnectedComponents
 setMethod("dims", "ConnectedComponents",
           function(x) {
-              ans <- t(sapply(connectedComponents(x), dim))
+              ans <- t(vapply(connectedComponents(x), dim, c(1, 1)))
               colnames(ans) <- c("nrow", "ncol")
               ans
           })
@@ -270,7 +270,7 @@ setMethod("dims", "ConnectedComponents",
 ##'
 ##' @rdname ConnectedComponents
 setMethod("ncols", "ConnectedComponents",
-          function(x) sapply(connectedComponents(x), ncol))
+          function(x) vapply(connectedComponents(x), ncol, 1L))
 
 ##' @export
 ##'
@@ -278,7 +278,7 @@ setMethod("ncols", "ConnectedComponents",
 ##'
 ##' @rdname ConnectedComponents
 setMethod("nrows", "ConnectedComponents",
-          function(x) sapply(connectedComponents(x), nrow))
+          function(x) vapply(connectedComponents(x), nrow, 1L))
 
 ##' @export
 ##'
@@ -346,24 +346,24 @@ prioritiseConnectedComponents <- function(x) {
     ans <- data.frame(dims(x))
     cc_x <- connectedComponents(x)
     ## community metrics
-    com_metrics <- t(sapply(cc_x,
+    com_metrics <- t(vapply(cc_x,
                      function(xx) {
                          g <- graph_from_incidence_matrix(xx)
                          com <- cluster_louvain(g)
                          c(n_coms = length(com),
                            mod_coms = modularity(com))
-                     }))
+                     }, c(1, 1)))
     ans <- cbind(ans, com_metrics)
     ## adjacency matrix metrics
-    adj_metrics <- t(sapply(cc_x,
+    adj_metrics <- t(vapply(cc_x,
                             function(xx)
                                 c(n = sum(xx),
                                   rs_min = min(rowSums(xx)),
                                   rs_max = max(rowSums(xx)),
                                   cs_min = min(colSums(xx)),
                                   cs_max = max(colSums(xx)),
-                                  sparsity = sum(xx == 0)/prod(dim(xx)))))
-
+                                  sparsity = sum(xx == 0)/prod(dim(xx))),
+                            numeric(6)))
     ans <- cbind(ans, adj_metrics)
     sel <- ans$ncol > 1 & ans$nrow > 1
     ans <- ans[sel, ]

@@ -13,6 +13,14 @@ describePeptides(object)
 \item{object}{Either an instance of class \code{Matrix}, \code{\link[=PSM]{PSM()}} or
 \code{\link[=ConnectedComponents]{ConnectedComponents()}}.}
 }
+\value{
+\code{describePeptides()} invisibly return the table of unique
+and shared peptides. \code{describeProteins()} invisibly returns a
+\code{data.frame} with logicals indicating the unique/shared
+peptide composition of proteins. Both functions are used for
+their side effects of printing a short descriptive output
+about peptides and proteins.
+}
 \description{
 It is important to explore PSM results prior to any further
 downstream analysies. Two functions, that work on \code{\link[=PSM]{PSM()}} and
