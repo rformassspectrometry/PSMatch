@@ -49,6 +49,9 @@ composition.
       <a href="../articles/PSM.html">Working with PSM data</a>
     </li>
   </ul></li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/RforMassSpectrometry/PSM/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
@@ -90,6 +93,15 @@ composition.</p></li>
 <dd><p>Either an instance of class <code>Matrix</code>, <code><a href="PSM.html">PSM()</a></code> or
 <code><a href="ConnectedComponents.html">ConnectedComponents()</a></code>.</p></dd>
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    <p><code>describePeptides()</code> invisibly return the table of unique
+and shared peptides. <code>describeProteins()</code> invisibly returns a
+<code>data.frame</code> with logicals indicating the unique/shared
+peptide composition of proteins. Both functions are used for
+their side effects of printing a short descriptive output
+about peptides and proteins.</p>
+    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
