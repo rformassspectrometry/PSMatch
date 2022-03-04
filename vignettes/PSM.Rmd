@@ -126,8 +126,9 @@ id2[j, ]
 id2[j, "DatabaseAccess"]
 ```
 
-The is the type of complete identification table that could be used to
-annotate an raw mass spectrometry `Spectra` object.
+The identification data could be used to annotate an raw mass
+spectrometry `Spectra` object (see the `Spectra::joinSpectraData()`
+function for details).
 
 ## Filtering data
 
@@ -172,7 +173,10 @@ This last filtering leaves us with `r nrow(id)` PSMs.
 Note that the `ConnectedComponents` approach defined in this package
 allows one to explore protein groups defined by such shared peptides
 more thoroughly and make informed decision as to which shared peptides
-to retain and which ones to drop.
+to retain and which ones to drop. For details see the related vignette
+or the
+[`ConnectedComponents`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.html)
+manual page.
 
 ### All filters in one function
 

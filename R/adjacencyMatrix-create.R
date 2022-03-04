@@ -52,9 +52,9 @@
 ##' and/or interactive visualisation using, for example
 ##' [igraph::tkplot()].
 ##'
-##' There is a fundamental differences in the creation of an adjacency
-##' matrix from a PSM object or a vector, other than the input
-##' variable itself:
+##' There exists some important differences in the creation of an
+##' adjacency matrix from a PSM object or a vector, other than the
+##' input variable itself:
 ##'
 ##' - In a `PSM` object, each row (PSM) refers to an *individual*
 ##'   proteins; rows/PSMs never refer to a protein group. There is

@@ -142,9 +142,9 @@ invisibly returns the graph \code{igraph} object for additional tuning
 and/or interactive visualisation using, for example
 \code{\link[igraph:tkplot]{igraph::tkplot()}}.
 
-There is a fundamental differences in the creation of an adjacency
-matrix from a PSM object or a vector, other than the input
-variable itself:
+There exists some important differences in the creation of an
+adjacency matrix from a PSM object or a vector, other than the
+input variable itself:
 \itemize{
 \item In a \code{PSM} object, each row (PSM) refers to an \emph{individual}
 proteins; rows/PSMs never refer to a protein group. There is
