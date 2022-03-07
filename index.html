@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.1</span>
       </span>
     </div>
 
@@ -48,7 +48,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -91,17 +91,29 @@
 <div class="section level1">
 <div class="page-header"><h1 id="handling-peptide-spectrum-matches">Handling peptide-spectrum matches<a class="anchor" aria-label="anchor" href="#handling-peptide-spectrum-matches"></a>
 </h1></div>
-<p><code>PSMatch</code> is a simple package to load, process and analyse PSMs (Peptide-Spectrum Matches). The following references are a good way to get started with the package:</p>
+<p><code>PSMatch</code> is a simple package to load, process and analyse
+PSMs (Peptide-Spectrum Matches). The following references are a good way
+to get started with the package:</p>
 <ul>
-<li>The <a href="https://rformassspectrometry.github.io/PSMatch/reference/PSMatch.html" class="external-link">package manual package</a> for a general overview of the main concepts tackled by the <code>PSMatch</code> package.</li>
-<li>The <a href="https://rformassspectrometry.github.io/PSMatch/articles/PSM.html" class="external-link">Working with PSM data</a> vignette to learn about the <code>PSM</code> to read and filter peptide-spectrum matches.</li>
-<li>The <a href="https://rformassspectrometry.github.io/PSMatch/articles/AdjacencyMatrix.html" class="external-link">Understanding protein groups with adjacency matrices</a> vignette to learn about adjaceny matrices and connected components to explore and manage protein groups.</li>
-<li>The <a href="https://rformassspectrometry.github.io/PSMatch/articles/Fragments.html" class="external-link">MS2 fragment ions</a> vignette to calculate and visualise MS2 fragment ions.</li>
+<li>The <a href="https://rformassspectrometry.github.io/PSMatch/reference/PSMatch.html" class="external-link">package
+manual package</a> for a general overview of the main concepts tackled
+by the <code>PSMatch</code> package.</li>
+<li>The <a href="https://rformassspectrometry.github.io/PSMatch/articles/PSM.html" class="external-link">Working
+with PSM data</a> vignette to learn about the <code>PSM</code> to read
+and filter peptide-spectrum matches.</li>
+<li>The <a href="https://rformassspectrometry.github.io/PSMatch/articles/AdjacencyMatrix.html" class="external-link">Understanding
+protein groups with adjacency matrices</a> vignette to learn about
+adjaceny matrices and connected components to explore and manage protein
+groups.</li>
+<li>The <a href="https://rformassspectrometry.github.io/PSMatch/articles/Fragments.html" class="external-link">MS2
+fragment ions</a> vignette to calculate and visualise MS2 fragment
+ions.</li>
 </ul>
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
-<p>To install the package, first install (if not already available) the <code>BiocManager</code> and <code>remotes</code> packages:</p>
+<p>To install the package, first install (if not already available) the
+<code>BiocManager</code> and <code>remotes</code> packages:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"remotes"</span>, <span class="st">"BiocManager"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Then:</p>
@@ -111,7 +123,10 @@
 <div class="section level2">
 <h2 id="credit">Credit<a class="anchor" aria-label="anchor" href="#credit"></a>
 </h2>
-<p>Code in this package is partly composed of functions ported from <a href="http://lgatto.github.io/MSnbase/" class="external-link"><code>MSnbase</code></a> with the goal to (1) make them more general and (2) integrate them with the <a href="https://github.com/rformassspectrometry" class="external-link"><em>R for Mass Spectrometry</em></a> infrastructure.</p>
+<p>Code in this package is partly composed of functions ported from <a href="http://lgatto.github.io/MSnbase/" class="external-link"><code>MSnbase</code></a> with
+the goal to (1) make them more general and (2) integrate them with the
+<a href="https://github.com/rformassspectrometry" class="external-link"><em>R for Mass
+Spectrometry</em></a> infrastructure.</p>
 </div>
 </div>
   </div>
@@ -163,7 +178,8 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.9000.</p>
 </div>
 
       </footer>

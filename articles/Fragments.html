@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.1</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -105,12 +105,23 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.15/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb [aut], Samuel Wieczorek [ctb], Thomas Burger [ctb]<br><strong>Last modified:</strong> 2022-02-15 14:32:02<br><strong>Compiled</strong>: Tue Feb 15 14:40:36 2022</p>
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.15/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
+[aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
+[aut], Samuel Wieczorek [ctb], Thomas Burger [ctb]<br><strong>Last
+modified:</strong> 2022-03-07 06:04:17<br><strong>Compiled</strong>:
+Mon Mar 7 07:03:36 2022</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This vignette is one among several illustrating how to use the <code>PSMatch</code> package, focusing on the calculation and visualisation of MS2 fragment ions. For a general overview of the package, see the <code>PSMatch</code> package manual page (<code><a href="../reference/PSMatch.html">?PSMatch</a></code>) and references therein.</p>
-<p>To illustrate this vignette, we will import and merge raw and identification data from the <em><a href="https://bioconductor.org/packages/3.15/msdata" class="external-link">msdata</a></em>. For details about this section, please visit the <a href="https://rformassspectrometry.github.io/Spectra/articles/Spectra.html" class="external-link">Spectra</a> package webpage.</p>
+<p>This vignette is one among several illustrating how to use the
+<code>PSMatch</code> package, focusing on the calculation and
+visualisation of MS2 fragment ions. For a general overview of the
+package, see the <code>PSMatch</code> package manual page
+(<code><a href="../reference/PSMatch.html">?PSMatch</a></code>) and references therein.</p>
+<p>To illustrate this vignette, we will import and merge raw and
+identification data from the <em><a href="https://bioconductor.org/packages/3.15/msdata" class="external-link">msdata</a></em>.
+For details about this section, please visit the <a href="https://rformassspectrometry.github.io/Spectra/articles/Spectra.html" class="external-link">Spectra</a>
+package webpage.</p>
 <p>Load the raw MS data:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">spf</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">proteomics</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"2014"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -158,7 +169,9 @@ document.addEventListener("DOMContentLoaded", function() {
 <span class="co">## </span>
 <span class="co">## file(s):</span>
 <span class="co">## TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML.gz</span></code></pre>
-<p>In this example, we are going to focus the MS2 scan with index 5449 and its parent MS1 scan (index 5447, selected automatically with the <a href="https://rformassspectrometry.github.io/Spectra/reference/MsBackend.html" class="external-link">filterPrecursorScan()</a> function).</p>
+<p>In this example, we are going to focus the MS2 scan with index 5449
+and its parent MS1 scan (index 5447, selected automatically with the <a href="https://rformassspectrometry.github.io/Spectra/reference/MsBackend.html" class="external-link">filterPrecursorScan()</a>
+function).</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sp5449</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterPrecursorScan</a></span><span class="op">(</span><span class="va">sp</span>, <span class="fl">5449</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -169,11 +182,14 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="section level2">
 <h2 id="calculating-fragment-ions">Calculating fragment ions<a class="anchor" aria-label="anchor" href="#calculating-fragment-ions"></a>
 </h2>
-<p>The MS2 scan was matched to <code>SQILQQAGTSVLSQANQVPQTVLSLLR</code> (there was obviously no match the the MS1 scan):</p>
+<p>The MS2 scan was matched to <code>SQILQQAGTSVLSQANQVPQTVLSLLR</code>
+(there was obviously no match the the MS1 scan):</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sp5449</span><span class="op">$</span><span class="va">sequence</span></code></pre></div>
 <pre><code><span class="co">## [1] NA                            "SQILQQAGTSVLSQANQVPQTVLSLLR"</span></code></pre>
-<p>The <code><a href="../reference/calculateFragments.html">calculateFragments()</a></code> simply takes a peptide sequence as input and returns a <code>data.frame</code> with the fragment sequences, M/Z, ion type, charge and position.</p>
+<p>The <code><a href="../reference/calculateFragments.html">calculateFragments()</a></code> simply takes a peptide sequence
+as input and returns a <code>data.frame</code> with the fragment
+sequences, M/Z, ion type, charge and position.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/calculateFragments.html">calculateFragments</a></span><span class="op">(</span><span class="va">sp5449</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## Modifications used: C=57.02146</span></code></pre>
@@ -320,7 +336,8 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="section level2">
 <h2 id="visualising-fragment-ions">Visualising fragment ions<a class="anchor" aria-label="anchor" href="#visualising-fragment-ions"></a>
 </h2>
-<p>We can now visualise these fragments directly on the MS spectrum. Let’s first visualise the spectrum as is:</p>
+<p>We can now visualise these fragments directly on the MS spectrum.
+Let’s first visualise the spectrum as is:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra</a></span><span class="op">(</span><span class="va">sp5449</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <p><img src="Fragments_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
@@ -333,9 +350,9 @@ document.addEventListener("DOMContentLoaded", function() {
 </h2>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## R Under development (unstable) (2022-02-10 r81713)</span>
+<pre><code><span class="co">## R Under development (unstable) (2022-03-03 r81847)</span>
 <span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span>
-<span class="co">## Running under: Ubuntu 20.04.3 LTS</span>
+<span class="co">## Running under: Ubuntu 20.04.4 LTS</span>
 <span class="co">## </span>
 <span class="co">## Matrix products: default</span>
 <span class="co">## BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so</span>
@@ -353,44 +370,44 @@ document.addEventListener("DOMContentLoaded", function() {
 <span class="co">## [8] base     </span>
 <span class="co">## </span>
 <span class="co">## other attached packages:</span>
-<span class="co">## [1] Spectra_1.5.8        ProtGenerics_1.27.2  BiocParallel_1.29.12</span>
-<span class="co">## [4] PSMatch_0.99.0       S4Vectors_0.33.10    BiocGenerics_0.41.2 </span>
+<span class="co">## [1] Spectra_1.5.12       ProtGenerics_1.27.2  BiocParallel_1.29.15</span>
+<span class="co">## [4] PSMatch_0.99.1       S4Vectors_0.33.10    BiocGenerics_0.41.2 </span>
 <span class="co">## [7] BiocStyle_2.23.1    </span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
 <span class="co">##  [1] Rcpp_1.0.8                  msdata_0.35.2              </span>
 <span class="co">##  [3] lattice_0.20-45             rprojroot_2.0.2            </span>
 <span class="co">##  [5] digest_0.6.29               R6_2.5.1                   </span>
-<span class="co">##  [7] GenomeInfoDb_1.31.4         evaluate_0.14              </span>
+<span class="co">##  [7] GenomeInfoDb_1.31.4         evaluate_0.15              </span>
 <span class="co">##  [9] highr_0.9                   zlibbioc_1.41.0            </span>
-<span class="co">## [11] rlang_1.0.1                 lazyeval_0.2.2             </span>
+<span class="co">## [11] rlang_1.0.2                 lazyeval_0.2.2             </span>
 <span class="co">## [13] jquerylib_0.1.4             Matrix_1.4-0               </span>
-<span class="co">## [15] mzR_2.29.3                  rmarkdown_2.11             </span>
+<span class="co">## [15] rmarkdown_2.12              mzR_2.29.3                 </span>
 <span class="co">## [17] pkgdown_2.0.2.9000          textshaping_0.3.6          </span>
-<span class="co">## [19] desc_1.4.0                  stringr_1.4.0              </span>
+<span class="co">## [19] desc_1.4.1                  stringr_1.4.0              </span>
 <span class="co">## [21] igraph_1.2.11               RCurl_1.98-1.6             </span>
 <span class="co">## [23] DelayedArray_0.21.2         compiler_4.2.0             </span>
-<span class="co">## [25] xfun_0.29                   pkgconfig_2.0.3            </span>
-<span class="co">## [27] systemfonts_1.0.3           htmltools_0.5.2            </span>
+<span class="co">## [25] xfun_0.30                   pkgconfig_2.0.3            </span>
+<span class="co">## [27] systemfonts_1.0.4           htmltools_0.5.2            </span>
 <span class="co">## [29] SummarizedExperiment_1.25.3 GenomeInfoDbData_1.2.7     </span>
 <span class="co">## [31] bookdown_0.24               codetools_0.2-18           </span>
 <span class="co">## [33] IRanges_2.29.1              matrixStats_0.61.0         </span>
-<span class="co">## [35] crayon_1.5.0                MASS_7.3-55                </span>
-<span class="co">## [37] bitops_1.0-7                grid_4.2.0                 </span>
-<span class="co">## [39] jsonlite_1.7.3              AnnotationFilter_1.19.0    </span>
-<span class="co">## [41] magrittr_2.0.2              MsCoreUtils_1.7.1          </span>
-<span class="co">## [43] ncdf4_1.19                  cli_3.2.0                  </span>
-<span class="co">## [45] stringi_1.7.6               cachem_1.0.6               </span>
-<span class="co">## [47] XVector_0.35.0              fs_1.5.2                   </span>
-<span class="co">## [49] MultiAssayExperiment_1.21.5 bslib_0.3.1                </span>
-<span class="co">## [51] ragg_1.2.1                  tools_4.2.0                </span>
-<span class="co">## [53] QFeatures_1.5.2             Biobase_2.55.0             </span>
-<span class="co">## [55] purrr_0.3.4                 MatrixGenerics_1.7.0       </span>
-<span class="co">## [57] parallel_4.2.0              fastmap_1.1.0              </span>
-<span class="co">## [59] yaml_2.2.2                  clue_0.3-60                </span>
-<span class="co">## [61] cluster_2.1.2               BiocManager_1.30.16        </span>
-<span class="co">## [63] GenomicRanges_1.47.6        memoise_2.0.1              </span>
-<span class="co">## [65] knitr_1.37                  sass_0.4.0</span></code></pre>
+<span class="co">## [35] MASS_7.3-55                 bitops_1.0-7               </span>
+<span class="co">## [37] grid_4.2.0                  jsonlite_1.8.0             </span>
+<span class="co">## [39] AnnotationFilter_1.19.0     magrittr_2.0.2             </span>
+<span class="co">## [41] MsCoreUtils_1.7.4           ncdf4_1.19                 </span>
+<span class="co">## [43] cli_3.2.0                   stringi_1.7.6              </span>
+<span class="co">## [45] cachem_1.0.6                XVector_0.35.0             </span>
+<span class="co">## [47] fs_1.5.2                    MultiAssayExperiment_1.21.5</span>
+<span class="co">## [49] bslib_0.3.1                 ragg_1.2.2                 </span>
+<span class="co">## [51] tools_4.2.0                 QFeatures_1.5.2            </span>
+<span class="co">## [53] Biobase_2.55.0              purrr_0.3.4                </span>
+<span class="co">## [55] MatrixGenerics_1.7.0        parallel_4.2.0             </span>
+<span class="co">## [57] fastmap_1.1.0               yaml_2.3.5                 </span>
+<span class="co">## [59] clue_0.3-60                 cluster_2.1.2              </span>
+<span class="co">## [61] BiocManager_1.30.16         GenomicRanges_1.47.6       </span>
+<span class="co">## [63] memoise_2.0.1               knitr_1.37                 </span>
+<span class="co">## [65] sass_0.4.0</span></code></pre>
 </div>
   </div>
 
@@ -411,7 +428,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.9000.</p>
 </div>
 
       </footer>
