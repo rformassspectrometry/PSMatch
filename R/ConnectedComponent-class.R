@@ -75,6 +75,11 @@
 ##'   analysis (using for instance [prcomp()]) for further inspection
 ##'   for component visualisation with [plotAdjacencyMatrix()].
 ##'
+##' @return The `ConnectedComponents()` constructor returns an
+##'     instance of class `ConnectedComponents`. The *Creating and
+##'     manipulating objects* section describes the return values of
+##'     the functions that manipulate `ConnectedComponents` objects.
+##'
 ##' @examples
 ##'
 ##' ## --------------------------------

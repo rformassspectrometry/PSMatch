@@ -75,6 +75,12 @@ a \code{List} is returned. Always a \code{List} if \code{FALSE}.}
 
 \item{drop}{ignore}
 }
+\value{
+The \code{ConnectedComponents()} constructor returns an
+instance of class \code{ConnectedComponents}. The \emph{Creating and
+manipulating objects} section describes the return values of
+the functions that manipulate \code{ConnectedComponents} objects.
+}
 \description{
 Connected components are a useful representation when exploring
 identification data. They represent the relation between proteins

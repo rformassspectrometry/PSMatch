@@ -24,6 +24,18 @@ BiocStyle::markdown()
 library("PSMatch")
 ```
 
+
+# Installation instructions
+
+To install the package from Bioconductor, make sure you have the
+`BiocManager` package, available from CRAN, and then run
+
+
+```r
+BiocManager::install("PSMatch")
+```
+
+
 # Introduction
 
 This vignette is one among several illustrating how to use the

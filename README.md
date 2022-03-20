@@ -22,17 +22,11 @@ get started with the package:
 
 ## Installation instructions
 
-To install the package, first install (if not already available) the
-`BiocManager` and `remotes` packages:
+To install the package from Bioconductor, make sure you have the
+`BiocManager` package, available from CRAN, and then run
 
 ```r
-install.packages(c("remotes", "BiocManager"))
-```
-
-Then:
-
-```r
-BiocManager::install("RforMassSpectrometry/PSMatch")
+BiocManager::install("PSMatch")
 ```
 
 ## Credit
