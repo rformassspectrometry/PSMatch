@@ -1,5 +1,9 @@
 # PSMatch 0.99
 
+## Changes in 0.99.3
+
+- Fix bug in `describePeptides()` (close #11).
+
 ## Changes in 0.99.2
 
 - Describe the `ConnectedComponents()` return value.

@@ -42,6 +42,8 @@ NULL
 
 ##' @importFrom Matrix rowSums
 .describeProteins <- function(adj) {
+    ## make adjacency matrix binary
+    adj[adj > 0] <- 1
     unique_peps <- names(which(Matrix::rowSums(adj) == 1))
     ans_unique <- ans_shared <- rep(NA, ncol(adj))
     for (i in seq_along(ans_unique)) {
@@ -85,15 +87,17 @@ describeProteins <- function(object) {
 ## Describe unique/shared peptide composition
 ## -------------------------------------------
 .describePeptides <- function(adj) {
-    tab <- table(Matrix::rowSums(adj))
+    ## make adjacency matrix binary
+    adj[adj > 0] <- 1
+    unique_peps <- rowSums(adj) == 1
     message(nrow(adj), " peptides composed of")
-    message(" unique peptides: ", tab["1"])
+    message(" unique peptides: ", sum(unique_peps))
+    tab <- table(rowSums(adj[!unique_peps, ]))
     message(" shared peptides (among protein):")
-    tab2 <- tab[names(tab) != "1"]
-    msg <- strwrap(paste(paste0(tab2, "(", names(tab2), ")"),
+    msg <- strwrap(paste(paste0(tab, "(", names(tab), ")"),
                          collapse = " "))
     message(paste(" ", msg, collapse = "\n"))
-    invisible(tab)
+    invisible(table(rowSums(adj)))
 }
 
 ##' @export
