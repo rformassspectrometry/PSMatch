@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.3</span>
       </span>
     </div>
 
@@ -108,8 +108,8 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.15/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut], Samuel Wieczorek [ctb], Thomas Burger [ctb]<br><strong>Last
-modified:</strong> 2022-03-20 18:28:15<br><strong>Compiled</strong>:
-Sun Mar 20 19:31:08 2022</p>
+modified:</strong> 2022-04-01 20:11:33<br><strong>Compiled</strong>:
+Fri Apr 1 21:03:43 2022</p>
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
@@ -336,13 +336,13 @@ backend fails.</p></li>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##    user  system elapsed </span>
-<span class="co">##   0.300   0.012   0.312</span></code></pre>
+<span class="co">##   0.229   0.008   0.237</span></code></pre>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## Loading required namespace: mzID</span></code></pre>
 <pre><code><span class="co">## reading TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid... DONE!</span></code></pre>
 <pre><code><span class="co">##    user  system elapsed </span>
-<span class="co">##   9.936   0.080  10.017</span></code></pre>
+<span class="co">##   6.767   0.064   6.832</span></code></pre>
 <p>Other differences in the two parsers include the columns that are
 returned, the way they name them, and, as will shown below the matches
 that are returned. Note for instance (and this will be important later),
@@ -488,23 +488,23 @@ same number of PSMs than with the <code>mzID</code> parser.</p>
 <span class="co">## [8] base     </span>
 <span class="co">## </span>
 <span class="co">## other attached packages:</span>
-<span class="co">## [1] PSMatch_0.99.2      S4Vectors_0.33.11   BiocGenerics_0.41.2</span>
+<span class="co">## [1] PSMatch_0.99.3      S4Vectors_0.33.15   BiocGenerics_0.41.2</span>
 <span class="co">## [4] BiocStyle_2.23.1   </span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
 <span class="co">##  [1] Rcpp_1.0.8.3                msdata_0.35.3              </span>
 <span class="co">##  [3] lattice_0.20-45             foreach_1.5.2              </span>
 <span class="co">##  [5] rprojroot_2.0.2             digest_0.6.29              </span>
-<span class="co">##  [7] plyr_1.8.6                  R6_2.5.1                   </span>
+<span class="co">##  [7] plyr_1.8.7                  R6_2.5.1                   </span>
 <span class="co">##  [9] GenomeInfoDb_1.31.6         mzID_1.33.0                </span>
 <span class="co">## [11] evaluate_0.15               zlibbioc_1.41.0            </span>
 <span class="co">## [13] rlang_1.0.2                 lazyeval_0.2.2             </span>
 <span class="co">## [15] jquerylib_0.1.4             Matrix_1.4-0               </span>
-<span class="co">## [17] rmarkdown_2.13              mzR_2.29.3                 </span>
+<span class="co">## [17] rmarkdown_2.13              mzR_2.29.5                 </span>
 <span class="co">## [19] pkgdown_2.0.2.9000          textshaping_0.3.6          </span>
-<span class="co">## [21] desc_1.4.1                  BiocParallel_1.29.17       </span>
+<span class="co">## [21] desc_1.4.1                  BiocParallel_1.29.18       </span>
 <span class="co">## [23] stringr_1.4.0               ProtGenerics_1.27.2        </span>
-<span class="co">## [25] igraph_1.2.11               RCurl_1.98-1.6             </span>
+<span class="co">## [25] igraph_1.3.0                RCurl_1.98-1.6             </span>
 <span class="co">## [27] DelayedArray_0.21.2         compiler_4.2.0             </span>
 <span class="co">## [29] xfun_0.30                   pkgconfig_2.0.3            </span>
 <span class="co">## [31] systemfonts_1.0.4           htmltools_0.5.2            </span>
@@ -514,20 +514,20 @@ same number of PSMs than with the <code>mzID</code> parser.</p>
 <span class="co">## [39] XML_3.99-0.9                MASS_7.3-55                </span>
 <span class="co">## [41] bitops_1.0-7                grid_4.2.0                 </span>
 <span class="co">## [43] jsonlite_1.8.0              AnnotationFilter_1.19.0    </span>
-<span class="co">## [45] magrittr_2.0.2              MsCoreUtils_1.7.4          </span>
+<span class="co">## [45] magrittr_2.0.3              MsCoreUtils_1.7.4          </span>
 <span class="co">## [47] ncdf4_1.19                  cli_3.2.0                  </span>
 <span class="co">## [49] stringi_1.7.6               cachem_1.0.6               </span>
 <span class="co">## [51] XVector_0.35.0              fs_1.5.2                   </span>
-<span class="co">## [53] doParallel_1.0.17           MultiAssayExperiment_1.21.5</span>
+<span class="co">## [53] doParallel_1.0.17           MultiAssayExperiment_1.21.6</span>
 <span class="co">## [55] bslib_0.3.1                 ragg_1.2.2                 </span>
 <span class="co">## [57] iterators_1.0.14            tools_4.2.0                </span>
-<span class="co">## [59] QFeatures_1.5.2             Biobase_2.55.0             </span>
+<span class="co">## [59] QFeatures_1.5.2             Biobase_2.55.1             </span>
 <span class="co">## [61] purrr_0.3.4                 MatrixGenerics_1.7.0       </span>
 <span class="co">## [63] parallel_4.2.0              fastmap_1.1.0              </span>
 <span class="co">## [65] yaml_2.3.5                  clue_0.3-60                </span>
 <span class="co">## [67] cluster_2.1.2               BiocManager_1.30.16        </span>
 <span class="co">## [69] GenomicRanges_1.47.6        memoise_2.0.1              </span>
-<span class="co">## [71] knitr_1.37                  sass_0.4.0</span></code></pre>
+<span class="co">## [71] knitr_1.38                  sass_0.4.1</span></code></pre>
 </div>
 <div class="footnotes footnotes-end-of-document">
 <hr>
