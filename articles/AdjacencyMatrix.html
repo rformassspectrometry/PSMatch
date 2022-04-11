@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.4</span>
       </span>
     </div>
 
@@ -109,8 +109,8 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.15/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut], Samuel Wieczorek [ctb], Thomas Burger [ctb]<br><strong>Last
-modified:</strong> 2022-04-01 20:11:33<br><strong>Compiled</strong>:
-Fri Apr 1 21:02:55 2022</p>
+modified:</strong> 2022-04-11 19:44:34<br><strong>Compiled</strong>:
+Mon Apr 11 20:34:12 2022</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -448,7 +448,7 @@ interesting.</p>
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cctab</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">prioritiseConnectedComponents</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##      nrow ncol n_coms  mod_coms   n rs_min rs_max cs_min cs_max  sparsity</span>
 <span class="co">## 1081   21    3      3 0.5793951  23      1      2      7      8 0.6349206</span>
-<span class="co">## 223   109    6      3 0.5483189 189      1      6     15     43 0.7110092</span>
+<span class="co">## 223   109    6      3 0.5522382 189      1      6     15     43 0.7110092</span>
 <span class="co">## 462    25    3      3 0.5301783  27      1      2      3     14 0.6400000</span>
 <span class="co">## 785    16    6      4 0.4862826  27      1      6      1      7 0.7187500</span>
 <span class="co">## 7       9    9      4 0.4819945  19      1      6      1      7 0.7654321</span>
@@ -488,16 +488,16 @@ below) or groups of <em>similar</em> components to explore.</p>
 <span class="co">## other attached packages:</span>
 <span class="co">##  [1] factoextra_1.0.7            ggplot2_3.3.5              </span>
 <span class="co">##  [3] QFeatures_1.5.2             MultiAssayExperiment_1.21.6</span>
-<span class="co">##  [5] SummarizedExperiment_1.25.3 Biobase_2.55.1             </span>
-<span class="co">##  [7] GenomicRanges_1.47.6        GenomeInfoDb_1.31.6        </span>
+<span class="co">##  [5] SummarizedExperiment_1.25.3 Biobase_2.55.2             </span>
+<span class="co">##  [7] GenomicRanges_1.47.6        GenomeInfoDb_1.31.7        </span>
 <span class="co">##  [9] IRanges_2.29.1              MatrixGenerics_1.7.0       </span>
-<span class="co">## [11] matrixStats_0.61.0          PSMatch_0.99.3             </span>
-<span class="co">## [13] S4Vectors_0.33.15           BiocGenerics_0.41.2        </span>
+<span class="co">## [11] matrixStats_0.61.0          PSMatch_0.99.4             </span>
+<span class="co">## [13] S4Vectors_0.33.17           BiocGenerics_0.41.2        </span>
 <span class="co">## [15] BiocStyle_2.23.1           </span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
 <span class="co">##  [1] ProtGenerics_1.27.2     bitops_1.0-7            fs_1.5.2               </span>
-<span class="co">##  [4] rprojroot_2.0.2         backports_1.4.1         tools_4.2.0            </span>
+<span class="co">##  [4] rprojroot_2.0.3         backports_1.4.1         tools_4.2.0            </span>
 <span class="co">##  [7] bslib_0.3.1             utf8_1.2.2              R6_2.5.1               </span>
 <span class="co">## [10] DBI_1.1.2               lazyeval_0.2.2          colorspace_2.0-3       </span>
 <span class="co">## [13] withr_2.5.0             tidyselect_1.1.2        compiler_4.2.0         </span>
@@ -508,7 +508,7 @@ below) or groups of <em>similar</em> components to explore.</p>
 <span class="co">## [28] rmarkdown_2.13          XVector_0.35.0          pkgconfig_2.0.3        </span>
 <span class="co">## [31] htmltools_0.5.2         fastmap_1.1.0           highr_0.9              </span>
 <span class="co">## [34] rlang_1.0.2             farver_2.1.0            jquerylib_0.1.4        </span>
-<span class="co">## [37] generics_0.1.2          jsonlite_1.8.0          BiocParallel_1.29.18   </span>
+<span class="co">## [37] generics_0.1.2          jsonlite_1.8.0          BiocParallel_1.29.20   </span>
 <span class="co">## [40] car_3.0-12              dplyr_1.0.8             RCurl_1.98-1.6         </span>
 <span class="co">## [43] magrittr_2.0.3          GenomeInfoDbData_1.2.7  Matrix_1.4-0           </span>
 <span class="co">## [46] Rcpp_1.0.8.3            munsell_0.5.0           fansi_1.0.3            </span>

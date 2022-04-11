@@ -39,7 +39,7 @@ reduced()&amp;lt;- setter."><!-- mathjax --><script src="https://cdnjs.cloudflar
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.4</span>
       </span>
     </div>
 
@@ -346,14 +346,14 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  [remote] QEP2LC6_HeLa_50ng_251120_08.raw</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  [remote] QEP2LC6_HeLa_50ng_251120_09.raw</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  ...</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fix_issue_17(x):</span> Can't access URL(s):</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>  ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2021/03/PXD022816/QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>  ftp://ftp.pride.ebi.ac.uk/pride-archive/2021/03/PXD022816/QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz from cache.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz from cache.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/91254d8964_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/91251d7c71fa_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
 <span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">mzids</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in PSM(mzids):</span> object 'mzids' not found</span>
 <span class="r-in"><span class="va">psm</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 5802 rows and 35 columns.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> names(35): sequence spectrumID ... subReplacementResidue subLocation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 50314 rows and 31 columns.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names(31): sequence spectrumID ... subReplacementResidue subLocation</span>
 <span class="r-in"><span class="fu">psmVariables</span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         spectrum          peptide          protein            decoy </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     "spectrumID"       "sequence" "DatabaseAccess"        "isDecoy" </span>
@@ -362,7 +362,8 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Here, spectrum identifiers are repeated accross files</span></span>
 <span class="r-in"><span class="va">psm</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"scan=20000"</span>, <span class="va">psm</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span>, <span class="st">"spectrumFile"</span><span class="op">]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "P:\\Projects\\Morgenstern\\HF2_QC_for_the_paper\\QEP2\\2020-11-29-13-56-12\\Task1-CalibrateTask\\QEP2LC6_HeLa_50ng_251120_01-calib.mzML"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "P:\\Projects\\Morgenstern\\HF2_QC_for_the_paper\\QEP2\\2020-11-29-13-56-12\\Task1-CalibrateTask\\QEP2LC6_HeLa_50ng_251120_02-calib.mzML"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Let's create a new primary identifier composed of the scan</span></span>
 <span class="r-in"><span class="co">## number and the file name</span></span>
@@ -370,76 +371,78 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-in">                  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"^.+scan="</span>, <span class="st">""</span>, <span class="va">psm</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span>,</span>
 <span class="r-in">                  sep <span class="op">=</span> <span class="st">"::"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">psm</span><span class="op">$</span><span class="va">pkey</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML::2949"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML::6534"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML::5674"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML::4782"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML::5839"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML::6118"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "QEP2LC6_HeLa_50ng_251120_01-calib.mzML::3426" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "QEP2LC6_HeLa_50ng_251120_01-calib.mzML::20165"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "QEP2LC6_HeLa_50ng_251120_01-calib.mzML::20180"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "QEP2LC6_HeLa_50ng_251120_01-calib.mzML::15180"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "QEP2LC6_HeLa_50ng_251120_01-calib.mzML::10327"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6] "QEP2LC6_HeLa_50ng_251120_01-calib.mzML::12894"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## the PSM is not reduced</span></span>
 <span class="r-in"><span class="fu">reduced</span><span class="op">(</span><span class="va">psm</span>, <span class="st">"pkey"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-in"><span class="fu">DataFrame</span><span class="op">(</span><span class="va">psm</span><span class="op">[</span><span class="fl">6</span><span class="op">:</span><span class="fl">7</span>, <span class="op">]</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> DataFrame with 2 rows and 36 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DataFrame with 2 rows and 32 columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        sequence    spectrumID chargeState      rank passThreshold</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;   &lt;character&gt;   &lt;integer&gt; &lt;integer&gt;     &lt;logical&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 DGGPAIYGHE... controller...           3         1          TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 QRMARTSDKQ... controller...           2         1          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 SEGSSCALES... controller...           4         1          TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 SEGSSCALES... controller...           4         1          TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   experimentalMassToCharge calculatedMassToCharge  peptideRef    modNum</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  &lt;numeric&gt;              &lt;numeric&gt; &lt;character&gt; &lt;integer&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                  969.194                968.856      Pep206         1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                 1369.238               1368.717      Pep163         1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                  796.367                796.367        P_19         2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                  796.367                796.367        P_19         2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     isDecoy        post         pre     start       end DatabaseAccess</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;logical&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;integer&gt;    &lt;character&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     FALSE           S           K       310       334        ECA1420</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     FALSE           D           R       182       203        ECA3009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   DBseqLength DatabaseSeq DatabaseDescription scan.number.s. acquisitionNum</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;integer&gt; &lt;character&gt;         &lt;character&gt;      &lt;numeric&gt;      &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         477                   ECA1420 un...           6118           6118</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         437                   ECA3009 pu...           4757           4757</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    spectrumFile        idFile MS.GF.RawScore MS.GF.DeNovoScore MS.GF.SpecEValue</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;   &lt;character&gt;      &lt;numeric&gt;         &lt;numeric&gt;        &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 TMT_Erwini... TMT_Erwini...              7               214      1.72203e-07</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 TMT_Erwini... TMT_Erwini...             21               196      1.76840e-07</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   MS.GF.EValue MS.GF.QValue MS.GF.PepQValue modPeptideRef       modName</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;numeric&gt;    &lt;numeric&gt;       &lt;numeric&gt;   &lt;character&gt;   &lt;character&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.495817     0.837037         0.85600        Pep206 Carbamidom...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     0.508761     0.837037         0.72449        Pep163 Carbamidom...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     modMass modLocation subOriginalResidue subReplacementResidue subLocation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;           &lt;character&gt;   &lt;integer&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   57.0215          21                 NA                    NA          NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   57.0215          20                 NA                    NA          NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            pkey</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 TMT_Erwini...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 TMT_Erwini...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     FALSE           I           K       220       251         Q58D62</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     FALSE           I           K       220       251         Q58D62</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   DBseqLength   DatabaseSeq DatabaseDescription scan.start.time acquisitionNum</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;integer&gt;   &lt;character&gt;         &lt;character&gt;     &lt;character&gt;      &lt;numeric&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         387 MNVLLLLVLC...       Q58D62|FET...       32.788864          12894</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2         387 MNVLLLLVLC...       Q58D62|FET...       32.788864          12894</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     spectrumFile        idFile MetaMorpheus.score PSM.level.q.value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;character&gt;   &lt;character&gt;          &lt;numeric&gt;         &lt;numeric&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... 91254d8964...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... 91254d8964...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   modPeptideRef       modName   modMass modLocation subOriginalResidue</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;   &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          P_19 Carbamidom...   57.0215           6                 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          P_19 Carbamidom...   57.0215          19                 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   subReplacementResidue subLocation          pkey</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;character&gt;   &lt;integer&gt;   &lt;character&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                    NA          NA QEP2LC6_He...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                    NA          NA QEP2LC6_He...</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## same sequence, same spectrumID, same file</span></span>
 <span class="r-in"><span class="va">psm</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">6</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "DGGPAIYGHERVGRNAKKFKCLKFR" "QRMARTSDKQQSIRFLERLCGR"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SEGSSCALESPGSVPVGICHGSLGEPQGNQGK" "SEGSSCALESPGSVPVGICHGSLGEPQGNQGK"</span>
 <span class="r-in"><span class="va">psm</span><span class="op">$</span><span class="va">pkey</span><span class="op">[</span><span class="fl">6</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML::6118"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML::4757"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "QEP2LC6_HeLa_50ng_251120_01-calib.mzML::12894"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "QEP2LC6_HeLa_50ng_251120_01-calib.mzML::12894"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## different modification locations</span></span>
 <span class="r-in"><span class="va">psm</span><span class="op">$</span><span class="va">modLocation</span><span class="op">[</span><span class="fl">6</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 21 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  6 19</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## here, we need to *explicitly* set pkey to reduce</span></span>
 <span class="r-in"><span class="va">rpsm</span> <span class="op">&lt;-</span> <span class="fu">reducePSMs</span><span class="op">(</span><span class="va">psm</span>, <span class="va">psm</span><span class="op">$</span><span class="va">pkey</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">rpsm</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced PSM with 5343 rows and 36 columns.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> names(36): sequence spectrumID ... subLocation pkey</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced PSM with 32739 rows and 32 columns.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> names(32): sequence spectrumID ... subLocation pkey</span>
 <span class="r-in"><span class="fu">reduced</span><span class="op">(</span><span class="va">rpsm</span>, <span class="st">"pkey"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## the two rows are now merged into a single one; the distinct</span></span>
 <span class="r-in"><span class="co">## modification locations are preserved.</span></span>
 <span class="r-in"><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">rpsm</span><span class="op">$</span><span class="va">pkey</span> <span class="op">==</span> <span class="st">"QEP2LC6_HeLa_50ng_251120_01-calib.mzML::12894"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> integer(0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2343</span>
 <span class="r-in"><span class="fu">DataFrame</span><span class="op">(</span><span class="va">rpsm</span><span class="op">[</span><span class="va">i</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sequence"</span>, <span class="st">"pkey"</span>, <span class="st">"modName"</span>, <span class="st">"modLocation"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> DataFrame with 0 rows and 4 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DataFrame with 1 row and 4 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                      sequence          pkey</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               &lt;CharacterList&gt;   &lt;character&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QEP2LC6_HeLa_50ng_251120_01-calib.mzML::12894   SEGSSCALES... QEP2LC6_He...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                       modName   modLocation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               &lt;CharacterList&gt; &lt;IntegerList&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QEP2LC6_HeLa_50ng_251120_01-calib.mzML::12894   Carbamidom...          6,19</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## ---------------------------------</span></span>
 <span class="r-in"><span class="co">## PSM from a data.frame</span></span>
@@ -455,17 +458,17 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-in">                    rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>,</span>
 <span class="r-in">                    score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psmdf</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    spectrum   sequence protein decoy rank      score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       sp1 ICDVRYKHGL   ProtC FALSE    1 0.05620300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       sp2 KLFGWRQHMI   ProtG FALSE    1 0.06319468</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       sp3 ASWCVMDGRT   ProtG FALSE    1 0.18128376</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       sp4 IDCSKGRFVP   ProtD FALSE    1 0.32778588</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       sp5 NPSFHMYVEW   ProtB FALSE    1 0.13580643</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       sp6 TWIRALVGMC   ProtE FALSE    1 0.12949983</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       sp7 HDPAISCKYF   ProtA FALSE    1 0.16557473</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       sp8 TDIGMNECVA   ProtC FALSE    1 0.34229973</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       sp9 SFKVHETIAD   ProtG FALSE    1 0.27334133</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     sp10 NRYDAWTFGP   ProtD FALSE    1 0.16629967</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    spectrum   sequence protein decoy rank        score</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       sp1 IGKLVMADFC   ProtG FALSE    1 0.9361429589</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       sp2 RNQVTICWMA   ProtG FALSE    1 0.0003496832</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       sp3 CSLWNFYHDR   ProtC FALSE    1 0.3903324960</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       sp4 CMNRWLHKVS   ProtB FALSE    1 0.3270135152</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       sp5 NMDHTIAQER   ProtA FALSE    1 0.8729030024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       sp6 HVDYTIPEAR   ProtB FALSE    1 0.4180779560</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       sp7 MPTGKCRLQS   ProtD FALSE    1 0.7146598452</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       sp8 QYNETSIKPF   ProtF FALSE    1 0.6651044274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       sp9 QWENGTSKIL   ProtB FALSE    1 0.9388950837</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     sp10 MKATCQGNEH   ProtB FALSE    1 0.4178670016</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">psmdf</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">psm</span></span>
@@ -492,17 +495,17 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="adjacencyMatrix.html">adjacencyMatrix</a></span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 6 sparse Matrix of class "dgCMatrix"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            ProtC ProtG ProtD ProtB ProtE ProtA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ICDVRYKHGL     1     .     .     .     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KLFGWRQHMI     .     1     .     .     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASWCVMDGRT     .     1     .     .     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IDCSKGRFVP     .     .     1     .     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NPSFHMYVEW     .     .     .     1     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> TWIRALVGMC     .     .     .     .     1     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HDPAISCKYF     .     .     .     .     .     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> TDIGMNECVA     1     .     .     .     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SFKVHETIAD     .     1     .     .     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NRYDAWTFGP     .     .     1     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            ProtG ProtC ProtB ProtA ProtD ProtF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IGKLVMADFC     1     .     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RNQVTICWMA     1     .     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CSLWNFYHDR     .     1     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CMNRWLHKVS     .     .     1     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NMDHTIAQER     .     .     .     1     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HVDYTIPEAR     .     .     1     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MPTGKCRLQS     .     .     .     .     1     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QYNETSIKPF     .     .     .     .     .     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QWENGTSKIL     .     .     1     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MKATCQGNEH     .     .     1     .     .     .</span>
 </code></pre></div>
     </div>
   </div>
