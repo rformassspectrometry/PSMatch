@@ -34,8 +34,8 @@ test_that("ConnectedComponents works from PSM", {
 })
 
 
-
 test_that("prioritiseConnectedComponents() works", {
+    set.seed(1)
     cc <- ConnectedComponents(adj)
     p1 <- prioritiseConnectedComponents(cc)
     p2 <- prioritizeConnectedComponents(cc)
