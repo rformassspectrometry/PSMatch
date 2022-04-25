@@ -1,5 +1,11 @@
 # PSMatch 0.99
 
+## Changes in 0.99.5
+
+- Fix *mz* calculation in `calculateFragments` for neutral losses with
+  a charge > 1 (ported from `MSnbase` - see [issue
+  573](https://github.com/lgatto/MSnbase/issues/573)).
+
 ## Changes in 0.99.4
 
 - Set seed in the ConnectedComponents unit test to stop random errors
