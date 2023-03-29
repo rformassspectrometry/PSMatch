@@ -1,3 +1,15 @@
+# PSMatch 1.3
+
+## PSMatch 1.3.1
+
+- Fix type in vignette.
+
+# PSMatch 1.0
+
+## PSMatch 1.0.0
+
+- First Bioconductor release.
+
 # PSMatch 0.99
 
 ## Changes in 0.99.5
