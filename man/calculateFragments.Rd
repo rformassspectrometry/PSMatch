@@ -37,11 +37,13 @@ which type of neutral loss should be calculated.  Currently
 neutral loss on the C terminal \code{"Cterm"}, at the amino acids
 \code{c("D", "E", "S", "T")} for \code{"water"} (shown with an \verb{_}) and
 \code{c("K", "N", "Q", "R")} for \code{"ammonia"} (shown with an \code{*}) are
-supported.\preformatted{There is a helper function `defaultNeutralLoss()` that returns
+supported.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{There is a helper function `defaultNeutralLoss()` that returns
 the correct list. It has two arguments `disableWaterLoss` and
 `disableAmmoniaLoss` to remove single neutral loss options. See
 the example section for use cases.
-}}
+}\if{html}{\out{</div>}}}
 
 \item{verbose}{\code{logical(1)}. If \code{TRUE} (default) the used
 modifications are printed.}

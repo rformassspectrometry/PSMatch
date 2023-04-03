@@ -1,5 +1,9 @@
 # PSMatch 1.3
 
+## PSMatch 1.3.2
+
+- Specific `Matrix::rowSums()` to fix error in example.
+
 ## PSMatch 1.3.1
 
 - Fix type in vignette.
