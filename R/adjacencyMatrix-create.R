@@ -167,7 +167,7 @@
 ##'
 ##' ## Peptides with rowSums > 1 match multiple proteins.
 ##' ## Use filterPsmShared() to filter these out.
-##' table(rowSums(adj))
+##' table(Matrix::rowSums(adj))
 ##'
 ##' ## -----------------------------------------------
 ##' ## Binary, non-binary and score adjacency matrices

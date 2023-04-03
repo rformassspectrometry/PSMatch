@@ -1,6 +1,6 @@
 Package: PSMatch
 Title: Handling and Managing Peptide Spectrum Matches
-Version: 1.3.0
+Version: 1.3.2
 Authors@R:
    c(person(given = "Laurent", family = "Gatto",
             email = "laurent.gatto@uclouvain.be",
@@ -54,7 +54,7 @@ Suggests:
 License: Artistic-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 BugReports: https://github.com/RforMassSpectrometry/PSM/issues
 URL: https://github.com/RforMassSpectrometry/PSM

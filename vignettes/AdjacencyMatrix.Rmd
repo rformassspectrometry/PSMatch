@@ -248,7 +248,7 @@ plotAdjacencyMatrix(cx, pepColors = cls)
 # Using quantitative data
 
 To conclude this vignette, we show how this same data modelling and
-exploration cam be initiated from a quantitative dataset. We will use
+exploration can be initiated from a quantitative dataset. We will use
 part of the CPTAC data that is available in the `msdata` package.
 
 Once we have the path to the tsv data, we identify the columns that
