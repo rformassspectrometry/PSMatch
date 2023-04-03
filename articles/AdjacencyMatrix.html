@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -106,12 +106,12 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.15/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.17/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (<a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
 [ctb], Thomas Burger [ctb]<br><strong>Last modified:</strong>
-2022-04-25 15:31:10<br><strong>Compiled</strong>: Mon Apr 25 15:39:49
-2022</p>
+2023-04-03 10:37:42.617801<br><strong>Compiled</strong>: Mon Apr 3
+10:47:16 2023</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -127,64 +127,64 @@ manual page (<code><a href="../reference/PSMatch.html">?PSMatch</a></code>) and 
 <p>Let’s start by loading and filter PSM data as illustrated in the <a href="https://rformassspectrometry.github.io/PSMatch/articles/PSM.html" class="external-link"><em>Working
 with PSM data</em></a> vignette.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/RforMassSpectrometry/PSM" class="external-link">"PSMatch"</a></span><span class="op">)</span>
-<span class="va">id</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">ident</a></span><span class="op">(</span>full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">"TMT"</span><span class="op">)</span> |&gt;
-<span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="op">)</span> |&gt;
-<span class="fu"><a href="../reference/filterPSMs.html">filterPsmDecoy</a></span><span class="op">(</span><span class="op">)</span> |&gt;
-<span class="fu"><a href="../reference/filterPSMs.html">filterPsmRank</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Loading required namespace: mzR</span></code></pre>
-<pre><code><span class="co">## Removed 2896 decoy hits.</span></code></pre>
-<pre><code><span class="co">## Removed 155 PSMs with rank &gt; 1.</span></code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/RforMassSpectrometry/PSM" class="external-link">"PSMatch"</a></span><span class="op">)</span></span>
+<span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">ident</a></span><span class="op">(</span>full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">"TMT"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="../reference/filterPSMs.html">filterPsmDecoy</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="../reference/filterPSMs.html">filterPsmRank</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Loading required namespace: mzR</span></span></code></pre>
+<pre><code><span><span class="co">## Removed 2896 decoy hits.</span></span></code></pre>
+<pre><code><span><span class="co">## Removed 155 PSMs with rank &gt; 1.</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">id</span></code></pre></div>
-<pre><code><span class="co">## PSM with 2751 rows and 35 columns.</span>
-<span class="co">## names(35): sequence spectrumID ... subReplacementResidue subLocation</span></code></pre>
+<code class="sourceCode R"><span><span class="va">id</span></span></code></pre></div>
+<pre><code><span><span class="co">## PSM with 2751 rows and 35 columns.</span></span>
+<span><span class="co">## names(35): sequence spectrumID ... subReplacementResidue subLocation</span></span></code></pre>
 <p>When identification data is stored as a table, the relation between
 peptides is typically encode in two columns, once containing the peptide
 sequences and the second the protein identifiers these peptides stem
 from. Below are the 10 first observations of our identification data
 table.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">id</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sequence"</span>, <span class="st">"DatabaseAccess"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##                             sequence DatabaseAccess</span>
-<span class="co">## 1                       RQCRTDFLNYLR        ECA2006</span>
-<span class="co">## 2             ESVALADQVTCVDWRNRKATKK        ECA1676</span>
-<span class="co">## 3             QRMARTSDKQQSIRFLERLCGR        ECA3009</span>
-<span class="co">## 4          DGGPAIYGHERVGRNAKKFKCLKFR        ECA1420</span>
-<span class="co">## 5             QRMARTSDKQQSIRFLERLCGR        ECA3009</span>
-<span class="co">## 6  CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR        ECA2142</span>
-<span class="co">## 7  CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR        ECA2142</span>
-<span class="co">## 8               VGRCRPIINYLASPGGTSER        ECA0331</span>
-<span class="co">## 9                QRLDEHCVGVGQNALLLGR        ECA3680</span>
-<span class="co">## 10  VDYQGKKVVIIGLGLTGLSCVDFFLARGVVPR        ECA3817</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">id</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sequence"</span>, <span class="st">"DatabaseAccess"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                             sequence DatabaseAccess</span></span>
+<span><span class="co">## 1                       RQCRTDFLNYLR        ECA2006</span></span>
+<span><span class="co">## 2             ESVALADQVTCVDWRNRKATKK        ECA1676</span></span>
+<span><span class="co">## 3             QRMARTSDKQQSIRFLERLCGR        ECA3009</span></span>
+<span><span class="co">## 4          DGGPAIYGHERVGRNAKKFKCLKFR        ECA1420</span></span>
+<span><span class="co">## 5             QRMARTSDKQQSIRFLERLCGR        ECA3009</span></span>
+<span><span class="co">## 6  CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR        ECA2142</span></span>
+<span><span class="co">## 7  CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR        ECA2142</span></span>
+<span><span class="co">## 8               VGRCRPIINYLASPGGTSER        ECA0331</span></span>
+<span><span class="co">## 9                QRLDEHCVGVGQNALLLGR        ECA3680</span></span>
+<span><span class="co">## 10  VDYQGKKVVIIGLGLTGLSCVDFFLARGVVPR        ECA3817</span></span></code></pre>
 <p>This information can however also be encoded as an adjacency matrix
 with peptides along the rows and proteins along the columns, and a 1 (or
 more generally a value &gt; 0) indicating that a peptides belongs to the
 corresponding proteins. Such a matrix is created below for our
 identification data.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adjacencyMatrix.html">makeAdjacencyMatrix</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 2357 1504</span></code></pre>
+<code class="sourceCode R"><span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adjacencyMatrix.html">makeAdjacencyMatrix</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 2357 1504</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">adj</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></code></pre></div>
-<pre><code><span class="co">## 5 x 5 sparse Matrix of class "dgCMatrix"</span>
-<span class="co">##                                   ECA2006 ECA1676 ECA3009 ECA1420 ECA2142</span>
-<span class="co">## RQCRTDFLNYLR                            1       .       .       .       .</span>
-<span class="co">## ESVALADQVTCVDWRNRKATKK                  .       1       .       .       .</span>
-<span class="co">## QRMARTSDKQQSIRFLERLCGR                  .       .       2       .       .</span>
-<span class="co">## DGGPAIYGHERVGRNAKKFKCLKFR               .       .       .       1       .</span>
-<span class="co">## CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR       .       .       .       .       2</span></code></pre>
+<code class="sourceCode R"><span><span class="va">adj</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## 5 x 5 sparse Matrix of class "dgCMatrix"</span></span>
+<span><span class="co">##                                   ECA2006 ECA1676 ECA3009 ECA1420 ECA2142</span></span>
+<span><span class="co">## RQCRTDFLNYLR                            1       .       .       .       .</span></span>
+<span><span class="co">## ESVALADQVTCVDWRNRKATKK                  .       1       .       .       .</span></span>
+<span><span class="co">## QRMARTSDKQQSIRFLERLCGR                  .       .       2       .       .</span></span>
+<span><span class="co">## DGGPAIYGHERVGRNAKKFKCLKFR               .       .       .       1       .</span></span>
+<span><span class="co">## CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR       .       .       .       .       2</span></span></code></pre>
 <p>This matrix models the relation between the 2357 peptides and the
 1504 is our identification data. These numbers can be verified by
 checking the number of unique peptides sequences and database accession
 numbers.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id</span><span class="op">$</span><span class="va">sequence</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 2357</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id</span><span class="op">$</span><span class="va">sequence</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 2357</span></span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id</span><span class="op">$</span><span class="va">DatabaseAccess</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 1504</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id</span><span class="op">$</span><span class="va">DatabaseAccess</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 1504</span></span></code></pre>
 <p>Some values are &gt; 1 because some peptide sequences are observed
 more than oncce, for example carrying different modification or the same
 one at different sites. The adjacency matrix can be made binary by
@@ -196,54 +196,54 @@ These are represented by subsets of this large matrix named connected
 component. We can easily compute all these connected components to
 produce the multiple smaller and relevant adjacency matrices.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">ConnectedComponents</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 1476</span></code></pre>
+<code class="sourceCode R"><span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">ConnectedComponents</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 1476</span></span></code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cc</span></code></pre></div>
-<pre><code><span class="co">## An instance of class ConnectedComponents </span>
-<span class="co">##  Number of proteins: 1504 </span>
-<span class="co">##  Number of components: 1476 </span>
-<span class="co">##  Number of components [peptide x peptides]:</span>
-<span class="co">##   954[1 x 1] 7[1 x n] 501[n x 1] 14[n x n]</span></code></pre>
+<code class="sourceCode R"><span><span class="va">cc</span></span></code></pre></div>
+<pre><code><span><span class="co">## An instance of class ConnectedComponents </span></span>
+<span><span class="co">##  Number of proteins: 1504 </span></span>
+<span><span class="co">##  Number of components: 1476 </span></span>
+<span><span class="co">##  Number of components [peptide x peptides]:</span></span>
+<span><span class="co">##   954[1 x 1] 7[1 x n] 501[n x 1] 14[n x n]</span></span></code></pre>
 <p>Among the 2357 and the 1504 proteins, we have 1476 connected
 components.</p>
 <p>954 thereof, such as the one shown below, correspond to single
 proteins identified by a single peptide:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">1</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## 1 x 1 sparse Matrix of class "dgCMatrix"</span>
-<span class="co">##                        ECA0003</span>
-<span class="co">## KTLGAYDFSFGEGIYTHMKALR       1</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## 1 x 1 sparse Matrix of class "dgCMatrix"</span></span>
+<span><span class="co">##                        ECA0003</span></span>
+<span><span class="co">## KTLGAYDFSFGEGIYTHMKALR       1</span></span></code></pre>
 <p>7 thereof represent protein groups identified by a single shared
 peptide:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">527</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## 1 x 2 sparse Matrix of class "dgCMatrix"</span>
-<span class="co">##            ECA1637 ECA2914</span>
-<span class="co">## KEIILNKNEK       1       1</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">527</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## 1 x 2 sparse Matrix of class "dgCMatrix"</span></span>
+<span><span class="co">##            ECA1637 ECA2914</span></span>
+<span><span class="co">## KEIILNKNEK       1       1</span></span></code></pre>
 <p>501 represent single proteins identified by multiple unique
 peptides:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">38</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## 5 x 1 sparse Matrix of class "dgCMatrix"</span>
-<span class="co">##                               ECA0130</span>
-<span class="co">## GKIECNLRFELDPSAQSALILNEKLAK         1</span>
-<span class="co">## ERLQSKLEDAQVQLENNRLEQELVLMAQR       1</span>
-<span class="co">## GNWGSAAWELRSVNQR                    1</span>
-<span class="co">## ILKKEEAVGRR                         1</span>
-<span class="co">## ERIRARLTR                           1</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">38</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## 5 x 1 sparse Matrix of class "dgCMatrix"</span></span>
+<span><span class="co">##                               ECA0130</span></span>
+<span><span class="co">## GKIECNLRFELDPSAQSALILNEKLAK         1</span></span>
+<span><span class="co">## ERLQSKLEDAQVQLENNRLEQELVLMAQR       1</span></span>
+<span><span class="co">## GNWGSAAWELRSVNQR                    1</span></span>
+<span><span class="co">## ILKKEEAVGRR                         1</span></span>
+<span><span class="co">## ERIRARLTR                           1</span></span></code></pre>
 <p>Finally, arguable those that warrant additional exploration are those
 that are composed of multiple peptides and multiple proteins. There are
 14 thereof in this identification; here’s an example:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">920</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## 4 x 2 sparse Matrix of class "dgCMatrix"</span>
-<span class="co">##                    ECA2869 ECA4278</span>
-<span class="co">## QKTRCATRAFKANKGRAR       1       1</span>
-<span class="co">## IDFLRDPKGYLR             1       .</span>
-<span class="co">## RFKQKTR                  .       1</span>
-<span class="co">## LIRKQVVQPGYR             1       1</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">920</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## 4 x 2 sparse Matrix of class "dgCMatrix"</span></span>
+<span><span class="co">##                    ECA2869 ECA4278</span></span>
+<span><span class="co">## QKTRCATRAFKANKGRAR       1       1</span></span>
+<span><span class="co">## IDFLRDPKGYLR             1       .</span></span>
+<span><span class="co">## RFKQKTR                  .       1</span></span>
+<span><span class="co">## LIRKQVVQPGYR             1       1</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="visualising-adjacency-matrices">Visualising adjacency matrices<a class="anchor" aria-label="anchor" href="#visualising-adjacency-matrices"></a>
@@ -252,36 +252,36 @@ that are composed of multiple peptides and multiple proteins. There are
 (i.e. rows in the adjacency matrix) and 3 proteins (i.e. columns in the
 adjacency matrix).</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu">nrows</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span> <span class="op">&amp;</span> <span class="fu">ncols</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 1079 1082</span></code></pre>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu">nrows</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span> <span class="op">&amp;</span> <span class="fu">ncols</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 1079 1082</span></span></code></pre>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">dims</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span></code></pre></div>
-<pre><code><span class="co">##      nrow ncol</span>
-<span class="co">## [1,]    3    4</span>
-<span class="co">## [2,]    7    4</span></code></pre>
+<code class="sourceCode R"><span><span class="fu">dims</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##      nrow ncol</span></span>
+<span><span class="co">## [1,]    3    4</span></span>
+<span><span class="co">## [2,]    7    4</span></span></code></pre>
 <p>We will use the second adjacency matrix, with index 1082 to learn
 about the <code><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix()</a></code> function and explore how to
 inform our peptides filtering beyond the <code>filterPsm*()</code>
 functions.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">1082</span><span class="op">)</span>
-<span class="va">cx</span></code></pre></div>
-<pre><code><span class="co">## 7 x 4 sparse Matrix of class "dgCMatrix"</span>
-<span class="co">##                     ECA3406 ECA3415 ECA3389 ECA3399</span>
-<span class="co">## THPAERKPRRRKKR            1       1       .       .</span>
-<span class="co">## KPTARRRKRK                .       .       2       .</span>
-<span class="co">## PLAQGGQLNRLSAIRGLFR       1       1       .       .</span>
-<span class="co">## RRKRKPDSLKK               .       .       1       .</span>
-<span class="co">## KPRRRK                    1       1       .       .</span>
-<span class="co">## VVPVGLRALVWVQR            1       1       1       1</span>
-<span class="co">## KLKPRRR                   .       .       .       1</span></code></pre>
+<code class="sourceCode R"><span><span class="va">cx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">1082</span><span class="op">)</span></span>
+<span><span class="va">cx</span></span></code></pre></div>
+<pre><code><span><span class="co">## 7 x 4 sparse Matrix of class "dgCMatrix"</span></span>
+<span><span class="co">##                     ECA3406 ECA3415 ECA3389 ECA3399</span></span>
+<span><span class="co">## THPAERKPRRRKKR            1       1       .       .</span></span>
+<span><span class="co">## KPTARRRKRK                .       .       2       .</span></span>
+<span><span class="co">## PLAQGGQLNRLSAIRGLFR       1       1       .       .</span></span>
+<span><span class="co">## RRKRKPDSLKK               .       .       1       .</span></span>
+<span><span class="co">## KPRRRK                    1       1       .       .</span></span>
+<span><span class="co">## VVPVGLRALVWVQR            1       1       1       1</span></span>
+<span><span class="co">## KLKPRRR                   .       .       .       1</span></span></code></pre>
 <p>We can now visualise the the <code>cx</code> adjacency matrix with
 the <code><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix()</a></code> function. The nodes of the graph
 represent proteins and petides - by default, proteins are shown as blue
 squares and peptides as white circles. Edge connect peptides/circles to
 proteins/squares, indicating that a peptide belongs to a protein.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">cx</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">cx</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AdjacencyMatrix_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 <p>We can immediately observe that peptide <code>VVPVGLRALVWVQR</code>
 is associated to all four proteins; it holds that protein group
@@ -314,13 +314,13 @@ colours (large distance, dissimilar names).</p>
 <code>ECA33</code> and those starting with <code>ECA34</code> are
 represented with different colours.</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">cx</span>, <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">cx</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AdjacencyMatrix_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 <p>We can further distinguish <code>ECA3406</code>, and
 <code>ECA314</code> and <code>ECA33*9</code> by setting
 <code>protColors</code> to 2.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">cx</span>, <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">cx</span>, <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AdjacencyMatrix_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 <p><code>protColors</code> can also be a character of colours named by
 protein names. We will illustrate this use below, as it functions the
@@ -338,32 +338,32 @@ peptides sequences. Let’s use the search engine score (here
 create a colour palette representing the range of scores.</p>
 <p>The named vector of scores:</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">score</span> <span class="op">&lt;-</span> <span class="va">id</span><span class="op">$</span><span class="va">MS.GF.RawScore</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">score</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">id</span><span class="op">$</span><span class="va">sequence</span>
-<span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="va">score</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##                      RQCRTDFLNYLR            ESVALADQVTCVDWRNRKATKK </span>
-<span class="co">##                                10                                12 </span>
-<span class="co">##            QRMARTSDKQQSIRFLERLCGR         DGGPAIYGHERVGRNAKKFKCLKFR </span>
-<span class="co">##                                -5                                 7 </span>
-<span class="co">##            QRMARTSDKQQSIRFLERLCGR CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR </span>
-<span class="co">##                                21                               -31</span></code></pre>
+<code class="sourceCode R"><span><span class="va">score</span> <span class="op">&lt;-</span> <span class="va">id</span><span class="op">$</span><span class="va">MS.GF.RawScore</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">score</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">id</span><span class="op">$</span><span class="va">sequence</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">score</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                      RQCRTDFLNYLR            ESVALADQVTCVDWRNRKATKK </span></span>
+<span><span class="co">##                                10                                12 </span></span>
+<span><span class="co">##            QRMARTSDKQQSIRFLERLCGR         DGGPAIYGHERVGRNAKKFKCLKFR </span></span>
+<span><span class="co">##                                -5                                 7 </span></span>
+<span><span class="co">##            QRMARTSDKQQSIRFLERLCGR CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR </span></span>
+<span><span class="co">##                                21                               -31</span></span></code></pre>
 <p>The matching named vector of colours:</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">score</span>, <span class="fl">12</span>,
-                        labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">12</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cls</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">id</span><span class="op">$</span><span class="va">sequence</span>
-<span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cls</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##                      RQCRTDFLNYLR            ESVALADQVTCVDWRNRKATKK </span>
-<span class="co">##                         "#FFA2A2"                         "#FFA2A2" </span>
-<span class="co">##            QRMARTSDKQQSIRFLERLCGR         DGGPAIYGHERVGRNAKKFKCLKFR </span>
-<span class="co">##                         "#FFB9B9"                         "#FFA2A2" </span>
-<span class="co">##            QRMARTSDKQQSIRFLERLCGR CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR </span>
-<span class="co">##                         "#FFA2A2"                         "#FFD0D0"</span></code></pre>
+<code class="sourceCode R"><span><span class="va">cls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">score</span>, <span class="fl">12</span>,</span>
+<span>                        labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">12</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cls</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">id</span><span class="op">$</span><span class="va">sequence</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cls</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                      RQCRTDFLNYLR            ESVALADQVTCVDWRNRKATKK </span></span>
+<span><span class="co">##                         "#FFA2A2"                         "#FFA2A2" </span></span>
+<span><span class="co">##            QRMARTSDKQQSIRFLERLCGR         DGGPAIYGHERVGRNAKKFKCLKFR </span></span>
+<span><span class="co">##                         "#FFB9B9"                         "#FFA2A2" </span></span>
+<span><span class="co">##            QRMARTSDKQQSIRFLERLCGR CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR </span></span>
+<span><span class="co">##                         "#FFA2A2"                         "#FFD0D0"</span></span></code></pre>
 <p>Below, we see that all these peptides have relatively low scores
 (light red), and that two of the three of the <code>ECA34*</code>
 proteins have the highest scores.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">cx</span>, pepColors <span class="op">=</span> <span class="va">cls</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">cx</span>, pepColors <span class="op">=</span> <span class="va">cls</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AdjacencyMatrix_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 </div>
 </div>
@@ -372,69 +372,69 @@ proteins have the highest scores.</p>
 <h2 id="using-quantitative-data">Using quantitative data<a class="anchor" aria-label="anchor" href="#using-quantitative-data"></a>
 </h2>
 <p>To conclude this vignette, we show how this same data modelling and
-exploration cam be initiated from a quantitative dataset. We will use
+exploration can be initiated from a quantitative dataset. We will use
 part of the CPTAC data that is available in the <code>msdata</code>
 package.</p>
 <p>Once we have the path to the tsv data, we identify the columns that
 contain quantitation values (i.e. those starting with
 <code>Intensity.</code>) and them create a
 <code>SummarizedExperiment</code> using the <a href="https://rformassspectrometry.github.io/QFeatures/reference/readQFeatures.html" class="external-link">readSummarizedExperiment()</a>
-function from the <em><a href="https://bioconductor.org/packages/3.15/QFeatures" class="external-link">QFeatures</a></em>
+function from the <em><a href="https://bioconductor.org/packages/3.17/QFeatures" class="external-link">QFeatures</a></em>
 package.</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">quant</a></span><span class="op">(</span>full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] "cptac_a_b_peptides.txt"</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">quant</a></span><span class="op">(</span>full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "cptac_a_b_peptides.txt"</span></span></code></pre>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"Intensity\\."</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 56 57 58 59 60 61</span></code></pre>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"Intensity\\."</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 56 57 58 59 60 61</span></span></code></pre>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/QFeatures" class="external-link">QFeatures</a></span><span class="op">)</span>
-<span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/QFeatures/man/readQFeatures.html" class="external-link">readSummarizedExperiment</a></span><span class="op">(</span><span class="va">f</span>, ecol <span class="op">=</span> <span class="va">i</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/QFeatures" class="external-link">QFeatures</a></span><span class="op">)</span></span>
+<span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/QFeatures/man/readQFeatures.html" class="external-link">readSummarizedExperiment</a></span><span class="op">(</span><span class="va">f</span>, ecol <span class="op">=</span> <span class="va">i</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></code></pre></div>
 <p>Below, we create a vector of protein groups (not leading razor
 protein names) and name it using the peptide sequences.</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">prots</span> <span class="op">&lt;-</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">Proteins</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">prots</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">Sequence</span>
-<span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="va">prots</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##                            AAAAGAGGAGDSGDAVTK </span>
-<span class="co">##                        "sp|P38915|SPT8_YEAST" </span>
-<span class="co">##                                     AAAALAGGK </span>
-<span class="co">## "sp|Q3E792|RS25A_YEAST;sp|P0C0T4|RS25B_YEAST" </span>
-<span class="co">##                                    AAAALAGGKK </span>
-<span class="co">## "sp|Q3E792|RS25A_YEAST;sp|P0C0T4|RS25B_YEAST" </span>
-<span class="co">##                                  AAADALSDLEIK </span>
-<span class="co">##                        "sp|P09938|RIR2_YEAST" </span>
-<span class="co">##                               AAADALSDLEIKDSK </span>
-<span class="co">##                        "sp|P09938|RIR2_YEAST" </span>
-<span class="co">##                                      AAAEEFQR </span>
-<span class="co">##                       "sp|P53075|SHE10_YEAST"</span></code></pre>
+<code class="sourceCode R"><span><span class="va">prots</span> <span class="op">&lt;-</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">Proteins</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">prots</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">Sequence</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">prots</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                            AAAAGAGGAGDSGDAVTK </span></span>
+<span><span class="co">##                        "sp|P38915|SPT8_YEAST" </span></span>
+<span><span class="co">##                                     AAAALAGGK </span></span>
+<span><span class="co">## "sp|Q3E792|RS25A_YEAST;sp|P0C0T4|RS25B_YEAST" </span></span>
+<span><span class="co">##                                    AAAALAGGKK </span></span>
+<span><span class="co">## "sp|Q3E792|RS25A_YEAST;sp|P0C0T4|RS25B_YEAST" </span></span>
+<span><span class="co">##                                  AAADALSDLEIK </span></span>
+<span><span class="co">##                        "sp|P09938|RIR2_YEAST" </span></span>
+<span><span class="co">##                               AAADALSDLEIKDSK </span></span>
+<span><span class="co">##                        "sp|P09938|RIR2_YEAST" </span></span>
+<span><span class="co">##                                      AAAEEFQR </span></span>
+<span><span class="co">##                       "sp|P53075|SHE10_YEAST"</span></span></code></pre>
 <p>Below, the <code><a href="../reference/adjacencyMatrix.html">makeAdjacencyMatrix()</a></code> will split the protein
 groups into individual proteins using a <code>;</code> (used by default,
 so not required here) to construct the adjacency matrix, which itself
 can be used to compute the connected components.</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adjacencyMatrix.html">makeAdjacencyMatrix</a></span><span class="op">(</span><span class="va">prots</span>, split <span class="op">=</span> <span class="st">";"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 11466  1718</span></code></pre>
+<code class="sourceCode R"><span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adjacencyMatrix.html">makeAdjacencyMatrix</a></span><span class="op">(</span><span class="va">prots</span>, split <span class="op">=</span> <span class="st">";"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 11466  1718</span></span></code></pre>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">adj</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></code></pre></div>
-<pre><code><span class="co">## 3 x 3 sparse Matrix of class "dgCMatrix"</span>
-<span class="co">##                    sp|P38915|SPT8_YEAST sp|Q3E792|RS25A_YEAST</span>
-<span class="co">## AAAAGAGGAGDSGDAVTK                    1                     .</span>
-<span class="co">## AAAALAGGK                             .                     1</span>
-<span class="co">## AAAALAGGKK                            .                     1</span>
-<span class="co">##                    sp|P0C0T4|RS25B_YEAST</span>
-<span class="co">## AAAAGAGGAGDSGDAVTK                     .</span>
-<span class="co">## AAAALAGGK                              1</span>
-<span class="co">## AAAALAGGKK                             1</span></code></pre>
+<code class="sourceCode R"><span><span class="va">adj</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## 3 x 3 sparse Matrix of class "dgCMatrix"</span></span>
+<span><span class="co">##                    sp|P38915|SPT8_YEAST sp|Q3E792|RS25A_YEAST</span></span>
+<span><span class="co">## AAAAGAGGAGDSGDAVTK                    1                     .</span></span>
+<span><span class="co">## AAAALAGGK                             .                     1</span></span>
+<span><span class="co">## AAAALAGGKK                            .                     1</span></span>
+<span><span class="co">##                    sp|P0C0T4|RS25B_YEAST</span></span>
+<span><span class="co">## AAAAGAGGAGDSGDAVTK                     .</span></span>
+<span><span class="co">## AAAALAGGK                              1</span></span>
+<span><span class="co">## AAAALAGGKK                             1</span></span></code></pre>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">ConnectedComponents</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span>
-<span class="va">cc</span></code></pre></div>
-<pre><code><span class="co">## An instance of class ConnectedComponents </span>
-<span class="co">##  Number of proteins: 1718 </span>
-<span class="co">##  Number of components: 1452 </span>
-<span class="co">##  Number of components [peptide x peptides]:</span>
-<span class="co">##   139[1 x 1] 0[1 x n] 1163[n x 1] 150[n x n]</span></code></pre>
+<code class="sourceCode R"><span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">ConnectedComponents</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></span>
+<span><span class="va">cc</span></span></code></pre></div>
+<pre><code><span><span class="co">## An instance of class ConnectedComponents </span></span>
+<span><span class="co">##  Number of proteins: 1718 </span></span>
+<span><span class="co">##  Number of components: 1452 </span></span>
+<span><span class="co">##  Number of components [peptide x peptides]:</span></span>
+<span><span class="co">##   139[1 x 1] 0[1 x n] 1163[n x 1] 150[n x n]</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="prioritising-connected-components">Prioritising connected components<a class="anchor" aria-label="anchor" href="#prioritising-connected-components"></a>
@@ -446,87 +446,90 @@ components composed of as least several peptides and proteins (150 in
 the example above) and ranks them from the most to the least
 interesting.</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cctab</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">prioritiseConnectedComponents</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##      nrow ncol n_coms  mod_coms   n rs_min rs_max cs_min cs_max  sparsity</span>
-<span class="co">## 1081   21    3      3 0.5793951  23      1      2      7      8 0.6349206</span>
-<span class="co">## 223   109    6      3 0.5522382 189      1      6     15     43 0.7110092</span>
-<span class="co">## 462    25    3      3 0.5301783  27      1      2      3     14 0.6400000</span>
-<span class="co">## 785    16    6      4 0.4862826  27      1      6      1      7 0.7187500</span>
-<span class="co">## 7       9    9      4 0.4819945  19      1      6      1      7 0.7654321</span>
-<span class="co">## 381    39    3      3 0.4770794  46      1      3      6     25 0.6068376</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cctab</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">prioritiseConnectedComponents</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      nrow ncol n_coms  mod_coms   n rs_min rs_max cs_min cs_max  sparsity</span></span>
+<span><span class="co">## 1081   21    3      3 0.5793951  23      1      2      7      8 0.6349206</span></span>
+<span><span class="co">## 223   109    6      3 0.5483189 189      1      6     15     43 0.7110092</span></span>
+<span><span class="co">## 462    25    3      3 0.5301783  27      1      2      3     14 0.6400000</span></span>
+<span><span class="co">## 785    16    6      4 0.4862826  27      1      6      1      7 0.7187500</span></span>
+<span><span class="co">## 7       9    9      4 0.4819945  19      1      6      1      7 0.7654321</span></span>
+<span><span class="co">## 381    39    3      3 0.4770794  46      1      3      6     25 0.6068376</span></span></code></pre>
 <p>The prioritisation table can then be further summarised using a
 principal component to identify outliers (for example component 1200
 below) or groups of <em>similar</em> components to explore.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">factoextra</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_pca.html" class="external-link">fviz_pca</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></span><span class="op">(</span><span class="va">cctab</span>, scale <span class="op">=</span> <span class="cn">TRUE</span>, center <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">factoextra</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/fviz_pca.html" class="external-link">fviz_pca</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></span><span class="op">(</span><span class="va">cctab</span>, scale <span class="op">=</span> <span class="cn">TRUE</span>, center <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AdjacencyMatrix_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## R Under development (unstable) (2022-03-14 r81896)</span>
-<span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span>
-<span class="co">## Running under: Ubuntu 20.04.4 LTS</span>
-<span class="co">## </span>
-<span class="co">## Matrix products: default</span>
-<span class="co">## BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so</span>
-<span class="co">## </span>
-<span class="co">## locale:</span>
-<span class="co">##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span>
-<span class="co">##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span>
-<span class="co">##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span>
-<span class="co">##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span>
-<span class="co">##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span>
-<span class="co">## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span>
-<span class="co">## </span>
-<span class="co">## attached base packages:</span>
-<span class="co">## [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span>
-<span class="co">## [8] base     </span>
-<span class="co">## </span>
-<span class="co">## other attached packages:</span>
-<span class="co">##  [1] factoextra_1.0.7            ggplot2_3.3.5              </span>
-<span class="co">##  [3] QFeatures_1.5.2             MultiAssayExperiment_1.21.7</span>
-<span class="co">##  [5] SummarizedExperiment_1.25.3 Biobase_2.55.2             </span>
-<span class="co">##  [7] GenomicRanges_1.47.6        GenomeInfoDb_1.31.10       </span>
-<span class="co">##  [9] IRanges_2.29.1              MatrixGenerics_1.7.0       </span>
-<span class="co">## [11] matrixStats_0.62.0          PSMatch_0.99.5             </span>
-<span class="co">## [13] S4Vectors_0.33.17           BiocGenerics_0.41.2        </span>
-<span class="co">## [15] BiocStyle_2.23.1           </span>
-<span class="co">## </span>
-<span class="co">## loaded via a namespace (and not attached):</span>
-<span class="co">##  [1] ProtGenerics_1.27.2     bitops_1.0-7            fs_1.5.2               </span>
-<span class="co">##  [4] rprojroot_2.0.3         backports_1.4.1         tools_4.2.0            </span>
-<span class="co">##  [7] bslib_0.3.1             utf8_1.2.2              R6_2.5.1               </span>
-<span class="co">## [10] DBI_1.1.2               lazyeval_0.2.2          colorspace_2.0-3       </span>
-<span class="co">## [13] withr_2.5.0             tidyselect_1.1.2        compiler_4.2.0         </span>
-<span class="co">## [16] textshaping_0.3.6       cli_3.3.0               desc_1.4.1             </span>
-<span class="co">## [19] DelayedArray_0.21.2     labeling_0.4.2          bookdown_0.26          </span>
-<span class="co">## [22] sass_0.4.1              scales_1.2.0            pkgdown_2.0.3.9000     </span>
-<span class="co">## [25] systemfonts_1.0.4       stringr_1.4.0           digest_0.6.29          </span>
-<span class="co">## [28] rmarkdown_2.13          XVector_0.35.0          pkgconfig_2.0.3        </span>
-<span class="co">## [31] htmltools_0.5.2         fastmap_1.1.0           highr_0.9              </span>
-<span class="co">## [34] rlang_1.0.2             farver_2.1.0            jquerylib_0.1.4        </span>
-<span class="co">## [37] generics_0.1.2          jsonlite_1.8.0          BiocParallel_1.29.21   </span>
-<span class="co">## [40] car_3.0-12              dplyr_1.0.8             RCurl_1.98-1.6         </span>
-<span class="co">## [43] magrittr_2.0.3          GenomeInfoDbData_1.2.8  Matrix_1.4-1           </span>
-<span class="co">## [46] Rcpp_1.0.8.3            munsell_0.5.0           fansi_1.0.3            </span>
-<span class="co">## [49] abind_1.4-5             MsCoreUtils_1.7.5       lifecycle_1.0.1        </span>
-<span class="co">## [52] stringi_1.7.6           yaml_2.3.5              carData_3.0-5          </span>
-<span class="co">## [55] MASS_7.3-57             zlibbioc_1.41.0         grid_4.2.0             </span>
-<span class="co">## [58] ggrepel_0.9.1           parallel_4.2.0          crayon_1.5.1           </span>
-<span class="co">## [61] lattice_0.20-45         mzR_2.29.5              knitr_1.38             </span>
-<span class="co">## [64] pillar_1.7.0            ggpubr_0.4.0            igraph_1.3.1           </span>
-<span class="co">## [67] ggsignif_0.6.3          codetools_0.2-18        glue_1.6.2             </span>
-<span class="co">## [70] evaluate_0.15           BiocManager_1.30.17     vctrs_0.4.1            </span>
-<span class="co">## [73] tidyr_1.2.0             gtable_0.3.0            purrr_0.3.4            </span>
-<span class="co">## [76] assertthat_0.2.1        clue_0.3-60             cachem_1.0.6           </span>
-<span class="co">## [79] xfun_0.30               broom_0.8.0             AnnotationFilter_1.19.0</span>
-<span class="co">## [82] msdata_0.35.3           rstatix_0.7.0           ragg_1.2.2             </span>
-<span class="co">## [85] ncdf4_1.19              tibble_3.1.6            memoise_2.0.1          </span>
-<span class="co">## [88] cluster_2.1.3           ellipsis_0.3.2</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## R Under development (unstable) (2023-03-16 r83996)</span></span>
+<span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
+<span><span class="co">## Running under: Ubuntu 22.04.2 LTS</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Matrix products: default</span></span>
+<span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## locale:</span></span>
+<span><span class="co">##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
+<span><span class="co">##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## time zone: UTC</span></span>
+<span><span class="co">## tzcode source: system (glibc)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## attached base packages:</span></span>
+<span><span class="co">## [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
+<span><span class="co">## [8] base     </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## other attached packages:</span></span>
+<span><span class="co">##  [1] factoextra_1.0.7            ggplot2_3.4.1              </span></span>
+<span><span class="co">##  [3] QFeatures_1.9.3             MultiAssayExperiment_1.25.7</span></span>
+<span><span class="co">##  [5] SummarizedExperiment_1.29.1 Biobase_2.59.0             </span></span>
+<span><span class="co">##  [7] GenomicRanges_1.51.4        GenomeInfoDb_1.35.16       </span></span>
+<span><span class="co">##  [9] IRanges_2.33.0              MatrixGenerics_1.11.1      </span></span>
+<span><span class="co">## [11] matrixStats_0.63.0          PSMatch_1.3.2              </span></span>
+<span><span class="co">## [13] S4Vectors_0.37.4            BiocGenerics_0.45.3        </span></span>
+<span><span class="co">## [15] BiocStyle_2.27.1           </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## loaded via a namespace (and not attached):</span></span>
+<span><span class="co">##  [1] tidyselect_1.2.0        farver_2.1.1            dplyr_1.1.1            </span></span>
+<span><span class="co">##  [4] bitops_1.0-7            fastmap_1.1.1           lazyeval_0.2.2         </span></span>
+<span><span class="co">##  [7] RCurl_1.98-1.12         digest_0.6.31           lifecycle_1.0.3        </span></span>
+<span><span class="co">## [10] cluster_2.1.4           ProtGenerics_1.31.0     magrittr_2.0.3         </span></span>
+<span><span class="co">## [13] compiler_4.3.0          rlang_1.1.0             sass_0.4.5             </span></span>
+<span><span class="co">## [16] tools_4.3.0             igraph_1.4.1            utf8_1.2.3             </span></span>
+<span><span class="co">## [19] yaml_2.3.7              ggsignif_0.6.4          knitr_1.42             </span></span>
+<span><span class="co">## [22] labeling_0.4.2          DelayedArray_0.25.0     abind_1.4-5            </span></span>
+<span><span class="co">## [25] BiocParallel_1.33.12    withr_2.5.0             purrr_1.0.1            </span></span>
+<span><span class="co">## [28] desc_1.4.2              grid_4.3.0              fansi_1.0.4            </span></span>
+<span><span class="co">## [31] ggpubr_0.6.0            colorspace_2.1-0        scales_1.2.1           </span></span>
+<span><span class="co">## [34] MASS_7.3-58.3           cli_3.6.1               mzR_2.33.0             </span></span>
+<span><span class="co">## [37] rmarkdown_2.21          ragg_1.2.5              generics_0.1.3         </span></span>
+<span><span class="co">## [40] ncdf4_1.21              cachem_1.0.7            stringr_1.5.0          </span></span>
+<span><span class="co">## [43] zlibbioc_1.45.0         parallel_4.3.0          AnnotationFilter_1.23.0</span></span>
+<span><span class="co">## [46] BiocManager_1.30.20     XVector_0.39.0          vctrs_0.6.1            </span></span>
+<span><span class="co">## [49] Matrix_1.5-3            carData_3.0-5           jsonlite_1.8.4         </span></span>
+<span><span class="co">## [52] car_3.1-2               bookdown_0.33           rstatix_0.7.2          </span></span>
+<span><span class="co">## [55] ggrepel_0.9.3           clue_0.3-64             systemfonts_1.0.4      </span></span>
+<span><span class="co">## [58] tidyr_1.3.0             jquerylib_0.1.4         glue_1.6.2             </span></span>
+<span><span class="co">## [61] pkgdown_2.0.7.9000      codetools_0.2-19        stringi_1.7.12         </span></span>
+<span><span class="co">## [64] gtable_0.3.3            munsell_0.5.0           tibble_3.2.1           </span></span>
+<span><span class="co">## [67] pillar_1.9.0            htmltools_0.5.5         GenomeInfoDbData_1.2.10</span></span>
+<span><span class="co">## [70] R6_2.5.1                textshaping_0.3.6       rprojroot_2.0.3        </span></span>
+<span><span class="co">## [73] evaluate_0.20           lattice_0.20-45         highr_0.10             </span></span>
+<span><span class="co">## [76] backports_1.4.1         broom_1.0.4             msdata_0.39.0          </span></span>
+<span><span class="co">## [79] memoise_2.0.1           bslib_0.4.2             Rcpp_1.0.10            </span></span>
+<span><span class="co">## [82] xfun_0.38               MsCoreUtils_1.11.5      fs_1.6.1               </span></span>
+<span><span class="co">## [85] pkgconfig_2.0.3</span></span></code></pre>
 </div>
   </div>
 
@@ -547,7 +550,7 @@ below) or groups of <em>similar</em> components to explore.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
       </footer>

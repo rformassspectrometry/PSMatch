@@ -32,7 +32,7 @@ match multiple proteins.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -90,65 +90,80 @@ match multiple proteins.</p></li>
 </ul></div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">filterPSMs</span><span class="op">(</span>
-  <span class="va">x</span>,
-  decoy <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"decoy"</span><span class="op">]</span>,
-  rank <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"rank"</span><span class="op">]</span>,
-  protein <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"protein"</span><span class="op">]</span>,
-  spectrum <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"spectrum"</span><span class="op">]</span>,
-  peptide <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"peptide"</span><span class="op">]</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">filterPsmDecoy</span><span class="op">(</span><span class="va">x</span>, decoy <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"decoy"</span><span class="op">]</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="fu">filterPsmRank</span><span class="op">(</span><span class="va">x</span>, rank <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"rank"</span><span class="op">]</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="fu">filterPsmShared</span><span class="op">(</span>
-  <span class="va">x</span>,
-  protein <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"protein"</span><span class="op">]</span>,
-  peptide <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"peptide"</span><span class="op">]</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filterPSMs</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  decoy <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"decoy"</span><span class="op">]</span>,</span>
+<span>  rank <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"rank"</span><span class="op">]</span>,</span>
+<span>  protein <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"protein"</span><span class="op">]</span>,</span>
+<span>  spectrum <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"spectrum"</span><span class="op">]</span>,</span>
+<span>  peptide <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"peptide"</span><span class="op">]</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">filterPsmDecoy</span><span class="op">(</span><span class="va">x</span>, decoy <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"decoy"</span><span class="op">]</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">filterPsmRank</span><span class="op">(</span><span class="va">x</span>, rank <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"rank"</span><span class="op">]</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">filterPsmShared</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  protein <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"protein"</span><span class="op">]</span>,</span>
+<span>  peptide <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"peptide"</span><span class="op">]</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>An instance of class <code>PSM</code>.</p></dd>
+
+
 <dt>decoy</dt>
 <dd><p><code>character(1)</code> with the column name specifying
 whether entries match the decoy database or not. Default is
 the <code>decoy</code> PSM variable as defined in <code><a href="PSM.html">psmVariables()</a></code>. The
 column should be a <code>logical</code> and only PSMs holding a <code>FALSE</code>
 are retained. Filtering is ignored if set to <code>NULL</code> or <code>NA</code>.</p></dd>
+
+
 <dt>rank</dt>
 <dd><p><code>character(1)</code> with the column name holding the rank
 of the PSM. Default is the <code>rank</code> PSM variable as defined in
 <code><a href="PSM.html">psmVariables()</a></code>. This column should be a <code>numeric</code> and only
 PSMs having rank equal to 1 are retained. Filtering is ignored
 if set to <code>NULL</code> or <code>NA</code>.</p></dd>
+
+
 <dt>protein</dt>
 <dd><p><code>character(1)</code> with the column name holding the
 protein (groups) protein. Default is the <code>protein</code> PSM
 variable as defined in <code><a href="PSM.html">psmVariables()</a></code>. Filtering is ignored
 if set to <code>NULL</code> or <code>NA</code>.</p></dd>
+
+
 <dt>spectrum</dt>
 <dd><p><code>character(1)</code> with the name of the spectrum
 identifier column. Default is the <code>spectrum</code> PSM variable as
 defined in <code><a href="PSM.html">psmVariables()</a></code>. Filtering is ignored if set to
 <code>NULL</code> or <code>NA</code>.</p></dd>
+
+
 <dt>peptide</dt>
 <dd><p><code>character(1)</code> with the name of the peptide
 identifier column. Default is the <code>peptide</code> PSM variable as
 defined in <code><a href="PSM.html">psmVariables()</a></code>. Filtering is ignored if set to
 <code>NULL</code> or <code>NA</code>.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p><code>logical(1)</code> setting the verbosity flag.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A new filtered <code>PSM</code> object with the same columns as the
+    
+
+<p>A new filtered <code>PSM</code> object with the same columns as the
 input <code>x</code>.</p>
     </div>
     <div id="author">
@@ -158,11 +173,11 @@ input <code>x</code>.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">ident</a></span><span class="op">(</span>full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">"TMT"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">ident</a></span><span class="op">(</span>full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">"TMT"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid"</span>
-<span class="r-in"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">filterPSMs</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">filterPSMs</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Starting with 5802 PSMs:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 2896 decoy hits.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 155 PSMs with rank &gt; 1.</span>
@@ -184,7 +199,7 @@ input <code>x</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
       </footer></div>

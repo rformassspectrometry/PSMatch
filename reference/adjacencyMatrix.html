@@ -19,7 +19,7 @@ described below convert between these two format."><!-- mathjax --><script src="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -73,23 +73,23 @@ described below convert between these two format.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span>
-  <span class="va">x</span>,
-  split <span class="op">=</span> <span class="st">";"</span>,
-  peptide <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"peptide"</span><span class="op">]</span>,
-  protein <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"protein"</span><span class="op">]</span>,
-  score <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"score"</span><span class="op">]</span>,
-  binary <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="fu">makePeptideProteinVector</span><span class="op">(</span><span class="va">m</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span>
-
-<span class="fu">plotAdjacencyMatrix</span><span class="op">(</span>
-  <span class="va">m</span>,
-  protColors <span class="op">=</span> <span class="fl">0</span>,
-  pepColors <span class="op">=</span> <span class="cn">NULL</span>,
-  layout <span class="op">=</span> <span class="fu">igraph</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/igraph/man/layout_nicely.html" class="external-link">layout_nicely</a></span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  split <span class="op">=</span> <span class="st">";"</span>,</span>
+<span>  peptide <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"peptide"</span><span class="op">]</span>,</span>
+<span>  protein <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"protein"</span><span class="op">]</span>,</span>
+<span>  score <span class="op">=</span> <span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="st">"score"</span><span class="op">]</span>,</span>
+<span>  binary <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">makePeptideProteinVector</span><span class="op">(</span><span class="va">m</span>, collapse <span class="op">=</span> <span class="st">";"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">plotAdjacencyMatrix</span><span class="op">(</span></span>
+<span>  <span class="va">m</span>,</span>
+<span>  protColors <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  pepColors <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  layout <span class="op">=</span> <span class="fu">igraph</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/igraph/man/layout_nicely.html" class="external-link">layout_nicely</a></span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -97,24 +97,34 @@ described below convert between these two format.</p>
     <dl><dt>x</dt>
 <dd><p>Either an instance of class <code>PSM</code> or a <code>character</code>. See
 example below for details.</p></dd>
+
+
 <dt>split</dt>
 <dd><p><code>character(1)</code> defining how to split the string of
 protein identifiers (using <code><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit()</a></code>). Default is ";". If
 <code>NULL</code>, splitting is ignored.</p></dd>
+
+
 <dt>peptide</dt>
 <dd><p><code>character(1)</code> indicating the name of the variable
 that defines peptides in the <code>PSM</code> object. Default is the
 <code>peptide</code> PSM variable as defined in <code><a href="PSM.html">psmVariables()</a></code>.</p></dd>
+
+
 <dt>protein</dt>
 <dd><p><code>character(1)</code> indicating the name of the variable
 that defines proteins in the <code>PSM</code> object. Default is the
 <code>peptide</code> PSM variable as defined in <code><a href="PSM.html">psmVariables()</a></code>.</p></dd>
+
+
 <dt>score</dt>
 <dd><p><code>character(1)</code> indicating the name of the variable
 that defines PSM scores in the <code>PSM</code> object. Default is the
 <code>score</code> PSM variable as defined in <code><a href="PSM.html">psmVariables()</a></code>. Ignored
 when <code>NA</code> (which is the default value unless set by the user
 when constructing the <code>PSM</code> object).</p></dd>
+
+
 <dt>binary</dt>
 <dd><p><code>logical(1)</code> indicates if the adjacency matrix
 should be strictly binary. In such a case, PSMs matching the
@@ -122,11 +132,17 @@ same peptide but from different precursors (for example charge
 2 and 3) or carrying different PTMs, are counted only
 once. Default if <code>FALSE</code>. This also overrides any <code>score</code> that
 would be set.</p></dd>
+
+
 <dt>m</dt>
 <dd><p>A peptide-by-protein adjacency matrix.</p></dd>
+
+
 <dt>collapse</dt>
 <dd><p><code>character(1)</code> indicating how to collapse protein
 names for shared peptides. Default is <code>";"</code>.</p></dd>
+
+
 <dt>protColors</dt>
 <dd><p>Either a <code>numeric(1)</code> or a named <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>
 of colour names. The numeric value indicates the protein
@@ -143,6 +159,8 @@ colours for at least all proteins in the adjacency matrix <code>m</code>,
 but more protein could be named. The latter is useful when
 generating a colour vector for all proteins in a dataset and
 use it for different adjacency matrix visualisations.</p></dd>
+
+
 <dt>pepColors</dt>
 <dd><p>Either <code>NULL</code> (default) for no peptide colouring
 (white nodes) or a named <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> of colour names. It
@@ -152,13 +170,18 @@ all peptides in the adjacency matrix <code>m</code>, but more peptides
 could be named. The latter is useful when generating a colour
 vector for all peptides in a dataset and use it for different
 adjacency matrix visualisations.</p></dd>
+
+
 <dt>layout</dt>
 <dd><p>A graph layout, as defined in the <code>ipgraph</code>
 package. Default is <code>layout_as_bipartite()</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A peptide-by-protein sparce adjacency matrix (or class
+    
+
+<p>A peptide-by-protein sparce adjacency matrix (or class
 <code>dgCMatrix</code> as defined in the <code>Matrix</code> package) or
 peptide/protein vector.</p>
     </div>
@@ -220,49 +243,49 @@ refer to protein groups and individual proteins (groups of size
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## -----------------------</span></span>
-<span class="r-in"><span class="co">## From a character</span></span>
-<span class="r-in"><span class="co">## -----------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Protein vector without names</span></span>
-<span class="r-in"><span class="va">prots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ProtA"</span>, <span class="st">"ProtB"</span>, <span class="st">"ProtA;ProtB"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">prots</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## -----------------------</span></span></span>
+<span class="r-in"><span><span class="co">## From a character</span></span></span>
+<span class="r-in"><span><span class="co">## -----------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Protein vector without names</span></span></span>
+<span class="r-in"><span><span class="va">prots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ProtA"</span>, <span class="st">"ProtB"</span>, <span class="st">"ProtA;ProtB"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">prots</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 x 2 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ProtA ProtB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     .     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3     1     1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Named protein vector</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">prots</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pep1"</span>, <span class="st">"pep2"</span>, <span class="st">"pep3"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">prots</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Named protein vector</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">prots</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pep1"</span>, <span class="st">"pep2"</span>, <span class="st">"pep3"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">prots</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          pep1          pep2          pep3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       "ProtA"       "ProtB" "ProtA;ProtB" </span>
-<span class="r-in"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">prots</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">m</span></span>
+<span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">prots</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">m</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 x 2 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      ProtA ProtB</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep1     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep2     .     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep3     1     1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Back to vector</span></span>
-<span class="r-in"><span class="va">vec</span> <span class="op">&lt;-</span> <span class="fu">makePeptideProteinVector</span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">vec</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Back to vector</span></span></span>
+<span class="r-in"><span><span class="va">vec</span> <span class="op">&lt;-</span> <span class="fu">makePeptideProteinVector</span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">vec</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          pep1          pep2          pep3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       "ProtA"       "ProtB" "ProtA;ProtB" </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">prots</span>, <span class="va">vec</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">prots</span>, <span class="va">vec</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ----------------------------</span></span>
-<span class="r-in"><span class="co">## PSM object from a data.frame</span></span>
-<span class="r-in"><span class="co">## ----------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">psmdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>psm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"psm"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">                    peptide <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"pep"</span>, <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">                    protein <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Prot"</span>, <span class="va">LETTERS</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">psmdf</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ----------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## PSM object from a data.frame</span></span></span>
+<span class="r-in"><span><span class="co">## ----------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">psmdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>psm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"psm"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    peptide <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"pep"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    protein <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Prot"</span>, <span class="va">LETTERS</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">psmdf</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      psm peptide protein</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   psm1    pep1   ProtA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   psm2    pep1   ProtA</span>
@@ -274,11 +297,11 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8   psm8    pep7   ProtE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9   psm9    pep8   ProtF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 psm10    pep8   ProtF</span>
-<span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psmdf</span>, peptide <span class="op">=</span> <span class="st">"peptide"</span>, protein <span class="op">=</span> <span class="st">"protein"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">psm</span></span>
+<span class="r-in"><span><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psmdf</span>, peptide <span class="op">=</span> <span class="st">"peptide"</span>, protein <span class="op">=</span> <span class="st">"protein"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">psm</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 10 rows and 3 columns.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names(3): psm peptide protein</span>
-<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7 x 6 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      ProtA ProtB ProtC ProtD ProtE ProtF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep1     2     .     .     .     .     .</span>
@@ -288,13 +311,13 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep6     .     .     1     .     .     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep7     .     .     .     .     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep8     .     .     .     .     .     2</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Reduce PSM object to peptides</span></span>
-<span class="r-in"><span class="va">rpsm</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">reducePSMs</a></span><span class="op">(</span><span class="va">psm</span>, k <span class="op">=</span> <span class="va">psm</span><span class="op">$</span><span class="va">peptide</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">rpsm</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Reduce PSM object to peptides</span></span></span>
+<span class="r-in"><span><span class="va">rpsm</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">reducePSMs</a></span><span class="op">(</span><span class="va">psm</span>, k <span class="op">=</span> <span class="va">psm</span><span class="op">$</span><span class="va">peptide</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rpsm</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Reduced PSM with 7 rows and 3 columns.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names(3): psm peptide protein</span>
-<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">rpsm</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">rpsm</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7 x 6 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      ProtA ProtB ProtC ProtD ProtE ProtF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep1     1     .     .     .     .     .</span>
@@ -304,9 +327,9 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep6     .     .     1     .     .     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep7     .     .     .     .     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep8     .     .     .     .     .     1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Or set binary to TRUE</span></span>
-<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span>, binary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Or set binary to TRUE</span></span></span>
+<span class="r-in"><span><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span>, binary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7 x 6 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      ProtA ProtB ProtC ProtD ProtE ProtF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep1     1     .     .     .     .     .</span>
@@ -316,24 +339,24 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep6     .     .     1     .     .     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep7     .     .     .     .     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pep8     .     .     .     .     .     1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ----------------------------</span></span>
-<span class="r-in"><span class="co">## PSM object from an mzid file</span></span>
-<span class="r-in"><span class="co">## ----------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">ident</a></span><span class="op">(</span>full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">"TMT"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span> |&gt;</span>
-<span class="r-in">       <span class="fu"><a href="filterPSMs.html">filterPsmDecoy</a></span><span class="op">(</span><span class="op">)</span> |&gt;</span>
-<span class="r-in">       <span class="fu"><a href="filterPSMs.html">filterPsmRank</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ----------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## PSM object from an mzid file</span></span></span>
+<span class="r-in"><span><span class="co">## ----------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">ident</a></span><span class="op">(</span>full.names <span class="op">=</span> <span class="cn">TRUE</span>, pattern <span class="op">=</span> <span class="st">"TMT"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>       <span class="fu"><a href="filterPSMs.html">filterPsmDecoy</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>       <span class="fu"><a href="filterPSMs.html">filterPsmRank</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 2896 decoy hits.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Removed 155 PSMs with rank &gt; 1.</span>
-<span class="r-in"><span class="va">psm</span></span>
+<span class="r-in"><span><span class="va">psm</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 2751 rows and 35 columns.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> names(35): sequence spectrumID ... subReplacementResidue subLocation</span>
-<span class="r-in"><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2357 1504</span>
-<span class="r-in"><span class="va">adj</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
+<span class="r-in"><span><span class="va">adj</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 4 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   ECA2006 ECA1676 ECA3009 ECA1420</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> RQCRTDFLNYLR                            1       .       .       .</span>
@@ -346,10 +369,10 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> VDYQGKKVVIIGLGLTGLSCVDFFLARGVVPR        .       .       .       .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> TLIIERCR                                .       .       .       .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> QEVESCTTIEKIWVIDLKIK                    .       .       .       .</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Binary adjacency matrix</span></span>
-<span class="r-in"><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span>, binary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">adj</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Binary adjacency matrix</span></span></span>
+<span class="r-in"><span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span>, binary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">adj</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 4 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   ECA2006 ECA1676 ECA3009 ECA1420</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> RQCRTDFLNYLR                            1       .       .       .</span>
@@ -362,33 +385,33 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> VDYQGKKVVIIGLGLTGLSCVDFFLARGVVPR        .       .       .       .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> TLIIERCR                                .       .       .       .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> QEVESCTTIEKIWVIDLKIK                    .       .       .       .</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Peptides with rowSums &gt; 1 match multiple proteins.</span></span>
-<span class="r-in"><span class="co">## Use filterPsmShared() to filter these out.</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Peptides with rowSums &gt; 1 match multiple proteins.</span></span></span>
+<span class="r-in"><span><span class="co">## Use filterPsmShared() to filter these out.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1    2    3    4 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2324   28    3    2 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## -----------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Binary, non-binary and score adjacency matrices</span></span>
-<span class="r-in"><span class="co">## -----------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## -------------------------------------</span></span>
-<span class="r-in"><span class="co">## Case 1: no scores, 1 PSM per peptides</span></span>
-<span class="r-in"><span class="va">psmdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>spectrum <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sp1"</span>, <span class="st">"sp2"</span>, <span class="st">"sp3"</span>, <span class="st">"sp4"</span>, <span class="st">"sp5"</span>,</span>
-<span class="r-in">                                 <span class="st">"sp6"</span>, <span class="st">"sp7"</span>, <span class="st">"sp8"</span>, <span class="st">"sp9"</span>, <span class="st">"sp10"</span><span class="op">)</span>,</span>
-<span class="r-in">                    sequence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NKAVRTYHEQ"</span>, <span class="st">"IYNHSQGFCA"</span>, <span class="st">"YHWRLPVSEF"</span>,</span>
-<span class="r-in">                                 <span class="st">"YEHNGFPLKD"</span>, <span class="st">"WAQFDVYNLS"</span>, <span class="st">"EDHINCTQWP"</span>,</span>
-<span class="r-in">                                 <span class="st">"WSMKVDYEQT"</span>, <span class="st">"GWTSKMRYPL"</span>, <span class="st">"PMAYIWEKLC"</span>,</span>
-<span class="r-in">                                 <span class="st">"HWAEYFNDVT"</span><span class="op">)</span>,</span>
-<span class="r-in">                    protein <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ProtB"</span>, <span class="st">"ProtB"</span>, <span class="st">"ProtA"</span>, <span class="st">"ProtD"</span>, <span class="st">"ProtD"</span>,</span>
-<span class="r-in">                                <span class="st">"ProtG"</span>, <span class="st">"ProtF"</span>, <span class="st">"ProtE"</span>, <span class="st">"ProtC"</span>, <span class="st">"ProtF"</span><span class="op">)</span>,</span>
-<span class="r-in">                    decoy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">                    rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>,</span>
-<span class="r-in">                    score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.082</span>, <span class="fl">0.310</span>, <span class="fl">0.133</span>, <span class="fl">0.174</span>, <span class="fl">0.944</span>, <span class="fl">0.0261</span>,</span>
-<span class="r-in">                              <span class="fl">0.375</span>, <span class="fl">0.741</span>, <span class="fl">0.254</span>, <span class="fl">0.058</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">psmdf</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## -----------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Binary, non-binary and score adjacency matrices</span></span></span>
+<span class="r-in"><span><span class="co">## -----------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## -------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Case 1: no scores, 1 PSM per peptides</span></span></span>
+<span class="r-in"><span><span class="va">psmdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>spectrum <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sp1"</span>, <span class="st">"sp2"</span>, <span class="st">"sp3"</span>, <span class="st">"sp4"</span>, <span class="st">"sp5"</span>,</span></span>
+<span class="r-in"><span>                                 <span class="st">"sp6"</span>, <span class="st">"sp7"</span>, <span class="st">"sp8"</span>, <span class="st">"sp9"</span>, <span class="st">"sp10"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    sequence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NKAVRTYHEQ"</span>, <span class="st">"IYNHSQGFCA"</span>, <span class="st">"YHWRLPVSEF"</span>,</span></span>
+<span class="r-in"><span>                                 <span class="st">"YEHNGFPLKD"</span>, <span class="st">"WAQFDVYNLS"</span>, <span class="st">"EDHINCTQWP"</span>,</span></span>
+<span class="r-in"><span>                                 <span class="st">"WSMKVDYEQT"</span>, <span class="st">"GWTSKMRYPL"</span>, <span class="st">"PMAYIWEKLC"</span>,</span></span>
+<span class="r-in"><span>                                 <span class="st">"HWAEYFNDVT"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    protein <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ProtB"</span>, <span class="st">"ProtB"</span>, <span class="st">"ProtA"</span>, <span class="st">"ProtD"</span>, <span class="st">"ProtD"</span>,</span></span>
+<span class="r-in"><span>                                <span class="st">"ProtG"</span>, <span class="st">"ProtF"</span>, <span class="st">"ProtE"</span>, <span class="st">"ProtC"</span>, <span class="st">"ProtF"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    decoy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.082</span>, <span class="fl">0.310</span>, <span class="fl">0.133</span>, <span class="fl">0.174</span>, <span class="fl">0.944</span>, <span class="fl">0.0261</span>,</span></span>
+<span class="r-in"><span>                              <span class="fl">0.375</span>, <span class="fl">0.741</span>, <span class="fl">0.254</span>, <span class="fl">0.058</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">psmdf</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    spectrum   sequence protein decoy rank  score</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       sp1 NKAVRTYHEQ   ProtB FALSE    1 0.0820</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       sp2 IYNHSQGFCA   ProtB FALSE    1 0.3100</span>
@@ -400,12 +423,12 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8       sp8 GWTSKMRYPL   ProtE FALSE    1 0.7410</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9       sp9 PMAYIWEKLC   ProtC FALSE    1 0.2540</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10     sp10 HWAEYFNDVT   ProtF FALSE    1 0.0580</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psmdf</span>, spectrum <span class="op">=</span> <span class="st">"spectrum"</span>, peptide <span class="op">=</span> <span class="st">"sequence"</span>,</span>
-<span class="r-in">           protein <span class="op">=</span> <span class="st">"protein"</span>, decoy <span class="op">=</span> <span class="st">"decoy"</span>, rank <span class="op">=</span> <span class="st">"rank"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## binary matrix</span></span>
-<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psmdf</span>, spectrum <span class="op">=</span> <span class="st">"spectrum"</span>, peptide <span class="op">=</span> <span class="st">"sequence"</span>,</span></span>
+<span class="r-in"><span>           protein <span class="op">=</span> <span class="st">"protein"</span>, decoy <span class="op">=</span> <span class="st">"decoy"</span>, rank <span class="op">=</span> <span class="st">"rank"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## binary matrix</span></span></span>
+<span class="r-in"><span><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 7 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            ProtB ProtA ProtD ProtG ProtF ProtE ProtC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NKAVRTYHEQ     1     .     .     .     .     .     .</span>
@@ -418,16 +441,16 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> GWTSKMRYPL     .     .     .     .     .     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PMAYIWEKLC     .     .     .     .     .     .     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HWAEYFNDVT     .     .     .     .     1     .     .</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Case 2: sp1 and sp11 match the same peptide (NKAVRTYHEQ)</span></span>
-<span class="r-in"><span class="va">psmdf2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">psmdf</span>,</span>
-<span class="r-in">                <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>spectrum <span class="op">=</span> <span class="st">"sp11"</span>,</span>
-<span class="r-in">                           sequence <span class="op">=</span> <span class="va">psmdf</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
-<span class="r-in">                           protein <span class="op">=</span> <span class="va">psmdf</span><span class="op">$</span><span class="va">protein</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
-<span class="r-in">                           decoy <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">                           rank <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">                           score <span class="op">=</span> <span class="fl">0.011</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">psmdf2</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Case 2: sp1 and sp11 match the same peptide (NKAVRTYHEQ)</span></span></span>
+<span class="r-in"><span><span class="va">psmdf2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">psmdf</span>,</span></span>
+<span class="r-in"><span>                <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>spectrum <span class="op">=</span> <span class="st">"sp11"</span>,</span></span>
+<span class="r-in"><span>                           sequence <span class="op">=</span> <span class="va">psmdf</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>                           protein <span class="op">=</span> <span class="va">psmdf</span><span class="op">$</span><span class="va">protein</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>                           decoy <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>                           rank <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                           score <span class="op">=</span> <span class="fl">0.011</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">psmdf2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    spectrum   sequence protein decoy rank  score</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       sp1 NKAVRTYHEQ   ProtB FALSE    1 0.0820</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       sp2 IYNHSQGFCA   ProtB FALSE    1 0.3100</span>
@@ -440,11 +463,11 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9       sp9 PMAYIWEKLC   ProtC FALSE    1 0.2540</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10     sp10 HWAEYFNDVT   ProtF FALSE    1 0.0580</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11     sp11 NKAVRTYHEQ   ProtB FALSE    1 0.0110</span>
-<span class="r-in"><span class="va">psm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psmdf2</span>, spectrum <span class="op">=</span> <span class="st">"spectrum"</span>, peptide <span class="op">=</span> <span class="st">"sequence"</span>,</span>
-<span class="r-in">            protein <span class="op">=</span> <span class="st">"protein"</span>, decoy <span class="op">=</span> <span class="st">"decoy"</span>, rank <span class="op">=</span> <span class="st">"rank"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Now NKAVRTYHEQ/ProtB counts 2 PSMs</span></span>
-<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">psm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psmdf2</span>, spectrum <span class="op">=</span> <span class="st">"spectrum"</span>, peptide <span class="op">=</span> <span class="st">"sequence"</span>,</span></span>
+<span class="r-in"><span>            protein <span class="op">=</span> <span class="st">"protein"</span>, decoy <span class="op">=</span> <span class="st">"decoy"</span>, rank <span class="op">=</span> <span class="st">"rank"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Now NKAVRTYHEQ/ProtB counts 2 PSMs</span></span></span>
+<span class="r-in"><span><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 7 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            ProtB ProtA ProtD ProtG ProtF ProtE ProtC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NKAVRTYHEQ     2     .     .     .     .     .     .</span>
@@ -457,9 +480,9 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> GWTSKMRYPL     .     .     .     .     .     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PMAYIWEKLC     .     .     .     .     .     .     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HWAEYFNDVT     .     .     .     .     1     .     .</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Force a binary matrix</span></span>
-<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm2</span>, binary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Force a binary matrix</span></span></span>
+<span class="r-in"><span><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm2</span>, binary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 7 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            ProtB ProtA ProtD ProtG ProtF ProtE ProtC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NKAVRTYHEQ     1     .     .     .     .     .     .</span>
@@ -472,21 +495,21 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> GWTSKMRYPL     .     .     .     .     .     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PMAYIWEKLC     .     .     .     .     .     .     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HWAEYFNDVT     .     .     .     .     1     .     .</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## --------------------------------</span></span>
-<span class="r-in"><span class="co">## Case 3: set the score PSM values</span></span>
-<span class="r-in"><span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">psm</span><span class="op">)</span> <span class="co">## no score defined</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## --------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Case 3: set the score PSM values</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">psm</span><span class="op">)</span> <span class="co">## no score defined</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   spectrum    peptide    protein      decoy       rank      score </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> "spectrum" "sequence"  "protein"    "decoy"     "rank"         NA </span>
-<span class="r-in"><span class="va">psm3</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psm</span>, spectrum <span class="op">=</span> <span class="st">"spectrum"</span>, peptide <span class="op">=</span> <span class="st">"sequence"</span>,</span>
-<span class="r-in">            protein <span class="op">=</span> <span class="st">"protein"</span>, decoy <span class="op">=</span> <span class="st">"decoy"</span>, rank <span class="op">=</span> <span class="st">"rank"</span>,</span>
-<span class="r-in">            score <span class="op">=</span> <span class="st">"score"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">psm3</span><span class="op">)</span> <span class="co">## score defined</span></span>
+<span class="r-in"><span><span class="va">psm3</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psm</span>, spectrum <span class="op">=</span> <span class="st">"spectrum"</span>, peptide <span class="op">=</span> <span class="st">"sequence"</span>,</span></span>
+<span class="r-in"><span>            protein <span class="op">=</span> <span class="st">"protein"</span>, decoy <span class="op">=</span> <span class="st">"decoy"</span>, rank <span class="op">=</span> <span class="st">"rank"</span>,</span></span>
+<span class="r-in"><span>            score <span class="op">=</span> <span class="st">"score"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">psm3</span><span class="op">)</span> <span class="co">## score defined</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   spectrum    peptide    protein      decoy       rank      score </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> "spectrum" "sequence"  "protein"    "decoy"     "rank"    "score" </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## adjacency matrix with scores</span></span>
-<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm3</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## adjacency matrix with scores</span></span></span>
+<span class="r-in"><span><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 7 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            ProtB ProtA ProtD  ProtG ProtF ProtE ProtC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NKAVRTYHEQ 0.082 .     .     .      .     .     .    </span>
@@ -499,9 +522,9 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> GWTSKMRYPL .     .     .     .      .     0.741 .    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PMAYIWEKLC .     .     .     .      .     .     0.254</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HWAEYFNDVT .     .     .     .      0.058 .     .    </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Force a binary matrix</span></span>
-<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm3</span>, binary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Force a binary matrix</span></span></span>
+<span class="r-in"><span><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm3</span>, binary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 7 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            ProtB ProtA ProtD ProtG ProtF ProtE ProtC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NKAVRTYHEQ     1     .     .     .     .     .     .</span>
@@ -514,17 +537,17 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-out co"><span class="r-pr">#&gt;</span> GWTSKMRYPL     .     .     .     .     .     1     .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PMAYIWEKLC     .     .     .     .     .     .     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HWAEYFNDVT     .     .     .     .     1     .     .</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ---------------------------------</span></span>
-<span class="r-in"><span class="co">## Case 4: scores with multiple PSMs</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">psm4</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psm2</span>, spectrum <span class="op">=</span> <span class="st">"spectrum"</span>, peptide <span class="op">=</span> <span class="st">"sequence"</span>,</span>
-<span class="r-in">            protein <span class="op">=</span> <span class="st">"protein"</span>, decoy <span class="op">=</span> <span class="st">"decoy"</span>, rank <span class="op">=</span> <span class="st">"rank"</span>,</span>
-<span class="r-in">            score <span class="op">=</span> <span class="st">"score"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Now NKAVRTYHEQ/ProtB has a summed score of 0.093 computed as</span></span>
-<span class="r-in"><span class="co">## 0.082 (from sp1) + 0.011 (from sp11)</span></span>
-<span class="r-in"><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm4</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ---------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Case 4: scores with multiple PSMs</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">psm4</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psm2</span>, spectrum <span class="op">=</span> <span class="st">"spectrum"</span>, peptide <span class="op">=</span> <span class="st">"sequence"</span>,</span></span>
+<span class="r-in"><span>            protein <span class="op">=</span> <span class="st">"protein"</span>, decoy <span class="op">=</span> <span class="st">"decoy"</span>, rank <span class="op">=</span> <span class="st">"rank"</span>,</span></span>
+<span class="r-in"><span>            score <span class="op">=</span> <span class="st">"score"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Now NKAVRTYHEQ/ProtB has a summed score of 0.093 computed as</span></span></span>
+<span class="r-in"><span><span class="co">## 0.082 (from sp1) + 0.011 (from sp11)</span></span></span>
+<span class="r-in"><span><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 7 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            ProtB ProtA ProtD  ProtG ProtF ProtE ProtC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NKAVRTYHEQ 0.093 .     .     .      .     .     .    </span>
@@ -551,7 +574,7 @@ refer to protein groups and individual proteins (groups of size
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
       </footer></div>
