@@ -252,7 +252,7 @@ setMethod("show", "PSM",
 ##'     calculate the reduced state.
 ##'
 ##' @param peptide `character(1)` variable name that defines a peptide
-##'     in the PSM data. Detaults are `"spequence"` (mzR parser) or
+##'     in the PSM data. Detaults are `"sequence"` (mzR parser) or
 ##'     `"pepSeq"` (mzID parser).
 ##'
 ##' @param protein `character(1)` variable name that defines a protein
@@ -269,6 +269,11 @@ setMethod("show", "PSM",
 ##' @param score `character(1)` variable name that defines the PSM
 ##'     score. This value isn't set by default as it depends on the
 ##'     search engine and application. Default is `NA`.
+##'
+##' @param fdr `character(1)` variable name that defines that defines
+##'     the spectrum FDR (or any similar/relevant metric that can be
+##'     used for filtering). This value isn't set by default as it
+##'     depends on the search engine and application. Default is `NA`.
 ##'
 ##' @param parser `character(1)` defining the parser to be used to
 ##'     read the `mzIdentML` files. One of `"mzR"` (default) or
@@ -294,6 +299,7 @@ PSM <- function(x,
                 decoy = NA,
                 rank = NA,
                 score = NA,
+                fdr = NA,
                 parser = c("mzR", "mzID"),
                 BPPARAM = SerialParam()) {
     if (is.character(x)) {
@@ -308,7 +314,8 @@ PSM <- function(x,
                                protein = "DatabaseAccess",
                                decoy = "isDecoy",
                                rank = "rank",
-                               score = NA_character_)
+                               score = NA_character_,
+                               fdr = NA_character_)
         } else {
             psm <- readPSMsMzID(x, BPPARAM)
             ## Default PSM variables for mzID parser
@@ -317,7 +324,8 @@ PSM <- function(x,
                                protein = "accession",
                                decoy = "isdecoy",
                                rank = "rank",
-                               score = NA_character_)
+                               score = NA_character_,
+                               fdr = NA_character_)
         }
     } else if (is.data.frame(x)) {
         psm <- as(DataFrame(x), "PSM")
@@ -326,7 +334,8 @@ PSM <- function(x,
                            protein = NA_character_,
                            decoy = NA_character_,
                            rank = NA_character_,
-                           score = NA_character_)
+                           score = NA_character_,
+                           fdr = NA_character_)
     } else {
         stopifnot(inherits(x, "PSM"))
         .psmVariables <- psmVariables(x)
@@ -345,6 +354,8 @@ PSM <- function(x,
         .psmVariables["rank"] <- rank
     if (score %in% names(psm))
         .psmVariables["score"] <- score
+    if (fdr %in% names(psm))
+        .psmVariables["fdr"] <- fdr
     metadata(psm)$variables <- .psmVariables
     psm
 }

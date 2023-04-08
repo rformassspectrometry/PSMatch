@@ -1,5 +1,13 @@
 # PSMatch 1.3
 
+## PSMatch 1.3.3
+
+- New `fdr` variable (default is always `NA_character_` for now) that
+  defines the spectrum FDR (or any similar/relevant metric that can be
+  used for filtering - see next item).
+- New `filterPsmFdr()` function that filters based on the `fdr`
+  variable.
+
 ## PSMatch 1.3.2
 
 - Specific `Matrix::rowSums()` to fix error in example.

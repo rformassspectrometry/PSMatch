@@ -143,3 +143,32 @@ filterPsmShared <- function(x,
         message("Removed ", n0 - n1, " shared peptides.")
     x
 }
+
+##' @description
+##'
+##' - `filterPsmFdr()` filters out PSMs based on their FDR.
+##'
+##' @name filterPSMs
+##'
+##' @param fdr `character(1)` variable name that defines that defines
+##'     the spectrum FDR (or any similar/relevant metric that can be
+##'     used for filtering). This value isn't set by default as it
+##'     depends on the search engine and application. Default is `NA`.
+##'
+##' @param FDR `numeric(1)` to be used to filter based on the `fdr`
+##'     variable. Default is 0.05.
+##'
+##' @export
+filterPsmFdr <- function(x,
+                         FDR = 0.05,
+                         fdr = psmVariables(x)["fdr"],
+                         verbose = TRUE) {
+    if (is.null(fdr) || is.na(fdr))
+        return(x)
+    n0 <- nrow(x)
+    x <- x[x[, fdr] < FDR, ]
+    n1 <- nrow(x)
+    if (verbose)
+        message("Removed ", n0 - n1, " PSMs with FDR < ", fdr, ".")
+    x
+}

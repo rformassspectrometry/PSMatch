@@ -23,6 +23,7 @@ PSM(
   decoy = NA,
   rank = NA,
   score = NA,
+  fdr = NA,
   parser = c("mzR", "mzID"),
   BPPARAM = SerialParam()
 )
@@ -47,7 +48,7 @@ parser) or \code{"spectrumid"} (mzID parser). It is also used to
 calculate the reduced state.}
 
 \item{peptide}{\code{character(1)} variable name that defines a peptide
-in the PSM data. Detaults are \code{"spequence"} (mzR parser) or
+in the PSM data. Detaults are \code{"sequence"} (mzR parser) or
 \code{"pepSeq"} (mzID parser).}
 
 \item{protein}{\code{character(1)} variable name that defines a protein
@@ -64,6 +65,11 @@ the peptide spectrum match in the PSM data. Default is \code{"rank"}.}
 \item{score}{\code{character(1)} variable name that defines the PSM
 score. This value isn't set by default as it depends on the
 search engine and application. Default is \code{NA}.}
+
+\item{fdr}{\code{character(1)} variable name that defines that defines
+the spectrum FDR (or any similar/relevant metric that can be
+used for filtering). This value isn't set by default as it
+depends on the search engine and application. Default is \code{NA}.}
 
 \item{parser}{\code{character(1)} defining the parser to be used to
 read the \code{mzIdentML} files. One of \code{"mzR"} (default) or

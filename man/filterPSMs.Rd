@@ -5,6 +5,7 @@
 \alias{filterPsmDecoy}
 \alias{filterPsmRank}
 \alias{filterPsmShared}
+\alias{filterPsmFdr}
 \title{Filter out unreliable PSMs.}
 \usage{
 filterPSMs(
@@ -27,6 +28,8 @@ filterPsmShared(
   peptide = psmVariables(x)["peptide"],
   verbose = TRUE
 )
+
+filterPsmFdr(x, FDR = 0.05, fdr = psmVariables(x)["fdr"], verbose = TRUE)
 }
 \arguments{
 \item{x}{An instance of class \code{PSM}.}
@@ -59,6 +62,14 @@ defined in \code{\link[=psmVariables]{psmVariables()}}. Filtering is ignored if 
 \code{NULL} or \code{NA}.}
 
 \item{verbose}{\code{logical(1)} setting the verbosity flag.}
+
+\item{FDR}{\code{numeric(1)} to be used to filter based on the \code{fdr}
+variable. Default is 0.05.}
+
+\item{fdr}{\code{character(1)} variable name that defines that defines
+the spectrum FDR (or any similar/relevant metric that can be
+used for filtering). This value isn't set by default as it
+depends on the search engine and application. Default is \code{NA}.}
 }
 \value{
 A new filtered \code{PSM} object with the same columns as the
@@ -80,6 +91,10 @@ as \code{isDecoy}.
 \itemize{
 \item \code{filterPsmShared()} filters out shared PSMs, i.e. those that
 match multiple proteins.
+}
+
+\itemize{
+\item \code{filterPsmFdr()} filters out PSMs based on their FDR.
 }
 }
 \examples{
