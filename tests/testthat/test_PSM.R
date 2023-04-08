@@ -15,24 +15,28 @@ psmdf0 <- data.frame(spectrum = paste0("sp", 1:10),
                      protein = paste0("Prot", LETTERS[1:10]),
                      decoy = rep(FALSE, 10),
                      rank = rep(1, 10),
-                     score = runif(10))
+                     score = runif(10),
+                     fdr = runif(10))
 
 ## Filtering will have an effect here. There will be 12 PSMs left
 ## after filtering for decoys , 10 PSMs after filtering for rank, 5
 ## when keeping shared peptides. When filtering decoy and high rank
 ## PSMs, we also get rid of all the non-unique peptides, which leaves
 ## 10 PSMs.
+set.seed(123) ## for score and fdr
 psmdf1 <- data.frame(spectrum = paste0("sp", 1:15),
                      sequence = c(psmdf0$sequence,
                                   psmdf0$sequence[1:5]),
                      protein = paste0("Prot", LETTERS[1:15]),
                      decoy = c(rep(FALSE, 12), rep(TRUE, 3)),
                      rank = c(rep(1, 10), rep(2, 5)),
-                     score = runif(15))
+                     score = runif(15),
+                     fdr = runif(15))
 not_decoy <- sum(!psmdf1$decoy)   ## 12
 rank_one <- sum(psmdf1$rank == 1) ## 10
 unique_pep <- sum(table(psmdf1$sequence) == 1) ## 5
-
+fdr_pep_1 <- sum(psmdf1$fdr < 0.05) ## 1
+fdr_pep_5 <- sum(psmdf1$fdr < 0.5) ## 1
 
 psmdf2 <- data.frame(spectrum = rep(paste0("sp", 1:5),
                                    c(2, 2, 1, 1, 1)),
@@ -48,14 +52,15 @@ test_that("Test PSM construction from data.frame", {
     expect_true(validObject(psm))
     expect_identical(nrow(psm), nrow(psmdf0))
     expect_identical(ncol(psm), ncol(psmdf0))
-    expect_true(sum(is.na(psmVariables(psm))) == 6)
+    expect_true(sum(is.na(psmVariables(psm))) == 7)
     psm2 <- PSM(psm, decoy = "decoy", rank = "rank",
                 spectrum = "spectrum", peptide = "sequence",
                 protein = "protein")
-    expect_true(sum(is.na(psmVariables(psm2))) == 1)
+    expect_true(sum(is.na(psmVariables(psm2))) == 2)
     psm2 <- PSM(psm, decoy = "decoy", rank = "rank",
                 spectrum = "spectrum", peptide = "sequence",
-                protein = "protein", score = "score")
+                protein = "protein", score = "score",
+                fdr = "fdr")
     expect_true(sum(is.na(psmVariables(psm2))) == 0)
     expect_error(psmVariables(psm, "error"))
     expect_error(psmVariables(psm2, "error"))
@@ -104,13 +109,15 @@ test_that("Test PSM construction from mzid files", {
     expect_true(validObject(psm_mzR))
     expect_true(validObject(psm_mzID))
     ## No missing PSM variables
-    expect_equal(sum(is.na(psmVariables(psm_mzR))), 1)
-    expect_equal(sum(is.na(psmVariables(psm_mzID))), 1)
+    expect_equal(sum(is.na(psmVariables(psm_mzR))), 2)
+    expect_equal(sum(is.na(psmVariables(psm_mzID))), 2)
     nms <- c("spectrum", "peptide", "protein", "decoy", "rank")
     expect_equal(sum(is.na(psmVariables(psm_mzR)[nms])), 0)
     expect_equal(sum(is.na(psmVariables(psm_mzID)[nms])), 0)
     expect_true(is.na(psmVariables(psm_mzR)["score"]))
     expect_true(is.na(psmVariables(psm_mzID)["score"]))
+    expect_true(is.na(psmVariables(psm_mzR)["fdr"]))
+    expect_true(is.na(psmVariables(psm_mzID)["fdr"]))
     expect_identical(names(psmVariables(psm_mzID)),
                      names(psmVariables(psm_mzR)))
 })
@@ -133,12 +140,14 @@ test_that("psmVariables accessor works", {
 test_that("Test PSM filtering", {
     psm <- PSM(psmdf1, decoy = "decoy", rank = "rank",
                spectrum = "spectrum", peptide = "sequence",
-               protein = "protein")
+               protein = "protein", fdr = "fdr")
     expect_true(validObject(psm))
     expect_identical(nrow(filterPsmDecoy(psm)), not_decoy)
     expect_identical(nrow(filterPsmRank(psm)), rank_one)
     expect_identical(nrow(filterPsmShared(psm)), unique_pep)
     expect_identical(nrow(filterPSMs(psm)), 10L)
+    expect_identical(nrow(filterPsmFdr(psm)), fdr_pep_1)
+    expect_identical(nrow(filterPsmFdr(psm, FDR = 0.5)), fdr_pep_5)
 })
 
 
