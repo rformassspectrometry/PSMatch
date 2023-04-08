@@ -19,7 +19,7 @@ described below convert between these two format."><!-- mathjax --><script src="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ described below convert between these two format.</p>
 <span>  <span class="va">m</span>,</span>
 <span>  protColors <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  pepColors <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  layout <span class="op">=</span> <span class="fu">igraph</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/igraph/man/layout_nicely.html" class="external-link">layout_nicely</a></span></span>
+<span>  layout <span class="op">=</span> <span class="fu">igraph</span><span class="fu">::</span><span class="va"><a href="https://r.igraph.org/reference/layout_nicely.html" class="external-link">layout_nicely</a></span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -223,7 +223,7 @@ peptides (represented as circes), which can further be coloured
 (see the <code>protColors</code> and <code>pepColors</code> arguments). The function
 invisibly returns the graph <code>igraph</code> object for additional tuning
 and/or interactive visualisation using, for example
-<code><a href="https://rdrr.io/pkg/igraph/man/tkplot.html" class="external-link">igraph::tkplot()</a></code>.</p>
+<code><a href="https://r.igraph.org/reference/tkplot.html" class="external-link">igraph::tkplot()</a></code>.</p>
 <p>There exists some important differences in the creation of an
 adjacency matrix from a PSM object or a vector, other than the
 input variable itself:</p><ul><li><p>In a <code>PSM</code> object, each row (PSM) refers to an <em>individual</em>
@@ -499,14 +499,14 @@ refer to protein groups and individual proteins (groups of size
 <span class="r-in"><span><span class="co">## --------------------------------</span></span></span>
 <span class="r-in"><span><span class="co">## Case 3: set the score PSM values</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">psm</span><span class="op">)</span> <span class="co">## no score defined</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   spectrum    peptide    protein      decoy       rank      score </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "spectrum" "sequence"  "protein"    "decoy"     "rank"         NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   spectrum    peptide    protein      decoy       rank      score        fdr </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "spectrum" "sequence"  "protein"    "decoy"     "rank"         NA         NA </span>
 <span class="r-in"><span><span class="va">psm3</span> <span class="op">&lt;-</span> <span class="fu"><a href="PSM.html">PSM</a></span><span class="op">(</span><span class="va">psm</span>, spectrum <span class="op">=</span> <span class="st">"spectrum"</span>, peptide <span class="op">=</span> <span class="st">"sequence"</span>,</span></span>
 <span class="r-in"><span>            protein <span class="op">=</span> <span class="st">"protein"</span>, decoy <span class="op">=</span> <span class="st">"decoy"</span>, rank <span class="op">=</span> <span class="st">"rank"</span>,</span></span>
 <span class="r-in"><span>            score <span class="op">=</span> <span class="st">"score"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="PSM.html">psmVariables</a></span><span class="op">(</span><span class="va">psm3</span><span class="op">)</span> <span class="co">## score defined</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   spectrum    peptide    protein      decoy       rank      score </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "spectrum" "sequence"  "protein"    "decoy"     "rank"    "score" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   spectrum    peptide    protein      decoy       rank      score        fdr </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "spectrum" "sequence"  "protein"    "decoy"     "rank"    "score"         NA </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## adjacency matrix with scores</span></span></span>
 <span class="r-in"><span><span class="fu">makeAdjacencyMatrix</span><span class="op">(</span><span class="va">psm3</span><span class="op">)</span></span></span>
