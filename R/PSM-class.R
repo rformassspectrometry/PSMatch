@@ -252,7 +252,7 @@ setMethod("show", "PSM",
 ##'     calculate the reduced state.
 ##'
 ##' @param peptide `character(1)` variable name that defines a peptide
-##'     in the PSM data. Detaults are `"spequence"` (mzR parser) or
+##'     in the PSM data. Detaults are `"sequence"` (mzR parser) or
 ##'     `"pepSeq"` (mzID parser).
 ##'
 ##' @param protein `character(1)` variable name that defines a protein

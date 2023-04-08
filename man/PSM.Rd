@@ -48,7 +48,7 @@ parser) or \code{"spectrumid"} (mzID parser). It is also used to
 calculate the reduced state.}
 
 \item{peptide}{\code{character(1)} variable name that defines a peptide
-in the PSM data. Detaults are \code{"spequence"} (mzR parser) or
+in the PSM data. Detaults are \code{"sequence"} (mzR parser) or
 \code{"pepSeq"} (mzID parser).}
 
 \item{protein}{\code{character(1)} variable name that defines a protein
