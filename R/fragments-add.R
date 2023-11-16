@@ -12,6 +12,10 @@
 ##'     peaks to be considered matching (see [MsCoreUtils::common()]
 ##'     for more details).
 ##'
+##' @param ... additional parameters (except `verbose`) passed to
+##'     [calculateFragments()] to calculate fragment m/z values to be
+##'     added to the spectra in `x`.
+##'
 ##' @return Return a `character()` with fragment ion labels.
 ##'
 ##' @importFrom MsCoreUtils common
@@ -64,7 +68,8 @@
 ##' plotSpectra(sp, labels = addFragments, labelPos = 3)
 addFragments <- function(x,
                          tolerance = 0,
-                         ppm = 20) {
+                         ppm = 20,
+                         ...) {
     stopifnot(requireNamespace("Spectra"))
     stopifnot(inherits(x, "Spectra"),
               length(x) == 1)
@@ -73,7 +78,7 @@ addFragments <- function(x,
 
     ## Prepare x and y data
     x_data <- Spectra::peaksData(x)[[1L]]
-    y_data <- calculateFragments(y, verbose = FALSE)
+    y_data <- calculateFragments(y, verbose = FALSE, ...)
     y_data <- y_data[order(y_data$mz), ]
 
     ## Find common peaks and prepare annotations

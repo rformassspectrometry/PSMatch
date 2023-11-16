@@ -4,7 +4,7 @@
 \alias{addFragments}
 \title{Adds MS2 Fragments}
 \usage{
-addFragments(x, tolerance = 0, ppm = 20)
+addFragments(x, tolerance = 0, ppm = 20, ...)
 }
 \arguments{
 \item{x}{An instance of class \code{Spectra} of length 1, containing a
@@ -18,6 +18,10 @@ for more details).}
 \item{ppm}{m/z relative acceptable difference (in ppm) for peaks
 to be considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::common()}} for
 more #' details).}
+
+\item{...}{additional parameters (except \code{verbose}) passed to
+\code{\link[=calculateFragments]{calculateFragments()}} to calculate fragment m/z values to be
+added to the spectra in \code{x}.}
 }
 \value{
 Return a \code{character()} with fragment ion labels.

@@ -1,3 +1,20 @@
+# PSMatch 1.7
+
+## PSMatch 1.7.1
+
+- In `addFragments()` use `...` to pass parameters to
+  `calculateFragments()`.
+
+## PSMatch 1.7.0
+
+- New Bioc devel.
+
+# PSMatch 1.5
+
+## PSMatch 1.5.0
+
+- New Bioc devel.
+
 # PSMatch 1.3
 
 ## PSMatch 1.3.3
