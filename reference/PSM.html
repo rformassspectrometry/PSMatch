@@ -39,7 +39,7 @@ reduced()&amp;lt;- setter."><!-- mathjax --><script src="https://cdnjs.cloudflar
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.1</span>
       </span>
     </div>
 
@@ -387,8 +387,8 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz from cache.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz from cache.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/22b52475dd5a_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/22b5592b64cb_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/954b7f34a080_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/954b43cb3d61_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
 <span class="r-in"><span><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">mzids</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">psm</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 50314 rows and 31 columns.</span>
@@ -440,8 +440,8 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2         387 MNVLLLLVLC...       Q58D62|FET...       32.788864          12894</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     spectrumFile        idFile MetaMorpheus.score PSM.level.q.value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;character&gt;   &lt;character&gt;          &lt;numeric&gt;         &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... 22b52475dd...            31.2586                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... 22b52475dd...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... 954b7f34a0...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... 954b7f34a0...            31.2586                 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   modPeptideRef       modName   modMass modLocation subOriginalResidue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;   &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          P_19 Carbamidom...   57.0215           6                 NA</span>
@@ -497,17 +497,17 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-in"><span>                    rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                    score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">psmdf</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    spectrum   sequence protein decoy rank      score</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       sp1 QMGDVLEWPN   ProtB FALSE    1 0.45839010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       sp2 KEVCQNSAWM   ProtF FALSE    1 0.07373135</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       sp3 SYPKITDQRE   ProtD FALSE    1 0.72145416</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       sp4 GAVCEWPQMR   ProtG FALSE    1 0.58522601</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       sp5 RNESVQGIFM   ProtE FALSE    1 0.76683129</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       sp6 NMWESACLHF   ProtF FALSE    1 0.81327289</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       sp7 GLDAMVFIQR   ProtA FALSE    1 0.43629106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       sp8 YSEGTMIFAH   ProtC FALSE    1 0.95356648</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       sp9 SCLYGAMPDR   ProtE FALSE    1 0.93705214</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     sp10 ACEYSRIQDF   ProtE FALSE    1 0.40638045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    spectrum   sequence protein decoy rank        score</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       sp1 LCFKEINHQV   ProtA FALSE    1 0.9260085274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       sp2 SQATGVHRPD   ProtG FALSE    1 0.1274354863</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       sp3 QMNHEPGFAV   ProtC FALSE    1 0.6361817680</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       sp4 IRQNTVACEP   ProtF FALSE    1 0.8631537359</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       sp5 GHCARNKQWV   ProtD FALSE    1 0.4791640313</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       sp6 TLAFMENIQC   ProtC FALSE    1 0.0005151236</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       sp7 WVFLCQDMRA   ProtB FALSE    1 0.5666472309</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       sp8 AFDRPVIGQT   ProtE FALSE    1 0.1081900785</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       sp9 PDKVNLYAIG   ProtC FALSE    1 0.9575106532</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     sp10 RMTYKNESAG   ProtE FALSE    1 0.2642415008</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">psmdf</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">psm</span></span></span>
@@ -534,17 +534,17 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="adjacencyMatrix.html">adjacencyMatrix</a></span><span class="op">(</span><span class="va">psm</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 7 sparse Matrix of class "dgCMatrix"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            ProtB ProtF ProtD ProtG ProtE ProtA ProtC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QMGDVLEWPN     1     .     .     .     .     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> KEVCQNSAWM     .     1     .     .     .     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SYPKITDQRE     .     .     1     .     .     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GAVCEWPQMR     .     .     .     1     .     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> RNESVQGIFM     .     .     .     .     1     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NMWESACLHF     .     1     .     .     .     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GLDAMVFIQR     .     .     .     .     .     1     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> YSEGTMIFAH     .     .     .     .     .     .     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SCLYGAMPDR     .     .     .     .     1     .     .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ACEYSRIQDF     .     .     .     .     1     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            ProtA ProtG ProtC ProtF ProtD ProtB ProtE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LCFKEINHQV     1     .     .     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SQATGVHRPD     .     1     .     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QMNHEPGFAV     .     .     1     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IRQNTVACEP     .     .     .     1     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GHCARNKQWV     .     .     .     .     1     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TLAFMENIQC     .     .     1     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> WVFLCQDMRA     .     .     .     .     .     1     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AFDRPVIGQT     .     .     .     .     .     .     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PDKVNLYAIG     .     .     1     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> RMTYKNESAG     .     .     .     .     .     .     1</span>
 </code></pre></div>
     </div>
   </div>

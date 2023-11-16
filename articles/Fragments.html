@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.7.1</span>
       </span>
     </div>
 
@@ -105,12 +105,12 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.17/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.19/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (<a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (<a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (<a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
 [ctb], Thomas Burger [ctb]<br><strong>Last modified:</strong>
-2023-04-08 11:36:56.710854<br><strong>Compiled</strong>: Sat Apr 8
-12:02:15 2023</p>
+2023-11-16 17:00:43.792534<br><strong>Compiled</strong>: Thu Nov 16
+17:37:05 2023</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -120,7 +120,7 @@ visualisation of MS2 fragment ions. For a general overview of the
 package, see the <code>PSMatch</code> package manual page
 (<code><a href="../reference/PSMatch.html">?PSMatch</a></code>) and references therein.</p>
 <p>To illustrate this vignette, we will import and merge raw and
-identification data from the <em><a href="https://bioconductor.org/packages/3.17/msdata" class="external-link">msdata</a></em>.
+identification data from the <em><a href="https://bioconductor.org/packages/3.19/msdata" class="external-link">msdata</a></em>.
 For details about this section, please visit the <a href="https://rformassspectrometry.github.io/Spectra/articles/Spectra.html" class="external-link">Spectra</a>
 package webpage.</p>
 <p>Load the raw MS data:</p>
@@ -351,13 +351,13 @@ Let’s first visualise the spectrum as is:</p>
 </h2>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R Under development (unstable) (2023-03-16 r83996)</span></span>
-<span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
-<span><span class="co">## Running under: Ubuntu 22.04.2 LTS</span></span>
+<pre><code><span><span class="co">## R Under development (unstable) (2023-11-08 r85496)</span></span>
+<span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
+<span><span class="co">## Running under: Ubuntu 22.04.3 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
-<span><span class="co">## </span></span>
+<span><span class="co">## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## locale:</span></span>
 <span><span class="co">##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
@@ -375,45 +375,48 @@ Let’s first visualise the spectrum as is:</p>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] Spectra_1.9.15       ProtGenerics_1.31.0  BiocParallel_1.33.12</span></span>
-<span><span class="co">## [4] PSMatch_1.3.3        S4Vectors_0.37.4     BiocGenerics_0.45.3 </span></span>
-<span><span class="co">## [7] BiocStyle_2.27.1    </span></span>
+<span><span class="co">## [1] Spectra_1.13.0      ProtGenerics_1.35.0 BiocParallel_1.37.0</span></span>
+<span><span class="co">## [4] PSMatch_1.7.1       S4Vectors_0.41.1    BiocGenerics_0.49.1</span></span>
+<span><span class="co">## [7] BiocStyle_2.31.0   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] SummarizedExperiment_1.29.1 xfun_0.38                  </span></span>
-<span><span class="co">##  [3] bslib_0.4.2                 QFeatures_1.9.3            </span></span>
-<span><span class="co">##  [5] Biobase_2.59.0              lattice_0.21-8             </span></span>
-<span><span class="co">##  [7] vctrs_0.6.1                 tools_4.3.0                </span></span>
-<span><span class="co">##  [9] bitops_1.0-7                parallel_4.3.0             </span></span>
+<span><span class="co">##  [1] SummarizedExperiment_1.33.0 xfun_0.41                  </span></span>
+<span><span class="co">##  [3] bslib_0.5.1                 QFeatures_1.13.1           </span></span>
+<span><span class="co">##  [5] Biobase_2.63.0              lattice_0.22-5             </span></span>
+<span><span class="co">##  [7] vctrs_0.6.4                 tools_4.4.0                </span></span>
+<span><span class="co">##  [9] bitops_1.0-7                parallel_4.4.0             </span></span>
 <span><span class="co">## [11] highr_0.10                  cluster_2.1.4              </span></span>
-<span><span class="co">## [13] pkgconfig_2.0.3             Matrix_1.5-4               </span></span>
-<span><span class="co">## [15] desc_1.4.2                  lifecycle_1.0.3            </span></span>
-<span><span class="co">## [17] GenomeInfoDbData_1.2.10     compiler_4.3.0             </span></span>
-<span><span class="co">## [19] stringr_1.5.0               textshaping_0.3.6          </span></span>
+<span><span class="co">## [13] pkgconfig_2.0.3             Matrix_1.6-3               </span></span>
+<span><span class="co">## [15] desc_1.4.2                  lifecycle_1.0.4            </span></span>
+<span><span class="co">## [17] GenomeInfoDbData_1.2.11     compiler_4.4.0             </span></span>
+<span><span class="co">## [19] stringr_1.5.1               textshaping_0.3.7          </span></span>
 <span><span class="co">## [21] codetools_0.2-19            ncdf4_1.21                 </span></span>
-<span><span class="co">## [23] clue_0.3-64                 GenomeInfoDb_1.35.16       </span></span>
-<span><span class="co">## [25] htmltools_0.5.5             sass_0.4.5                 </span></span>
-<span><span class="co">## [27] RCurl_1.98-1.12             yaml_2.3.7                 </span></span>
+<span><span class="co">## [23] clue_0.3-65                 GenomeInfoDb_1.39.1        </span></span>
+<span><span class="co">## [25] htmltools_0.5.7             sass_0.4.7                 </span></span>
+<span><span class="co">## [27] RCurl_1.98-1.13             yaml_2.3.7                 </span></span>
 <span><span class="co">## [29] lazyeval_0.2.2              pkgdown_2.0.7.9000         </span></span>
-<span><span class="co">## [31] jquerylib_0.1.4             MASS_7.3-58.4              </span></span>
-<span><span class="co">## [33] cachem_1.0.7                DelayedArray_0.25.0        </span></span>
-<span><span class="co">## [35] digest_0.6.31               stringi_1.7.12             </span></span>
-<span><span class="co">## [37] purrr_1.0.1                 bookdown_0.33              </span></span>
-<span><span class="co">## [39] rprojroot_2.0.3             fastmap_1.1.1              </span></span>
-<span><span class="co">## [41] grid_4.3.0                  cli_3.6.1                  </span></span>
-<span><span class="co">## [43] magrittr_2.0.3              rmarkdown_2.21             </span></span>
-<span><span class="co">## [45] XVector_0.39.0              matrixStats_0.63.0         </span></span>
-<span><span class="co">## [47] igraph_1.4.2                ragg_1.2.5                 </span></span>
-<span><span class="co">## [49] memoise_2.0.1               evaluate_0.20              </span></span>
-<span><span class="co">## [51] knitr_1.42                  GenomicRanges_1.51.4       </span></span>
-<span><span class="co">## [53] IRanges_2.33.0              MultiAssayExperiment_1.25.7</span></span>
-<span><span class="co">## [55] rlang_1.1.0                 Rcpp_1.0.10                </span></span>
-<span><span class="co">## [57] glue_1.6.2                  mzR_2.33.1                 </span></span>
-<span><span class="co">## [59] BiocManager_1.30.20         msdata_0.39.0              </span></span>
-<span><span class="co">## [61] jsonlite_1.8.4              AnnotationFilter_1.23.0    </span></span>
-<span><span class="co">## [63] R6_2.5.1                    MatrixGenerics_1.11.1      </span></span>
-<span><span class="co">## [65] systemfonts_1.0.4           fs_1.6.1                   </span></span>
-<span><span class="co">## [67] zlibbioc_1.45.0             MsCoreUtils_1.11.5</span></span></code></pre>
+<span><span class="co">## [31] crayon_1.5.2                jquerylib_0.1.4            </span></span>
+<span><span class="co">## [33] MASS_7.3-60.1               cachem_1.0.8               </span></span>
+<span><span class="co">## [35] DelayedArray_0.29.0         MetaboCoreUtils_1.11.0     </span></span>
+<span><span class="co">## [37] abind_1.4-5                 digest_0.6.33              </span></span>
+<span><span class="co">## [39] stringi_1.8.1               purrr_1.0.2                </span></span>
+<span><span class="co">## [41] bookdown_0.36               rprojroot_2.0.4            </span></span>
+<span><span class="co">## [43] fastmap_1.1.1               grid_4.4.0                 </span></span>
+<span><span class="co">## [45] cli_3.6.1                   SparseArray_1.3.1          </span></span>
+<span><span class="co">## [47] magrittr_2.0.3              S4Arrays_1.3.0             </span></span>
+<span><span class="co">## [49] rmarkdown_2.25              XVector_0.43.0             </span></span>
+<span><span class="co">## [51] matrixStats_1.1.0           igraph_1.5.1               </span></span>
+<span><span class="co">## [53] ragg_1.2.6                  memoise_2.0.1              </span></span>
+<span><span class="co">## [55] evaluate_0.23               knitr_1.45                 </span></span>
+<span><span class="co">## [57] GenomicRanges_1.55.1        IRanges_2.37.0             </span></span>
+<span><span class="co">## [59] MultiAssayExperiment_1.29.0 rlang_1.1.2                </span></span>
+<span><span class="co">## [61] Rcpp_1.0.11                 glue_1.6.2                 </span></span>
+<span><span class="co">## [63] mzR_2.37.0                  BiocManager_1.30.22        </span></span>
+<span><span class="co">## [65] msdata_0.43.0               jsonlite_1.8.7             </span></span>
+<span><span class="co">## [67] AnnotationFilter_1.27.0     R6_2.5.1                   </span></span>
+<span><span class="co">## [69] MatrixGenerics_1.15.0       systemfonts_1.0.5          </span></span>
+<span><span class="co">## [71] fs_1.6.3                    zlibbioc_1.49.0            </span></span>
+<span><span class="co">## [73] MsCoreUtils_1.15.1</span></span></code></pre>
 </div>
   </div>
 
