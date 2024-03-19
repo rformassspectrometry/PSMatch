@@ -1,5 +1,9 @@
 # PSMatch 1.7
 
+## PSMatch 1.7.2
+
+- Fix connected component dim names in `show()`.
+
 ## PSMatch 1.7.1
 
 - In `addFragments()` use `...` to pass parameters to

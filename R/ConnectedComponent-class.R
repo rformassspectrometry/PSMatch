@@ -210,7 +210,7 @@ setMethod("show", "ConnectedComponents",
               cat(sprintf("An instance of class %s", class(object)), "\n")
               cat(" Number of proteins:", nrow(ccMatrix(object)), "\n")
               cat(" Number of components:", length(connectedComponents(object)), "\n")
-              cat(" Number of components [peptide x peptides]:\n  ")
+              cat(" Number of components [peptide x proteins]:\n  ")
               dim_mat <- dims(object)
               cat(paste0(sum(dim_mat[, 1] == 1 & dim_mat[, 2] == 1), "[1 x 1] "))
               cat(paste0(sum(dim_mat[, 1] == 1 & dim_mat[, 2] > 1), "[1 x n] "))
