@@ -1,4 +1,4 @@
-##' @importFrom igraph layout_nicely graph_from_incidence_matrix V V<- plot.igraph set_vertex_attr
+##' @importFrom igraph layout_nicely graph_from_biadjacency_matrix V V<- plot.igraph set_vertex_attr
 ##'
 ##' @export
 ##'
@@ -37,7 +37,7 @@ plotAdjacencyMatrix <- function(m,
                                 protColors = 0,
                                 pepColors = NULL,
                                 layout = igraph::layout_nicely) {
-    g <- graph_from_incidence_matrix(m)
+    g <- graph_from_biadjacency_matrix(m)
     if (is.character(protColors)) {
         ## Expecting a named vector of colour characters
         if (is.null(names(protColors)))

@@ -2,6 +2,7 @@
 % Please edit documentation in R/PSMatch-package.R
 \docType{package}
 \name{PSMatch}
+\alias{PSMatch-package}
 \alias{PSMatch}
 \title{PSMatch: Handling and Managing Peptide Spectrum Matches}
 \description{
@@ -75,3 +76,27 @@ the package's
 \href{https://rformassspectrometry.github.io/PSMatch/}{webpage}.
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/RforMassSpectrometry/PSM}
+  \item Report bugs at \url{https://github.com/RforMassSpectrometry/PSM/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Laurent Gatto \email{laurent.gatto@uclouvain.be} (\href{https://orcid.org/0000-0002-1520-2268}{ORCID})
+
+Authors:
+\itemize{
+  \item Johannes Rainer \email{Johannes.Rainer@eurac.edu} (\href{https://orcid.org/0000-0002-6977-7147}{ORCID})
+  \item Sebastian Gibb \email{mail@sebastiangibb.de} (\href{https://orcid.org/0000-0001-7406-4443}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Samuel Wieczorek \email{samuel.wieczorek@cea.fr} [contributor]
+  \item Thomas Burger \email{thomas.burger@cea.fr} [contributor]
+}
+
+}

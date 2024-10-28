@@ -353,7 +353,7 @@ prioritiseConnectedComponents <- function(x) {
     ## community metrics
     com_metrics <- t(vapply(cc_x,
                      function(xx) {
-                         g <- graph_from_incidence_matrix(xx)
+                         g <- graph_from_biadjacency_matrix(xx)
                          com <- cluster_louvain(g)
                          c(n_coms = length(com),
                            mod_coms = modularity(com))
