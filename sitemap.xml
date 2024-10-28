@@ -1,60 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/AdjacencyMatrix.html</loc>
-  </url>
-  <url>
-    <loc>/articles/Fragments.html</loc>
-  </url>
-  <url>
-    <loc>/articles/PSM.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ConnectedComponents.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PSM.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PSMatch.html</loc>
-  </url>
-  <url>
-    <loc>/reference/addFragments.html</loc>
-  </url>
-  <url>
-    <loc>/reference/adjacencyMatrix.html</loc>
-  </url>
-  <url>
-    <loc>/reference/calculateFragments.html</loc>
-  </url>
-  <url>
-    <loc>/reference/describeProteins.html</loc>
-  </url>
-  <url>
-    <loc>/reference/filterPSMs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/getAminoAcids.html</loc>
-  </url>
-  <url>
-    <loc>/reference/getAtomicMass.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/articles/AdjacencyMatrix.html</loc></url>
+<url><loc>/articles/Fragments.html</loc></url>
+<url><loc>/articles/PSM.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/ConnectedComponents.html</loc></url>
+<url><loc>/reference/PSM.html</loc></url>
+<url><loc>/reference/PSMatch.html</loc></url>
+<url><loc>/reference/addFragments.html</loc></url>
+<url><loc>/reference/adjacencyMatrix.html</loc></url>
+<url><loc>/reference/calculateFragments.html</loc></url>
+<url><loc>/reference/describeProteins.html</loc></url>
+<url><loc>/reference/filterPSMs.html</loc></url>
+<url><loc>/reference/getAminoAcids.html</loc></url>
+<url><loc>/reference/getAtomicMass.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
 </urlset>
+
