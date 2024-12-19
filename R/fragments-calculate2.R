@@ -1,3 +1,16 @@
+
+setMethod("calculateFragments", c("character", "missing"),
+          function(sequence, type = c("b", "y"), z = 1,
+                   fixed_modifications = c(C = 57.02146),
+                   variable_modifications = NULL,
+                   max_mods = Inf,
+                   neutralLoss = defaultNeutralLoss(),
+                   verbose = TRUE) {
+            l <- lapply(sequence, .calculateFragments,
+                        type = type, z = z, modifications = modifications,
+                        neutralLoss = neutralLoss, verbose = verbose)
+            return(do.call(rbind, l))
+        })
 #' @title Calculate ions produced by fragmentation, including possible modifications
 #' 
 #' @param sequence character() providing a peptide sequence.
