@@ -1,5 +1,8 @@
-
 #' @title Calculate ions produced by fragmentation, including possible modifications
+#' 
+#' @aliases calculateFragments2, modificationPositions, cumsumFragmentMasses, character,missing-method
+#'
+#' @name calculateFragments2
 #' 
 #' @param sequence character() providing a peptide sequence.
 #' 
@@ -37,13 +40,12 @@
 #' acids within brackets thus include a variable modification. Fixed modifications
 #' are not displayed in the names. 
 #' 
-#' @noRd
 #' 
 #' @examples
 #' calculateFragments2(sequence = "ARGSHKATC", type = c("b", "y"), z = 1, 
 #' fixed_modifications = c(C = 57), variable_modifications = c(S = 79, Y = 79, T = 79),
 #' max_mods = 2)
-#' 
+#' @export
 calculateFragments2 <- function(sequence, 
                                 type = c("b", "y"), 
                                 z = 1,

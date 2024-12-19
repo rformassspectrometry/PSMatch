@@ -2,3 +2,5 @@
 .editorconfig
 .travis.yml
 favicon
+^.*\.Rproj$
+^\.Rproj\.user$

@@ -97,6 +97,7 @@ Other contributors:
 \itemize{
   \item Samuel Wieczorek \email{samuel.wieczorek@cea.fr} [contributor]
   \item Thomas Burger \email{thomas.burger@cea.fr} [contributor]
+  \item Guillaume Deflandre \email{guillaume.deflandre@uclouvain.be} [contributor]
 }
 
 }
