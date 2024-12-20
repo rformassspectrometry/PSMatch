@@ -34,11 +34,10 @@
 #' 
 #' @param verbose logical(1). If TRUE (default) the used modifications are printed.
 #' 
-#' @return A named list containing dataframes. The dataframes show all the 
+#' @return A dataframe showing all the 
 #' ions produced by fragmentation with all possible combinations of modifications.
-#' The used modifications are displayed in the element names of the list. Amino
-#' acids within brackets thus include a variable modification. Fixed modifications
-#' are not displayed in the names. 
+#' The used variable modifications are displayed in the peptide column through the
+#' use of amino acids within brackets. Fixed modifications are not displayed. 
 #' 
 #' 
 #' @examples
