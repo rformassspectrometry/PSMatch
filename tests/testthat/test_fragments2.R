@@ -1,5 +1,5 @@
 ## For additional tests, refer to calculateFragments from PSMatch package
-test_that("calculateFragments2: Default behavior without modifications", {
+test_that("calculateFragments2: Default behaviour without modifications", {
     
     ## Test 1: Default behavior without modifications
     sequence <- "PQR"
@@ -23,11 +23,12 @@ test_that("calculateFragments2: Default behavior without modifications", {
     )
     
     ## Check unique peptide without modifications
-    expect_equal(unique(result$peptide), "PQR")
-    expect_equal(result[,-7], original_result)
+    expect_identical(unique(result$peptide), "PQR")
+    expect_identical(result[, names(original_result)],
+                     original_result)
     })
 
-test_that("calculateFragments2: Behavior with fixed modifications", {
+test_that("calculateFragments2: Behaviour with fixed modifications", {
     ## Test 2: Fixed modifications
     sequence <- "PQR"
     result <- calculateFragments2(
@@ -53,13 +54,14 @@ test_that("calculateFragments2: Behavior with fixed modifications", {
     )
     
     ## Fixed modifications do not produce additional unique peptides
-    expect_equal(length(unique(result_fixed$peptide)), 1)
+    expect_identical(unique(result_fixed$peptide), "PQR")
+    expect_identical(nrow(result), nrow(result_fixed))
     
     ## Fixed modifications do change the fragment masses
     expect_false(all(result$mz == result_fixed$mz))
 })
 
-test_that("calculateFragments2: Behavior with variable modifications", {
+test_that("calculateFragments2: Behaviour with variable modifications", {
     ## Test 3: Variable modifications only
     sequence <- "PQR"
     result <- calculateFragments2(
