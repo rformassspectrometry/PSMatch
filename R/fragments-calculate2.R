@@ -1,4 +1,4 @@
-#' @title Calculate ions produced by fragmentation, including possible modifications
+#' @title Calculate ions produced by fragmentation with variable modifications
 #' 
 #' @aliases calculateFragments2, modificationPositions, cumsumFragmentMasses, character,missing-method
 #'
@@ -66,8 +66,18 @@ calculateFragments2 <- function(sequence,
                       several.ok=TRUE)
     type <- sort(type)
     ## constants
-    mass <- PSMatch::getAtomicMass()
-    
+    mass <- getAtomicMass()
+    ## according to Table 1 of:
+    ## Johnson, R. S., Martin, S. A., Biemann, K., Stults, J. T., and
+    ## Watson, J. T. (1987).
+    ## Novel fragmentation process of peptides by collision-induced
+    ## decomposition in a tandem mass spectrometer: differentiation of leucine
+    ## and isoleucine.
+    ## Analytical Chemistry, 59(21), 2621-2625.
+    ## https://doi.org/10.1021/ac00148a019
+    ##
+    ## a proton (H+) is added later
+    ## (after calculation of the different charge states)
     add <- c(a=-(mass["C"]+mass["O"]),            # + H - CO
              b=0,                                 # + H
              c=mass["N"]+3*mass["H"],             # + H + NH3
@@ -254,61 +264,6 @@ calculateFragments2 <- function(sequence,
         list(mods)
     }
 }
-
-# .modificationPositions <- function(sequence,
-#                                    variable_modifications = NULL,
-#                                    max_mods = 2) {
-#     
-#     sequence_split <- strsplit(sequence, "")[[1]]
-#     
-#     if (length(variable_modifications)) {
-#         modifiable_positions_var <-
-#             which(sequence_split %in% names(variable_modifications))
-#         l <- length(modifiable_positions_var)
-#     } else {l <- NULL}
-#     
-#     ## take the maximum amount of modifications possible 
-#     max_mods <- min(max_mods, l)
-#     
-#     if (max_mods > 0 & length(l)) {
-#         mod_combinations <- lapply(0:max_mods, function(n) {
-#             if (n == 0) {
-#                 list(integer(0))
-#             } else if (l == 1) {
-#                 list(modifiable_positions_var)
-#             } else {
-#                 combn(modifiable_positions_var, n, simplify = FALSE)
-#             }
-#         })
-#         
-#         mod_combinations <- do.call(c, mod_combinations)
-#         lapply(mod_combinations, function(comb) {
-#             mods <- rep(0, nchar(sequence))
-#             mods[comb] <- unname(variable_modifications[sequence_split[comb]])
-#             names(mods) <- sequence_split
-#             mods
-#         })
-#     } else {
-#         mods <- rep(0, nchar(sequence))
-#         names(mods) <- sequence_split
-#         mods
-#     }
-# }
-#' @title Sums the modifications cumulatively to the sequence 
-#' 
-#' @param modificationCombination Named numeric. Element of list of `.modification_positions`
-#' 
-#' @param fragmentMasses Named numeric. Fragment masses for a given sequence
-#' 
-#' @return A named numeric indicating the fragment masses for a given sequence
-#' with the assigned combination of modifications
-#' 
-#' @noRd
-#' 
-#' @examples
-#' first <- c(A = 4, R = 0, G = 0, H = 0, K = 0, A = 6)
-#' second <- c(A = 75, R = 231, G = 288, H = 425, K = 553, A = 580)
-#' .cumsumFragmentMasses(first, second)
 
 .cumsumFragmentMasses <- function(modificationCombination, fragmentMasses) {
     
