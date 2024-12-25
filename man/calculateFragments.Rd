@@ -16,7 +16,8 @@
 )
 }
 \arguments{
-\item{sequence}{character() providing a peptide sequence.}
+\item{sequence}{character() providing a peptide sequence. ProForma delta
+masses are supported (e.g. "EM\link{+15.9949}EVEES\link{-79.9663}PEK").}
 
 \item{type}{\code{character} vector of target ions; possible values:
 \code{c("a", "b", "c", "x", "y", "z")}. Default is \code{type = c("b", "y")}.}
@@ -98,6 +99,12 @@ calculateFragments("PQR",
 
 ## disable neutral loss completely
 calculateFragments("PQR", neutralLoss=NULL)
+
+## ProForma encoded delta masses
+calculateFragments("EM[+15.9949]EVEES[-79.9663]PEK")
+}
+\references{
+\href{http://www.psidev.info/proforma}{HUPO-PSI ProForma specification}
 }
 \author{
 Sebastian Gibb \href{mailto:mail@sebastiangibb.de}{mail@sebastiangibb.de}
