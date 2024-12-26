@@ -25,7 +25,7 @@
 #'     `data.frame`.
 #'
 #' @param sequence character() providing a peptide sequence. ProForma delta
-#' masses are supported (e.g. "EM[+15.9949]EVEES[-79.9663]PEK").
+#' masses are supported (e.g. `"EM[+15.9949]EVEES[-79.9663]PEK"`).
 #'
 #' @param type `character` vector of target ions; possible values:
 #'     `c("a", "b", "c", "x", "y", "z")`. Default is `type = c("b",

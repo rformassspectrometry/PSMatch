@@ -17,7 +17,7 @@
 }
 \arguments{
 \item{sequence}{character() providing a peptide sequence. ProForma delta
-masses are supported (e.g. "EM\link{+15.9949}EVEES\link{-79.9663}PEK").}
+masses are supported (e.g. \code{"EM[+15.9949]EVEES[-79.9663]PEK"}).}
 
 \item{type}{\code{character} vector of target ions; possible values:
 \code{c("a", "b", "c", "x", "y", "z")}. Default is \code{type = c("b", "y")}.}
