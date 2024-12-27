@@ -24,7 +24,8 @@
 #' @return The methods with `oject = "missing"` returns a
 #'     `data.frame`.
 #'
-#' @param sequence character() providing a peptide sequence.
+#' @param sequence character() providing a peptide sequence. ProForma delta
+#' masses are supported (e.g. `"EM[+15.9949]EVEES[-79.9663]PEK"`).
 #'
 #' @param type `character` vector of target ions; possible values:
 #'     `c("a", "b", "c", "x", "y", "z")`. Default is `type = c("b",
@@ -63,6 +64,9 @@
 #'
 #' @exportMethod calculateFragments
 #'
+#' @references
+#' [HUPO-PSI ProForma specification](http://www.psidev.info/proforma)
+#'
 #' @examples
 #'
 #' ## calculate fragments for ACE with default modification
@@ -93,6 +97,9 @@
 #'
 #' ## disable neutral loss completely
 #' calculateFragments("PQR", neutralLoss=NULL)
+#'
+#' ## ProForma encoded delta masses
+#' calculateFragments("EM[+15.9949]EVEES[-79.9663]PEK")
 setMethod("calculateFragments", c("character", "missing"),
           function(sequence, type = c("b", "y"), z = 1,
                    modifications = c(C = 57.02146),
@@ -172,14 +179,17 @@ setMethod("calculateFragments", c("character", "missing"),
         message("Modifications used: ", mods)
     }
 
+    clean_sequence <- .proforma_clean_sequences(sequence)[[1]]
+    delta_mass <- .proforma_delta_masses(sequence)[[1]]
+
     ## split peptide sequence into aa
-    fragment.seq <- strsplit(sequence, "")[[1]]
+    fragment.seq <- strsplit(clean_sequence, "")[[1]]
     fn <- length(fragment.seq)
 
     ## calculate cumulative mass starting at the amino-terminus (for a, b, c)
-    amz <- cumsum(aamass[fragment.seq[-fn]])
+    amz <- cumsum(aamass[fragment.seq[-fn]] + delta_mass[-fn])
     ## calculate cumulative mass starting at the carboxyl-terminus (for x, y, z)
-    cmz <- cumsum(aamass[rev(fragment.seq[-1L])])
+    cmz <- cumsum(aamass[rev(fragment.seq[-1L])] + rev(delta_mass[-1L]))
 
     ## calculate fragment mass (amino-terminus)
     tn <- length(amz)
@@ -202,11 +212,11 @@ setMethod("calculateFragments", c("character", "missing"),
     cmz <- cmz + mass["p"]
 
     ## fragment seq (amino-terminus)
-    aseq <- rep(rep(substring(sequence, rep(1L, fn - 1L),
+    aseq <- rep(rep(substring(clean_sequence, rep(1L, fn - 1L),
                               1L:(fn - 1L)), each = zn), nat)
 
     ## fragment seq (carboxyl-terminus)
-    cseq <- rep(rep(rev(substring(sequence, 2L:fn,
+    cseq <- rep(rep(rev(substring(clean_sequence, 2L:fn,
                                   rep(fn, fn - 1L))), each=zn), nct)
 
     ## fragment str (amino-terminus)
