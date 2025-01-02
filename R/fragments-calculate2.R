@@ -266,14 +266,5 @@ calculateFragments2 <- function(sequence,
 }
 
 .cumsumFragmentMasses <- function(modificationCombination, fragmentMasses) {
-    
-    expanded_modificationCombination <- rep(0, length(fragmentMasses))
-    cumulative_sum <- 0
-    
-    for (i in seq_along(fragmentMasses)) {
-        cumulative_sum <- cumulative_sum + modificationCombination[i]
-        expanded_modificationCombination[i] <- cumulative_sum
-    }
-    
-    fragmentMasses + expanded_modificationCombination
+    fragmentMasses + cumsum(modificationCombination)
 }
