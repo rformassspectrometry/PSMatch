@@ -85,7 +85,7 @@ calculateFragments2 <- function(sequence,
              y=2*mass["H"]+mass["O"],             # + H2 + OH
              z=-(mass["N"]+mass["H"])+mass["O"])  # + NH + OH
     
-    aa <- PSMatch::getAminoAcids()
+    aa <- getAminoAcids()
     aamass <- setNames(aa$ResidueMass, aa$AA)
     
     ## replace default mass by masses with fixed modifications
@@ -228,41 +228,45 @@ calculateFragments2 <- function(sequence,
 .modificationPositions <- function(sequence,
                                    variable_modifications = NULL,
                                    max_mods = Inf) {
-    
-    sequence_split <- strsplit(sequence, "")[[1]]
-    
-    if (length(variable_modifications)) {
-        modifiable_positions_var <-
-            which(sequence_split %in% names(variable_modifications))
-        l <- length(modifiable_positions_var)
-    } else {l <- NULL}
-    
-    ## take the maximum amount of modifications possible 
+    sequence_split <- strsplit(sequence, "", fixed = TRUE)[[1]]
+
+    modifiable_positions_var <-
+        which(sequence_split %in% names(variable_modifications))
+
+    l <- length(modifiable_positions_var)
+
+    ## take the maximum amount of modifications possible
     max_mods <- min(max_mods, l)
-    
-    if (max_mods > 0 & length(l)) {
-        mod_combinations <- lapply(0:max_mods, function(n) {
-            if (n == 0) {
-                list(integer(0))
-            } else if (l == 1) {
-                list(modifiable_positions_var)
-            } else {
-                combn(modifiable_positions_var, n, simplify = FALSE)
-            }
-        })
-        
-        mod_combinations <- do.call(c, mod_combinations)
-        lapply(mod_combinations, function(comb) {
-            mods <- rep(0, nchar(sequence))
-            mods[comb] <- unname(variable_modifications[sequence_split[comb]])
-            names(mods) <- sequence_split
-            mods
-        })
-    } else {
-        mods <- rep(0, nchar(sequence))
-        names(mods) <- sequence_split
-        list(mods)
+
+    if (!length(variable_modifications) || max_mods <= 0)
+        return(
+            list(setNames(integer(length(sequence_split)), sequence_split))
+        )
+
+    .mod <- function(cmb,
+                     seq_split = sequence_split,
+                     var_mods = variable_modifications) {
+        m <- setNames(integer(length(seq_split)), seq_split)
+        m[cmb] <- var_mods[seq_split[cmb]]
+        m
     }
+
+    c(
+        list(setNames(integer(length(sequence_split)), sequence_split)),
+        if (length(modifiable_positions_var) == 1)
+            lapply(modifiable_positions_var, .mod)
+        else
+            unlist(
+                lapply(seq_len(max_mods),
+                    function(n)combn(
+                        modifiable_positions_var, n,
+                        FUN = .mod,
+                        simplify = FALSE
+                    )
+                ),
+                recursive = FALSE
+            )
+    )
 }
 
 .cumsumFragmentMasses <- function(modificationCombination, fragmentMasses) {
