@@ -271,11 +271,8 @@ calculateFragments2 <- function(sequence,
 
 .cumsumFragmentMasses <- function(modificationCombination, fragmentMasses) {
     
-    shared <- names(modificationCombination) %in% names(fragmentMasses)
+    modificationCombination <- 
+        modificationCombination[-NROW(modificationCombination)]
     
-    fragmentMasses[names(modificationCombination)[shared]] <- 
-        fragmentMasses[names(modificationCombination)[shared]] + 
-        cumsum(modificationCombination)[shared]
-    
-    fragmentMasses
+    fragmentMasses + cumsum(modificationCombination)
 }
