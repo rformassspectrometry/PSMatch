@@ -49,7 +49,7 @@ calculateFragments2 <- function(sequence,
                                 type = c("b", "y"), 
                                 z = 1,
                                 fixed_modifications = c(C = 57.02146),
-                                variable_modifications = NULL,
+                                variable_modifications = numeric(),
                                 max_mods = Inf,
                                 neutralLoss = defaultNeutralLoss(),
                                 verbose = TRUE) {
@@ -226,7 +226,7 @@ calculateFragments2 <- function(sequence,
 #' .modificationPositions("ARGHKA", variable_modifications = c(A = 4, K = 5, S = 8), max_mods = 3)
 #' 
 .modificationPositions <- function(sequence,
-                                   variable_modifications = NULL,
+                                   variable_modifications = numeric(),
                                    max_mods = Inf) {
     sequence_split <- strsplit(sequence, "", fixed = TRUE)[[1]]
 
