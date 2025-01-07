@@ -144,3 +144,21 @@ test_that("calculateFragments2: Behaviour with variable modifications", {
     ## Check equal mass of variable mods fragments and fixed mods fragments
     expect_true(all(result_fixed$mz == result_var[result_var$peptide == "[P]QR","mz"]))
 })
+
+test_that(".cumsumFragmentMasses: Behaviour with any modification", {
+    ## Test4: Check behaviour of .cumsumFragmentMasses function
+    
+    ## Modifications used
+    mods_forward <- c(P = 5, Q = 0, R = 7)
+    mods_backward <- c(R = 7, Q = 0, P = 5)
+    
+    ## theoretical masses P = 15, Q = 25, R = 10)
+    fragments_forward <- c(P = 15, Q = 40) ## representing cumsum forward ions
+    fragments_backward <- c(R = 10, Q = 35) ## representing cumsum backward ions
+    
+    result_forward <- .cumsumFragmentMasses(mods_forward, fragments_forward)
+    result_backward <- .cumsumFragmentMasses(mods_backward, fragments_backward)
+    
+    expect_identical(c(P = 20, Q = 45), result_forward)
+    expect_identical(c(R = 17, Q = 42), result_backward)
+})
