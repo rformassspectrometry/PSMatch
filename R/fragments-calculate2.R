@@ -198,7 +198,10 @@ calculateFragments2 <- function(sequence,
         rownames(df[[i]]) <- NULL
         non_zero <- mod_combinations[[i]] != 0
         names(mod_combinations[[i]])[non_zero] <- 
-            paste0("[", (names(mod_combinations[[i]])[non_zero]), "]")
+            paste0(names(mod_combinations[[i]])[non_zero],
+                   "[",
+                   mod_combinations[[i]][non_zero],
+                   "]")
         df[[i]][["peptide"]] <- paste(names(mod_combinations[[i]]),
                                       collapse = "")
     }
