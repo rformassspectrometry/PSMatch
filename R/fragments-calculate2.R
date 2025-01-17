@@ -52,9 +52,15 @@ calculateFragments2 <- function(sequence,
                                 variable_modifications = numeric(),
                                 max_mods = Inf,
                                 neutralLoss = defaultNeutralLoss(),
-                                verbose = TRUE) {
+                                verbose = TRUE,
+                                modifications = NULL) {
     if (nchar(sequence) <= 1L) {
         stop("'sequence' has to have two or more residues.")
+    }
+    
+    if (!is.null(modifications)) {
+        warning("'modifications' is deprecated, please use 'fixed_modifications' instead.")
+        fixed_modifications <- modifications
     }
     
     mod_combinations <- 
