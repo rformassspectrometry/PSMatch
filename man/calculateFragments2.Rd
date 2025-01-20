@@ -6,17 +6,18 @@
 \alias{modificationPositions,}
 \alias{cumsumFragmentMasses,}
 \alias{character,missing-method}
-\title{Calculate ions produced by fragmentation, including possible modifications}
+\title{Calculate ions produced by fragmentation with variable modifications}
 \usage{
 calculateFragments2(
   sequence,
   type = c("b", "y"),
   z = 1,
   fixed_modifications = c(C = 57.02146),
-  variable_modifications = NULL,
+  variable_modifications = numeric(),
   max_mods = Inf,
   neutralLoss = defaultNeutralLoss(),
-  verbose = TRUE
+  verbose = TRUE,
+  modifications = NULL
 )
 }
 \arguments{
@@ -57,7 +58,7 @@ The used variable modifications are displayed in the peptide column through the
 use of amino acids within brackets. Fixed modifications are not displayed.
 }
 \description{
-Calculate ions produced by fragmentation, including possible modifications
+Calculate ions produced by fragmentation with variable modifications
 }
 \examples{
 calculateFragments2(sequence = "ARGSHKATC", type = c("b", "y"), z = 1, 
