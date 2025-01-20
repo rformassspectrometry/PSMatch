@@ -232,7 +232,9 @@ calculateFragments2 <- function(sequence,
 #' @param max_mods Numeric. Indicates how many modifications can be applied at once.
 #' 
 #' @return list with all possible combinations of modifications
-#' 
+#'
+#' @importFrom utils combn
+#'
 #' @noRd
 #' 
 #' @examples
