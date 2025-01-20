@@ -80,6 +80,9 @@ addFragments <- function(x,
     x_data <- Spectra::peaksData(x)[[1L]]
     y_data <- calculateFragments(y, verbose = FALSE, ...)
     y_data <- y_data[order(y_data$mz), ]
+    
+    ## stop if variable modifications used
+    stopifnot(length(unique(y_data[["peptide"]])) == 1)
 
     ## Find common peaks and prepare annotations
     idx <- which(MsCoreUtils::common(x_data[, "mz"], y_data[, "mz"],

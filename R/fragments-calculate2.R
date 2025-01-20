@@ -1,24 +1,153 @@
 #' @title Calculate ions produced by fragmentation with variable modifications
 #' 
-#' @aliases calculateFragments2, modificationPositions, cumsumFragmentMasses, character,missing-method
+#' @aliases calculateFragments modificationPositions defaultNeutralLoss calculateFragments,character,missing-method
 #'
-#' @name calculateFragments2
+#' @name calculateFragments
 #' 
-#' @param sequence character() providing a peptide sequence.
+#' @description
+#'
+#' This method calculates a-, b-, c-, x-, y- and z-ions produced by
+#' fragmentation.
+#'
+#' Available methods
+#'
+#' - The default method with signature `sequence = "character"` and
+#'   `object = "missing"` calculates the theoretical fragments for a
+#'   peptide sequence. It returns a `data.frame` with the columns
+#'   `mz`, `ion`, `type`, `pos`, `z`, `seq` and `peptide`.
+#'
+#' - Additional method can be defined that will adapt their behaviour
+#'   based on spectra defined in `object`. See for example the MSnbase
+#'   package that implements a method for objects of class
+#'   `Spectrum2`.
+#'   
+#' @param sequence `character()` providing a peptide sequence.
 #' 
-#' @param type character vector of target ions; possible values: 
-#' c("a", "b", "c", "x", "y", "z"). Default is type = c("b", "y").
+#' @param type `character` vector of target ions; possible values: 
+#' `c("a", "b", "c", "x", "y", "z")`. Default is `type = c("b", "y")`.
 #' 
 #' @param z numeric with a desired charge state; default is 1.
 #' 
-#' @param fixed_modifications A named numeric vector of used fixed modifications. 
+#' @param fixed_modifications A named `numeric` vector of used fixed modifications. 
 #' The name must correspond to the one-letter-code of the modified amino acid 
 #' and the numeric value must represent the mass that should be added to the 
 #' original amino accid mass, default: Carbamidomethyl modifications = 
 #' c(C = 57.02146). Use Nterm or Cterm as names for modifications that should 
 #' be added to the amino respectively carboxyl-terminus.
 #' 
-#' @param variable_modifications A named numeric vector of variable modifications.
+#' @param variable_modifications A named `numeric` vector of variable modifications.
+#' Depending on the maximum number of modifications (`max_mods`), all possible 
+#' combinations are returned.
+#' 
+#' @param max_mods A `numeric(1L)` indicating the maximum number of variable modifications 
+#' allowed on the sequence at once. Does not include fixed modifications. 
+#' Default value is positive infinity.
+#' 
+#' @param neutralLoss `list`, it has to have two named elments,
+#'     namely `water` and `ammonia` that contain a `character` vector
+#'     which type of neutral loss should be calculated.  Currently
+#'     neutral loss on the C terminal `"Cterm"`, at the amino acids
+#'     `c("D", "E", "S", "T")` for `"water"` (shown with an `_`) and
+#'     `c("K", "N", "Q", "R")` for `"ammonia"` (shown with an `*`) are
+#'     supported.
+#'
+#'     There is a helper function `defaultNeutralLoss()` that returns
+#'     the correct list. It has two arguments `disableWaterLoss` and
+#'     `disableAmmoniaLoss` to remove single neutral loss options. See
+#'     the example section for use cases.
+#' 
+#' @param verbose `logical(1)`. If `TRUE` (default) the used modifications are printed.
+#' 
+#' @param modifications Named `numeric()`. Deprecated modifications parameter.
+#' Will override `fixed_modifications` but is set to `NULL` by default. Please 
+#' refrain from using it, opt for `fixed_modifications` instead.
+#' 
+#' @return A `data.frame` showing all the 
+#' ions produced by fragmentation with all possible combinations of modifications.
+#' The used variable modifications are displayed in the `peptide` column through the
+#' use of amino acids followed by the modification within brackets. 
+#' Fixed modifications are not displayed. 
+#' 
+#' @author Sebastian Gibb <mail@sebastiangibb.de>
+#'
+#' @importFrom ProtGenerics calculateFragments
+#'
+#' @exportMethod calculateFragments
+#' 
+#' @examples
+#' ## General use
+#' calculateFragments(sequence = "ARGSHKATC", type = c("b", "y"), z = 1, 
+#' fixed_modifications = c(C = 57), variable_modifications = c(S = 79, Y = 79, T = 79),
+#' max_mods = 2)
+#' 
+#' ## calculate fragments for ACE with default modification
+#' calculateFragments("ACE", fixed_modifications = c(C = 57.02146))
+#'
+#' #' ## calculate fragments for ACE with an added variable modification
+#' calculateFragments("ACE", variable_modifications = c(A = 43.25))
+#' 
+#' ## calculate fragments for ACE with an added N-terminal modification
+#' calculateFragments("ACE", fixed_modifications = c(C = 57.02146, Nterm = 229.1629))
+#'
+#' ## calculate fragments for ACE without any modifications
+#' calculateFragments("ACE", fixed_modifications = NULL)
+#'
+#' calculateFragments("VESITARHGEVLQLRPK",
+#'                    type = c("a", "b", "c", "x", "y", "z"),
+#'                    z = 1:2)
+#'
+#' ## neutral loss
+#' defaultNeutralLoss()
+#'
+#' ## disable water loss on the C terminal
+#' defaultNeutralLoss(disableWaterLoss="Cterm")
+#'
+#' ## real example
+#' calculateFragments("PQR")
+#' calculateFragments("PQR",
+#'                    neutralLoss=defaultNeutralLoss(disableWaterLoss="Cterm"))
+#' calculateFragments("PQR",
+#'                    neutralLoss=defaultNeutralLoss(disableAmmoniaLoss="Q"))
+#'
+#' ## disable neutral loss completely
+#' calculateFragments("PQR", neutralLoss=NULL)
+#'  
+setMethod("calculateFragments", c("character", "missing"),
+          function(sequence, type = c("b", "y"), z = 1,
+                   fixed_modifications = c(C = 57.02146),
+                   variable_modifications = numeric(),
+                   max_mods = Inf,
+                   neutralLoss = defaultNeutralLoss(),
+                   verbose = TRUE, 
+                   modifications = NULL) {
+              l <- lapply(sequence, .calculateFragments,
+                          type = type, z = z, 
+                          fixed_modifications = fixed_modifications,
+                          variable_modifications = variable_modifications,
+                          max_mods = Inf,
+                          neutralLoss = neutralLoss, 
+                          verbose = verbose,
+                          modifications = modifications)
+              return(do.call(rbind, l))
+          })
+
+
+#' calculate fragments from a peptide sequence
+#'
+#' @param sequence character vector of length 1
+#'
+#' @param type could be c("a", "b", "c", "x", "y", "z")
+#'
+#' @param z charge
+#'
+#' @param fixed_modifications A named `numeric` vector of used fixed modifications. 
+#' The name must correspond to the one-letter-code of the modified amino acid 
+#' and the numeric value must represent the mass that should be added to the 
+#' original amino accid mass, default: Carbamidomethyl modifications = 
+#' c(C = 57.02146). Use Nterm or Cterm as names for modifications that should 
+#' be added to the amino respectively carboxyl-terminus.
+#' 
+#' @param variable_modifications A named `numeric` vector of variable modifications.
 #' Depending on the maximum number of modifications (`max_mods`), all possible 
 #' combinations are returned.
 #' 
@@ -26,30 +155,29 @@
 #' allowed on the sequence at once. Does not include fixed modifications. 
 #' Default value is positive infinity.
 #' 
-#' @param neutralLoss list, it has to have two named elments, namely water and
-#' ammonia that contain a character vector which type of neutral loss should be 
-#' calculated. Currently neutral loss on the C terminal "Cterm", at the amino 
-#' acids c("D", "E", "S", "T") for "water" (shown with an ⁠_⁠) an
-#' d c("K", "N", "Q", "R") for "ammonia" (shown with an *) are supported.
+#' @param neutralLoss `list`, it has to have two named elments,
+#'     namely `water` and `ammonia` that contain a `character` vector
+#'     which type of neutral loss should be calculated.  Currently
+#'     neutral loss on the C terminal `"Cterm"`, at the amino acids
+#'     `c("D", "E", "S", "T")` for `"water"` (shown with an `_`) and
+#'     `c("K", "N", "Q", "R")` for `"ammonia"` (shown with an `*`) are
+#'     supported.
+#'
+#'     There is a helper function `defaultNeutralLoss()` that returns
+#'     the correct list. It has two arguments `disableWaterLoss` and
+#'     `disableAmmoniaLoss` to remove single neutral loss options. See
+#'     the example section for use cases.
 #' 
-#' @param verbose logical(1). If TRUE (default) the used modifications are printed.
+#' @param verbose `logical(1)`. If `TRUE` (default) the used modifications are printed.
 #' 
 #' @param modifications Named `numeric()`. Deprecated modifications parameter.
 #' Will override `fixed_modifications` but is set to `NULL` by default. Please 
 #' refrain from using it, opt for `fixed_modifications` instead.
 #' 
-#' @return A dataframe showing all the 
-#' ions produced by fragmentation with all possible combinations of modifications.
-#' The used variable modifications are displayed in the peptide column through the
-#' use of amino acids within brackets. Fixed modifications are not displayed. 
-#' 
-#' 
-#' @examples
-#' calculateFragments2(sequence = "ARGSHKATC", type = c("b", "y"), z = 1, 
-#' fixed_modifications = c(C = 57), variable_modifications = c(S = 79, Y = 79, T = 79),
-#' max_mods = 2)
-#' @export
-calculateFragments2 <- function(sequence, 
+#' @importFrom stats setNames
+#'
+#' @noRd
+.calculateFragments <- function(sequence, 
                                 type = c("b", "y"), 
                                 z = 1,
                                 fixed_modifications = c(C = 57.02146),
@@ -232,13 +360,9 @@ calculateFragments2 <- function(sequence,
 #' @param max_mods Numeric. Indicates how many modifications can be applied at once.
 #' 
 #' @return list with all possible combinations of modifications
-<<<<<<< HEAD
 #' 
-=======
-#'
 #' @importFrom utils combn
 #'
->>>>>>> b0421575011f5140cba43f5f5a4ef0d02a1ee5bd
 #' @noRd
 #' 
 #' @examples
@@ -292,4 +416,113 @@ calculateFragments2 <- function(sequence,
         modificationCombination[-NROW(modificationCombination)]
     
     fragmentMasses + cumsum(modificationCombination)
+}
+
+#' adds neutral loss to data.frame generated by .calculateFragments
+#' 
+#' @param df data.frame generated by. calculateFragments
+#' 
+#' @return data.frame neutral loss rows added
+#' 
+#' @noRd
+.neutralLoss <- function(df,
+                         water = c("Cterm", "D", "E", "S", "T"),
+                         ammonia = c("K", "N", "Q", "R")) {
+    ## see "Low energy peptide fragmentation pathways" by Hugh-G. Patterton, Ph.D.
+    ## http://cbio.ufs.ac.za/fgap/download/fragmentation_review.pdf
+    ## see also discussion #47: https://github.com/lgatto/MSnbase/issues/47
+    
+    ## constants
+    mass <- getAtomicMass()
+    
+    widx <- double()
+    aidx <- double()
+    
+    .removeNeutralLoss <- function(df, idx, mass, ion) {
+        if (length(idx)) {
+            loss <- df[idx, ]
+            loss[, c("ion", "type")] <- paste0(c(loss$ion, loss$type), ion)
+            loss$mz <- loss$mz - mass / loss$z
+            rbind(df, loss)
+        } else {
+            df
+        }
+    }
+    
+    if (length(water)) {
+        ## N-term D/E, internal S/T
+        rules <- c(D = "^D.", E = "^E.", S = ".S.", T = ".T.")
+        rules <- rules[intersect(c("D", "E", "S", "T"), water)]
+        
+        if (length(rules)) {
+            widx <- grep(paste0(rules, collapse = "|"), df$seq)
+        }
+        
+        ## C-term COOH (all x, y, z fragments)
+        if ("Cterm" %in% water) {
+            widx <- unique(c(widx, grep("[xyz]", df$type)))
+        }
+    }
+    
+    if (length(ammonia)) {
+        ## N-term/internal K/N/Q, internal R
+        rules <- c(K = "^.*K.", N = "^.*N.", Q = "^.*Q.", R = ".R.")
+        rules <- rules[intersect(c("K", "N", "Q", "R"), ammonia)]
+        
+        if (length(rules)) {
+            aidx <- grep(paste0(rules, collapse="|"), df$seq)
+        }
+    }
+    
+    if (length(widx)) {
+        df <- .removeNeutralLoss(df, idx = widx, mass = 2*mass["H"]+mass["O"], ion = "_")
+    }
+    if (length(aidx)) {
+        df <- .removeNeutralLoss(df, idx = aidx, mass = mass["N"]+3*mass["H"], ion = "*")
+    }
+    df
+}
+
+#' adds nterm/cterm modifications to data.frame generated by
+#' .calculateFragments should be used after .neutralLoss
+#'
+#' @param df data.frame generated by. calculateFragments
+#'
+#' @return modified data.frame
+#'
+#' @noRd
+.terminalModifications <- function(df, modifications) {
+    
+    if ("Nterm" %in% names(modifications)) {
+        isABC <- grep("[abc]", df$type)
+        
+        if (length(isABC)) {
+            df$mz[isABC] <- df$mz[isABC] + modifications["Nterm"] / df$z[isABC]
+        }
+    }
+    
+    if ("Cterm" %in% names(modifications)) {
+        isXYZ <- grep("[xyz]", df$type)
+        
+        if (length(isXYZ)) {
+            df$mz[isXYZ] <- df$mz[isXYZ] + modifications["Cterm"] / df$z[isXYZ]
+        }
+    }
+    
+    df
+}
+
+#' default neutral loss argument for calculateFragments
+#'
+#' @param disableWaterLoss character, which loss should not calculated
+#'
+#' @param disableAmmoniaLoss character, which loss should not
+#'     calculated
+#'
+#' @export
+#'
+#' @noRd
+defaultNeutralLoss <- function(disableWaterLoss = NULL, disableAmmoniaLoss = NULL) {
+    list(water = setdiff(c("Cterm", "D", "E", "S", "T"), disableWaterLoss),
+         ammonia = setdiff(c("K", "N", "Q", "R"), disableAmmoniaLoss))
 }
