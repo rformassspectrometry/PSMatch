@@ -50,6 +50,10 @@ acids c("D", "E", "S", "T") for "water" (shown with an ⁠_⁠) an
 d c("K", "N", "Q", "R") for "ammonia" (shown with an *) are supported.}
 
 \item{verbose}{logical(1). If TRUE (default) the used modifications are printed.}
+
+\item{modifications}{Named \code{numeric()}. Deprecated modifications parameter.
+Will override \code{fixed_modifications} but is set to \code{NULL} by default. Please
+refrain from using it, opt for \code{fixed_modifications} instead.}
 }
 \value{
 A dataframe showing all the

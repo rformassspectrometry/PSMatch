@@ -34,6 +34,10 @@
 #' 
 #' @param verbose logical(1). If TRUE (default) the used modifications are printed.
 #' 
+#' @param modifications Named `numeric()`. Deprecated modifications parameter.
+#' Will override `fixed_modifications` but is set to `NULL` by default. Please 
+#' refrain from using it, opt for `fixed_modifications` instead.
+#' 
 #' @return A dataframe showing all the 
 #' ions produced by fragmentation with all possible combinations of modifications.
 #' The used variable modifications are displayed in the peptide column through the
