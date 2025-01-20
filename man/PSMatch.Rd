@@ -97,6 +97,7 @@ Other contributors:
 \itemize{
   \item Samuel Wieczorek \email{samuel.wieczorek@cea.fr} [contributor]
   \item Thomas Burger \email{thomas.burger@cea.fr} [contributor]
+  \item Guillaume Deflandre \email{guillaume.deflandre@uclouvain.be} (\href{https://orcid.org/0009-0008-1257-2416}{ORCID}) [contributor]
 }
 
 }

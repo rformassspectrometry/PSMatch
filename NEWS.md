@@ -2,7 +2,8 @@
 
 ## PSMatch 1.11.1
 
-- Nothing yet
+- New `calculateFragments2` function includes
+ fixed and variable modifications to fragments ions.
 
 ## PSMatch 1.11.0
 

@@ -60,7 +60,7 @@
 #' the package's
 #' [webpage](https://rformassspectrometry.github.io/PSMatch/).
 #'
-#' @docType package
+#' 
 #'
 #' @name PSMatch
-NULL
+"_PACKAGE"
