@@ -63,8 +63,12 @@ calculateFragments2 <- function(sequence,
         fixed_modifications <- modifications
     }
     
+    ## split peptide sequence into aa
+    fragment.seq <- strsplit(sequence, "")[[1]]
+    fn <- length(fragment.seq)
+    
     mod_combinations <- 
-        .modificationPositions(sequence, 
+        .modificationPositions(fragment.seq, 
                                variable_modifications, 
                                max_mods)
     type <- match.arg(type,
@@ -121,10 +125,6 @@ calculateFragments2 <- function(sequence,
         message("Fixed modifications used: ", mods, 
                 "\nVariable modifications used: ", mods2)
     }
-    
-    ## split peptide sequence into aa
-    fragment.seq <- strsplit(sequence, "")[[1]]
-    fn <- length(fragment.seq)
     
     ## calculate cumulative mass starting at the amino-terminus (for a, b, c)
     amz <- cumsum(aamass[fragment.seq[-fn]])
@@ -234,13 +234,11 @@ calculateFragments2 <- function(sequence,
 #' @examples
 #' .modificationPositions("ARGHKA", variable_modifications = c(A = 4, K = 5, S = 8), max_mods = 3)
 #' 
-.modificationPositions <- function(sequence,
+.modificationPositions <- function(fragment.seq,
                                    variable_modifications = numeric(),
                                    max_mods = Inf) {
-    sequence_split <- strsplit(sequence, "", fixed = TRUE)[[1]]
-
-    modifiable_positions_var <-
-        which(sequence_split %in% names(variable_modifications))
+    modifiable_positions_var <- 
+        which(fragment.seq %in% names(variable_modifications))
 
     l <- length(modifiable_positions_var)
 
@@ -249,11 +247,11 @@ calculateFragments2 <- function(sequence,
 
     if (!length(variable_modifications) || max_mods <= 0)
         return(
-            list(setNames(integer(length(sequence_split)), sequence_split))
+            list(setNames(integer(length(fragment.seq)), fragment.seq))
         )
 
     .mod <- function(cmb,
-                     seq_split = sequence_split,
+                     seq_split = fragment.seq,
                      var_mods = variable_modifications) {
         m <- setNames(integer(length(seq_split)), seq_split)
         m[cmb] <- var_mods[seq_split[cmb]]
@@ -261,7 +259,7 @@ calculateFragments2 <- function(sequence,
     }
 
     c(
-        list(setNames(integer(length(sequence_split)), sequence_split)),
+        list(setNames(integer(length(fragment.seq)), fragment.seq)),
         if (length(modifiable_positions_var) == 1)
             lapply(modifiable_positions_var, .mod)
         else
