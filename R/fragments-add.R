@@ -84,7 +84,7 @@ addFragments <- function(x,
     ## stop if variable modifications used
     ## Temporary check to allow plotSpectra to work fine
     ## Will need to be removed once plotSpectra accepts variable modifications
-    ## See issue: 
+    ## See issue: https://github.com/rformassspectrometry/Spectra/issues/346
     stopifnot(length(unique(y_data[["peptide"]])) == 1)
 
     ## Find common peaks and prepare annotations
