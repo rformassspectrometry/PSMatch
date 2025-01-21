@@ -311,3 +311,4 @@ test_that(".cumsumFragmentMasses: Behaviour with any modification", {
     expect_identical(c(P = 20, Q = 45), result_forward)
     expect_identical(c(R = 17, Q = 42), result_backward)
 })
+

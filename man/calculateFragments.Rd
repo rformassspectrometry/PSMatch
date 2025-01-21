@@ -13,6 +13,7 @@
   z = 1,
   fixed_modifications = c(C = 57.02146),
   variable_modifications = numeric(),
+  max_mods = Inf,
   neutralLoss = defaultNeutralLoss(),
   verbose = TRUE,
   modifications = NULL
@@ -37,6 +38,10 @@ be added to the amino respectively carboxyl-terminus.}
 Depending on the maximum number of modifications (\code{max_mods}), all possible
 combinations are returned.}
 
+\item{max_mods}{A numeric indicating the maximum number of variable modifications
+allowed on the sequence at once. Does not include fixed modifications.
+Default value is positive infinity.}
+
 \item{neutralLoss}{\code{list}, it has to have two named elments,
 namely \code{water} and \code{ammonia} that contain a \code{character} vector
 which type of neutral loss should be calculated.  Currently
@@ -56,10 +61,6 @@ the example section for use cases.
 \item{modifications}{Named \code{numeric()}. Deprecated modifications parameter.
 Will override \code{fixed_modifications} but is set to \code{NULL} by default. Please
 refrain from using it, opt for \code{fixed_modifications} instead.}
-
-\item{max_mods}{A numeric indicating the maximum number of variable modifications
-allowed on the sequence at once. Does not include fixed modifications.
-Default value is positive infinity.}
 }
 \value{
 A \code{data.frame} showing all the
