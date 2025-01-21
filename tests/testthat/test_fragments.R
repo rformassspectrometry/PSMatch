@@ -38,6 +38,9 @@ test_that("calculateFragments", {
         peptide = rep("ACE", 12),
         stringsAsFactors=FALSE)
     
+    expect_warning(calculateFragments("PQR", modifications = c(P=2)),
+                   "'modifications' is deprecated, please use 'fixed_modifications' instead.")
+    
     expect_equal(pqr[1:12,],
                  calculateFragments("PQR",
                                     type = c("a", "b", "c", "x", "y", "z"),

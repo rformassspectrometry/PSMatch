@@ -69,6 +69,8 @@
 #' Fixed modifications are not displayed. 
 #' 
 #' @author Sebastian Gibb <mail@sebastiangibb.de>
+#' 
+#' @author Guillaume Deflandre <guillaume.deflandre@uclouvain.be>
 #'
 #' @importFrom ProtGenerics calculateFragments
 #'
@@ -358,6 +360,8 @@ setMethod("calculateFragments", c("character", "missing"),
 #' @param max_mods Numeric. Indicates how many modifications can be applied at once.
 #' 
 #' @return list with all possible combinations of modifications
+#' 
+#' @author Guillaume Deflandre <guillaume.deflandre@uclouvain.be>
 #' 
 #' @importFrom utils combn
 #'

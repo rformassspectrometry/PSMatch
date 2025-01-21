@@ -82,6 +82,9 @@ addFragments <- function(x,
     y_data <- y_data[order(y_data$mz), ]
     
     ## stop if variable modifications used
+    ## Temporary check to allow plotSpectra to work fine
+    ## Will need to be removed once plotSpectra accepts variable modifications
+    ## See issue: 
     stopifnot(length(unique(y_data[["peptide"]])) == 1)
 
     ## Find common peaks and prepare annotations
