@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.21/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [ctb] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2025-01-20 22:01:36.658877<br><strong>Compiled</strong>: Mon Jan 20 22:35:12 2025</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [ctb] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2025-01-22 09:36:00.275594<br><strong>Compiled</strong>: Wed Jan 22 09:44:13 2025</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -190,7 +190,8 @@ as input and returns a <code>data.frame</code> with the fragment
 sequences, M/Z, ion type, charge and position.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/calculateFragments.html">calculateFragments</a></span><span class="op">(</span><span class="va">sp5449</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Modifications used: C=57.02146</span></span></code></pre>
+<pre><code><span><span class="co">## Fixed modifications used: C=57.02146</span></span>
+<span><span class="co">## Variable modifications used: None</span></span></code></pre>
 <pre><code><span><span class="co">##             mz  ion type pos z                        seq</span></span>
 <span><span class="co">## 1     88.03931   b1    b   1 1                          S</span></span>
 <span><span class="co">## 2    216.09789   b2    b   2 1                         SQ</span></span>
@@ -329,7 +330,146 @@ sequences, M/Z, ion type, charge and position.</p>
 <span><span class="co">## 135 2421.30959 y23*   y*  23 1    QQAGTSVLSQANQVPQTVLSLLR</span></span>
 <span><span class="co">## 136 2534.39365 y24*   y*  24 1   LQQAGTSVLSQANQVPQTVLSLLR</span></span>
 <span><span class="co">## 137 2647.47771 y25*   y*  25 1  ILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 138 2775.53629 y26*   y*  26 1 QILQQAGTSVLSQANQVPQTVLSLLR</span></span></code></pre>
+<span><span class="co">## 138 2775.53629 y26*   y*  26 1 QILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">##                         peptide</span></span>
+<span><span class="co">## 1   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 2   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 3   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 4   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 5   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 6   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 7   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 8   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 9   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 10  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 11  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 12  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 13  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 14  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 15  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 16  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 17  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 18  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 19  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 20  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 21  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 22  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 23  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 24  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 25  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 26  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 27  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 28  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 29  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 30  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 31  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 32  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 33  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 34  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 35  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 36  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 37  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 38  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 39  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 40  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 41  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 42  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 43  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 44  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 45  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 46  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 47  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 48  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 49  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 50  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 51  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 52  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 53  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 54  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 55  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 56  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 57  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 58  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 59  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 60  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 61  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 62  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 63  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 64  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 65  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 66  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 67  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 68  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 69  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 70  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 71  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 72  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 73  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 74  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 75  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 76  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 77  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 78  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 79  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 80  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 81  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 82  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 83  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 84  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 85  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 86  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 87  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 88  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 89  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 90  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 91  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 92  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 93  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 94  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 95  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 96  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 97  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 98  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 99  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 100 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 101 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 102 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 103 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 104 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 105 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 106 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 107 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 108 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 109 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 110 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 111 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 112 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 113 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 114 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 115 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 116 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 117 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 118 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 119 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 120 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 121 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 122 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 123 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 124 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 125 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 126 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 127 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 128 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 129 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 130 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 131 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 132 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 133 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 134 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 135 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 136 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 137 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
+<span><span class="co">## 138 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="visualising-fragment-ions">Visualising fragment ions<a class="anchor" aria-label="anchor" href="#visualising-fragment-ions"></a>
