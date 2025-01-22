@@ -24,7 +24,8 @@ more #' details).}
 added to the spectra in \code{x}.}
 }
 \value{
-Return a \code{character()} with fragment ion labels.
+Return a \code{list()} of \code{character()} with fragment ion labels. The
+elements are named after the peptide they belong to (modifications included).
 }
 \description{
 Adds MS2 Fragments
