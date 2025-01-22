@@ -16,7 +16,8 @@
 ##'     [calculateFragments()] to calculate fragment m/z values to be
 ##'     added to the spectra in `x`.
 ##'
-##' @return Return a `character()` with fragment ion labels.
+##' @return Return a `list()` of `character()` with fragment ion labels. The 
+##' elements are named after the peptide they belong to (modifications included).
 ##'
 ##' @importFrom MsCoreUtils common
 ##'
@@ -66,35 +67,47 @@
 ##'
 ##' ## Annotate the spectum with the fragment labels
 ##' plotSpectra(sp, labels = addFragments, labelPos = 3)
-addFragments <- function(x,
-                         tolerance = 0,
-                         ppm = 20,
-                         ...) {
+addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
     stopifnot(requireNamespace("Spectra"))
-    stopifnot(inherits(x, "Spectra"),
-              length(x) == 1)
-    stopifnot("sequence" %in% Spectra::spectraVariables(x))
-    y <- Spectra::spectraData(x)[["sequence"]]
-
-    ## Prepare x and y data
-    x_data <- Spectra::peaksData(x)[[1L]]
-    y_data <- calculateFragments(y, verbose = FALSE, ...)
-    y_data <- y_data[order(y_data$mz), ]
+    stopifnot(inherits(x, "Spectra"))
+    super_labels <- vector("list", length = length(x))
     
-    ## stop if variable modifications used
-    ## Temporary check to allow plotSpectra to work fine
-    ## Will need to be removed once plotSpectra accepts variable modifications
-    ## See issue: https://github.com/rformassspectrometry/Spectra/issues/346
-    stopifnot(length(unique(y_data[["peptide"]])) == 1)
-
-    ## Find common peaks and prepare annotations
-    idx <- which(MsCoreUtils::common(x_data[, "mz"], y_data[, "mz"],
-                                     tolerance = tolerance, ppm = ppm))
-    idy <- which(MsCoreUtils::common(y_data[, "mz"], x_data[, "mz"],
-                                     tolerance = tolerance, ppm = ppm))
-
-    ## Prepare labels
-    labels <- rep(NA_character_, nrow(x_data))
-    labels[idx] <- y_data[idy, "ion"]
-    labels
+    for (j in seq_along(x)) {
+        stopifnot("sequence" %in% Spectra::spectraVariables(x[j]))
+        y <- Spectra::spectraData(x[j])[["sequence"]]
+        x_data <- Spectra::peaksData(x[j])[[1L]]
+        y_data <- calculateFragments2(y, verbose = FALSE, ...)
+        
+        ## stop if variable modifications used
+        ## Temporary check to allow plotSpectra to work fine
+        ## Will need to be removed once plotSpectra accepts variable modifications
+        ## See issue: https://github.com/rformassspectrometry/Spectra/issues/346
+        if (length(unique(y_data[["peptide"]])) != 1)
+            stop("Variable modifications are not yet supported.")
+        
+        y_data <- split(y_data, y_data$peptide)
+        
+        labels <- vector("list", length = length(y_data))
+        names(labels) <- names(y_data)
+        
+        for (i in seq_along(y_data)) {
+            y_data[[i]] <- y_data[[i]][order(y_data[[i]]$mz), 
+            ]
+            idx <- which(MsCoreUtils::common(x_data[, "mz"], 
+                                             y_data[[i]][, "mz"],
+                                             tolerance = tolerance,
+                                             ppm = ppm))
+            idy <- which(MsCoreUtils::common(y_data[[i]][, "mz"], 
+                                             x_data[, "mz"],
+                                             tolerance = tolerance, 
+                                             ppm = ppm))
+            
+            labels[[i]] <- rep(NA_character_, nrow(x_data))
+            labels[[i]][idx] <- y_data[[i]][idy, "ion"]
+            
+            attr(labels[[i]], "spectrumNumber") <- j
+        }
+        super_labels[[j]] <- labels
+    }
+    unlist(super_labels, recursive = FALSE)
 }
