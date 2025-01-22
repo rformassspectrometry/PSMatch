@@ -1,9 +1,15 @@
 # PSMatch 1.11
 
+## PSMatch 1.11.2
+
+- Replace `calculateFragments` with `calculateFragments2`.
+    [PR #19](https://github.com/rformassspectrometry/PSMatch/pull/19)
+
 ## PSMatch 1.11.1
 
-- New `calculateFragments2` function includes
- fixed and variable modifications to fragments ions.
+- New `calculateFragments2` function includes fixed and variable modifications
+    to fragments ions.
+  [PR #16](https://github.com/rformassspectrometry/PSMatch/pull/16)
 
 ## PSMatch 1.11.0
 
