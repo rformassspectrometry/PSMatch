@@ -78,13 +78,6 @@ addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
         x_data <- Spectra::peaksData(x[j])[[1L]]
         y_data <- calculateFragments2(y, verbose = FALSE, ...)
         
-        ## stop if variable modifications used
-        ## Temporary check to allow plotSpectra to work fine
-        ## Will need to be removed once plotSpectra accepts variable modifications
-        ## See issue: https://github.com/rformassspectrometry/Spectra/issues/346
-        if (length(unique(y_data[["peptide"]])) != 1)
-            stop("Variable modifications are not yet supported.")
-        
         y_data <- split(y_data, y_data$peptide)
         
         labels <- vector("list", length = length(y_data))
