@@ -76,7 +76,7 @@ addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
         stopifnot("sequence" %in% Spectra::spectraVariables(x[j]))
         y <- Spectra::spectraData(x[j])[["sequence"]]
         x_data <- Spectra::peaksData(x[j])[[1L]]
-        y_data <- calculateFragments2(y, verbose = FALSE, ...)
+        y_data <- calculateFragments(y, verbose = FALSE, ...)
         
         y_data <- split(y_data, y_data$peptide)
         
