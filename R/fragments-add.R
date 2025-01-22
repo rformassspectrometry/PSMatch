@@ -80,6 +80,12 @@ addFragments <- function(x,
     x_data <- Spectra::peaksData(x)[[1L]]
     y_data <- calculateFragments(y, verbose = FALSE, ...)
     y_data <- y_data[order(y_data$mz), ]
+    
+    ## stop if variable modifications used
+    ## Temporary check to allow plotSpectra to work fine
+    ## Will need to be removed once plotSpectra accepts variable modifications
+    ## See issue: https://github.com/rformassspectrometry/Spectra/issues/346
+    stopifnot(length(unique(y_data[["peptide"]])) == 1)
 
     ## Find common peaks and prepare annotations
     idx <- which(MsCoreUtils::common(x_data[, "mz"], y_data[, "mz"],

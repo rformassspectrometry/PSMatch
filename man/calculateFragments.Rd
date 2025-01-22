@@ -2,34 +2,45 @@
 % Please edit documentation in R/fragments-calculate.R
 \name{calculateFragments}
 \alias{calculateFragments}
+\alias{modificationPositions}
 \alias{defaultNeutralLoss}
 \alias{calculateFragments,character,missing-method}
-\title{Calculate ions produced by fragmentation}
+\title{Calculate ions produced by fragmentation with variable modifications}
 \usage{
 \S4method{calculateFragments}{character,missing}(
   sequence,
   type = c("b", "y"),
   z = 1,
-  modifications = c(C = 57.02146),
+  fixed_modifications = c(C = 57.02146),
+  variable_modifications = numeric(),
+  max_mods = Inf,
   neutralLoss = defaultNeutralLoss(),
-  verbose = TRUE
+  verbose = TRUE,
+  modifications = NULL
 )
 }
 \arguments{
-\item{sequence}{character() providing a peptide sequence.}
+\item{sequence}{\code{character()} providing a peptide sequence.}
 
 \item{type}{\code{character} vector of target ions; possible values:
 \code{c("a", "b", "c", "x", "y", "z")}. Default is \code{type = c("b", "y")}.}
 
-\item{z}{\code{numeric} with desired charge state; default is 1.}
+\item{z}{numeric with a desired charge state; default is 1.}
 
-\item{modifications}{A named \code{numeric} vector of used
-modifications. The name must correspond to the one-letter-code
-of the modified amino acid and the \code{numeric} value must
-represent the mass that should be added to the original amino
-accid mass, default: Carbamidomethyl \code{modifications = c(C = 57.02146)}. Use \code{Nterm} or \code{Cterm} as names for modifications
-that should be added to the amino respectively
-carboxyl-terminus.}
+\item{fixed_modifications}{A named \code{numeric} vector of used fixed modifications.
+The name must correspond to the one-letter-code of the modified amino acid
+and the numeric value must represent the mass that should be added to the
+original amino accid mass, default: Carbamidomethyl modifications =
+c(C = 57.02146). Use Nterm or Cterm as names for modifications that should
+be added to the amino respectively carboxyl-terminus.}
+
+\item{variable_modifications}{A named \code{numeric} vector of variable modifications.
+Depending on the maximum number of modifications (\code{max_mods}), all possible
+combinations are returned.}
+
+\item{max_mods}{A numeric indicating the maximum number of variable modifications
+allowed on the sequence at once. Does not include fixed modifications.
+Default value is positive infinity.}
 
 \item{neutralLoss}{\code{list}, it has to have two named elments,
 namely \code{water} and \code{ammonia} that contain a \code{character} vector
@@ -45,15 +56,21 @@ the correct list. It has two arguments `disableWaterLoss` and
 the example section for use cases.
 }\if{html}{\out{</div>}}}
 
-\item{verbose}{\code{logical(1)}. If \code{TRUE} (default) the used
-modifications are printed.}
+\item{verbose}{\code{logical(1)}. If \code{TRUE} (default) the used modifications are printed.}
+
+\item{modifications}{Named \code{numeric()}. Deprecated modifications parameter.
+Will override \code{fixed_modifications} but is set to \code{NULL} by default. Please
+refrain from using it, opt for \code{fixed_modifications} instead.}
 }
 \value{
-The methods with \code{oject = "missing"} returns a
-\code{data.frame}.
+A \code{data.frame} showing all the
+ions produced by fragmentation with all possible combinations of modifications.
+The used variable modifications are displayed in the \code{peptide} column through the
+use of amino acids followed by the modification within brackets.
+Fixed modifications are not displayed.
 }
 \description{
-These method calculates a-, b-, c-, x-, y- and z-ions produced by
+This method calculates a-, b-, c-, x-, y- and z-ions produced by
 fragmentation.
 
 Available methods
@@ -61,7 +78,7 @@ Available methods
 \item The default method with signature \code{sequence = "character"} and
 \code{object = "missing"} calculates the theoretical fragments for a
 peptide sequence. It returns a \code{data.frame} with the columns
-\code{mz}, \code{ion}, \code{type}, \code{pos}, \code{z} and \code{seq}.
+\code{mz}, \code{ion}, \code{type}, \code{pos}, \code{z}, \code{seq} and \code{peptide}.
 \item Additional method can be defined that will adapt their behaviour
 based on spectra defined in \code{object}. See for example the MSnbase
 package that implements a method for objects of class
@@ -69,15 +86,22 @@ package that implements a method for objects of class
 }
 }
 \examples{
+## General use
+calculateFragments(sequence = "ARGSHKATC", type = c("b", "y"), z = 1, 
+fixed_modifications = c(C = 57), variable_modifications = c(S = 79, Y = 79, T = 79),
+max_mods = 2)
 
 ## calculate fragments for ACE with default modification
-calculateFragments("ACE", modifications = c(C = 57.02146))
+calculateFragments("ACE", fixed_modifications = c(C = 57.02146))
 
-## calculate fragments for ACE with an addition N-terminal modification
-calculateFragments("ACE", modifications = c(C = 57.02146, Nterm = 229.1629))
+#' ## calculate fragments for ACE with an added variable modification
+calculateFragments("ACE", variable_modifications = c(A = 43.25))
+
+## calculate fragments for ACE with an added N-terminal modification
+calculateFragments("ACE", fixed_modifications = c(C = 57.02146, Nterm = 229.1629))
 
 ## calculate fragments for ACE without any modifications
-calculateFragments("ACE", modifications = NULL)
+calculateFragments("ACE", fixed_modifications = NULL)
 
 calculateFragments("VESITARHGEVLQLRPK",
                    type = c("a", "b", "c", "x", "y", "z"),
@@ -98,7 +122,10 @@ calculateFragments("PQR",
 
 ## disable neutral loss completely
 calculateFragments("PQR", neutralLoss=NULL)
+ 
 }
 \author{
 Sebastian Gibb \href{mailto:mail@sebastiangibb.de}{mail@sebastiangibb.de}
+
+Guillaume Deflandre \href{mailto:guillaume.deflandre@uclouvain.be}{guillaume.deflandre@uclouvain.be}
 }
