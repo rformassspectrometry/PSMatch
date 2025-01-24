@@ -97,8 +97,6 @@ addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
             
             labels[[i]] <- rep(NA_character_, nrow(x_data))
             labels[[i]][idx] <- y_data[[i]][idy, "ion"]
-            
-            attr(labels[[i]], "spectrumNumber") <- j
         }
         super_labels[[j]] <- labels
     }
