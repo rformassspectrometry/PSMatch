@@ -58,6 +58,4 @@ test_that("addFragments() works with modifications", {
     ## Number of elements equal the possibilities of peptide sequences
     ## This instance: no mod, 1 mod on Q: 2 possibilities
     expect_equal(length(ans), 2)
-    expect_identical(attr(ans[[1]], "spectrumNumber"), 
-                     attr(ans[[1]], "spectrumNumber"))
 })
