@@ -84,8 +84,7 @@ addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
         names(labels) <- names(y_data)
         
         for (i in seq_along(y_data)) {
-            y_data[[i]] <- y_data[[i]][order(y_data[[i]]$mz), 
-            ]
+            y_data[[i]] <- y_data[[i]][order(y_data[[i]]$mz), ]
             idx <- which(MsCoreUtils::common(x_data[, "mz"], 
                                              y_data[[i]][, "mz"],
                                              tolerance = tolerance,
