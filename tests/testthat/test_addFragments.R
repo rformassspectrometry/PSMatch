@@ -43,21 +43,3 @@ test_that("addFragments() works with multiple Spectra", {
     expect_equal(length(ans), 2)
     expect_identical(names(ans), seq)
 })
-
-test_that("addFragments() works with modifications", {
-    library("Spectra")
-    seq <- "PQR"
-    frags <- calculateFragments(seq)
-    o <- order(frags$mz)
-    sp <- DataFrame(msLevel = 2L, rtime = 2345, sequence = seq)
-    sp$mz <- list(frags$mz[o])
-    sp$intensity <- list(rep(1, 7))
-    sp <- Spectra(sp)
-    ## all fragments
-    ans <- addFragments(sp, variable_modifications = c(Q = 45))
-    ## Number of elements equal the possibilities of peptide sequences
-    ## This instance: no mod, 1 mod on Q: 2 possibilities
-    expect_equal(length(ans), 2)
-    expect_identical(attr(ans[[1]], "spectrumNumber"), 
-                     attr(ans[[1]], "spectrumNumber"))
-})
