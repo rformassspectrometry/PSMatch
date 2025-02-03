@@ -1,4 +1,4 @@
-##' @name labels
+##' @name labelFragments
 ##' 
 ##' @title labels MS2 Fragments
 ##'
@@ -109,7 +109,7 @@ labelFragments <- function(x, tolerance = 0, ppm = 20, ...) {
 }
 
 
-#' @rdname labels
+#' @rdname labelFragments
 addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
     .Deprecated("labelFragments")
     labelFragments(x, tolerance, ppm, ...)
