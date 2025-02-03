@@ -110,7 +110,7 @@ labelFragments <- function(x, tolerance = 0, ppm = 20, ...) {
 
 
 #' @rdname labels
-addFragment <- function(x, tolerance = 0, ppm = 20, ...) {
+addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
     .Deprecated("labelFragments")
     labelFragments(x, tolerance, ppm, ...)
 }
