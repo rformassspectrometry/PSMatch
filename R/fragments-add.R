@@ -71,6 +71,7 @@ addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
     stopifnot(requireNamespace("Spectra"))
     stopifnot(inherits(x, "Spectra"))
     super_labels <- vector("list", length = length(x))
+    k <- integer()
     
     for (j in seq_along(x)) {
         stopifnot("sequence" %in% Spectra::spectraVariables(x[j]))
@@ -84,6 +85,7 @@ addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
         names(labels) <- names(y_data)
         
         for (i in seq_along(y_data)) {
+            k <- c(k, j)
             y_data[[i]] <- y_data[[i]][order(y_data[[i]]$mz), ]
             idx <- which(MsCoreUtils::common(x_data[, "mz"], 
                                              y_data[[i]][, "mz"],
@@ -99,5 +101,7 @@ addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
         }
         super_labels[[j]] <- labels
     }
-    unlist(super_labels, recursive = FALSE)
+    super_labels <- unlist(super_labels, recursive = FALSE)
+    attr(super_labels, "group") <- k
+    super_labels
 }
