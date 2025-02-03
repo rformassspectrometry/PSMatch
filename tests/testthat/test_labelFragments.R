@@ -59,3 +59,4 @@ test_that("labelFragments() works with modifications", {
     ## This instance: no mod, 1 mod on Q: 2 possibilities
     expect_equal(length(ans), 2)
 })
+

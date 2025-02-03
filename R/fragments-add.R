@@ -1,4 +1,6 @@
-##' @title Adds MS2 Fragments
+##' @name labels
+##' 
+##' @title labels MS2 Fragments
 ##'
 ##' @param x An instance of class `Spectra` of length 1, containing a
 ##'     spectra variable `"sequence"` with a `character(1)`
@@ -63,11 +65,11 @@
 ##' sp <- Spectra(sp)
 ##'
 ##' ## The fragment ion labels
-##' addFragments(sp)
+##' labelFragments(sp)
 ##'
 ##' ## Annotate the spectum with the fragment labels
-##' plotSpectra(sp, labels = addFragments, labelPos = 3)
-addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
+##' plotSpectra(sp, labels = labelFragments, labelPos = 3)
+labelFragments <- function(x, tolerance = 0, ppm = 20, ...) {
     stopifnot(requireNamespace("Spectra"))
     stopifnot(inherits(x, "Spectra"))
     super_labels <- vector("list", length = length(x))
@@ -104,4 +106,11 @@ addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
     super_labels <- unlist(super_labels, recursive = FALSE)
     attr(super_labels, "group") <- k
     super_labels
+}
+
+
+#' @rdname labels
+addFragment <- function(x, tolerance = 0, ppm = 20, ...) {
+    .Deprecated("labelFragments")
+    labelFragments(x, tolerance, ppm, ...)
 }
