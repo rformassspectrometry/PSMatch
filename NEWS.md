@@ -1,5 +1,10 @@
 # PSMatch 1.11
 
+## PSMatch 1.11.3
+
+- Replace `addFragments` with `labelFragments`.
+    [PR #20](https://github.com/rformassspectrometry/PSMatch/pull/20)
+
 ## PSMatch 1.11.2
 
 - Replace `calculateFragments` with `calculateFragments2`.
