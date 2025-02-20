@@ -63,7 +63,7 @@ are implemented as \code{\link[=ConnectedComponents]{ConnectedComponents()}} obj
 
 The package also provides functionality to calculate ions produced
 by the fragmentation of a peptides (see \code{\link[=calculateFragments]{calculateFragments()}}) and
-annotated MS2 \code{\link[Spectra:Spectra]{Spectra::Spectra()}} objects (see \code{\link[=addFragments]{addFragments()}}).
+annotated MS2 \code{\link[Spectra:Spectra]{Spectra::Spectra()}} objects (see \code{\link[=labelFragments]{labelFragments()}}).
 }
 
 \section{Vignettes}{
