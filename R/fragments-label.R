@@ -115,6 +115,8 @@ labelFragments <- function(x, tolerance = 0, ppm = 20, ...) {
 
 ##' @rdname labelFragments
 ##' 
+##' @export 
+##' 
 ##' @details
 ##' `addFragments` is deprecated and will be made defunct; use `labelFragments` instead.
 addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
