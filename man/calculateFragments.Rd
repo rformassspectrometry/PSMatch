@@ -87,9 +87,11 @@ package that implements a method for objects of class
 }
 \examples{
 ## General use
-calculateFragments(sequence = "ARGSHKATC", type = c("b", "y"), z = 1, 
-fixed_modifications = c(C = 57), variable_modifications = c(S = 79, Y = 79, T = 79),
-max_mods = 2)
+calculateFragments(sequence = "ARGSHKATC",
+                   type = c("b", "y"), z = 1,
+                   fixed_modifications = c(C = 57),
+                   variable_modifications = c(S = 79, Y = 79, T = 79),
+                   max_mods = 2)
 
 ## calculate fragments for ACE with default modification
 calculateFragments("ACE", fixed_modifications = c(C = 57.02146))
@@ -122,7 +124,7 @@ calculateFragments("PQR",
 
 ## disable neutral loss completely
 calculateFragments("PQR", neutralLoss=NULL)
- 
+
 }
 \author{
 Sebastian Gibb \href{mailto:mail@sebastiangibb.de}{mail@sebastiangibb.de}
