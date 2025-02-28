@@ -50,7 +50,7 @@
 #'
 #' The package also provides functionality to calculate ions produced
 #' by the fragmentation of a peptides (see [calculateFragments()]) and
-#' annotated MS2 [Spectra::Spectra()] objects (see [addFragments()]).
+#' annotated MS2 [Spectra::Spectra()] objects (see [labelFragments()]).
 #'
 #' @section Vignettes:
 #'

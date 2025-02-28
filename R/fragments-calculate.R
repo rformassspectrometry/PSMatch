@@ -379,17 +379,17 @@ setMethod("calculateFragments", c("character", "missing"),
                                    max_mods = Inf) {
     modifiable_positions_var <-
         which(fragment.seq %in% names(variable_modifications))
-
+    
     l <- length(modifiable_positions_var)
-
+    
     ## take the maximum amount of modifications possible
     max_mods <- min(max_mods, l)
-
+    
     if (!length(variable_modifications) || max_mods <= 0)
         return(
             list(setNames(integer(length(fragment.seq)), fragment.seq))
         )
-
+    
     .mod <- function(cmb,
                      seq_split = fragment.seq,
                      var_mods = variable_modifications) {
@@ -397,7 +397,7 @@ setMethod("calculateFragments", c("character", "missing"),
         m[cmb] <- var_mods[seq_split[cmb]]
         m
     }
-
+    
     c(
         list(setNames(integer(length(fragment.seq)), fragment.seq)),
         if (length(modifiable_positions_var) == 1)
@@ -405,11 +405,11 @@ setMethod("calculateFragments", c("character", "missing"),
         else
             unlist(
                 lapply(seq_len(max_mods),
-                    function(n)combn(
-                        modifiable_positions_var, n,
-                        FUN = .mod,
-                        simplify = FALSE
-                    )
+                       function(n)combn(
+                           modifiable_positions_var, n,
+                           FUN = .mod,
+                           simplify = FALSE
+                       )
                 ),
                 recursive = FALSE
             )
