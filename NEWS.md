@@ -2,7 +2,7 @@
 
 ## PSMatch 1.11.3
 
-- Replace `addFragments` with `labelFragments`.
+- Deprecated `addFragments`. The use of `labelFragments` is endorsed instead.
     [PR #20](https://github.com/rformassspectrometry/PSMatch/pull/20)
 
 ## PSMatch 1.11.2

@@ -2,6 +2,9 @@
 ##' 
 ##' @title labels MS2 Fragments
 ##'
+##' @description
+##' Creates a list of annotations based on `calculateFragments` results.  
+##'
 ##' @param x An instance of class `Spectra` of length 1, containing a
 ##'     spectra variable `"sequence"` with a `character(1)`
 ##'     representing a valid peptide sequence.
@@ -19,7 +22,8 @@
 ##'     added to the spectra in `x`.
 ##'
 ##' @return Return a `list()` of `character()` with fragment ion labels. The 
-##' elements are named after the peptide they belong to (modifications included).
+##' elements are named after the peptide they belong to (variable 
+##' modifications included).
 ##'
 ##' @importFrom MsCoreUtils common
 ##'
@@ -109,7 +113,10 @@ labelFragments <- function(x, tolerance = 0, ppm = 20, ...) {
 }
 
 
-#' @rdname labelFragments
+##' @rdname labelFragments
+##' 
+##' @details
+##' `addFragments` is deprecated and will be made defunct; use `labelFragments` instead.
 addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
     .Deprecated("labelFragments")
     labelFragments(x, tolerance, ppm, ...)

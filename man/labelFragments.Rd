@@ -28,10 +28,14 @@ added to the spectra in \code{x}.}
 }
 \value{
 Return a \code{list()} of \code{character()} with fragment ion labels. The
-elements are named after the peptide they belong to (modifications included).
+elements are named after the peptide they belong to (variable
+modifications included).
 }
 \description{
-labels MS2 Fragments
+Creates a list of annotations based on \code{calculateFragments} results.
+}
+\details{
+\code{addFragments} is deprecated and will be made defunct; use \code{labelFragments} instead.
 }
 \examples{
 
