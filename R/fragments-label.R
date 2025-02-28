@@ -32,7 +32,6 @@
 ##' @author Johannes Rainer, Sebastian Gibb, Laurent Gatto
 ##'
 ##' @examples
-##'
 ##' library("Spectra")
 ##'
 ##' sp <- DataFrame(msLevel = 2L, rtime = 2345, sequence = "SIGFEGDSIGR")
@@ -121,32 +120,5 @@ labelFragments <- function(x, tolerance = 0, ppm = 20, ...) {
 ##' `addFragments` is deprecated and will be made defunct; use `labelFragments` instead.
 addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
     .Deprecated("labelFragments")
-    
-    stopifnot(requireNamespace("Spectra"))
-    stopifnot(inherits(x, "Spectra"),
-              length(x) == 1)
-    stopifnot("sequence" %in% Spectra::spectraVariables(x))
-    y <- Spectra::spectraData(x)[["sequence"]]
-    
-    ## Prepare x and y data
-    x_data <- Spectra::peaksData(x)[[1L]]
-    y_data <- calculateFragments(y, verbose = FALSE, ...)
-    y_data <- y_data[order(y_data$mz), ]
-    
-    ## stop if variable modifications used
-    ## Temporary check to allow plotSpectra to work fine
-    ## Will need to be removed once plotSpectra accepts variable modifications
-    ## See issue: https://github.com/rformassspectrometry/Spectra/issues/346
-    stopifnot(length(unique(y_data[["peptide"]])) == 1)
-    
-    ## Find common peaks and prepare annotations
-    idx <- which(MsCoreUtils::common(x_data[, "mz"], y_data[, "mz"],
-                                     tolerance = tolerance, ppm = ppm))
-    idy <- which(MsCoreUtils::common(y_data[, "mz"], x_data[, "mz"],
-                                     tolerance = tolerance, ppm = ppm))
-    
-    ## Prepare labels
-    labels <- rep(NA_character_, nrow(x_data))
-    labels[idx] <- y_data[idy, "ion"]
-    labels
+    labelFragments(x, tolerance, ppm, ...)
 }
