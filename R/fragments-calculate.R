@@ -193,16 +193,16 @@ setMethod("calculateFragments", c("character", "missing"),
     if (nchar(sequence) <= 1L) {
         stop("'sequence' has to have two or more residues.")
     }
-    
+
     if (!is.null(modifications)) {
         warning("'modifications' is deprecated, please use 'fixed_modifications' instead.")
         fixed_modifications <- modifications
     }
-    
+
     ## split peptide sequence into aa
     fragment.seq <- strsplit(sequence, "")[[1]]
     fn <- length(fragment.seq)
-    
+
     mod_combinations <-
         .modificationPositions(fragment.seq,
                                variable_modifications,
@@ -230,16 +230,16 @@ setMethod("calculateFragments", c("character", "missing"),
              x=mass["C"]+2*mass["O"],             # + CO + OH
              y=2*mass["H"]+mass["O"],             # + H2 + OH
              z=-(mass["N"]+mass["H"])+mass["O"])  # + NH + OH
-    
+
     aa <- getAminoAcids()
     aamass <- setNames(aa$ResidueMass, aa$AA)
-    
+
     ## replace default mass by masses with fixed modifications
     if (length(fixed_modifications)) {
         aamass[names(fixed_modifications)] <-
             aamass[names(fixed_modifications)] + fixed_modifications
     }
-    
+
     ## message used modifications
     if (verbose) {
         if (length(fixed_modifications)) {
@@ -261,12 +261,12 @@ setMethod("calculateFragments", c("character", "missing"),
         message("Fixed modifications used: ", mods,
                 "\nVariable modifications used: ", mods2)
     }
-    
+
     ## calculate cumulative mass starting at the amino-terminus (for a, b, c)
     amz <- cumsum(aamass[fragment.seq[-fn]])
     ## calculate cumulative mass starting at the carboxyl-terminus (for x, y, z)
     cmz <- cumsum(aamass[rev(fragment.seq[-1L])])
-    
+
     ## calculate fragment mass (amino-terminus)
     tn <- length(amz)
     atype <- c("a", "b", "c") %in% type
@@ -274,38 +274,38 @@ setMethod("calculateFragments", c("character", "missing"),
     ## calculate fragment mass (carboxyl-terminus)
     ctype <- c("x", "y", "z") %in% type
     nct <- sum(ctype)
-    
+
     ## devide by charge
     zn <- length(z)
-    
+
     ## fragment seq (amino-terminus)
     aseq <- rep(rep(substring(sequence, rep(1L, fn - 1L),
                               1L:(fn - 1L)), each = zn), nat)
-    
+
     ## fragment seq (carboxyl-terminus)
     cseq <- rep(rep(rev(substring(sequence, 2L:fn,
                                   rep(fn, fn - 1L))), each=zn), nct)
-    
+
     ## add the variable modifications and apply steps above
     amz_mod <- vector("list", length(mod_combinations))
     cmz_mod <- vector("list", length(mod_combinations))
     df <- vector("list", length(mod_combinations))
-    
+
     for (i in 1:length(mod_combinations)) {
         amz_mod[[i]] <- .cumsumFragmentMasses(mod_combinations[[i]], amz)
         cmz_mod[[i]] <- .cumsumFragmentMasses(rev(mod_combinations[[i]]), cmz)
-        
+
         amz_mod[[i]] <- rep(amz_mod[[i]], nat) + rep(add[1:3][atype], each=tn)
         cmz_mod[[i]] <- rep(cmz_mod[[i]], nct) + rep(add[4:6][ctype], each=tn)
-        
+
         amz_mod[[i]] <- rep(amz_mod[[i]], each = zn)/z
         cmz_mod[[i]] <- rep(cmz_mod[[i]], each = zn)/z
-        
+
         ## add protons (H+)
         amz_mod[[i]] <- amz_mod[[i]] + mass["p"]
         cmz_mod[[i]] <- cmz_mod[[i]] + mass["p"]
     }
-    
+
     ## fragment str (amino-terminus)
     atype <- rep(c("a", "b", "c")[atype], each = tn * zn)
     pos <- rep(1L:tn, each = zn)
@@ -314,7 +314,7 @@ setMethod("calculateFragments", c("character", "missing"),
     } else {
         aion <- character()
     }
-    
+
     ## fragment str (carboxyl-terminus)
     ctype <- rep(c("x", "y", "z")[ctype], each = tn * zn)
     if (length(ctype)) {
@@ -322,7 +322,7 @@ setMethod("calculateFragments", c("character", "missing"),
     } else {
         cion <- character()
     }
-    
+
     ## generate unique dataframe with all fragments and modifications
     for (i in 1:length(mod_combinations)) {
         df[[i]] <- data.frame(mz = c(amz_mod[[i]], cmz_mod[[i]]),
@@ -347,7 +347,7 @@ setMethod("calculateFragments", c("character", "missing"),
         df[[i]][["peptide"]] <- paste(names(mod_combinations[[i]]),
                                       collapse = "")
     }
-    
+
     df <- do.call(rbind, df)
     rownames(df) <- NULL
     df
@@ -417,10 +417,10 @@ setMethod("calculateFragments", c("character", "missing"),
 }
 
 .cumsumFragmentMasses <- function(modificationCombination, fragmentMasses) {
-    
+
     modificationCombination <-
         modificationCombination[-NROW(modificationCombination)]
-    
+
     fragmentMasses + cumsum(modificationCombination)
 }
 
@@ -437,13 +437,13 @@ setMethod("calculateFragments", c("character", "missing"),
     ## see "Low energy peptide fragmentation pathways" by Hugh-G. Patterton, Ph.D.
     ## http://cbio.ufs.ac.za/fgap/download/fragmentation_review.pdf
     ## see also discussion #47: https://github.com/lgatto/MSnbase/issues/47
-    
+
     ## constants
     mass <- getAtomicMass()
-    
+
     widx <- double()
     aidx <- double()
-    
+
     .removeNeutralLoss <- function(df, idx, mass, ion) {
         if (length(idx)) {
             loss <- df[idx, ]
@@ -454,32 +454,32 @@ setMethod("calculateFragments", c("character", "missing"),
             df
         }
     }
-    
+
     if (length(water)) {
         ## N-term D/E, internal S/T
         rules <- c(D = "^D.", E = "^E.", S = ".S.", T = ".T.")
         rules <- rules[intersect(c("D", "E", "S", "T"), water)]
-        
+
         if (length(rules)) {
             widx <- grep(paste0(rules, collapse = "|"), df$seq)
         }
-        
+
         ## C-term COOH (all x, y, z fragments)
         if ("Cterm" %in% water) {
             widx <- unique(c(widx, grep("[xyz]", df$type)))
         }
     }
-    
+
     if (length(ammonia)) {
         ## N-term/internal K/N/Q, internal R
         rules <- c(K = "^.*K.", N = "^.*N.", Q = "^.*Q.", R = ".R.")
         rules <- rules[intersect(c("K", "N", "Q", "R"), ammonia)]
-        
+
         if (length(rules)) {
             aidx <- grep(paste0(rules, collapse="|"), df$seq)
         }
     }
-    
+
     if (length(widx)) {
         df <- .removeNeutralLoss(df, idx = widx, mass = 2*mass["H"]+mass["O"], ion = "_")
     }
@@ -498,23 +498,23 @@ setMethod("calculateFragments", c("character", "missing"),
 #'
 #' @noRd
 .terminalModifications <- function(df, modifications) {
-    
+
     if ("Nterm" %in% names(modifications)) {
         isABC <- grep("[abc]", df$type)
-        
+
         if (length(isABC)) {
             df$mz[isABC] <- df$mz[isABC] + modifications["Nterm"] / df$z[isABC]
         }
     }
-    
+
     if ("Cterm" %in% names(modifications)) {
         isXYZ <- grep("[xyz]", df$type)
-        
+
         if (length(isXYZ)) {
             df$mz[isXYZ] <- df$mz[isXYZ] + modifications["Cterm"] / df$z[isXYZ]
         }
     }
-    
+
     df
 }
 
