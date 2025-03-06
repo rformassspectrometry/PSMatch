@@ -29,7 +29,7 @@
 ##'
 ##' @export
 ##'
-##' @author Johannes Rainer, Sebastian Gibb, Laurent Gatto
+##' @author Johannes Rainer, Guillaume Deflandre, Sebastian Gibb, Laurent Gatto
 ##'
 ##' @examples
 ##' library("Spectra")

@@ -38,7 +38,6 @@ Creates a list of annotations based on \code{calculateFragments} results.
 \code{addFragments} is deprecated and will be made defunct; use \code{labelFragments} instead.
 }
 \examples{
-
 library("Spectra")
 
 sp <- DataFrame(msLevel = 2L, rtime = 2345, sequence = "SIGFEGDSIGR")
@@ -81,5 +80,5 @@ labelFragments(sp)
 plotSpectra(sp, labels = labelFragments, labelPos = 3)
 }
 \author{
-Johannes Rainer, Sebastian Gibb, Laurent Gatto
+Johannes Rainer, Guillaume Deflandre, Sebastian Gibb, Laurent Gatto
 }
