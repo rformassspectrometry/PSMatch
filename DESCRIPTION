@@ -48,7 +48,7 @@ Suggests:
     rpx,
     mzID,
     mzR,
-    Spectra,
+    Spectra (>= 1.17.10),
     SummarizedExperiment,
     BiocStyle,
     rmarkdown,
