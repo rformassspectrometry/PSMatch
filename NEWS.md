@@ -1,20 +1,27 @@
 # PSMatch 1.11
 
+## PSMatch 1.11.4
+
+- Nothing yet.
+
+## PSMatch 1.11.3
+
+- Deprecated `addFragments`. The use of `labelFragments` is endorsed
+  instead.  See [PR #20](https://github.com/rformassspectrometry/PSMatch/pull/20).
+
 ## PSMatch 1.11.2
 
-- Replace `calculateFragments` with `calculateFragments2`.
-    [PR #19](https://github.com/rformassspectrometry/PSMatch/pull/19)
+- Replace `calculateFragments` with `calculateFragments2`. See
+  [PR #19](https://github.com/rformassspectrometry/PSMatch/pull/19).
 
 ## PSMatch 1.11.1
 
-- New `calculateFragments2` function includes fixed and variable modifications
-    to fragments ions.
-  [PR #16](https://github.com/rformassspectrometry/PSMatch/pull/16)
+- New `calculateFragments2` function includes fixed and variable
+  modifications to fragments ions. See [PR #16](https://github.com/rformassspectrometry/PSMatch/pull/16).
 
 ## PSMatch 1.11.0
 
 - New devel version
-
 
 # PSMatch 1.9
 

@@ -23,6 +23,7 @@
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 name: R-CMD-check-bioc
 
@@ -53,6 +54,7 @@ jobs:
       matrix:
         config:
           - { os: ubuntu-latest, r: '4.4', bioc: '3.21', cont: "bioconductor/bioconductor_docker:devel", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
+          - { os: ubuntu-latest, r: '4.5', bioc: '3.21', cont: "bioconductor/bioconductor_docker:devel", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
           ## - { os: macOS-latest, r: '4.2', bioc: '3.15'}
           ## - { os: windows-latest, r: '4.2', bioc: '3.15'}
     env:
@@ -100,7 +102,7 @@ jobs:
 
       - name: Cache R packages
         if: "!contains(github.event.head_commit.message, '/nocache') && runner.os != 'Linux'"
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-devel-r-devel-${{ hashFiles('.github/depends.Rds') }}
@@ -108,7 +110,7 @@ jobs:
 
       - name: Cache R packages on Linux
         if: "!contains(github.event.head_commit.message, '/nocache') && runner.os == 'Linux' "
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: /home/runner/work/_temp/Library
           key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-devel-r-devel-${{ hashFiles('.github/depends.Rds') }}
@@ -198,6 +200,12 @@ jobs:
         run: |
           ## Install BiocGenerics
           BiocManager::install("BiocGenerics")
+        shell: Rscript {0}
+
+      - name: Install latest Spectra >= 1.17.10 (from github)
+        run: |
+          ## Install BiocGenerics
+          BiocManager::install("RforMassSpectrometry/Spectra")
         shell: Rscript {0}
 
       - name: Install covr

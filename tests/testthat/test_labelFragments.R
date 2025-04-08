@@ -1,4 +1,4 @@
-test_that("addFragments() works", {
+test_that("labelFragments() works", {
     library("Spectra")
     seq <- "PQR"
     frags <- calculateFragments(seq)
@@ -8,24 +8,24 @@ test_that("addFragments() works", {
     sp$intensity <- list(rep(1, 7))
     sp <- Spectra(sp)
     ## all fragments
-    ans <- addFragments(sp)[[1]]
+    ans <- labelFragments(sp)[[1]]
     exp <- frags$ion[o]
     ## Remove attribute
     expect_identical(ans[1:length(ans)], exp)
     ## 2nd fragment missing
     sp$mz[[1]][2] <- sp$mz[[1]][2] * 1.1
     exp[2] <- NA
-    ans <- addFragments(sp)[[1]]
+    ans <- labelFragments(sp)[[1]]
     expect_identical(ans[1:length(ans)], exp)
     ## 7th fragment missing
     sp$mz[[1]][7] <- sp$mz[[1]][7] * 1.1
     exp[7] <- NA
-    ans <- addFragments(sp)[[1]]
+    ans <- labelFragments(sp)[[1]]
     expect_identical(ans[1:length(ans)], exp)
 })
 
 
-test_that("addFragments() works with multiple Spectra", {
+test_that("labelFragments() works with multiple Spectra", {
     library("Spectra")
     seq <- c("PQR", "ACE")
     frags_pqr <- calculateFragments(seq)[1:7,]
@@ -37,14 +37,14 @@ test_that("addFragments() works with multiple Spectra", {
     sp$intensity <- c(list(rep(1, 7)), list(rep(1, 6)))
     sp <- Spectra(sp)
     ## all fragments
-    ans <- addFragments(sp)
+    ans <- labelFragments(sp)
     ## Number of elements equal the possibilities of peptide sequences
     ## This instance: no mod, 1 mod on Q: 2 possibilities
     expect_equal(length(ans), 2)
     expect_identical(names(ans), seq)
 })
 
-test_that("addFragments() works with modifications", {
+test_that("labelFragments() works with modifications", {
     library("Spectra")
     seq <- "PQR"
     frags <- calculateFragments(seq)
@@ -54,10 +54,9 @@ test_that("addFragments() works with modifications", {
     sp$intensity <- list(rep(1, 7))
     sp <- Spectra(sp)
     ## all fragments
-    ans <- addFragments(sp, variable_modifications = c(Q = 45))
+    ans <- labelFragments(sp, variable_modifications = c(Q = 45))
     ## Number of elements equal the possibilities of peptide sequences
     ## This instance: no mod, 1 mod on Q: 2 possibilities
     expect_equal(length(ans), 2)
-    expect_identical(attr(ans[[1]], "spectrumNumber"), 
-                     attr(ans[[1]], "spectrumNumber"))
 })
+
