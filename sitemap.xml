@@ -10,7 +10,6 @@
 <url><loc>/reference/ConnectedComponents.html</loc></url>
 <url><loc>/reference/PSM.html</loc></url>
 <url><loc>/reference/PSMatch.html</loc></url>
-<url><loc>/reference/addFragments.html</loc></url>
 <url><loc>/reference/adjacencyMatrix.html</loc></url>
 <url><loc>/reference/calculateFragments.html</loc></url>
 <url><loc>/reference/describeProteins.html</loc></url>
@@ -18,5 +17,6 @@
 <url><loc>/reference/getAminoAcids.html</loc></url>
 <url><loc>/reference/getAtomicMass.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/labelFragments.html</loc></url>
 </urlset>
 
