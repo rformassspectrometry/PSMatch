@@ -102,7 +102,7 @@ plotSpectra(sp5449[2])
 ```
 
 ```{r}
-plotSpectra(sp5449[2], labels = addFragments, labelPos = 3)
+plotSpectra(sp5449[2], labels = labelFragments, labelPos = 3)
 ```
 
 # Session information
