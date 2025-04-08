@@ -5,9 +5,9 @@
 \alias{addFragments}
 \title{labels MS2 Fragments}
 \usage{
-labelFragments(x, tolerance = 0, ppm = 20, ...)
+labelFragments(x, tolerance = 0, ppm = 20, what = c("ion", "mz"), ...)
 
-addFragments(x, tolerance = 0, ppm = 20, ...)
+addFragments(x, tolerance = 0, ppm = 20, what = c("ion", "mz"), ...)
 }
 \arguments{
 \item{x}{An instance of class \code{Spectra} of length 1, containing a

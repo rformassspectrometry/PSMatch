@@ -54,6 +54,7 @@ Suggests:
     rmarkdown,
     knitr,
     factoextra,
+    vdiffr (>= 1.0.0),
     testthat
 License: Artistic-2.0
 Encoding: UTF-8
