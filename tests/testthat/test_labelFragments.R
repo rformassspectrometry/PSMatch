@@ -60,3 +60,20 @@ test_that("labelFragments() works with modifications", {
     expect_equal(length(ans), 2)
 })
 
+test_that("labelFragments() works with what = 'mz'", {
+    library("Spectra")
+    seq <- "PQR"
+    frags <- calculateFragments(seq)
+    o <- order(frags$mz)
+    sp <- DataFrame(msLevel = 2L, rtime = 2345, sequence = seq)
+    sp$mz <- list(frags$mz[o])
+    sp$intensity <- list(rep(1, 7))
+    sp <- Spectra(sp)
+    ## all fragments
+    ans <- labelFragments(sp, what = "mz")
+    ans_names <- lapply(ans, names)[[1]]
+    ans_mz <- lapply(ans, unname)[[1]]
+    
+    expect_identical(frags[o,"mz"], ans_mz)
+    expect_identical(frags[o,"ion"], ans_names)
+})
