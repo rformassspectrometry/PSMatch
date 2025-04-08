@@ -1,6 +1,6 @@
 Package: PSMatch
 Title: Handling and Managing Peptide Spectrum Matches
-Version: 1.11.2
+Version: 1.11.3
 Authors@R:
    c(person(given = "Laurent", family = "Gatto",
             email = "laurent.gatto@uclouvain.be",
@@ -19,10 +19,10 @@ Authors@R:
             role = "ctb"),
      person(given = "Thomas", family = "Burger",
             email = "thomas.burger@cea.fr",
-            role = "ctb"), 
+            role = "ctb"),
      person(given = "Guillaume", family = "Deflandre",
             email = "guillaume.deflandre@uclouvain.be",
-            role = "ctb", 
+            role = "ctb",
             comment = c(ORCID = "0009-0008-1257-2416")))
 Description: The PSMatch package helps proteomics practitioners to
     load, handle and manage Peptide Spectrum Matches. It provides
