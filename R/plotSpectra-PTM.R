@@ -140,7 +140,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     nsp <- length(x)
     old_par <- par(no.readonly = TRUE)
     
-    if (length(main) && length(main) != nsp)
+    if (length(main) != nsp)
         main <- rep(main[1], nsp)
     
     labels <- labelFragments(x, ppm = ppm, what = "ion", ...)
