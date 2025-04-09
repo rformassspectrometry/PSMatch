@@ -146,12 +146,13 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     labels <- labelFragments(x, ppm = ppm, what = "ion", ...)
 
     if (deltaMz) {
-        deltaMz <- labelFragments(x, ppm = ppm, what = "mz", ...)
+        deltaMzData <- labelFragments(x, ppm = ppm, what = "mz", ...)
         layout_matrix <- .make_layout_matrix(length(labels))
         layout(layout_matrix,
                heights = rep(c(5, 1), length.out = nrow(layout_matrix)))
     } else {
       par(mfrow = n2mfrow(length(labels), asp = asp))
+      deltaMzData <- NULL
       }
     spectrum_number <- attr(labels, "group")
     
@@ -165,7 +166,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                                   labelAdj = labelAdj, labelPos = labelPos,
                                   labelOffset = labelOffset, 
                                   minorTicks = minorTicks, 
-                                  deltaMz = deltaMz[[i]],
+                                  deltaMzData = deltaMzData[[i]],
                                   ppm = ppm)
     }
     on.exit(par(old_par))
@@ -197,7 +198,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                                       labelCol = col, labelCex = 1, labelSrt = 0,
                                       labelAdj = NULL, labelPos = 3,
                                       labelOffset = 0.5, minorTicks = TRUE,
-                                      ppm = 20, deltaMz = NULL) {
+                                      ppm = 20, deltaMzData = NULL) {
     v <- peaksData(x)[[1L]]
     mzs <- v[, "mz"]
     ints <- v[, "intensity"]
@@ -285,7 +286,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     
     abline(h = 0, col = "grey45")
     
-    if (!isFALSE(deltaMz)) {
+    if (!is.null(deltaMzData)) {
         deltaMz <- ((mzs - as.numeric(deltaMz))/as.numeric(deltaMz))*10^6
         par(mar = c(2, 4, 0, 2) + 0.1)
         
