@@ -6,11 +6,13 @@
 \usage{
 plotSpectraPTM(
   x,
+  deltaMz = TRUE,
+  ppm = 20,
   xlab = "m/z",
   ylab = "intensity",
   xlim = numeric(),
   ylim = numeric(),
-  main = NULL,
+  main = character(),
   col = c(y = "darkred", b = "darkblue", acxy = "darkgreen", other = "grey40"),
   labelCex = 1,
   labelSrt = 0,
@@ -19,13 +21,20 @@ plotSpectraPTM(
   labelOffset = 0.5,
   asp = 1,
   minorTicks = TRUE,
-  deltaMz = TRUE,
-  ppm = 20,
   ...
 )
 }
 \arguments{
 \item{x}{a \code{Spectra()} object.}
+
+\item{deltaMz}{\code{logical(1L)} If \code{TRUE}, adds an additional plot showing the
+difference of mass over charge between matched oberved and theoretical
+fragments in parts per million. Does not yet support modifications. The
+matching is based on \code{calculateFragments()} and needs a 'sequence' variable
+in \code{spectraVariables(x)}. Default is set to \code{TRUE}.}
+
+\item{ppm}{\code{integer(1L)} Sets the limits of the delta m/z plot and is passed
+to \code{labelFragments()}.}
 
 \item{xlab}{\code{character(1)} with the label for the x-axis
 (by default \code{xlab = "m/z"}).}
@@ -66,23 +75,20 @@ If \code{deltaMz} is \code{TRUE}, \code{asp} is ignored.}
 \item{minorTicks}{\code{logical(1L)} If \code{TRUE}, minor ticks are added to the plots.
 Default is set to \code{TRUE}.}
 
-\item{deltaMz}{\code{logical(1L)} If \code{TRUE}, adds an additional plot showing the
-difference of mass over charge between matched observed and theoretical
-fragments in parts per million. Does not yet support modifications. The
-matching is based on \code{calculateFragments()} and needs a 'sequence' variable
-in \code{spectraVariables(x)}. Default is set to \code{TRUE}.}
-
-\item{ppm}{\code{integer(1L)} Sets the limits of the delta m/z plot and is passed
-to \code{labelFragments()}.}
-
 \item{...}{additional parameters to be passed to the \code{labelFragments()} function.}
 }
 \value{
 Creates a plot depicting an MS/MS-MS spectrum
 }
 \description{
-Plot a single spectrum, annotate peaks, easily visualise sequence
-fragmentations, observe differences by modifications, ...
+\code{plotSpectraPTM()} creates annotated visualisations of MS/MS spectra,
+designed to explore fragment identifications and post-translational
+modifications (PTMs).
+
+\code{plotSpectraPTM()} plots a spectrum's m/z values on the x-axis and corresponding
+intensities on the y-axis, labeling the peaks according to theoretical
+fragment ions (e.g., b, y, a, c, x, z) computed using \code{labelFragments()}
+and \code{calculateFragments()}.
 }
 \examples{
 library("Spectra")
@@ -118,8 +124,27 @@ sp$intensity <- list(c(83143.03, 65473.8, 192735.53, 3649178.5,
                        1708093.12, 43119.03, 97048.02, 2668231.75,
                        83310.2, 40705.72))
 sp <- Spectra(sp)
+
 ## Annotate the spectum with the fragment labels
-plotSpectraPTM(sp, type = c("a", "b", "x", "y"), variable_modifications = c(R = 5))
+plotSpectraPTM(sp, main = "An example of a annotated plot")
+
+## Annotate the spectrum without the delta m/z plot
+plotSpectraPTM(sp, deltaMz = FALSE)
+
+## Annotate the spectrum with different ion types
+plotSpectraPTM(sp, type = c("a", "b", "x", "y"))
+
+## Annotate the spectrum with variable modifications
+plotSpectraPTM(sp, variable_modifications = c(R = 49.469))
+
+## Annotate multiple spectra at a time
+plotSpectraPTM(c(sp,sp), variable_modifications = c(R = 490469))
+
+## Color the peaks with different colors
+plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
+}
+\seealso{
+\code{\link[Spectra]{plotSpectra}}
 }
 \author{
 Johannes Rainer, Sebastian Gibb, Guillaume Deflandre, Laurent Gatto

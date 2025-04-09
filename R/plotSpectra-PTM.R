@@ -1,10 +1,25 @@
 #' @title Function to plot MS/MS spectra with PTMs
 #'
 #' @description
-#' Plot a single spectrum, annotate peaks, easily visualise sequence
-#' fragmentations, observe differences by modifications, ...
+#' `plotSpectraPTM()` creates annotated visualisations of MS/MS spectra,
+#' designed to explore fragment identifications and post-translational
+#' modifications (PTMs).
+#' 
+#' `plotSpectraPTM()` plots a spectrum's m/z values on the x-axis and corresponding 
+#' intensities on the y-axis, labeling the peaks according to theoretical 
+#' fragment ions (e.g., b, y, a, c, x, z) computed using `labelFragments()`
+#' and `calculateFragments()`.
 #'
 #' @param x a `Spectra()` object.
+#' 
+#' @param deltaMz `logical(1L)` If `TRUE`, adds an additional plot showing the 
+#' difference of mass over charge between matched oberved and theoretical 
+#' fragments in parts per million. Does not yet support modifications. The 
+#' matching is based on `calculateFragments()` and needs a 'sequence' variable
+#' in `spectraVariables(x)`. Default is set to `TRUE`.
+#'
+#' @param ppm `integer(1L)` Sets the limits of the delta m/z plot and is passed
+#' to `labelFragments()`.
 #'
 #' @param xlab `character(1)` with the label for the x-axis 
 #' (by default `xlab = "m/z"`).
@@ -44,21 +59,14 @@
 #' 
 #' @param minorTicks `logical(1L)` If `TRUE`, minor ticks are added to the plots.
 #' Default is set to `TRUE`.
-#' 
-#' @param deltaMz `logical(1L)` If `TRUE`, adds an additional plot showing the 
-#' difference of mass over charge between matched observed and theoretical 
-#' fragments in parts per million. Does not yet support modifications. The 
-#' matching is based on `calculateFragments()` and needs a 'sequence' variable
-#' in `spectraVariables(x)`. Default is set to `TRUE`.
-#'
-#' @param ppm `integer(1L)` Sets the limits of the delta m/z plot and is passed
-#' to `labelFragments()`.
 #'   
 #' @param ... additional parameters to be passed to the `labelFragments()` function.
 #' 
 #' @importFrom Spectra spectraVariables
 #'
 #' @author Johannes Rainer, Sebastian Gibb, Guillaume Deflandre, Laurent Gatto
+#' 
+#' @seealso \code{\link[Spectra]{plotSpectra}}
 #' 
 #' @return Creates a plot depicting an MS/MS-MS spectrum
 #'
@@ -98,9 +106,26 @@
 #'                        1708093.12, 43119.03, 97048.02, 2668231.75,
 #'                        83310.2, 40705.72))
 #' sp <- Spectra(sp)
+#' 
 #' ## Annotate the spectum with the fragment labels
-#' plotSpectraPTM(sp, type = c("a", "b", "x", "y"), variable_modifications = c(R = 5))
-plotSpectraPTM <- function(x, xlab = "m/z", ylab = "intensity",
+#' plotSpectraPTM(sp, main = "An example of a annotated plot")
+#' 
+#' ## Annotate the spectrum without the delta m/z plot
+#' plotSpectraPTM(sp, deltaMz = FALSE)
+#' 
+#' ## Annotate the spectrum with different ion types
+#' plotSpectraPTM(sp, type = c("a", "b", "x", "y"))
+#' 
+#' ## Annotate the spectrum with variable modifications
+#' plotSpectraPTM(sp, variable_modifications = c(R = 49.469))
+#' 
+#' ## Annotate multiple spectra at a time
+#' plotSpectraPTM(c(sp,sp), variable_modifications = c(R = 490469))
+#' 
+#' ## Color the peaks with different colors
+#' plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
+plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
+                           xlab = "m/z", ylab = "intensity",
                            xlim = numeric(), ylim = numeric(),
                            main = character(), 
                            col = c(y = "darkred",
@@ -109,7 +134,7 @@ plotSpectraPTM <- function(x, xlab = "m/z", ylab = "intensity",
                                    other = "grey40"),
                            labelCex = 1, labelSrt = 0,
                            labelAdj = NULL, labelPos = 3, labelOffset = 0.5,
-                           asp = 1, minorTicks = TRUE, deltaMz = TRUE, ppm = 20,
+                           asp = 1, minorTicks = TRUE,
                            ...) {
     stopifnot("sequence" %in% Spectra::spectraVariables(x))
     nsp <- length(x)
@@ -119,7 +144,7 @@ plotSpectraPTM <- function(x, xlab = "m/z", ylab = "intensity",
         main <- rep(main[1], nsp)
     
     labels <- labelFragments(x, ppm = ppm, what = "ion", ...)
-    
+
     if (deltaMz) {
         deltaMz <- labelFragments(x, ppm = ppm, what = "mz", ...)
         layout_matrix <- .make_layout_matrix(length(labels))
@@ -150,7 +175,7 @@ plotSpectraPTM <- function(x, xlab = "m/z", ylab = "intensity",
 #' @description
 #'
 #' Plot a single spectrum (m/z on x against intensity on y) whilst 
-#' labelling the individual peaks based on `labelFragments()`.
+#' labeling the individual peaks based on `labelFragments()`.
 #'
 #' @author Johannes Rainer, Sebastian Gibb, Guillaume Deflandre, Laurent Gatto
 #'
@@ -260,7 +285,7 @@ plotSpectraPTM <- function(x, xlab = "m/z", ylab = "intensity",
     
     abline(h = 0, col = "grey45")
     
-    if (deltaMz) {
+    if (!isFALSE(deltaMz)) {
         deltaMz <- ((mzs - as.numeric(deltaMz))/as.numeric(deltaMz))*10^6
         par(mar = c(2, 4, 0, 2) + 0.1)
         
