@@ -18,8 +18,8 @@
 ##'     for more details).
 ##' 
 ##' @param what `character(1)`, one of `"ion"` (default) or `"mz"`, defining
-##'     whether labels should be fragment ions, , or their M/Z values. If the
-##'     latter, then the M/Z values are named with the ion labels.
+##'     whether labels should be fragment ions, , or their m/z values. If the
+##'     latter, then the m/z values are named with the ion labels.
 ##' 
 ##' @param ... additional parameters (except `verbose`) passed to
 ##'     [calculateFragments()] to calculate fragment m/z values to be
