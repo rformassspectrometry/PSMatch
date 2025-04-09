@@ -136,16 +136,19 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                            labelAdj = NULL, labelPos = 3, labelOffset = 0.5,
                            asp = 1, minorTicks = TRUE,
                            ...) {
-    stopifnot("sequence" %in% Spectra::spectraVariables(x))
+    if(!("sequence" %in% Spectra::spectraVariables(x))) {
+      stop("Missing 'sequence' in Spectra::spectraVariables(x)")
+    }
     nsp <- length(x)
     old_par <- par(no.readonly = TRUE)
+    on.exit(par(old_par))
     
     if (length(main) && length(main) != nsp)
         main <- rep(main[1], nsp)
     
     labels <- labelFragments(x, ppm = ppm, what = "ion", ...)
 
-    if (deltaMz) {
+    if (deltaMz) { ## Generate deltaMzData labels for .plot_single_spectrum_PTM
         deltaMzData <- labelFragments(x, ppm = ppm, what = "mz", ...)
         layout_matrix <- .make_layout_matrix(length(labels))
         layout(layout_matrix,
@@ -169,7 +172,6 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                                   deltaMzData = deltaMzData[[i]],
                                   ppm = ppm)
     }
-    on.exit(par(old_par))
 }
 
 
@@ -202,7 +204,6 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     v <- peaksData(x)[[1L]]
     mzs <- v[, "mz"]
     ints <- v[, "intensity"]
-    old_par <- par(no.readonly = TRUE)
     
     if (!length(xlim))
         suppressWarnings(xlim <- range(mzs, na.rm = TRUE))
@@ -215,7 +216,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
         ylim <- c(0, 0)
     if (length(main)) {
         par(mar = c(4,4,1.4,2))
-    } else {par(mar = c(4,4,0.5,2))}
+    } else par(mar = c(4,4,0.5,2))
     plot.new()
     plot.window(xlim = xlim, ylim = ylim)
     
@@ -249,12 +250,11 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     
     if (minorTicks) {
         minor_ticks <- unlist(lapply(seq_along(major_ticks[-length(major_ticks)]),
-                                     function(i) {seq(major_ticks[i],
-                                                      major_ticks[i+1],
-                                                      length.out = 6)[-c(1,6)]
-                                     }
-        )
-        )
+                                     function(i) {
+                                       seq(major_ticks[i],
+                                           major_ticks[i+1],
+                                           length.out = 6)[-c(1,6)]
+                                       }))
         
         axis(side = 1, at = minor_ticks, labels = FALSE,
              tck = -0.01, col.ticks = "grey65", pos = c(0,0))
@@ -287,17 +287,25 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     abline(h = 0, col = "grey45")
     
     if (!is.null(deltaMzData)) {
-        deltaMzData <- ((mzs - as.numeric(deltaMzData))/as.numeric(deltaMzData))*10^6
+        deltaMzData <- 
+          ((mzs - as.numeric(deltaMzData))/as.numeric(deltaMzData))*10^6
         par(mar = c(2, 4, 0, 2) + 0.1)
         
+        true_hits <- !is.na(labels)
+        
         plot(
-            mzs[!is.na(labels)], deltaMzData[!is.na(labels)], col = labelCol[!is.na(labels)],
-            type = "h", pch = 19, ann = FALSE, xaxt = "n", xlim = xlim, lwd = 2,
-            ylim = c(-ppm, ppm))
+            mzs[true_hits],
+            deltaMzData[true_hits],
+            col = labelCol[true_hits],
+            type = "h", pch = 19, 
+            ann = FALSE, xaxt = "n", 
+            xlim = xlim, ylim = c(-ppm, ppm),
+            lwd = 2)
         
         points(
-            mzs[!is.na(labels)], deltaMzData[!is.na(labels)], 
-            col = labelCol[!is.na(labels)], type = "p", pch = 19, cex = 0.7)
+            mzs[true_hits], deltaMzData[true_hits], 
+            col = labelCol[true_hits], 
+            type = "p", pch = 19, cex = 0.7)
         
         abline(h = 0, col = "#808080", lty = 2)
         title(ylab = "delta m/z [ppm]")
@@ -362,8 +370,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
             peptide_sequence,
             "(?<=[A-Za-z])(?=[A-Z])|(?<=\\])(?=[A-Z])",
             perl = TRUE
-        )
-    )
+        ))
     
     # Clean modifications for plotting
     mod_pep_seq <- sapply(pep_seq, function(residue) {
@@ -444,8 +451,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
              cex = 1,
              adj = c(0.5, 1.3),
              col = b_ion_col
-        )
-    }
+        )}
     
     # Draw y-ions
     y_matches <- subset(PSMlabel, yion %in% labels)
@@ -477,6 +483,5 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
              cex = 1,
              adj = c(0.5, -0.3),
              col = y_ion_col
-        )
-    }
+        )}
 }

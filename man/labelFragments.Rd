@@ -23,8 +23,8 @@ to be considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::co
 more #' details).}
 
 \item{what}{\code{character(1)}, one of \code{"ion"} (default) or \code{"mz"}, defining
-whether labels should be fragment ions, , or their M/Z values. If the
-latter, then the M/Z values are named with the ion labels.}
+whether labels should be fragment ions, , or their m/z values. If the
+latter, then the m/z values are named with the ion labels.}
 
 \item{...}{additional parameters (except \code{verbose}) passed to
 \code{\link[=calculateFragments]{calculateFragments()}} to calculate fragment m/z values to be
