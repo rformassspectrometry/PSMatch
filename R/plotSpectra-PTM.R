@@ -287,16 +287,16 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     abline(h = 0, col = "grey45")
     
     if (!is.null(deltaMzData)) {
-        deltaMz <- ((mzs - as.numeric(deltaMz))/as.numeric(deltaMz))*10^6
+        deltaMzData <- ((mzs - as.numeric(deltaMzData))/as.numeric(deltaMzData))*10^6
         par(mar = c(2, 4, 0, 2) + 0.1)
         
         plot(
-            mzs[!is.na(labels)], deltaMz[!is.na(labels)], col = labelCol[!is.na(labels)],
+            mzs[!is.na(labels)], deltaMzData[!is.na(labels)], col = labelCol[!is.na(labels)],
             type = "h", pch = 19, ann = FALSE, xaxt = "n", xlim = xlim, lwd = 2,
             ylim = c(-ppm, ppm))
         
         points(
-            mzs[!is.na(labels)], deltaMz[!is.na(labels)], 
+            mzs[!is.na(labels)], deltaMzData[!is.na(labels)], 
             col = labelCol[!is.na(labels)], type = "p", pch = 19, cex = 0.7)
         
         abline(h = 0, col = "#808080", lty = 2)
