@@ -139,5 +139,5 @@ labelFragments <- function(x, tolerance = 0, ppm = 20,
 ##' `addFragments` is deprecated and will be made defunct; use `labelFragments` instead.
 addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
     .Deprecated("labelFragments")
-    labelFragments(x, tolerance, ppm, ...)
+    labelFragments(x, tolerance, ppm, what = "ion", ...)
 }
