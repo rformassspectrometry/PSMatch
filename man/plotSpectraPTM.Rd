@@ -144,7 +144,7 @@ plotSpectraPTM(c(sp,sp), variable_modifications = c(R = 490469))
 plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
 }
 \seealso{
-\code{\link[Spectra]{plotSpectra}}
+\code{\link[Spectra:spectra-plotting]{Spectra::plotSpectra()}}
 }
 \author{
 Johannes Rainer, Sebastian Gibb, Guillaume Deflandre, Laurent Gatto

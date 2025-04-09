@@ -66,7 +66,7 @@
 #'
 #' @author Johannes Rainer, Sebastian Gibb, Guillaume Deflandre, Laurent Gatto
 #' 
-#' @seealso \code{\link[Spectra]{plotSpectra}}
+#' @seealso [Spectra::plotSpectra()]
 #' 
 #' @return Creates a plot depicting an MS/MS-MS spectrum
 #'
