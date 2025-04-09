@@ -31,12 +31,14 @@ Description: The PSMatch package helps proteomics practitioners to
     informed decision about shared peptide filtering. The package also
     provides functions to calculate and visualise MS2 fragment ions.
 Depends:
-    S4Vectors
+    S4Vectors,
+    R (>= 4.1.0)
 Imports:
     utils,
     stats,
     igraph,
     methods,
+    Spectra (>= 1.17.10),
     Matrix,
     BiocParallel,
     BiocGenerics,
@@ -48,7 +50,6 @@ Suggests:
     rpx,
     mzID,
     mzR,
-    Spectra (>= 1.17.10),
     SummarizedExperiment,
     BiocStyle,
     rmarkdown,
