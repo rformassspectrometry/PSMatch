@@ -229,10 +229,10 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     xlim[2L] <- xlim[2L] + wdths
     plot.window(xlim = xlim, ylim = ylim)
     
-    peakCol <- ifelse(grepl("b", labels), col[["b"]],
-                      ifelse(grepl("y", labels), col[["y"]], 
-                             ifelse(grepl("a|c|x|z", labels), col[["acxy"]], 
-                                    col[["other"]])))
+    peakCol <- rep_len(col[["other"]], length(labels))
+    peakCol[startsWith(labels, "b")] <- col[["b"]]
+    peakCol[startsWith(labels, "y")] <- col[["y"]]
+    peakCol[grepl("^[acxz]", labels)] <- col[["acxy"]]
     
     labelCol <- ifelse(grepl("b", labels), col[["b"]],
                        ifelse(grepl("y", labels), col[["y"]], col[["acxy"]]))
@@ -245,7 +245,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     plot.xy(xy.coords(mzs, ints), type = "h", col = peakCol)
     
     major_ticks <- pretty(mzs, n = 8)
-    axis(side = 1, lwd = 1, at = major_ticks, pos = c(0,0),
+    axis(side = 1, lwd = 1, at = major_ticks, pos = 0,
          col.ticks = "grey45", col = "grey45")
     
     if (minorTicks) {
@@ -257,7 +257,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                                        }))
         
         axis(side = 1, at = minor_ticks, labels = FALSE,
-             tck = -0.01, col.ticks = "grey65", pos = c(0,0))
+             tck = -0.01, col.ticks = "grey65", pos = 0)
     }
     
     axis_y_percent <- paste0(seq(0, 100, length.out = 5), "%")
