@@ -102,7 +102,7 @@
 #' plotSpectraPTM(sp, type = c("a", "b", "x", "y"), variable_modifications = c(R = 5))
 plotSpectraPTM <- function(x, xlab = "m/z", ylab = "intensity",
                            xlim = numeric(), ylim = numeric(),
-                           main = NULL, 
+                           main = character(), 
                            col = c(y = "darkred",
                                    b = "darkblue",
                                    acxy = "darkgreen", 
@@ -122,15 +122,12 @@ plotSpectraPTM <- function(x, xlab = "m/z", ylab = "intensity",
     
     if (deltaMz) {
         deltaMz <- labelFragments(x, ppm = ppm, what = "mz", ...)
-    } else {deltaMz <- NULL}
-    
-    if (is.null(deltaMz)) {
-        par(mfrow = n2mfrow(length(labels), asp = asp))
-    } else {
         layout_matrix <- .make_layout_matrix(length(labels))
         layout(layout_matrix,
                heights = rep(c(5, 1), length.out = nrow(layout_matrix)))
-    }
+    } else {
+      par(mfrow = n2mfrow(length(labels), asp = asp))
+      }
     spectrum_number <- attr(labels, "group")
     
     for (i in seq_along(spectrum_number)) {
@@ -166,7 +163,7 @@ plotSpectraPTM <- function(x, xlab = "m/z", ylab = "intensity",
 #' @noRd
 .plot_single_spectrum_PTM <- function(x, xlab = "m/z", ylab = "intensity",
                                       xlim = numeric(),
-                                      ylim = numeric(), main = NULL,
+                                      ylim = numeric(), main = character(),
                                       col = c(y = "darkred",
                                               b = "darkblue",
                                               acxy = "darkgreen", 
@@ -263,7 +260,7 @@ plotSpectraPTM <- function(x, xlab = "m/z", ylab = "intensity",
     
     abline(h = 0, col = "grey45")
     
-    if (length(deltaMz)) {
+    if (deltaMz) {
         deltaMz <- ((mzs - as.numeric(deltaMz))/as.numeric(deltaMz))*10^6
         par(mar = c(2, 4, 0, 2) + 0.1)
         
