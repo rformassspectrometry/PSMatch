@@ -7,7 +7,7 @@
 \usage{
 labelFragments(x, tolerance = 0, ppm = 20, what = c("ion", "mz"), ...)
 
-addFragments(x, tolerance = 0, ppm = 20, what = c("ion", "mz"), ...)
+addFragments(x, tolerance = 0, ppm = 20, ...)
 }
 \arguments{
 \item{x}{An instance of class \code{Spectra} of length 1, containing a
@@ -21,6 +21,10 @@ for more details).}
 \item{ppm}{m/z relative acceptable difference (in ppm) for peaks
 to be considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::common()}} for
 more #' details).}
+
+\item{what}{\code{character(1)}, one of \code{"ion"} (default) or \code{"mz"}, defining
+whether labels should be fragment ions, , or their M/Z values. If the
+latter, then the M/Z values are named with the ion labels.}
 
 \item{...}{additional parameters (except \code{verbose}) passed to
 \code{\link[=calculateFragments]{calculateFragments()}} to calculate fragment m/z values to be
@@ -76,8 +80,17 @@ sp <- Spectra(sp)
 ## The fragment ion labels
 labelFragments(sp)
 
+## The fragment mz labels
+labelFragments(sp, what = "mz")
+
+## Call additional parameters sur as variable modifications to calculateFragments
+labelFragments(sp, type = c("a", "b", "x", "y"), variable_modifications = c(R = 5))
+
 ## Annotate the spectum with the fragment labels
 plotSpectra(sp, labels = labelFragments, labelPos = 3)
+
+## By default used in `plotSpectraPTM()`.
+plotSpectraPTM(sp)
 }
 \author{
 Johannes Rainer, Guillaume Deflandre, Sebastian Gibb, Laurent Gatto

@@ -16,7 +16,11 @@
 ##' @param tolerance absolute acceptable difference of m/z values for
 ##'     peaks to be considered matching (see [MsCoreUtils::common()]
 ##'     for more details).
-##'
+##' 
+##' @param what `character(1)`, one of `"ion"` (default) or `"mz"`, defining
+##'     whether labels should be fragment ions, , or their M/Z values. If the
+##'     latter, then the M/Z values are named with the ion labels.
+##' 
 ##' @param ... additional parameters (except `verbose`) passed to
 ##'     [calculateFragments()] to calculate fragment m/z values to be
 ##'     added to the spectra in `x`.
@@ -69,9 +73,18 @@
 ##'
 ##' ## The fragment ion labels
 ##' labelFragments(sp)
+##' 
+##' ## The fragment mz labels
+##' labelFragments(sp, what = "mz")
+##' 
+##' ## Call additional parameters sur as variable modifications to calculateFragments
+##' labelFragments(sp, type = c("a", "b", "x", "y"), variable_modifications = c(R = 5))
 ##'
 ##' ## Annotate the spectum with the fragment labels
 ##' plotSpectra(sp, labels = labelFragments, labelPos = 3)
+##' 
+##' ## By default used in `plotSpectraPTM()`.
+##' plotSpectraPTM(sp)
 labelFragments <- function(x, tolerance = 0, ppm = 20,
                            what = c("ion", "mz"), ...) {
     stopifnot(requireNamespace("Spectra"))
@@ -88,7 +101,7 @@ labelFragments <- function(x, tolerance = 0, ppm = 20,
         
         y_data <- split(y_data, y_data$peptide)
         
-        mz <- labels <- vector("list", length = length(y_data))
+        labels <- vector("list", length = length(y_data))
         names(labels) <- names(y_data)
         
         for (i in seq_along(y_data)) {
@@ -124,8 +137,7 @@ labelFragments <- function(x, tolerance = 0, ppm = 20,
 ##' 
 ##' @details
 ##' `addFragments` is deprecated and will be made defunct; use `labelFragments` instead.
-addFragments <- function(x, tolerance = 0, ppm = 20,
-                         what = c("ion", "mz"), ...) {
+addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
     .Deprecated("labelFragments")
-    labelFragments(x, tolerance, ppm, what, ...)
+    labelFragments(x, tolerance, ppm, ...)
 }
