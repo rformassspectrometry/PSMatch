@@ -9,7 +9,7 @@ plotSpectraPTM(
   deltaMz = TRUE,
   ppm = 20,
   xlab = "m/z",
-  ylab = "intensity",
+  ylab = "intensity [\%]",
   xlim = numeric(),
   ylim = numeric(),
   main = character(),

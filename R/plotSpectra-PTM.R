@@ -125,7 +125,7 @@
 #' ## Color the peaks with different colors
 #' plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
 plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
-                           xlab = "m/z", ylab = "intensity",
+                           xlab = "m/z", ylab = "intensity [%]",
                            xlim = numeric(), ylim = numeric(),
                            main = character(), 
                            col = c(y = "darkred",
@@ -143,8 +143,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     old_par <- par(no.readonly = TRUE)
     on.exit(par(old_par))
     
-    if (length(main) != nsp)
-        main <- rep(main[1], nsp)
+    if (length(main) != nsp) main <- rep(main[1], nsp)
     
     labels <- labelFragments(x, ppm = ppm, what = "ion", ...)
 
@@ -170,7 +169,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                                   labelOffset = labelOffset, 
                                   minorTicks = minorTicks, 
                                   deltaMzData = deltaMzData[[i]],
-                                  ppm = ppm)
+                                  ppm = ppm, old_par = old_par)
     }
 }
 
@@ -200,7 +199,8 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                                       labelCol = col, labelCex = 1, labelSrt = 0,
                                       labelAdj = NULL, labelPos = 3,
                                       labelOffset = 0.5, minorTicks = TRUE,
-                                      ppm = 20, deltaMzData = NULL) {
+                                      ppm = 20, deltaMzData = NULL,
+                                      old_par = old_par) {
     v <- peaksData(x)[[1L]]
     mzs <- v[, "mz"]
     ints <- v[, "intensity"]
@@ -214,9 +214,10 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
         xlim <- c(0, 0)
     if (any(is.infinite(ylim)))
         ylim <- c(0, 0)
-    if (length(main)) {
-        par(mar = c(4,4,1.4,2))
-    } else par(mar = c(4,4,0.5,2))
+    if (!is.na(main)) {
+      par(mar = old_par[["mar"]] + 
+            c(0, 0, - old_par[["mar"]][3] + old_par[["cex.main"]], 0))
+    } else par(mar = c(4,4,1,2))
     plot.new()
     plot.window(xlim = xlim, ylim = ylim)
     
@@ -249,18 +250,16 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
          col.ticks = "grey45", col = "grey45")
     
     if (minorTicks) {
-        minor_ticks <- unlist(lapply(seq_along(major_ticks[-length(major_ticks)]),
-                                     function(i) {
-                                       seq(major_ticks[i],
-                                           major_ticks[i+1],
-                                           length.out = 6)[-c(1,6)]
-                                       }))
-        
-        axis(side = 1, at = minor_ticks, labels = FALSE,
-             tck = -0.01, col.ticks = "grey65", pos = 0)
+      nm <- length(major_ticks)
+      ticks <- seq.int(
+        major_ticks[1L], major_ticks[nm], length.out = 5L * (nm - 1L) + 1L
+      )
+      
+      axis(side = 1, at = ticks[!ticks %in% major_ticks], labels = FALSE,
+           tck = -0.01, col.ticks = "grey65", pos = 0)
     }
     
-    axis_y_percent <- paste0(seq(0, 100, length.out = 5), "%")
+    axis_y_percent <- seq(0, 100, length.out = 5)
     
     axis(side = 2, las = 0, tck = -0.02, 
          at = seq(0, max(abs(ints)), length.out = 5),
@@ -270,17 +269,17 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     
     prefix <- "mzspec"
     run <- basename(spectraData(x)[["dataOrigin"]])
-    scan <- paste0("scan: ",spectraData(x)[["scanIndex"]])
+    scan <- paste0("scan: ", spectraData(x)[["scanIndex"]])
     rt <- paste0("rt: ", round(spectraData(x)[["rtime"]], 2))
     charge <- paste0("charge: ", spectraData(x)[["charge"]])
     seq_text <- paste0("sequence: ", peptide_sequence)
     
-    text(min(mzs), max(abs(ints))*1.4,
-         paste(prefix, run, scan, rt, charge, seq_text, sep = "/"),
-         pos=4, offset=0, cex = 0.7)
+    mtext(paste(prefix, run, scan, rt, charge, seq_text, sep = "/"),
+          adj = ifelse(!is.na(main),0, NA), 
+          cex = ifelse(!is.na(main),0.75, 1))
     
     base_peak <- which.max(abs(ints))
-    text(mzs[base_peak], ints[base_peak]*0.60, 
+    text(mzs[base_peak], ints[base_peak] * 0.60, 
          paste0(formatC(ints[base_peak])),
          pos = 4, offset = 0.6, cex = 0.9, srt = 90)
     
@@ -288,8 +287,8 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     
     if (!is.null(deltaMzData)) {
         deltaMzData <- 
-          ((mzs - as.numeric(deltaMzData))/as.numeric(deltaMzData))*10^6
-        par(mar = c(2, 4, 0, 2) + 0.1)
+          ((mzs - deltaMzData) / deltaMzData) * 10^6
+        par(mar = c(2, 4, 0, 2))
         
         true_hits <- !is.na(labels)
         
@@ -308,7 +307,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
             type = "p", pch = 19, cex = 0.7)
         
         abline(h = 0, col = "#808080", lty = 2)
-        title(ylab = "delta m/z [ppm]")
+        title(ylab = "delta m/z\n[ppm]", cex.lab = 0.9, line = 2)
         axis(side = 1, lwd = 1, at = pretty(xlim, n = 8),
              col.ticks = "grey45", col = "grey45")
     }
