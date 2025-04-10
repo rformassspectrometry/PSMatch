@@ -399,9 +399,8 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                           col = col,
                           labels = labels,
                           peptide_sequence = peptide_sequence) {
-    ## Create binding for these variable
-    bion <- yion <- NULL
-    # Split peptide sequence by amino acid or modification
+
+    # split peptide sequence by amino acid or modification
     pep_seq <- unlist(
         strsplit(
             peptide_sequence,
@@ -409,116 +408,65 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
             perl = TRUE
         ))
 
-    # Clean modifications for plotting
-    mod_pep_seq <- sapply(pep_seq, function(residue) {
-        gsub("([A-Za-z])\\[[-+]?\\d+\\.?\\d*\\]",
-             "[\\1]",
-             residue)
-    })
-
-    peptide <- c("-", mod_pep_seq, "-")
-    n <- length(peptide) * 2 - 1
-
-    # Build base peptide plot structure
-    peptide_list <- vector("list", n)
-    peptide_list[c(TRUE, FALSE)] <- as.list(peptide)
-    peptide_list[c(FALSE, TRUE)] <- as.list(".")
-
-    peptide_list_b <- peptide_list_y <- peptide_list
-    peptide_list_b[c(FALSE, TRUE)] <- paste0("b", seq(0, length(peptide) - 2))
-    peptide_list_y[c(FALSE, TRUE)] <- paste0("y", rev(seq(0, length(peptide) - 2)))
-
-    # Map AA positions across mz range
-    x_quarter <- seq(min(mzs), max(mzs), length.out = 20)[c(3, 18)]
-    AA_pos <- seq(x_quarter[1], x_quarter[2], length.out = n)
-
-    # Create annotation table
-    PSMlabel <- data.frame(
-        AA_pos = AA_pos,
-        peptide = peptide_list,
-        bion = peptide_list_b,
-        yion = peptide_list_y
+    # clean modifications for plotting
+    mod_pep_seq <- gsub(
+        "([A-Za-z])\\[[-+]?\\d+\\.?\\d*\\]", "[\\1]", pep_seq
     )
 
-    peptide_height <- max(abs(ints)) * 1.20
-    len_annoSpace <- max(abs(ints)) / 15
-    b_ion_col <- col[["b"]]
-    y_ion_col <- col[["y"]]
+    chrwdh <- strwidth("M")
+    chrhgt <- strheight("M")
+    xlim <- par("usr")[1L:2L]
+    # we added 8x strheight space in .plot_single_spectrum_PTM;
+    # the text is 5x M, we left 1.5x M space below and above for the fragment
+    # labels and the mzspec string, respectively
+    # ypos is the mid of the text position
+    ypos <- par("usr")[4L] - 5L  * chrhgt
+    xmid <- diff(xlim) / 2L
 
-    # Filter labels (exclude ".", "-")
-    PSMlabel_annots <- PSMlabel[!apply(PSMlabel, 1, function(row)
-        any(row %in% c(".", "-"))), ]
+    n <- length(mod_pep_seq)
+    xpos <- seq(xmid - n * chrwdh, xmid + n * chrwdh, length.out = 2L * n + 1L)
+    is_letter <- !as.logical(seq_along(xpos) %% 2L)
 
-    # Draw AA text
     text(
-        PSMlabel_annots$AA_pos,
-        peptide_height,
-        PSMlabel_annots$peptide,
+        xpos[is_letter], ypos,
+        labels = mod_pep_seq,
         cex = 1,
         adj = 0.5
     )
 
-    # Draw b-ions
-    b_matches <- subset(PSMlabel, bion %in% labels)
-    if (nrow(b_matches) > 0) {
-        b_pos <- b_matches$AA_pos
-        idx <- match(b_pos, PSMlabel$AA_pos) - 1
-        b_mid <- (b_pos + PSMlabel$AA_pos[idx]) / 2
-        b_labels <- substring(b_matches$bion, 2)
+    ionb <- paste0("b", c(0, seq_len(n)))
+    ionbpos <- xpos[!is_letter][ionb %in% labels]
 
-        segments(
-            b_pos,
-            peptide_height,
-            b_pos,
-            peptide_height - len_annoSpace,
-            col = b_ion_col,
-            lwd = 2
-        )
-        segments(
-            b_mid,
-            peptide_height - len_annoSpace,
-            b_pos,
-            peptide_height - len_annoSpace,
-            col = b_ion_col,
-            lwd = 2
-        )
-        text((b_mid + b_pos) / 2,
-             peptide_height - len_annoSpace,
-             b_labels,
-             cex = 1,
-             adj = c(0.5, 1.3),
-             col = b_ion_col
-        )}
+    segments(
+        ionbpos, ypos, ionbpos, ypos - chrhgt,
+        col = col[["b"]], lwd = 2L
+    )
+    segments(
+        ionbpos, ypos - chrhgt, ionbpos - chrwdh, ypos - chrhgt,
+        col = col[["b"]], lwd = 2L
+    )
+    text(
+         ionbpos, ypos - chrhgt,
+         adj = c(1.1, 1.3),
+         which(ionb %in% labels) - 1L,
+         cex = 1, col = col[["b"]]
+    )
 
-    # Draw y-ions
-    y_matches <- subset(PSMlabel, yion %in% labels)
-    if (nrow(y_matches) > 0) {
-        y_pos <- y_matches$AA_pos
-        idx <- match(y_pos, PSMlabel$AA_pos) + 1
-        y_mid <- (y_pos + PSMlabel$AA_pos[idx]) / 2
-        y_labels <- substring(y_matches$yion, 2)
+    iony <- paste0("y", rev(c(0, seq_len(n))))
+    ionypos <- xpos[!is_letter][iony %in% labels]
 
-        segments(
-            y_pos,
-            peptide_height,
-            y_pos,
-            peptide_height + len_annoSpace,
-            col = y_ion_col,
-            lwd = 2
-        )
-        segments(
-            y_mid,
-            peptide_height + len_annoSpace,
-            y_pos,
-            peptide_height + len_annoSpace,
-            col = y_ion_col,
-            lwd = 2
-        )
-        text((y_mid + y_pos) / 2,
-             peptide_height + len_annoSpace,
-             y_labels,
-             cex = 1,
-             adj = c(0.5, -0.3),
-             col = y_ion_col
-        )}
+    segments(
+        ionypos, ypos, ionypos, ypos + chrhgt,
+        col = col[["y"]], lwd = 2L
+    )
+    segments(
+        ionypos, ypos + chrhgt, ionypos + chrwdh, ypos + chrhgt,
+        col = col[["y"]], lwd = 2L
+    )
+    text(
+         ionypos, ypos + chrhgt,
+         adj = c(-0.1, -0.3),
+         which(iony %in% labels) - 1L,
+         cex = 1, col = col[["y"]]
+    )
 }
