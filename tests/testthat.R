@@ -4,6 +4,7 @@
 Sys.setenv("R_TESTS" = "")
 
 library("testthat")
+library("vdiffr")
 library("PSMatch")
 
 adj <- Matrix::sparseMatrix(

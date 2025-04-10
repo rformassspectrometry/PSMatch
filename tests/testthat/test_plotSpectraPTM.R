@@ -2,8 +2,6 @@
 #' # that could be called by `vdiffr::expect_doppelganger()`
 #' Run devtools::test_active_file(file = "tests/testthat/test_plotSpectraPTM.R")
 
-## context("test_plotSpectraPTM")
-
 test_that("plotSpectraPTM works with deltaMz = TRUE", {
     sp <- DataFrame(
         msLevel = 2L,
@@ -13,14 +11,14 @@ test_that("plotSpectraPTM works with deltaMz = TRUE", {
         scanIndex = 1L,
         charge = 2L
     )
-    sp$mz <- list(c(223.1583, 251.15432, 308.168017, 455.24801, 604.30949, 
-                    641.30842, 667.2244, 778.30164, 813.34935, 923.350391, 
+    sp$mz <- list(c(223.1583, 251.15432, 308.168017, 455.24801, 604.30949,
+                    641.30842, 667.2244, 778.30164, 813.34935, 923.350391,
                     995.45281, 1017.43394, 1065.46197, 1112.5069, 1130.5874))
     sp$intensity <- list(c(83000, 65000, 190000, 379000, 281000, 112000, 39000,
                            139000, 1015000, 63000, 58000, 1960000, 240000,
                            1338000, 40700))
     spectra <- Spectra(sp)
-    
+
     # We're using fixed colors here for reproducibility
     expect_doppelganger(
         "deltaMz_true",
@@ -43,14 +41,14 @@ test_that("plotSpectraPTM works with deltaMz = FALSE", {
         scanIndex = 1L,
         charge = 2L
     )
-    sp$mz <- list(c(223.1583, 251.15432, 308.168017, 455.24801, 604.30949, 
-                    641.30842, 667.2244, 778.30164, 813.34935, 923.350391, 
+    sp$mz <- list(c(223.1583, 251.15432, 308.168017, 455.24801, 604.30949,
+                    641.30842, 667.2244, 778.30164, 813.34935, 923.350391,
                     995.45281, 1017.43394, 1065.46197, 1112.5069, 1130.5874))
     sp$intensity <- list(c(83000, 65000, 190000, 379000, 281000, 112000, 39000,
-                           139000, 1015000, 63000, 58000, 1960000, 240000, 
+                           139000, 1015000, 63000, 58000, 1960000, 240000,
                            1338000, 40700))
     spectra <- Spectra(sp)
-    
+
     # We're using fixed colors here for reproducibility
     expect_doppelganger(
         "deltaMz_false",
@@ -73,14 +71,14 @@ test_that("plotSpectraPTM works with variable modifications", {
         scanIndex = 1L,
         charge = 2L
     )
-    sp$mz <- list(c(223.1583, 251.15432, 308.168017, 455.24801, 604.30949, 
-                    641.30842, 667.2244, 778.30164, 813.34935, 923.350391, 
+    sp$mz <- list(c(223.1583, 251.15432, 308.168017, 455.24801, 604.30949,
+                    641.30842, 667.2244, 778.30164, 813.34935, 923.350391,
                     995.45281, 1017.43394, 1065.46197, 1112.5069, 1130.5874))
     sp$intensity <- list(c(83000, 65000, 190000, 379000, 281000, 112000, 39000,
                            139000, 1015000, 63000, 58000, 1960000, 240000,
                            1338000, 40700))
     spectra <- Spectra(sp)
-    
+
     # We're using fixed colors here for reproducibility
     expect_doppelganger(
         "one_ptm_deltaMz_true",
@@ -104,14 +102,14 @@ test_that("plotSpectraPTM works with different col", {
         scanIndex = 1L,
         charge = 2L
     )
-    sp$mz <- list(c(223.1583, 251.15432, 308.168017, 455.24801, 604.30949, 
-                    641.30842, 667.2244, 778.30164, 813.34935, 923.350391, 
+    sp$mz <- list(c(223.1583, 251.15432, 308.168017, 455.24801, 604.30949,
+                    641.30842, 667.2244, 778.30164, 813.34935, 923.350391,
                     995.45281, 1017.43394, 1065.46197, 1112.5069, 1130.5874))
     sp$intensity <- list(c(83000, 65000, 190000, 379000, 281000, 112000, 39000,
-                           139000, 1015000, 63000, 58000, 1960000, 240000, 
+                           139000, 1015000, 63000, 58000, 1960000, 240000,
                            1338000, 40700))
     spectra <- Spectra(sp)
-    
+
     # We're using fixed colors here for reproducibility
     expect_doppelganger(
         "diff_col",
