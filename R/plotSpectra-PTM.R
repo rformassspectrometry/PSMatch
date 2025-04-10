@@ -235,7 +235,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     labels <- labels[[1]]
     wdths <- max(strwidth(labels, cex = labelCex)) / 2
     usr_lim <- par("usr")
-    ylim[2L] <- ylim[2L] + 0.6 * diff(ylim)
+    ylim[2L] <- ylim[2L] + 0.7 * diff(ylim)
     xlim[1L] <- xlim[1L] - wdths
     xlim[2L] <- xlim[2L] + wdths
     plot.window(xlim = xlim, ylim = ylim)

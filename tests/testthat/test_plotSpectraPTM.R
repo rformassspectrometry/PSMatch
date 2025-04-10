@@ -21,7 +21,7 @@ test_that("plotSpectraPTM works with deltaMz = TRUE", {
 
     # We're using fixed colors here for reproducibility
     expect_doppelganger(
-        "deltaMz_true",
+        "deltaMz-true",
         function() {
             plotSpectraPTM(
                 spectra,
@@ -51,7 +51,7 @@ test_that("plotSpectraPTM works with deltaMz = FALSE", {
 
     # We're using fixed colors here for reproducibility
     expect_doppelganger(
-        "deltaMz_false",
+        "deltaMz-false",
         function() {
             plotSpectraPTM(
                 spectra,
@@ -81,7 +81,7 @@ test_that("plotSpectraPTM works with variable modifications", {
 
     # We're using fixed colors here for reproducibility
     expect_doppelganger(
-        "one_ptm_deltaMz_true",
+        "one-ptm-deltaMz-true",
         function() {
             plotSpectraPTM(
                 spectra,
@@ -112,7 +112,7 @@ test_that("plotSpectraPTM works with different col", {
 
     # We're using fixed colors here for reproducibility
     expect_doppelganger(
-        "diff_col",
+        "diff-col",
         function() {
             plotSpectraPTM(
                 spectra,
