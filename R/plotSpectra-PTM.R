@@ -351,17 +351,17 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
 
 ##' Annotated sequence fragments split view
 ##'
-##' @param x Spectra object
+##' @param x `Spectra(1L)` object
 ##'
 ##' @param peptide_sequence `character(1L)` The identified peptide sequence
 ##'
-##' @param mzs mz values of peaks
+##' @param mzs `numeric()` mz values of peaks
 ##'
-##' @param ints the intensity values of peaks
+##' @param ints `numeric()` the intensity values of peaks
 ##'
-##' @param labels labels associated to the peaks
+##' @param labels `character()` labels associated to the peaks
 ##' 
-##' @param col The colors of annotations
+##' @param col named `character(4L)` The colors of annotations
 ##'
 ##' @importFrom graphics segments
 ##'
