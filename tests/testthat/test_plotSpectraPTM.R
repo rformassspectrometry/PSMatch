@@ -1,6 +1,7 @@
 #' # each base::graphics plot function must be wrapped by an anonymous function
 #' # that could be called by `vdiffr::expect_doppelganger()`
 #' Run devtools::test_active_file(file = "tests/testthat/test_plotSpectraPTM.R")
+library(vdiffr)
 
 test_that("plotSpectraPTM works with deltaMz = TRUE", {
     sp <- DataFrame(
