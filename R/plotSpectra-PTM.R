@@ -466,7 +466,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     text(
          ionypos, ypos + chrhgt,
          adj = c(-0.1, -0.3),
-         which(iony %in% labels) - 1L,
+         which(iony %in% labels),
          cex = 1, col = col[["y"]]
     )
 }
