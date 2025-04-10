@@ -177,7 +177,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                                   labelOffset = labelOffset,
                                   minorTicks = minorTicks,
                                   deltaMzData = deltaMzData[[i]],
-                                  ppm = ppm, old_par = old_par)
+                                  ppm = ppm)
     }
 }
 
@@ -209,11 +209,13 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                                       labelCol = col, labelCex = 1, labelSrt = 0,
                                       labelAdj = NULL, labelPos = 3,
                                       labelOffset = 0.5, minorTicks = TRUE,
-                                      ppm = 20, deltaMzData = NULL,
-                                      old_par = old_par) {
+                                      ppm = 20, deltaMzData = NULL) {
     v <- peaksData(x)[[1L]]
     mzs <- v[, "mz"]
     ints <- v[, "intensity"]
+
+    old_mar <- par("mar")
+    on.exit(par(mar = old_mar))
 
     if (!length(xlim))
         suppressWarnings(xlim <- range(mzs, na.rm = TRUE))
@@ -229,7 +231,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
             mar = par("mar") +
             c(
                 -par("mar")[1L] * 0.6, 0,
-                -par("mar")[3L] + par("cex.main"), 0
+                -par("mar")[3L] * 0.6 + par("cex.main"), 0
             )
         )
     } else par(mar = c(par("mar")[1L] * 0.8, 4, 1, 2))
