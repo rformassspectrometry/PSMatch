@@ -226,10 +226,13 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
         ylim <- c(0, 0)
     if (!is.na(main)) {
         par(
-            mar = old_par[["mar"]] +
-            c(0, 0, - old_par[["mar"]][3] + old_par[["cex.main"]], 0)
+            mar = par("mar") +
+            c(
+                -par("mar")[1L] * 0.6, 0,
+                -par("mar")[3L] + par("cex.main"), 0
+            )
         )
-    } else par(mar = c(4, 4, 1, 2))
+    } else par(mar = c(par("mar") * 0.8, 4, 1, 2))
     plot.new()
     plot.window(xlim = xlim, ylim = ylim)
 
@@ -237,9 +240,11 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     labels <- labels[[1L]]
     wdths <- max(strwidth(labels, cex = labelCex)) / 2
     usr_lim <- par("usr")
-    ylim[2L] <- ylim[2L] + 0.4*diff(ylim)
     xlim[1L] <- xlim[1L] - wdths
     xlim[2L] <- xlim[2L] + wdths
+
+    ## add space for the annotation
+    ylim[2L] <- ylim[2L] + 8L * strheight("M")
     plot.window(xlim = xlim, ylim = ylim)
 
     peakCol <- rep_len(col[["other"]], length(labels))
@@ -247,8 +252,9 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     peakCol[startsWith(labels, "y")] <- col[["y"]]
     peakCol[grepl("^[acxz]", labels)] <- col[["acxy"]]
 
-    labelCol <- ifelse(grepl("b", labels), col[["b"]],
-                ifelse(grepl("y", labels), col[["y"]], col[["acxy"]]))
+    labelCol <- rep_len(col[["acxy"]], length(labels))
+    labelCol[startsWith(labels, "b")] <- col[["b"]]
+    labelCol[startsWith(labels, "y")] <- col[["y"]]
 
     text(mzs, ints, labels = labels, adj = labelAdj, pos = labelPos,
          col = labelCol, cex = labelCex, srt = labelSrt, offset = labelOffset)
@@ -268,28 +274,30 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
         )
         axis(
             side = 1, at = ticks[!ticks %in% major_ticks], labels = FALSE,
-            tck = -0.01, col.ticks = "grey65", pos = 0
+            tck = par("tcl") * 1e-2 , col.ticks = "grey65", pos = 0
         )
     }
 
-    axis_y_percent <- seq(0, 100, length.out = 5)
+    axis(
+        side = 2, las = 0,
+        at = seq(0, max(abs(ints)), length.out = 5),
+        labels = seq(0, 100, length.out = 5)
+    )
 
-    axis(side = 2, las = 0, tck = -0.02,
-         at = seq(0, max(abs(ints)), length.out = 5),
-         labels = axis_y_percent)
+    title(main = main)
+    title(xlab = xlab, line = 0)
+    title(ylab = ylab, line = 2)
 
-    title(main = main, xlab = xlab, ylab = ylab)
+    subtxt <- paste0(
+        "mzspec/",
+        basename(spectraData(x)[["dataOrigin"]]),
+        "/scan: ", spectraData(x)[["scanIndex"]],
+        "/rt: ", round(spectraData(x)[["rtime"]], 2L),
+        "/charge: ", spectraData(x)[["charge"]],
+        peptide_sequence
+    )
 
-    prefix <- "mzspec"
-    run <- basename(spectraData(x)[["dataOrigin"]])
-    scan <- paste0("scan: ", spectraData(x)[["scanIndex"]])
-    rt <- paste0("rt: ", round(spectraData(x)[["rtime"]], 2))
-    charge <- paste0("charge: ", spectraData(x)[["charge"]])
-    seq_text <- paste0("sequence: ", peptide_sequence)
-
-    mtext(paste(prefix, run, scan, rt, charge, seq_text, sep = "/"),
-          adj = ifelse(!is.na(main), 0, NA),
-          cex = ifelse(!is.na(main), 0.75, 1))
+    mtext(subtxt, adj = 0, line = -1)
 
     base_peak <- which.max(abs(ints))
     text(mzs[base_peak], ints[base_peak] * 0.60,
@@ -301,7 +309,11 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     if (!is.null(deltaMzData)) {
         deltaMzData <-
             ((mzs - deltaMzData) / deltaMzData) * 10^6
-        par(mar = c(2, 4, 0, 2))
+
+        par(
+            mar = par("mar") -
+                c(par("mar")[1L], 0, par("mar")[3L], 0) * 0.8
+        )
 
         true_hits <- !is.na(labels)
 
@@ -320,9 +332,18 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
             type = "p", pch = 19, cex = 0.7)
 
         abline(h = 0, col = "#808080", lty = 2)
-        title(ylab = "delta m/z\n[ppm]", cex.lab = 0.9, line = 2)
-        axis(side = 1, lwd = 1, at = pretty(xlim, n = 8),
-             col.ticks = "grey45", col = "grey45")
+        title(ylab = "delta m/z [ppm]", cex.lab = 0.9, line = 2)
+        axis(
+            side = 1, lwd = 1, at = major_ticks, pos = 0,
+            col.ticks = "grey45", col = "grey45"
+        )
+
+        if (minorTicks) {
+            axis(
+                side = 1, at = ticks[!ticks %in% major_ticks], labels = FALSE,
+                tck = par("tcl") * 1e-2, col.ticks = "grey65", pos = 0
+            )
+        }
     }
 }
 
