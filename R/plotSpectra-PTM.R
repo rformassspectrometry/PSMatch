@@ -437,36 +437,40 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     ionb <- paste0("b", c(0, seq_len(n)))
     ionbpos <- xpos[!is_letter][ionb %in% labels]
 
-    segments(
-        ionbpos, ypos, ionbpos, ypos - chrhgt,
-        col = col[["b"]], lwd = 2L
-    )
-    segments(
-        ionbpos, ypos - chrhgt, ionbpos - chrwdh, ypos - chrhgt,
-        col = col[["b"]], lwd = 2L
-    )
-    text(
-         ionbpos, ypos - chrhgt,
-         adj = c(1.1, 1.3),
-         which(ionb %in% labels) - 1L,
-         cex = 1, col = col[["b"]]
-    )
+    if (length(ionbpos)) {
+        segments(
+            ionbpos, ypos, ionbpos, ypos - chrhgt,
+            col = col[["b"]], lwd = 2L
+        )
+        segments(
+            ionbpos, ypos - chrhgt, ionbpos - chrwdh, ypos - chrhgt,
+            col = col[["b"]], lwd = 2L
+        )
+        text(
+             ionbpos, ypos - chrhgt,
+             adj = c(1.1, 1.3),
+             which(ionb %in% labels) - 1L,
+             cex = 1, col = col[["b"]]
+        )
+    }
 
     iony <- paste0("y", rev(c(0, seq_len(n))))
     ionypos <- xpos[!is_letter][iony %in% labels]
 
-    segments(
-        ionypos, ypos, ionypos, ypos + chrhgt,
-        col = col[["y"]], lwd = 2L
-    )
-    segments(
-        ionypos, ypos + chrhgt, ionypos + chrwdh, ypos + chrhgt,
-        col = col[["y"]], lwd = 2L
-    )
-    text(
-         ionypos, ypos + chrhgt,
-         adj = c(-0.1, -0.3),
-         which(iony %in% labels),
-         cex = 1, col = col[["y"]]
-    )
+    if (length(ionypos)) {
+        segments(
+            ionypos, ypos, ionypos, ypos + chrhgt,
+            col = col[["y"]], lwd = 2L
+        )
+        segments(
+            ionypos, ypos + chrhgt, ionypos + chrwdh, ypos + chrhgt,
+            col = col[["y"]], lwd = 2L
+        )
+        text(
+             ionypos, ypos + chrhgt,
+             adj = c(-0.1, -0.3),
+             which(iony %in% labels),
+             cex = 1, col = col[["y"]]
+        )
+    }
 }
