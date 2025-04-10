@@ -224,10 +224,9 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
         xlim <- c(0, 0)
     if (any(is.infinite(ylim)))
         ylim <- c(0, 0)
-    # if (!is.na(main)) {
-    #   par(mar = old_par[["mar"]] +
-    #         c(0, 0, - old_par[["mar"]][3] + old_par[["cex.main"]], 0))
-    # } else par(mar = c(4,4,1,2))
+    if (!is.na(main)) {
+      par(cex.main = 1.2, mar = c(4,4,1.5,2))
+    } else par(mar = c(4,4,1,2))
     plot.new()
     plot.window(xlim = xlim, ylim = ylim)
 
@@ -235,7 +234,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     labels <- labels[[1]]
     wdths <- max(strwidth(labels, cex = labelCex)) / 2
     usr_lim <- par("usr")
-    ylim[2L] <- ylim[2L] + 0.4*diff(ylim)
+    ylim[2L] <- ylim[2L] + 0.6 * diff(ylim)
     xlim[1L] <- xlim[1L] - wdths
     xlim[2L] <- xlim[2L] + wdths
     plot.window(xlim = xlim, ylim = ylim)
@@ -283,7 +282,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     seq_text <- paste0("sequence: ", peptide_sequence)
 
     mtext(paste(prefix, run, scan, rt, charge, seq_text, sep = "/"),
-          adj = 0, cex = 0.75)
+          cex = 0.85, line = -1)
 
     base_peak <- which.max(abs(ints))
     text(mzs[base_peak], ints[base_peak] * 0.60,
@@ -351,17 +350,17 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
 
 ##' Annotated sequence fragments split view
 ##'
-##' Code based on plotting tool [MMS2Plot](https://doi.org/10.1002/pmic.202000061)
-##'
 ##' @param x Spectra object
 ##'
 ##' @param peptide_sequence `character(1L)` The identified peptide sequence
 ##'
 ##' @param mzs mz values of peaks
 ##'
-##' @param name intensity values of peaks
+##' @param ints the intensity values of peaks
 ##'
 ##' @param labels labels associated to the peaks
+##' 
+##' @param col The colors of annotations
 ##'
 ##' @importFrom graphics segments
 ##'
@@ -372,116 +371,121 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                           col = col,
                           labels = labels,
                           peptide_sequence = peptide_sequence) {
-  pep_seq <- unlist(
+  split_seq <- unlist(
     strsplit(
       peptide_sequence,
       "(?<=[A-Za-z])(?=[A-Z])|(?<=\\])(?=[A-Z])",
       perl = TRUE
     ))
   
-  mod_pep_seq <- sapply(pep_seq, function(residue) {
-    gsub("([A-Za-z])\\[[-+]?\\d+\\.?\\d*\\]",
-         "[\\1]",
-         residue)
+  cleaned_peptide <- sapply(split_seq, function(amino_acid) {
+    gsub("([A-Za-z])\\[[-+]?\\d+\\.?\\d*\\]", "[\\1]", amino_acid)
   })
   
-  peptide <- c("-", mod_pep_seq, "-")
-  n <- length(peptide) * 2 - 1
+  res_count <- length(cleaned_peptide)
+  label_template <- rep(NA, res_count * 2 - 1)
+  label_template[seq(1, length(label_template), by = 2)] <- cleaned_peptide
   
-  peptide_list <- vector("list", n)
-  peptide_list[c(TRUE, FALSE)] <- as.list(peptide)
-  peptide_list[c(FALSE, TRUE)] <- as.list(".")
+  peptide_annotation <- label_template
   
-  peptide_list_b <- peptide_list_y <- peptide_list
-  peptide_list_b[c(FALSE, TRUE)] <- paste0("b", seq(0, length(peptide) - 2))
-  peptide_list_y[c(FALSE, TRUE)] <- paste0("y", rev(seq(0, length(peptide) - 2)))
+  .insert_ions <- function(prefix, idx) {
+    label_template[seq(2, length(label_template), by = 2)] <- paste0(prefix, idx)
+    return(label_template)
+  }
   
-  x_quarter <- seq(min(mzs), max(mzs), length.out = 20)[c(3, 18)]
-  AA_pos <- seq(x_quarter[1], x_quarter[2], length.out = n)
+  b_ion_list <- .insert_ions("b", seq_len(res_count - 1))
+  y_ion_list <- .insert_ions("y", rev(seq_len(res_count - 1)))
   
-  PSMlabel <- data.frame(
-    AA_pos = AA_pos,
-    peptide = unlist(peptide_list),
-    bion = unlist(peptide_list_b),
-    yion = unlist(peptide_list_y),
+  mz_center <- mean(range(mzs))
+  mz_range <- diff(range(mzs)) * 0.4
+  x_positions <- seq(mz_center - mz_range / 2, 
+                     mz_center + mz_range / 2, 
+                     length.out = length(label_template))
+  
+  ion_label_data <- data.frame(
+    x = x_positions,
+    residue = unlist(peptide_annotation),
+    b_label = unlist(b_ion_list),
+    y_label = unlist(y_ion_list),
     stringsAsFactors = FALSE
   )
   
-  peptide_height <- max(abs(ints)) * 1.20
-  len_annoSpace <- max(abs(ints)) / 15
-  b_ion_col <- col[["b"]]
-  y_ion_col <- col[["y"]]
+  label_height <- max(abs(ints)) * 1.35
+  label_spacing <- max(abs(ints)) / 15
+  b_color <- col[["b"]]
+  y_color <- col[["y"]]
   
-  PSMlabel_annots <- PSMlabel[!apply(PSMlabel, 1, function(row)
-    any(row %in% c(".", "-"))), ]
+  displayed_residues <- ion_label_data[!is.na(ion_label_data$residue), ]
   
   text(
-    PSMlabel_annots$AA_pos,
-    peptide_height,
-    PSMlabel_annots$peptide,
+    displayed_residues$x,
+    label_height,
+    displayed_residues$residue,
     cex = 1,
     adj = 0.5
   )
   
-  b_matches <- PSMlabel[PSMlabel$bion %in% labels, ]
-  if (nrow(b_matches) > 0) {
-    b_pos <- b_matches$AA_pos
-    idx <- match(b_pos, PSMlabel$AA_pos) - 1
-    b_mid <- (b_pos + PSMlabel$AA_pos[idx]) / 2
-    b_labels <- substring(b_matches$bion, 2)
+  b_ion_hits <- ion_label_data[ion_label_data$b_label %in% labels, ]
+  if (nrow(b_ion_hits) > 0) {
+    b_x <- b_ion_hits$x
+    b_idx <- match(b_x, ion_label_data$x) - 1
+    b_midpoints <- (b_x + ion_label_data$x[b_idx]) / 2
+    b_ion_tags <- substring(b_ion_hits$b_label, 2)
     
     segments(
-      b_pos,
-      peptide_height,
-      b_pos,
-      peptide_height - len_annoSpace,
-      col = b_ion_col,
+      b_x,
+      label_height,
+      b_x,
+      label_height - label_spacing,
+      col = b_color,
       lwd = 2
     )
     segments(
-      b_mid,
-      peptide_height - len_annoSpace,
-      b_pos,
-      peptide_height - len_annoSpace,
-      col = b_ion_col,
+      b_midpoints,
+      label_height - label_spacing * 1.5,
+      b_x,
+      label_height - label_spacing,
+      col = b_color,
       lwd = 2
     )
-    text((b_mid + b_pos) / 2,
-         peptide_height - len_annoSpace,
-         b_labels,
-         cex = 1,
+    text(b_midpoints + (b_midpoints - b_x)/2,
+         label_height - label_spacing * 1.5,
+         b_ion_tags,
          adj = c(0.5, 1.3),
-         col = b_ion_col
+         col = b_color
     )}
   
-  y_matches <- PSMlabel[PSMlabel$yion %in% labels, ]
-  if (nrow(y_matches) > 0) {
-    y_pos <- y_matches$AA_pos
-    idx <- match(y_pos, PSMlabel$AA_pos) + 1
-    y_mid <- (y_pos + PSMlabel$AA_pos[idx]) / 2
-    y_labels <- substring(y_matches$yion, 2)
+  y_ion_hits <- ion_label_data[ion_label_data$y_label %in% labels, ]
+  if (nrow(y_ion_hits) > 0) {
+    y_x <- y_ion_hits$x
+    y_idx <- match(y_x, ion_label_data$x) + 1
+    y_midpoints <- (y_x + ion_label_data$x[y_idx]) / 2
+    y_ion_tags <- substring(y_ion_hits$y_label, 2)
     
     segments(
-      y_pos,
-      peptide_height,
-      y_pos,
-      peptide_height + len_annoSpace,
-      col = y_ion_col,
+      y_x,
+      label_height,
+      y_x,
+      label_height + label_spacing,
+      col = y_color,
       lwd = 2
     )
     segments(
-      y_mid,
-      peptide_height + len_annoSpace,
-      y_pos,
-      peptide_height + len_annoSpace,
-      col = y_ion_col,
+      y_midpoints,
+      label_height + label_spacing * 1.5,
+      y_x,
+      label_height + label_spacing,
+      col = y_color,
       lwd = 2
     )
-    text((y_mid + y_pos) / 2,
-         peptide_height + len_annoSpace,
-         y_labels,
-         cex = 1,
+    text(y_midpoints + (y_midpoints - y_x)/2,
+         label_height + label_spacing * 1.5,
+         y_ion_tags,
          adj = c(0.5, -0.3),
-         col = y_ion_col
+         col = y_color
     )}
 }
+
+
+
+
