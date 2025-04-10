@@ -30,17 +30,15 @@ plotSpectraPTM(
 \item{deltaMz}{\code{logical(1L)} If \code{TRUE}, adds an additional plot showing the
 difference of mass over charge between matched oberved and theoretical
 fragments in parts per million. Does not yet support modifications. The
-matching is based on \code{calculateFragments()} and needs a 'sequence' variable
-in \code{spectraVariables(x)}. Default is set to \code{TRUE}.}
+matching is based on \code{calculateFragments()} and needs a 'sequence'
+variable in \code{spectraVariables(x)}. Default is set to \code{TRUE}.}
 
 \item{ppm}{\code{integer(1L)} Sets the limits of the delta m/z plot and is passed
 to \code{labelFragments()}.}
 
-\item{xlab}{\code{character(1)} with the label for the x-axis
-(by default \code{xlab = "m/z"}).}
+\item{xlab}{\code{character(1)} with the label for the x-axis (by default \code{xlab = "m/z"}).}
 
-\item{ylab}{\code{character(1)} with the label for the y-axis
-(by default \code{ylab = "intensity"}).}
+\item{ylab}{\code{character(1)} with the label for the y-axis (by default \code{ylab = "intensity"}).}
 
 \item{xlim}{\code{numeric(2)} defining the x-axis limits. The range of m/z values
 are used by default.}
@@ -52,14 +50,14 @@ values are used by default.}
 spectrum's MS level and retention time (in seconds) is used.}
 
 \item{col}{Named \code{character(4L)}. Colors for the labels, the character names
-need to be "b", "y", "acxz" and "other", respectively for the b-ions, y-ions,
-a,c,x,z-ions and the unidentified fragments.}
+need to be "b", "y", "acxz" and "other", respectively for the b-ions,
+y-ions, a,c,x,z-ions and the unidentified fragments.}
 
 \item{labelCex}{\code{numeric(1)} giving the amount by which the text should be
 magnified relative to the default. See parameter \code{cex} in \code{par()}.}
 
-\item{labelSrt}{\code{numeric(1)} defining the rotation of the label.
-See parameter \code{srt} in \code{text()}.}
+\item{labelSrt}{\code{numeric(1)} defining the rotation of the label.  See
+parameter \code{srt} in \code{text()}.}
 
 \item{labelAdj}{see parameter \code{adj} in \code{text()}.}
 
@@ -67,31 +65,34 @@ See parameter \code{srt} in \code{text()}.}
 
 \item{labelOffset}{see parameter \code{offset} in \code{text()}.}
 
-\item{asp}{for \code{plotSpectra()}: the target ratio (columns / rows) when plotting
-mutliple spectra (e.g. for 20 spectra use asp = 4/5 for 4 columns and 5 rows
-or asp = 5/4 for 5 columns and 4 rows; see \code{grDevices::n2mfrow()} for details).
-If \code{deltaMz} is \code{TRUE}, \code{asp} is ignored.}
+\item{asp}{for \code{plotSpectra()}, the target ratio (columns / rows) when
+plotting mutliple spectra (e.g. for 20 spectra use asp = 4/5 for 4
+columns and 5 rows or asp = 5/4 for 5 columns and 4 rows; see
+\code{grDevices::n2mfrow()} for details).  If \code{deltaMz} is \code{TRUE}, \code{asp} is
+ignored.}
 
-\item{minorTicks}{\code{logical(1L)} If \code{TRUE}, minor ticks are added to the plots.
-Default is set to \code{TRUE}.}
+\item{minorTicks}{\code{logical(1L)}. If \code{TRUE}, minor ticks are added to the
+plots.  Default is set to \code{TRUE}.}
 
-\item{...}{additional parameters to be passed to the \code{labelFragments()} function.}
+\item{...}{additional parameters to be passed to the \code{labelFragments()}
+function.}
 }
 \value{
-Creates a plot depicting an MS/MS-MS spectrum
+Creates a plot depicting an MS/MS-MS spectrum.
 }
 \description{
 \code{plotSpectraPTM()} creates annotated visualisations of MS/MS spectra,
 designed to explore fragment identifications and post-translational
 modifications (PTMs).
 
-\code{plotSpectraPTM()} plots a spectrum's m/z values on the x-axis and corresponding
-intensities on the y-axis, labeling the peaks according to theoretical
-fragment ions (e.g., b, y, a, c, x, z) computed using \code{labelFragments()}
-and \code{calculateFragments()}.
+\code{plotSpectraPTM()} plots a spectrum's m/z values on the x-axis and
+corresponding intensities on the y-axis, labeling the peaks according to
+theoretical fragment ions (e.g., b, y, a, c, x, z) computed using
+\code{labelFragments()} and \code{calculateFragments()}.
 }
 \examples{
 library("Spectra")
+
 sp <- DataFrame(msLevel = 2L, rtime = 2345, sequence = "SIGFEGDSIGR")
 sp$mz <- list(c(75.048614501953, 81.069030761719, 86.085876464844,
                 88.039, 158.089569091797, 163.114898681641,

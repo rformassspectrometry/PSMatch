@@ -14,13 +14,11 @@ addFragments(x, tolerance = 0, ppm = 20, ...)
 spectra variable \code{"sequence"} with a \code{character(1)}
 representing a valid peptide sequence.}
 
-\item{tolerance}{absolute acceptable difference of m/z values for
-peaks to be considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::common()}}
-for more details).}
+\item{tolerance}{absolute acceptable difference of m/z values for peaks to
+be considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::common()}} for more details).}
 
-\item{ppm}{m/z relative acceptable difference (in ppm) for peaks
-to be considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::common()}} for
-more #' details).}
+\item{ppm}{m/z relative acceptable difference (in ppm) for peaks to be
+considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::common()}} for more details).}
 
 \item{what}{\code{character(1)}, one of \code{"ion"} (default) or \code{"mz"}, defining
 whether labels should be fragment ions, , or their m/z values. If the
@@ -39,7 +37,8 @@ modifications included).
 Creates a list of annotations based on \code{calculateFragments} results.
 }
 \details{
-\code{addFragments} is deprecated and will be made defunct; use \code{labelFragments} instead.
+\code{addFragments} is deprecated and will be made defunct; use \code{labelFragments}
+instead.
 }
 \examples{
 library("Spectra")

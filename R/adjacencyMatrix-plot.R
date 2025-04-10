@@ -32,7 +32,7 @@
 ##'     adjacency matrix visualisations.
 ##'
 ##' @param layout A graph layout, as defined in the `ipgraph`
-##'     package. Default is [layout_as_bipartite()].
+##'     package. Default is [igraph::layout_as_bipartite()].
 plotAdjacencyMatrix <- function(m,
                                 protColors = 0,
                                 pepColors = NULL,

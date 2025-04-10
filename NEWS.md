@@ -2,8 +2,8 @@
 
 ## PSMatch 1.11.4
 
-- Added `plotSpectraPTM`: a plotting function to visualise post-translational
-modifications.
+- Added `plotSpectraPTM`: a plotting function to visualise
+  post-translational modifications.
 
 ## PSMatch 1.11.3
 

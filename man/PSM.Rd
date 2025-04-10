@@ -75,9 +75,8 @@ depends on the search engine and application. Default is \code{NA}.}
 read the \code{mzIdentML} files. One of \code{"mzR"} (default) or
 \code{"mzID"}.}
 
-\item{BPPARAM}{an object inheriting from \link{BiocParallelParam} to
-control parallel processing. The default value is
-\code{SerialParam()} to read files in series.}
+\item{BPPARAM}{an object from the \code{BiocParallel} package to control parallel
+processing. The default value is SerialParam()` to read files in series.}
 
 \item{object}{An instance of class \code{PSM}.}
 

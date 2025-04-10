@@ -86,7 +86,7 @@ vector for all peptides in a dataset and use it for different
 adjacency matrix visualisations.}
 
 \item{layout}{A graph layout, as defined in the \code{ipgraph}
-package. Default is \code{\link[=layout_as_bipartite]{layout_as_bipartite()}}.}
+package. Default is \code{\link[igraph:layout_as_bipartite]{igraph::layout_as_bipartite()}}.}
 }
 \value{
 A peptide-by-protein sparce adjacency matrix (or class

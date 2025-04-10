@@ -68,7 +68,7 @@
 ##'   component's adjacency matrix, including its dimensions, row and
 ##'   col sums maxima and minima, its sparsity and the number of
 ##'   communities and their modularity that quantifies how well the
-##'   communities separate (see [modularity.igraph()]. Note that
+##'   communities separate (see [igraph::modularity()]. Note that
 ##'   trivial components, i.e. those composed of a single peptide and
 ##'   protein are excluded from the prioritised results. This
 ##'   `data.frame` is ideally suited for a principal component

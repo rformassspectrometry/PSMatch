@@ -279,9 +279,8 @@ setMethod("show", "PSM",
 ##'     read the `mzIdentML` files. One of `"mzR"` (default) or
 ##'     `"mzID"`.
 ##'
-##' @param BPPARAM an object inheriting from [BiocParallelParam] to
-##'     control parallel processing. The default value is
-##'     `SerialParam()` to read files in series.
+##' @param BPPARAM an object from the `BiocParallel` package to control parallel
+##'     processing. The default value is SerialParam()` to read files in series.
 ##'
 ##' @return `PSM()` returns a `PSM` object.
 ##'

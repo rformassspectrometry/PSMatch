@@ -1,32 +1,30 @@
 ##' @name labelFragments
-##' 
+##'
 ##' @title labels MS2 Fragments
 ##'
 ##' @description
-##' Creates a list of annotations based on `calculateFragments` results.  
+##' Creates a list of annotations based on `calculateFragments` results.
 ##'
 ##' @param x An instance of class `Spectra` of length 1, containing a
 ##'     spectra variable `"sequence"` with a `character(1)`
 ##'     representing a valid peptide sequence.
 ##'
-##' @param ppm m/z relative acceptable difference (in ppm) for peaks
-##'     to be considered matching (see [MsCoreUtils::common()] for
-##'     more #' details).
+##' @param ppm m/z relative acceptable difference (in ppm) for peaks to be
+##'     considered matching (see [MsCoreUtils::common()] for more details).
 ##'
-##' @param tolerance absolute acceptable difference of m/z values for
-##'     peaks to be considered matching (see [MsCoreUtils::common()]
-##'     for more details).
-##' 
+##' @param tolerance absolute acceptable difference of m/z values for peaks to
+##'     be considered matching (see [MsCoreUtils::common()] for more details).
+##'
 ##' @param what `character(1)`, one of `"ion"` (default) or `"mz"`, defining
 ##'     whether labels should be fragment ions, , or their m/z values. If the
 ##'     latter, then the m/z values are named with the ion labels.
-##' 
+##'
 ##' @param ... additional parameters (except `verbose`) passed to
 ##'     [calculateFragments()] to calculate fragment m/z values to be
 ##'     added to the spectra in `x`.
 ##'
-##' @return Return a `list()` of `character()` with fragment ion labels. The 
-##' elements are named after the peptide they belong to (variable 
+##' @return Return a `list()` of `character()` with fragment ion labels. The
+##' elements are named after the peptide they belong to (variable
 ##' modifications included).
 ##'
 ##' @importFrom MsCoreUtils common
@@ -73,16 +71,16 @@
 ##'
 ##' ## The fragment ion labels
 ##' labelFragments(sp)
-##' 
+##'
 ##' ## The fragment mz labels
 ##' labelFragments(sp, what = "mz")
-##' 
+##'
 ##' ## Call additional parameters sur as variable modifications to calculateFragments
 ##' labelFragments(sp, type = c("a", "b", "x", "y"), variable_modifications = c(R = 5))
 ##'
 ##' ## Annotate the spectum with the fragment labels
 ##' plotSpectra(sp, labels = labelFragments, labelPos = 3)
-##' 
+##'
 ##' ## By default used in `plotSpectraPTM()`.
 ##' plotSpectraPTM(sp)
 labelFragments <- function(x, tolerance = 0, ppm = 20,
@@ -92,18 +90,18 @@ labelFragments <- function(x, tolerance = 0, ppm = 20,
     what <- match.arg(what)
     super_labels <- vector("list", length = length(x))
     k <- integer()
-    
+
     for (j in seq_along(x)) {
         stopifnot("sequence" %in% Spectra::spectraVariables(x[j]))
         y <- Spectra::spectraData(x[j])[["sequence"]]
         x_data <- Spectra::peaksData(x[j])[[1L]]
         y_data <- calculateFragments(y, verbose = FALSE, ...)
-        
+
         y_data <- split(y_data, y_data$peptide)
-        
+
         labels <- vector("list", length = length(y_data))
         names(labels) <- names(y_data)
-        
+
         for (i in seq_along(y_data)) {
             k <- c(k, j)
             y_data[[i]] <- y_data[[i]][order(y_data[[i]]$mz), ]
@@ -132,11 +130,13 @@ labelFragments <- function(x, tolerance = 0, ppm = 20,
 
 
 ##' @rdname labelFragments
-##' 
-##' @export 
-##' 
+##'
+##' @export
+##'
 ##' @details
-##' `addFragments` is deprecated and will be made defunct; use `labelFragments` instead.
+##'
+##' `addFragments` is deprecated and will be made defunct; use `labelFragments`
+##' instead.
 addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
     .Deprecated("labelFragments")
     labelFragments(x, tolerance, ppm, what = "ion", ...)
