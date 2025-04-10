@@ -250,7 +250,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     text(mzs, ints, labels = labels, adj = labelAdj, pos = labelPos,
          col = labelCol, cex = labelCex, srt = labelSrt, offset = labelOffset)
 
-    .draw_psmanno(x, mzs, ints, col, labels, peptide_sequence)
+    .build_annotations(x, mzs, ints, col, labels, peptide_sequence)
 
     plot.xy(xy.coords(mzs, ints), type = "h", col = peakCol)
 
@@ -365,12 +365,12 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
 ##' @importFrom graphics segments
 ##'
 ##' @noRd
-.draw_psmanno <- function(x,
-                          mzs = mzs,
-                          ints = ints,
-                          col = col,
-                          labels = labels,
-                          peptide_sequence = peptide_sequence) {
+.build_annotations <- function(x,
+                               mzs = mzs,
+                               ints = ints,
+                               col = col,
+                               labels = labels,
+                               peptide_sequence = peptide_sequence) {
   split_seq <- unlist(
     strsplit(
       peptide_sequence,
