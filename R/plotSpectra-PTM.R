@@ -161,8 +161,8 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
         layout(layout_matrix,
                heights = rep(c(5, 1), length.out = nrow(layout_matrix)))
     } else {
-      par(mfrow = n2mfrow(length(labels), asp = asp))
-      deltaMzData <- NULL
+        par(mfrow = n2mfrow(length(labels), asp = asp))
+        deltaMzData <- NULL
     }
     spectrum_number <- attr(labels, "group")
 
@@ -225,14 +225,16 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     if (any(is.infinite(ylim)))
         ylim <- c(0, 0)
     if (!is.na(main)) {
-      par(mar = old_par[["mar"]] +
-            c(0, 0, - old_par[["mar"]][3] + old_par[["cex.main"]], 0))
-    } else par(mar = c(4,4,1,2))
+        par(
+            mar = old_par[["mar"]] +
+            c(0, 0, - old_par[["mar"]][3] + old_par[["cex.main"]], 0)
+        )
+    } else par(mar = c(4, 4, 1, 2))
     plot.new()
     plot.window(xlim = xlim, ylim = ylim)
 
     peptide_sequence <- names(labels)
-    labels <- labels[[1]]
+    labels <- labels[[1L]]
     wdths <- max(strwidth(labels, cex = labelCex)) / 2
     usr_lim <- par("usr")
     ylim[2L] <- ylim[2L] + 0.4*diff(ylim)
@@ -260,11 +262,14 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
          col.ticks = "grey45", col = "grey45")
 
     if (minorTicks) {
-      nm <- length(major_ticks)
-      ticks <- seq.int(
-        major_ticks[1L], major_ticks[nm], length.out = 5L * (nm - 1L) + 1L)
-      axis(side = 1, at = ticks[!ticks %in% major_ticks], labels = FALSE,
-           tck = -0.01, col.ticks = "grey65", pos = 0)
+        nm <- length(major_ticks)
+        ticks <- seq.int(
+            major_ticks[1L], major_ticks[nm], length.out = 5L * (nm - 1L) + 1L
+        )
+        axis(
+            side = 1, at = ticks[!ticks %in% major_ticks], labels = FALSE,
+            tck = -0.01, col.ticks = "grey65", pos = 0
+        )
     }
 
     axis_y_percent <- seq(0, 100, length.out = 5)
@@ -283,8 +288,8 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     seq_text <- paste0("sequence: ", peptide_sequence)
 
     mtext(paste(prefix, run, scan, rt, charge, seq_text, sep = "/"),
-          adj = ifelse(!is.na(main),0, NA),
-          cex = ifelse(!is.na(main),0.75, 1))
+          adj = ifelse(!is.na(main), 0, NA),
+          cex = ifelse(!is.na(main), 0.75, 1))
 
     base_peak <- which.max(abs(ints))
     text(mzs[base_peak], ints[base_peak] * 0.60,
