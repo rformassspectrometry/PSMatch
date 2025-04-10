@@ -232,7 +232,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                 -par("mar")[3L] + par("cex.main"), 0
             )
         )
-    } else par(mar = c(par("mar") * 0.8, 4, 1, 2))
+    } else par(mar = c(par("mar")[1L] * 0.8, 4, 1, 2))
     plot.new()
     plot.window(xlim = xlim, ylim = ylim)
 
