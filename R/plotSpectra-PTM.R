@@ -189,7 +189,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
 ##'
 ##' @author Johannes Rainer, Sebastian Gibb, Guillaume Deflandre, Laurent Gatto
 ##'
-##' @importFrom graphics axis plot.new plot.window plot.xy strwidth
+##' @importFrom graphics axis plot.new plot.window plot.xy strwidth strheight
 ##'
 ##' @importFrom graphics text title par mtext abline points
 ##'
