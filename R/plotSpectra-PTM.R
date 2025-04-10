@@ -34,8 +34,9 @@
 ##' @param ylim `numeric(2)` defining the y-axis limits. The range of intensity
 ##'     values are used by default.
 ##'
-##' @param main `character(1)` with the title for the plot. By default the
-##'     spectrum's MS level and retention time (in seconds) is used.
+##' @param main `character(1)` with the title for the each spectrum. By default
+##' `NULL`, if variable modifications are used, the same title is applied on all
+##' plots originating from a common spectrum.
 ##'
 ##' @param col Named `character(4L)`. Colors for the labels, the character names
 ##'     need to be "b", "y", "acxz" and "other", respectively for the b-ions,
