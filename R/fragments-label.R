@@ -16,7 +16,11 @@
 ##' @param tolerance absolute acceptable difference of m/z values for
 ##'     peaks to be considered matching (see [MsCoreUtils::common()]
 ##'     for more details).
-##'
+##' 
+##' @param what `character(1)`, one of `"ion"` (default) or `"mz"`, defining
+##'     whether labels should be fragment ions, , or their m/z values. If the
+##'     latter, then the m/z values are named with the ion labels.
+##' 
 ##' @param ... additional parameters (except `verbose`) passed to
 ##'     [calculateFragments()] to calculate fragment m/z values to be
 ##'     added to the spectra in `x`.
@@ -69,12 +73,23 @@
 ##'
 ##' ## The fragment ion labels
 ##' labelFragments(sp)
+##' 
+##' ## The fragment mz labels
+##' labelFragments(sp, what = "mz")
+##' 
+##' ## Call additional parameters sur as variable modifications to calculateFragments
+##' labelFragments(sp, type = c("a", "b", "x", "y"), variable_modifications = c(R = 5))
 ##'
 ##' ## Annotate the spectum with the fragment labels
 ##' plotSpectra(sp, labels = labelFragments, labelPos = 3)
-labelFragments <- function(x, tolerance = 0, ppm = 20, ...) {
+##' 
+##' ## By default used in `plotSpectraPTM()`.
+##' plotSpectraPTM(sp)
+labelFragments <- function(x, tolerance = 0, ppm = 20,
+                           what = c("ion", "mz"), ...) {
     stopifnot(requireNamespace("Spectra"))
     stopifnot(inherits(x, "Spectra"))
+    what <- match.arg(what)
     super_labels <- vector("list", length = length(x))
     k <- integer()
     
@@ -92,17 +107,21 @@ labelFragments <- function(x, tolerance = 0, ppm = 20, ...) {
         for (i in seq_along(y_data)) {
             k <- c(k, j)
             y_data[[i]] <- y_data[[i]][order(y_data[[i]]$mz), ]
-            idx <- which(MsCoreUtils::common(x_data[, "mz"], 
+            idx <- which(MsCoreUtils::common(x_data[, "mz"],
                                              y_data[[i]][, "mz"],
                                              tolerance = tolerance,
                                              ppm = ppm))
-            idy <- which(MsCoreUtils::common(y_data[[i]][, "mz"], 
+            idy <- which(MsCoreUtils::common(y_data[[i]][, "mz"],
                                              x_data[, "mz"],
-                                             tolerance = tolerance, 
+                                             tolerance = tolerance,
                                              ppm = ppm))
-            
-            labels[[i]] <- rep(NA_character_, nrow(x_data))
-            labels[[i]][idx] <- y_data[[i]][idy, "ion"]
+            if (what == "ion") {
+                labels[[i]] <- rep(NA_character_, nrow(x_data))
+                labels[[i]][idx] <- y_data[[i]][idy, "ion"]
+            } else { ## mz
+                labels[[i]] <- rep(NA_real_, nrow(x_data))
+                labels[[i]][idx] <- y_data[[i]][idy, "mz"]
+            }
         }
         super_labels[[j]] <- labels
     }
@@ -120,5 +139,5 @@ labelFragments <- function(x, tolerance = 0, ppm = 20, ...) {
 ##' `addFragments` is deprecated and will be made defunct; use `labelFragments` instead.
 addFragments <- function(x, tolerance = 0, ppm = 20, ...) {
     .Deprecated("labelFragments")
-    labelFragments(x, tolerance, ppm, ...)
+    labelFragments(x, tolerance, ppm, what = "ion", ...)
 }

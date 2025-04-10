@@ -1,5 +1,6 @@
+library("Spectra")
+
 test_that("labelFragments() works", {
-    library("Spectra")
     seq <- "PQR"
     frags <- calculateFragments(seq)
     o <- order(frags$mz)
@@ -26,7 +27,6 @@ test_that("labelFragments() works", {
 
 
 test_that("labelFragments() works with multiple Spectra", {
-    library("Spectra")
     seq <- c("PQR", "ACE")
     frags_pqr <- calculateFragments(seq)[1:7,]
     frags_ace <- calculateFragments(seq)[8:13,]
@@ -45,7 +45,6 @@ test_that("labelFragments() works with multiple Spectra", {
 })
 
 test_that("labelFragments() works with modifications", {
-    library("Spectra")
     seq <- "PQR"
     frags <- calculateFragments(seq)
     o <- order(frags$mz)
@@ -60,3 +59,17 @@ test_that("labelFragments() works with modifications", {
     expect_equal(length(ans), 2)
 })
 
+test_that("labelFragments() works with what = 'mz'", {
+    seq <- "PQR"
+    frags <- calculateFragments(seq)
+    o <- order(frags$mz)
+    sp <- DataFrame(msLevel = 2L, rtime = 2345, sequence = seq)
+    sp$mz <- list(frags$mz[o])
+    sp$intensity <- list(rep(1, 7))
+    sp <- Spectra(sp)
+    ## all fragments
+    ans_mz<- labelFragments(sp, what = "mz")
+    expect_identical(frags[o,"mz"], ans_mz[[1]])
+    ans_ions <- labelFragments(sp, what = "ion")
+    expect_identical(frags[o,"ion"], ans_ions[[1]])
+})

@@ -4,3 +4,4 @@
 favicon
 ^.*\.Rproj$
 ^\.Rproj\.user$
+revdep
