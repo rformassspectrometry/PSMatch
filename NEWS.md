@@ -1,5 +1,9 @@
 # PSMatch 1.11
 
+## PSMatch 1.11.5
+
+- Correct `plotSpectraPTM` annotations.
+  
 ## PSMatch 1.11.4
 
 - Added `plotSpectraPTM`: a plotting function to visualise
