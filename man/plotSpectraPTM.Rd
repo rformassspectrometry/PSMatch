@@ -46,8 +46,9 @@ are used by default.}
 \item{ylim}{\code{numeric(2)} defining the y-axis limits. The range of intensity
 values are used by default.}
 
-\item{main}{\code{character(1)} with the title for the plot. By default the
-spectrum's MS level and retention time (in seconds) is used.}
+\item{main}{\code{character(1)} with the title for the each spectrum. By default
+\code{NULL}, if variable modifications are used, the same title is applied on all
+plots originating from a common spectrum.}
 
 \item{col}{Named \code{character(4L)}. Colors for the labels, the character names
 need to be "b", "y", "acxz" and "other", respectively for the b-ions,
