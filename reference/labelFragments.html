@@ -69,7 +69,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">labelFragments</span><span class="op">(</span><span class="va">x</span>, tolerance <span class="op">=</span> <span class="fl">0</span>, ppm <span class="op">=</span> <span class="fl">20</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">labelFragments</span><span class="op">(</span><span class="va">x</span>, tolerance <span class="op">=</span> <span class="fl">0</span>, ppm <span class="op">=</span> <span class="fl">20</span>, what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ion"</span>, <span class="st">"mz"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">addFragments</span><span class="op">(</span><span class="va">x</span>, tolerance <span class="op">=</span> <span class="fl">0</span>, ppm <span class="op">=</span> <span class="fl">20</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -85,15 +85,19 @@ representing a valid peptide sequence.</p></dd>
 
 
 <dt id="arg-tolerance">tolerance<a class="anchor" aria-label="anchor" href="#arg-tolerance"></a></dt>
-<dd><p>absolute acceptable difference of m/z values for
-peaks to be considered matching (see <code><a href="https://rdrr.io/pkg/MsCoreUtils/man/matching.html" class="external-link">MsCoreUtils::common()</a></code>
-for more details).</p></dd>
+<dd><p>absolute acceptable difference of m/z values for peaks to
+be considered matching (see <code><a href="https://rdrr.io/pkg/MsCoreUtils/man/matching.html" class="external-link">MsCoreUtils::common()</a></code> for more details).</p></dd>
 
 
 <dt id="arg-ppm">ppm<a class="anchor" aria-label="anchor" href="#arg-ppm"></a></dt>
-<dd><p>m/z relative acceptable difference (in ppm) for peaks
-to be considered matching (see <code><a href="https://rdrr.io/pkg/MsCoreUtils/man/matching.html" class="external-link">MsCoreUtils::common()</a></code> for
-more #' details).</p></dd>
+<dd><p>m/z relative acceptable difference (in ppm) for peaks to be
+considered matching (see <code><a href="https://rdrr.io/pkg/MsCoreUtils/man/matching.html" class="external-link">MsCoreUtils::common()</a></code> for more details).</p></dd>
+
+
+<dt id="arg-what">what<a class="anchor" aria-label="anchor" href="#arg-what"></a></dt>
+<dd><p><code>character(1)</code>, one of <code>"ion"</code> (default) or <code>"mz"</code>, defining
+whether labels should be fragment ions, , or their m/z values. If the
+latter, then the m/z values are named with the ion labels.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -110,7 +114,8 @@ modifications included).</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p><code>addFragments</code> is deprecated and will be made defunct; use <code>labelFragments</code> instead.</p>
+    <p><code>addFragments</code> is deprecated and will be made defunct; use <code>labelFragments</code>
+instead.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -167,9 +172,44 @@ modifications included).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"group")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## The fragment mz labels</span></span></span>
+<span class="r-in"><span><span class="fu">labelFragments</span><span class="op">(</span><span class="va">sp</span>, what <span class="op">=</span> <span class="st">"mz"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $SIGFEGDSIGR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]        NA        NA        NA        NA        NA        NA  175.1190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8]        NA  214.1298  232.1404        NA        NA        NA        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15]        NA        NA        NA        NA        NA        NA        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22]        NA        NA  529.2729        NA        NA        NA        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29]        NA        NA        NA        NA        NA        NA        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [36]        NA        NA        NA        NA  880.4159        NA        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43]        NA        NA 1050.5214        NA        NA        NA        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [50]        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"group")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Call additional parameters sur as variable modifications to calculateFragments</span></span></span>
+<span class="r-in"><span><span class="fu">labelFragments</span><span class="op">(</span><span class="va">sp</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, variable_modifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>R <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $SIGFEGDSIGR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] NA    NA    NA    NA    NA    NA    "y1"  NA    "y2_" "y2"  NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    "y5_"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] NA    NA    NA    "y8"  NA    NA    NA    NA    "y10" NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`SIGFEGDSIGR[5]`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"group")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 1</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Annotate the spectum with the fragment labels</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra</a></span><span class="op">(</span><span class="va">sp</span>, labels <span class="op">=</span> <span class="va">labelFragments</span>, labelPos <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="labelFragments-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## By default used in `plotSpectraPTM()`.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plotSpectraPTM.html">plotSpectraPTM</a></span><span class="op">(</span><span class="va">sp</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="labelFragments-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>
