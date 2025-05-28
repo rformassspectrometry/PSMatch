@@ -100,7 +100,7 @@ With variable modifications, multiple sets of fragments are generated. The
 fragments can be traced to their parent ion by checking the `peptide` column.
 
 ```{r}
-calculateFragments(sp1158$sequence, 
+calculateFragments(sp1158$sequence[2], 
                    fixed_modifications = NULL,
                    variable_modifications = c(C = 57.02146))
 ```
@@ -115,19 +115,17 @@ We can now visualise these fragments directly on the MS
 spectrum. Let's first visualise the spectrum as is:
 
 ```{r}
-plotSpectraPTM(sp1158[2])
-```
-
-```{r}
-plotSpectra(sp1158[2], labels = labelFragments, labelPos = 3)
+plotSpectra(sp1158[2])
 ```
 
 `plotSpectraPTM()` allows a more in depth visualisation of a PSM by providing 
 a delta mass plot of matched fragments and a direct visualisation of matched 
 b- and y-ion fragment sequences. Labels are automatically applied based on the 
-provided `sequence` in the `spectraVariables`. 
+provided `sequence` in the `spectraVariables` with carbamidomethylation of 
+cysteine set as default fixed modification. 
 
 ```{r}
+dataOrigin(sp1158)[2] <- "TMT_Erwinia" ## Reduces the mzspec text
 plotSpectraPTM(sp1158[2])
 ```
 
@@ -135,6 +133,14 @@ More importantly, `plotSpectraPTM()` allows the comparison of used modifications
 For instance, there is a better match when carbamidomethylation of cysteine 
 is applied (interestingly, as glycine has the same mass as cabamidomethylation, 
 the b7 and b8 ions are overlapping in both spectra).
+
+```{r}
+plotSpectraPTM(sp1158[2], 
+               fixed_modifications = NULL,
+               variable_modifications = NULL)
+```
+
+Both plots can be created at once using the `variable_modifications` parameter.
 
 ```{r}
 plotSpectraPTM(sp1158[2], 
