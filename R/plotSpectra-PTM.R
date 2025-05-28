@@ -290,7 +290,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     
     title(main = main)
     title(ylab = ylab, line = 2.5, cex = 0.9)
-    title(xlab = xlab, line = 0.25, cex = 0.9)
+    title(xlab = xlab, line = 1.5, cex = 0.9)
     
     subtxt <- paste0(
         "mzspec/",
@@ -452,11 +452,11 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
         num_pos <- xpos[num] - (xpos[num] - xpos[num - 1]) * 0.5
         
         segments(
-            ionbpos, ypos - chrhgt, num_pos, ypos - 1.5*chrhgt,
+            ionbpos, ypos - chrhgt, num_pos, ypos - 1.5 * chrhgt,
             col = col[["b"]], lwd = 2L
         )
         text(
-            num_pos, ypos - 1.5*chrhgt,
+            num_pos, ypos - 1.5 * chrhgt,
             adj = c(1, 1.3),
             which(ionb %in% labels) - 1L,
             cex = 1, col = col[["b"]]
@@ -476,11 +476,11 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
         num_pos <- xpos[num] + (xpos[num + 1] - xpos[num]) * 0.5
         
         segments(
-            ionypos, ypos + chrhgt, num_pos, ypos + 1.5*chrhgt,
+            ionypos, ypos + chrhgt, num_pos, ypos + 1.5 * chrhgt,
             col = col[["y"]], lwd = 2L
         )
         text(
-            num_pos, ypos + 1.5*chrhgt,
+            num_pos, ypos + 1.5 * chrhgt,
             adj = c(0, -0.3),
             n - which(iony %in% labels) + 1,
             cex = 1, col = col[["y"]]
