@@ -424,9 +424,9 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     # we added 10x strheight space in .plot_single_spectrum_PTM_dev;
     # the text is 5x M + a slight adjustment, we left some space below and above
     # for the fragment labels and the mzspec string, respectively
-    # ypos is the mid of the text position
+    # ypos and xmid are the mid of the text position
     ypos <- par("usr")[4L] - 6L * chrhgt
-    xmid <- sum(xlimit) / 2L
+    xmid <- mean(xlimit)
     
     n <- length(mod_pep_seq)
     xpos <- seq(xmid - n * chrwdh, xmid + n * chrwdh, length.out = 2L * n + 1L)
