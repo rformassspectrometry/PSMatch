@@ -53,7 +53,7 @@
 ##'
 ##' @param labelOffset see parameter `offset` in `text()`.
 ##'
-##' @param asp for `plotSpectra()`, the target ratio (columns / rows) when
+##' @param asp for `plotSpectraPTM()`, the target ratio (columns / rows) when
 ##'     plotting mutliple spectra (e.g. for 20 spectra use asp = 4/5 for 4
 ##'     columns and 5 rows or asp = 5/4 for 5 columns and 4 rows; see
 ##'     `grDevices::n2mfrow()` for details).  If `deltaMz` is `TRUE`, `asp` is

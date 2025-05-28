@@ -65,7 +65,7 @@ parameter \code{srt} in \code{text()}.}
 
 \item{labelOffset}{see parameter \code{offset} in \code{text()}.}
 
-\item{asp}{for \code{plotSpectra()}, the target ratio (columns / rows) when
+\item{asp}{for \code{plotSpectraPTM()}, the target ratio (columns / rows) when
 plotting mutliple spectra (e.g. for 20 spectra use asp = 4/5 for 4
 columns and 5 rows or asp = 5/4 for 5 columns and 4 rows; see
 \code{grDevices::n2mfrow()} for details).  If \code{deltaMz} is \code{TRUE}, \code{asp} is
