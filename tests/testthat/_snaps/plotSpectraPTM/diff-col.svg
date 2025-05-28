@@ -149,7 +149,7 @@
 <text transform='translate(40.32,202.03) rotate(-90)' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='13.35px' lengthAdjust='spacingAndGlyphs'>75</text>
 <text transform='translate(40.32,103.17) rotate(-90)' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='20.02px' lengthAdjust='spacingAndGlyphs'>100</text>
 <text transform='translate(18.72,265.82) rotate(-90)' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='64.70px' lengthAdjust='spacingAndGlyphs'>intensity [%]</text>
-<text x='374.40' y='532.37' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='19.34px' lengthAdjust='spacingAndGlyphs'>m/z</text>
+<text x='691.20' y='521.57' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='19.34px' lengthAdjust='spacingAndGlyphs'>m/z</text>
 <text x='374.40' y='25.92' text-anchor='middle' style='font-size: 10.80px; font-family: sans;' textLength='349.41px' lengthAdjust='spacingAndGlyphs'>mzspec/testfile.mzML/scan: 1/rt: 2345/charge: 2/peptide: HIGFEGDSIGR</text>
 </g>
 <g clip-path='url(#cpNTcuNjB8NjkxLjIwfDE0LjQwfDUxNy4yNQ==)'>
