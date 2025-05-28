@@ -290,7 +290,8 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     
     title(main = main)
     title(ylab = ylab, line = 2.5, cex = 0.9)
-    title(xlab = xlab, line = 1.5, cex = 0.9)
+    mtext(xlab, side = 1, line = -0.5, at = c(par("usr")[2]))
+    # title(xlab = xlab, line = 1.5, cex = 0.9) ## Stood in the way in some plots
     
     subtxt <- paste0(
         "mzspec/",
