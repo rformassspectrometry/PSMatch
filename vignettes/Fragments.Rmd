@@ -62,7 +62,7 @@ sp
 ```
 
 In this example, we are going to focus the MS2 scan with index 1158
-and its parent MS1 scan (index 5447, selected automatically with the
+and its parent MS1 scan (index 1148, selected automatically with the
 [filterPrecursorScan()](https://rformassspectrometry.github.io/Spectra/reference/MsBackend.html)
 function).
 
