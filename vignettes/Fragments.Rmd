@@ -156,7 +156,12 @@ plotSpectraPTM(sp1158[2],
 ```
 
 
+<<<<<<< HEAD
 For more details on what `plotSpectraPTM()` can do, run `?plotSpectraPTM`.
+=======
+For more details on what `plotSpectraPTM()` can do, run
+`?plotSpectraPTM`.
+>>>>>>> 149ffd79f11082bce04aad64694c4f6f5fe43f7f
 
 # Session information
 
