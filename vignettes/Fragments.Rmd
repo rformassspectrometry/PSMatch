@@ -155,7 +155,7 @@ plotSpectraPTM(sp1158[2],
                deltaMz = FALSE)
 ```
 
-For a more complete comprehension of what `plotSpectraPTM()` can do, run
+For more information on what `plotSpectraPTM()` can do, run
 `?plotSpectraPTM`.
 
 # Session information
