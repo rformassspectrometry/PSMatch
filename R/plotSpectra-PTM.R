@@ -133,17 +133,17 @@
 ##' ## Color the peaks with different colors
 ##' plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
 plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
-                               xlab = "m/z", ylab = "intensity [%]",
-                               xlim = numeric(), ylim = numeric(),
-                               main = character(),
-                               col = c(y = "darkred",
-                                       b = "darkblue",
-                                       acxy = "darkgreen",
-                                       other = "grey40"),
-                               labelCex = 1, labelSrt = 0,
-                               labelAdj = NULL, labelPos = 3, labelOffset = 0.5,
-                               asp = 1, minorTicks = TRUE,
-                               ...) {
+                           xlab = "m/z", ylab = "intensity [%]",
+                           xlim = numeric(), ylim = numeric(),
+                           main = character(),
+                           col = c(y = "darkred",
+                                   b = "darkblue",
+                                   acxy = "darkgreen",
+                                   other = "grey40"),
+                           labelCex = 1, labelSrt = 0,
+                           labelAdj = NULL, labelPos = 3, labelOffset = 0.5,
+                           asp = 1, minorTicks = TRUE,
+                           ...) {
     if (!("sequence" %in% Spectra::spectraVariables(x))) {
         stop("Missing 'sequence' in Spectra::spectraVariables(x)")
     }
