@@ -142,9 +142,8 @@ values are used by default.</p></dd>
 
 
 <dt id="arg-main">main<a class="anchor" aria-label="anchor" href="#arg-main"></a></dt>
-<dd><p><code>character(1)</code> with the title for the each spectrum. By default
-<code>NULL</code>, if variable modifications are used, the same title is applied on all
-plots originating from a common spectrum.</p></dd>
+<dd><p><code>character(1)</code> with the title for the plot. By default the
+spectrum's MS level and retention time (in seconds) is used.</p></dd>
 
 
 <dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
@@ -176,7 +175,7 @@ parameter <code>srt</code> in <code><a href="https://rdrr.io/r/graphics/text.htm
 
 
 <dt id="arg-asp">asp<a class="anchor" aria-label="anchor" href="#arg-asp"></a></dt>
-<dd><p>for <code><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra()</a></code>, the target ratio (columns / rows) when
+<dd><p>for <code>plotSpectraPTM()</code>, the target ratio (columns / rows) when
 plotting mutliple spectra (e.g. for 20 spectra use asp = 4/5 for 4
 columns and 5 rows or asp = 5/4 for 5 columns and 4 rows; see
 <code><a href="https://rdrr.io/r/grDevices/n2mfrow.html" class="external-link">grDevices::n2mfrow()</a></code> for details).  If <code>deltaMz</code> is <code>TRUE</code>, <code>asp</code> is
@@ -244,7 +243,7 @@ function.</p></dd>
 <span class="r-in"><span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/Spectra.html" class="external-link">Spectra</a></span><span class="op">(</span><span class="va">sp</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Annotate the spectum with the fragment labels</span></span></span>
-<span class="r-in"><span><span class="fu">plotSpectraPTM</span><span class="op">(</span><span class="va">sp</span>, main <span class="op">=</span> <span class="st">"An example of a annotated plot"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plotSpectraPTM</span><span class="op">(</span><span class="va">sp</span>, main <span class="op">=</span> <span class="st">"An example of an annotated plot"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotSpectraPTM-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Annotate the spectrum without the delta m/z plot</span></span></span>
@@ -260,7 +259,7 @@ function.</p></dd>
 <span class="r-plt img"><img src="plotSpectraPTM-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Annotate multiple spectra at a time</span></span></span>
-<span class="r-in"><span><span class="fu">plotSpectraPTM</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sp</span>,<span class="va">sp</span><span class="op">)</span>, variable_modifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>R <span class="op">=</span> <span class="fl">490469</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plotSpectraPTM</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sp</span>,<span class="va">sp</span><span class="op">)</span>, variable_modifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>R <span class="op">=</span> <span class="fl">49.469</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotSpectraPTM-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Color the peaks with different colors</span></span></span>
@@ -280,7 +279,7 @@ function.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
 </div>
 
       </footer></div>
