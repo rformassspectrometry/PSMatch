@@ -245,6 +245,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     xlim[2L] <- xlim[2L] + wdths
     
     ## add space for the annotation
+    ## The choice of 10L * chrhgt is explained in .build_annotations
     chrwdh <- strwidth("M")
     chrhgt <- strheight("M")
     ylim[2L] <- ylim[2L] + 10L * chrhgt
