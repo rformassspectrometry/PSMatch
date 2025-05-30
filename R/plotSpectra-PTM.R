@@ -155,7 +155,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     
     labels <- labelFragments(x, ppm = ppm, what = "ion", ...)
     
-    if (deltaMz) { ## Generate deltaMzData labels for .plot_single_spectrum_PTM_dev
+    if (deltaMz) { ## Generate deltaMzData labels for .plot_single_spectrum_PTM
         deltaMzData <- labelFragments(x, ppm = ppm, what = "mz", ...)
         layout_matrix <- .make_layout_matrix(length(labels))
         layout(layout_matrix,
@@ -167,7 +167,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     spectrum_number <- attr(labels, "group")
     
     for (i in seq_along(spectrum_number)) {
-        .plot_single_spectrum_PTM_dev(x[spectrum_number[i]], xlab = xlab,
+        .plot_single_spectrum_PTM(x[spectrum_number[i]], xlab = xlab,
                                       ylab = ylab, xlim = xlim,
                                       ylim = ylim,
                                       main = main[spectrum_number[i]],
@@ -198,7 +198,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
 ##' @importFrom Spectra peaksData spectraData
 ##'
 ##' @noRd
-.plot_single_spectrum_PTM_dev <- function(x, xlab = "m/z", ylab = "intensity",
+.plot_single_spectrum_PTM <- function(x, xlab = "m/z", ylab = "intensity",
                                           xlim = numeric(),
                                           ylim = numeric(), main = character(),
                                           col = c(y = "darkred",
@@ -292,7 +292,6 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     title(main = main)
     title(ylab = ylab, line = 2.5, cex = 0.9)
     mtext(xlab, side = 1, line = -0.5, at = c(par("usr")[2]))
-    # title(xlab = xlab, line = 1.5, cex = 0.9) ## Stood in the way in some plots
     
     subtxt <- paste0(
         "mzspec/",
@@ -423,7 +422,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     )
     
     xlimit <- par("usr")[1L:2L]
-    # we added 10x strheight space in .plot_single_spectrum_PTM_dev;
+    # we added 10x strheight space in .plot_single_spectrum_PTM;
     # the text is 5x M + a slight adjustment, we left some space below and above
     # for the fragment labels and the mzspec string, respectively
     # ypos and xmid are the mid of the text position
