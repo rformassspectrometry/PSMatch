@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.22/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [ctb] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2025-05-30 17:47:34.84883<br><strong>Compiled</strong>: Fri May 30 17:59:39 2025</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [ctb] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2025-06-02 12:55:06.925787<br><strong>Compiled</strong>: Mon Jun 2 13:05:55 2025</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -167,326 +167,228 @@ package webpage.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## file(s):</span></span>
 <span><span class="co">## TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML.gz</span></span></code></pre>
-<p>In this example, we are going to focus the MS2 scan with index 5449
-and its parent MS1 scan (index 5447, selected automatically with the <a href="https://rformassspectrometry.github.io/Spectra/reference/MsBackend.html" class="external-link">filterPrecursorScan()</a>
+<p>In this example, we are going to focus the MS2 scan with index 1158
+and its parent MS1 scan (index 1148, selected automatically with the <a href="https://rformassspectrometry.github.io/Spectra/reference/MsBackend.html" class="external-link">filterPrecursorScan()</a>
 function).</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sp5449</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterPrecursorScan</a></span><span class="op">(</span><span class="va">sp</span>, <span class="fl">5449</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">sp1158</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterPrecursorScan</a></span><span class="op">(</span><span class="va">sp</span>, <span class="fl">1158</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra</a></span><span class="op">(</span><span class="va">sp5449</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">550</span>, <span class="fl">1200</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">precursorMz</a></span><span class="op">(</span><span class="va">sp5449</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, col <span class="op">=</span> <span class="st">"red"</span>, lty <span class="op">=</span> <span class="st">"dotted"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">400</span>, <span class="fl">600</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">precursorMz</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, col <span class="op">=</span> <span class="st">"red"</span>, lty <span class="op">=</span> <span class="st">"dotted"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Fragments_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="calculating-fragment-ions">Calculating fragment ions<a class="anchor" aria-label="anchor" href="#calculating-fragment-ions"></a>
 </h2>
-<p>The MS2 scan was matched to <code>SQILQQAGTSVLSQANQVPQTVLSLLR</code>
-(there was obviously no match the the MS1 scan):</p>
+<p>The MS2 scan was matched to the sequence <code>SCALITDGR</code>.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sp5449</span><span class="op">$</span><span class="va">sequence</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] NA                            "SQILQQAGTSVLSQANQVPQTVLSLLR"</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">sp1158</span><span class="op">$</span><span class="va">sequence</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] NA          "SCALITDGR"</span></span></code></pre>
 <p>The <code><a href="../reference/calculateFragments.html">calculateFragments()</a></code> simply takes a peptide sequence
 as input and returns a <code>data.frame</code> with the fragment
-sequences, M/Z, ion type, charge and position.</p>
+sequences, M/Z, ion type, charge, position and the peptide sequence of
+the parent ion.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/calculateFragments.html">calculateFragments</a></span><span class="op">(</span><span class="va">sp5449</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/calculateFragments.html">calculateFragments</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fixed modifications used: C=57.02146</span></span>
 <span><span class="co">## Variable modifications used: None</span></span></code></pre>
-<pre><code><span><span class="co">##             mz  ion type pos z                        seq</span></span>
-<span><span class="co">## 1     88.03931   b1    b   1 1                          S</span></span>
-<span><span class="co">## 2    216.09789   b2    b   2 1                         SQ</span></span>
-<span><span class="co">## 3    329.18195   b3    b   3 1                        SQI</span></span>
-<span><span class="co">## 4    442.26601   b4    b   4 1                       SQIL</span></span>
-<span><span class="co">## 5    570.32459   b5    b   5 1                      SQILQ</span></span>
-<span><span class="co">## 6    698.38317   b6    b   6 1                     SQILQQ</span></span>
-<span><span class="co">## 7    769.42028   b7    b   7 1                    SQILQQA</span></span>
-<span><span class="co">## 8    826.44174   b8    b   8 1                   SQILQQAG</span></span>
-<span><span class="co">## 9    927.48942   b9    b   9 1                  SQILQQAGT</span></span>
-<span><span class="co">## 10  1014.52145  b10    b  10 1                 SQILQQAGTS</span></span>
-<span><span class="co">## 11  1113.58986  b11    b  11 1                SQILQQAGTSV</span></span>
-<span><span class="co">## 12  1226.67392  b12    b  12 1               SQILQQAGTSVL</span></span>
-<span><span class="co">## 13  1313.70595  b13    b  13 1              SQILQQAGTSVLS</span></span>
-<span><span class="co">## 14  1441.76453  b14    b  14 1             SQILQQAGTSVLSQ</span></span>
-<span><span class="co">## 15  1512.80164  b15    b  15 1            SQILQQAGTSVLSQA</span></span>
-<span><span class="co">## 16  1626.84457  b16    b  16 1           SQILQQAGTSVLSQAN</span></span>
-<span><span class="co">## 17  1754.90315  b17    b  17 1          SQILQQAGTSVLSQANQ</span></span>
-<span><span class="co">## 18  1853.97156  b18    b  18 1         SQILQQAGTSVLSQANQV</span></span>
-<span><span class="co">## 19  1951.02432  b19    b  19 1        SQILQQAGTSVLSQANQVP</span></span>
-<span><span class="co">## 20  2079.08290  b20    b  20 1       SQILQQAGTSVLSQANQVPQ</span></span>
-<span><span class="co">## 21  2180.13058  b21    b  21 1      SQILQQAGTSVLSQANQVPQT</span></span>
-<span><span class="co">## 22  2279.19899  b22    b  22 1     SQILQQAGTSVLSQANQVPQTV</span></span>
-<span><span class="co">## 23  2392.28305  b23    b  23 1    SQILQQAGTSVLSQANQVPQTVL</span></span>
-<span><span class="co">## 24  2479.31508  b24    b  24 1   SQILQQAGTSVLSQANQVPQTVLS</span></span>
-<span><span class="co">## 25  2592.39914  b25    b  25 1  SQILQQAGTSVLSQANQVPQTVLSL</span></span>
-<span><span class="co">## 26  2705.48320  b26    b  26 1 SQILQQAGTSVLSQANQVPQTVLSLL</span></span>
-<span><span class="co">## 27   175.11895   y1    y   1 1                          R</span></span>
-<span><span class="co">## 28   288.20301   y2    y   2 1                         LR</span></span>
-<span><span class="co">## 29   401.28707   y3    y   3 1                        LLR</span></span>
-<span><span class="co">## 30   488.31910   y4    y   4 1                       SLLR</span></span>
-<span><span class="co">## 31   601.40316   y5    y   5 1                      LSLLR</span></span>
-<span><span class="co">## 32   700.47157   y6    y   6 1                     VLSLLR</span></span>
-<span><span class="co">## 33   801.51925   y7    y   7 1                    TVLSLLR</span></span>
-<span><span class="co">## 34   929.57783   y8    y   8 1                   QTVLSLLR</span></span>
-<span><span class="co">## 35  1026.63059   y9    y   9 1                  PQTVLSLLR</span></span>
-<span><span class="co">## 36  1125.69900  y10    y  10 1                 VPQTVLSLLR</span></span>
-<span><span class="co">## 37  1253.75758  y11    y  11 1                QVPQTVLSLLR</span></span>
-<span><span class="co">## 38  1367.80051  y12    y  12 1               NQVPQTVLSLLR</span></span>
-<span><span class="co">## 39  1438.83762  y13    y  13 1              ANQVPQTVLSLLR</span></span>
-<span><span class="co">## 40  1566.89620  y14    y  14 1             QANQVPQTVLSLLR</span></span>
-<span><span class="co">## 41  1653.92823  y15    y  15 1            SQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 42  1767.01229  y16    y  16 1           LSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 43  1866.08070  y17    y  17 1          VLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 44  1953.11273  y18    y  18 1         SVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 45  2054.16041  y19    y  19 1        TSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 46  2111.18187  y20    y  20 1       GTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 47  2182.21898  y21    y  21 1      AGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 48  2310.27756  y22    y  22 1     QAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 49  2438.33614  y23    y  23 1    QQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 50  2551.42020  y24    y  24 1   LQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 51  2664.50426  y25    y  25 1  ILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 52  2792.56284  y26    y  26 1 QILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 53   996.51088 b10_   b_  10 1                 SQILQQAGTS</span></span>
-<span><span class="co">## 54  1095.57929 b11_   b_  11 1                SQILQQAGTSV</span></span>
-<span><span class="co">## 55  1208.66335 b12_   b_  12 1               SQILQQAGTSVL</span></span>
-<span><span class="co">## 56  1295.69538 b13_   b_  13 1              SQILQQAGTSVLS</span></span>
-<span><span class="co">## 57  1423.75396 b14_   b_  14 1             SQILQQAGTSVLSQ</span></span>
-<span><span class="co">## 58  1494.79107 b15_   b_  15 1            SQILQQAGTSVLSQA</span></span>
-<span><span class="co">## 59  1608.83400 b16_   b_  16 1           SQILQQAGTSVLSQAN</span></span>
-<span><span class="co">## 60  1736.89258 b17_   b_  17 1          SQILQQAGTSVLSQANQ</span></span>
-<span><span class="co">## 61  1835.96099 b18_   b_  18 1         SQILQQAGTSVLSQANQV</span></span>
-<span><span class="co">## 62  1933.01375 b19_   b_  19 1        SQILQQAGTSVLSQANQVP</span></span>
-<span><span class="co">## 63  2061.07233 b20_   b_  20 1       SQILQQAGTSVLSQANQVPQ</span></span>
-<span><span class="co">## 64  2162.12001 b21_   b_  21 1      SQILQQAGTSVLSQANQVPQT</span></span>
-<span><span class="co">## 65  2261.18842 b22_   b_  22 1     SQILQQAGTSVLSQANQVPQTV</span></span>
-<span><span class="co">## 66  2374.27248 b23_   b_  23 1    SQILQQAGTSVLSQANQVPQTVL</span></span>
-<span><span class="co">## 67  2461.30451 b24_   b_  24 1   SQILQQAGTSVLSQANQVPQTVLS</span></span>
-<span><span class="co">## 68  2574.38857 b25_   b_  25 1  SQILQQAGTSVLSQANQVPQTVLSL</span></span>
-<span><span class="co">## 69  2687.47263 b26_   b_  26 1 SQILQQAGTSVLSQANQVPQTVLSLL</span></span>
-<span><span class="co">## 70   583.39260  y5_   y_   5 1                      LSLLR</span></span>
-<span><span class="co">## 71   682.46101  y6_   y_   6 1                     VLSLLR</span></span>
-<span><span class="co">## 72   783.50869  y7_   y_   7 1                    TVLSLLR</span></span>
-<span><span class="co">## 73   911.56727  y8_   y_   8 1                   QTVLSLLR</span></span>
-<span><span class="co">## 74  1008.62003  y9_   y_   9 1                  PQTVLSLLR</span></span>
-<span><span class="co">## 75  1107.68844 y10_   y_  10 1                 VPQTVLSLLR</span></span>
-<span><span class="co">## 76  1235.74702 y11_   y_  11 1                QVPQTVLSLLR</span></span>
-<span><span class="co">## 77  1349.78995 y12_   y_  12 1               NQVPQTVLSLLR</span></span>
-<span><span class="co">## 78  1420.82706 y13_   y_  13 1              ANQVPQTVLSLLR</span></span>
-<span><span class="co">## 79  1548.88564 y14_   y_  14 1             QANQVPQTVLSLLR</span></span>
-<span><span class="co">## 80  1635.91767 y15_   y_  15 1            SQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 81  1749.00173 y16_   y_  16 1           LSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 82  1848.07014 y17_   y_  17 1          VLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 83  1935.10217 y18_   y_  18 1         SVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 84  2036.14985 y19_   y_  19 1        TSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 85  2093.17131 y20_   y_  20 1       GTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 86  2164.20842 y21_   y_  21 1      AGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 87  2292.26700 y22_   y_  22 1     QAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 88  2420.32558 y23_   y_  23 1    QQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 89  2533.40964 y24_   y_  24 1   LQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 90  2646.49370 y25_   y_  25 1  ILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 91  2774.55228 y26_   y_  26 1 QILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 92   157.10839  y1_   y_   1 1                          R</span></span>
-<span><span class="co">## 93   270.19245  y2_   y_   2 1                         LR</span></span>
-<span><span class="co">## 94   383.27651  y3_   y_   3 1                        LLR</span></span>
-<span><span class="co">## 95   470.30854  y4_   y_   4 1                       SLLR</span></span>
-<span><span class="co">## 96   312.15540  b3*   b*   3 1                        SQI</span></span>
-<span><span class="co">## 97   425.23946  b4*   b*   4 1                       SQIL</span></span>
-<span><span class="co">## 98   553.29804  b5*   b*   5 1                      SQILQ</span></span>
-<span><span class="co">## 99   681.35662  b6*   b*   6 1                     SQILQQ</span></span>
-<span><span class="co">## 100  752.39373  b7*   b*   7 1                    SQILQQA</span></span>
-<span><span class="co">## 101  809.41519  b8*   b*   8 1                   SQILQQAG</span></span>
-<span><span class="co">## 102  910.46287  b9*   b*   9 1                  SQILQQAGT</span></span>
-<span><span class="co">## 103  997.49490 b10*   b*  10 1                 SQILQQAGTS</span></span>
-<span><span class="co">## 104 1096.56331 b11*   b*  11 1                SQILQQAGTSV</span></span>
-<span><span class="co">## 105 1209.64737 b12*   b*  12 1               SQILQQAGTSVL</span></span>
-<span><span class="co">## 106 1296.67940 b13*   b*  13 1              SQILQQAGTSVLS</span></span>
-<span><span class="co">## 107 1424.73798 b14*   b*  14 1             SQILQQAGTSVLSQ</span></span>
-<span><span class="co">## 108 1495.77509 b15*   b*  15 1            SQILQQAGTSVLSQA</span></span>
-<span><span class="co">## 109 1609.81802 b16*   b*  16 1           SQILQQAGTSVLSQAN</span></span>
-<span><span class="co">## 110 1737.87660 b17*   b*  17 1          SQILQQAGTSVLSQANQ</span></span>
-<span><span class="co">## 111 1836.94501 b18*   b*  18 1         SQILQQAGTSVLSQANQV</span></span>
-<span><span class="co">## 112 1933.99777 b19*   b*  19 1        SQILQQAGTSVLSQANQVP</span></span>
-<span><span class="co">## 113 2062.05635 b20*   b*  20 1       SQILQQAGTSVLSQANQVPQ</span></span>
-<span><span class="co">## 114 2163.10403 b21*   b*  21 1      SQILQQAGTSVLSQANQVPQT</span></span>
-<span><span class="co">## 115 2262.17244 b22*   b*  22 1     SQILQQAGTSVLSQANQVPQTV</span></span>
-<span><span class="co">## 116 2375.25650 b23*   b*  23 1    SQILQQAGTSVLSQANQVPQTVL</span></span>
-<span><span class="co">## 117 2462.28853 b24*   b*  24 1   SQILQQAGTSVLSQANQVPQTVLS</span></span>
-<span><span class="co">## 118 2575.37259 b25*   b*  25 1  SQILQQAGTSVLSQANQVPQTVLSL</span></span>
-<span><span class="co">## 119 2688.45665 b26*   b*  26 1 SQILQQAGTSVLSQANQVPQTVLSLL</span></span>
-<span><span class="co">## 120  912.55128  y8*   y*   8 1                   QTVLSLLR</span></span>
-<span><span class="co">## 121 1009.60404  y9*   y*   9 1                  PQTVLSLLR</span></span>
-<span><span class="co">## 122 1108.67245 y10*   y*  10 1                 VPQTVLSLLR</span></span>
-<span><span class="co">## 123 1236.73103 y11*   y*  11 1                QVPQTVLSLLR</span></span>
-<span><span class="co">## 124 1350.77396 y12*   y*  12 1               NQVPQTVLSLLR</span></span>
-<span><span class="co">## 125 1421.81107 y13*   y*  13 1              ANQVPQTVLSLLR</span></span>
-<span><span class="co">## 126 1549.86965 y14*   y*  14 1             QANQVPQTVLSLLR</span></span>
-<span><span class="co">## 127 1636.90168 y15*   y*  15 1            SQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 128 1749.98574 y16*   y*  16 1           LSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 129 1849.05415 y17*   y*  17 1          VLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 130 1936.08618 y18*   y*  18 1         SVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 131 2037.13386 y19*   y*  19 1        TSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 132 2094.15532 y20*   y*  20 1       GTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 133 2165.19243 y21*   y*  21 1      AGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 134 2293.25101 y22*   y*  22 1     QAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 135 2421.30959 y23*   y*  23 1    QQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 136 2534.39365 y24*   y*  24 1   LQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 137 2647.47771 y25*   y*  25 1  ILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 138 2775.53629 y26*   y*  26 1 QILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">##                         peptide</span></span>
-<span><span class="co">## 1   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 2   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 3   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 4   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 5   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 6   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 7   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 8   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 9   SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 10  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 11  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 12  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 13  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 14  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 15  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 16  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 17  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 18  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 19  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 20  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 21  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 22  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 23  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 24  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 25  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 26  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 27  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 28  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 29  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 30  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 31  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 32  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 33  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 34  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 35  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 36  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 37  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 38  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 39  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 40  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 41  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 42  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 43  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 44  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 45  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 46  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 47  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 48  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 49  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 50  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 51  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 52  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 53  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 54  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 55  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 56  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 57  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 58  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 59  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 60  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 61  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 62  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 63  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 64  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 65  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 66  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 67  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 68  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 69  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 70  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 71  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 72  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 73  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 74  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 75  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 76  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 77  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 78  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 79  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 80  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 81  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 82  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 83  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 84  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 85  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 86  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 87  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 88  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 89  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 90  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 91  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 92  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 93  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 94  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 95  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 96  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 97  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 98  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 99  SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 100 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 101 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 102 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 103 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 104 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 105 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 106 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 107 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 108 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 109 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 110 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 111 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 112 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 113 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 114 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 115 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 116 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 117 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 118 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 119 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 120 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 121 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 122 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 123 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 124 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 125 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 126 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 127 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 128 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 129 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 130 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 131 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 132 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 133 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 134 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 135 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 136 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 137 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span>
-<span><span class="co">## 138 SQILQQAGTSVLSQANQVPQTVLSLLR</span></span></code></pre>
+<pre><code><span><span class="co">##           mz ion type pos z      seq   peptide</span></span>
+<span><span class="co">## 1   88.03931  b1    b   1 1        S SCALITDGR</span></span>
+<span><span class="co">## 2  248.06996  b2    b   2 1       SC SCALITDGR</span></span>
+<span><span class="co">## 3  319.10707  b3    b   3 1      SCA SCALITDGR</span></span>
+<span><span class="co">## 4  432.19113  b4    b   4 1     SCAL SCALITDGR</span></span>
+<span><span class="co">## 5  545.27519  b5    b   5 1    SCALI SCALITDGR</span></span>
+<span><span class="co">## 6  646.32287  b6    b   6 1   SCALIT SCALITDGR</span></span>
+<span><span class="co">## 7  761.34981  b7    b   7 1  SCALITD SCALITDGR</span></span>
+<span><span class="co">## 8  818.37127  b8    b   8 1 SCALITDG SCALITDGR</span></span>
+<span><span class="co">## 9  175.11895  y1    y   1 1        R SCALITDGR</span></span>
+<span><span class="co">## 10 232.14041  y2    y   2 1       GR SCALITDGR</span></span>
+<span><span class="co">## 11 347.16735  y3    y   3 1      DGR SCALITDGR</span></span>
+<span><span class="co">## 12 448.21503  y4    y   4 1     TDGR SCALITDGR</span></span>
+<span><span class="co">## 13 561.29909  y5    y   5 1    ITDGR SCALITDGR</span></span>
+<span><span class="co">## 14 674.38315  y6    y   6 1   LITDGR SCALITDGR</span></span>
+<span><span class="co">## 15 745.42026  y7    y   7 1  ALITDGR SCALITDGR</span></span>
+<span><span class="co">## 16 905.45091  y8    y   8 1 CALITDGR SCALITDGR</span></span>
+<span><span class="co">## 17 743.33924 b7_   b_   7 1  SCALITD SCALITDGR</span></span>
+<span><span class="co">## 18 800.36070 b8_   b_   8 1 SCALITDG SCALITDGR</span></span>
+<span><span class="co">## 19 329.15679 y3_   y_   3 1      DGR SCALITDGR</span></span>
+<span><span class="co">## 20 543.28853 y5_   y_   5 1    ITDGR SCALITDGR</span></span>
+<span><span class="co">## 21 656.37259 y6_   y_   6 1   LITDGR SCALITDGR</span></span>
+<span><span class="co">## 22 727.40970 y7_   y_   7 1  ALITDGR SCALITDGR</span></span>
+<span><span class="co">## 23 887.44035 y8_   y_   8 1 CALITDGR SCALITDGR</span></span>
+<span><span class="co">## 24 157.10839 y1_   y_   1 1        R SCALITDGR</span></span>
+<span><span class="co">## 25 214.12985 y2_   y_   2 1       GR SCALITDGR</span></span>
+<span><span class="co">## 26 430.20447 y4_   y_   4 1     TDGR SCALITDGR</span></span></code></pre>
+<p>The function also allows to generate fragment sequences with fixed
+and/or variable modifications. By default,
+<code>fixed_modifications = c(C = 57.02146)</code> for
+carbamidomethylation of cysteine.</p>
+<p>With variable modifications, multiple sets of fragments are
+generated. The fragments can be traced to their parent ion by checking
+the <code>peptide</code> column. A fragment can have multiple
+modifications.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/calculateFragments.html">calculateFragments</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, </span>
+<span>                   fixed_modifications <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                   variable_modifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>C <span class="op">=</span> <span class="fl">57.02146</span>, </span>
+<span>                                              T <span class="op">=</span> <span class="fl">79.966</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Fixed modifications used: None</span></span>
+<span><span class="co">## Variable modifications used: C=57.02146, T=79.966</span></span></code></pre>
+<pre><code><span><span class="co">##            mz ion type pos z      seq                     peptide</span></span>
+<span><span class="co">## 1    88.03931  b1    b   1 1        S                   SCALITDGR</span></span>
+<span><span class="co">## 2   191.04850  b2    b   2 1       SC                   SCALITDGR</span></span>
+<span><span class="co">## 3   262.08561  b3    b   3 1      SCA                   SCALITDGR</span></span>
+<span><span class="co">## 4   375.16967  b4    b   4 1     SCAL                   SCALITDGR</span></span>
+<span><span class="co">## 5   488.25373  b5    b   5 1    SCALI                   SCALITDGR</span></span>
+<span><span class="co">## 6   589.30141  b6    b   6 1   SCALIT                   SCALITDGR</span></span>
+<span><span class="co">## 7   704.32835  b7    b   7 1  SCALITD                   SCALITDGR</span></span>
+<span><span class="co">## 8   761.34981  b8    b   8 1 SCALITDG                   SCALITDGR</span></span>
+<span><span class="co">## 9   175.11895  y1    y   1 1        R                   SCALITDGR</span></span>
+<span><span class="co">## 10  232.14041  y2    y   2 1       GR                   SCALITDGR</span></span>
+<span><span class="co">## 11  347.16735  y3    y   3 1      DGR                   SCALITDGR</span></span>
+<span><span class="co">## 12  448.21503  y4    y   4 1     TDGR                   SCALITDGR</span></span>
+<span><span class="co">## 13  561.29909  y5    y   5 1    ITDGR                   SCALITDGR</span></span>
+<span><span class="co">## 14  674.38315  y6    y   6 1   LITDGR                   SCALITDGR</span></span>
+<span><span class="co">## 15  745.42026  y7    y   7 1  ALITDGR                   SCALITDGR</span></span>
+<span><span class="co">## 16  848.42945  y8    y   8 1 CALITDGR                   SCALITDGR</span></span>
+<span><span class="co">## 17  686.31778 b7_   b_   7 1  SCALITD                   SCALITDGR</span></span>
+<span><span class="co">## 18  743.33924 b8_   b_   8 1 SCALITDG                   SCALITDGR</span></span>
+<span><span class="co">## 19  329.15679 y3_   y_   3 1      DGR                   SCALITDGR</span></span>
+<span><span class="co">## 20  543.28853 y5_   y_   5 1    ITDGR                   SCALITDGR</span></span>
+<span><span class="co">## 21  656.37259 y6_   y_   6 1   LITDGR                   SCALITDGR</span></span>
+<span><span class="co">## 22  727.40970 y7_   y_   7 1  ALITDGR                   SCALITDGR</span></span>
+<span><span class="co">## 23  830.41889 y8_   y_   8 1 CALITDGR                   SCALITDGR</span></span>
+<span><span class="co">## 24  157.10839 y1_   y_   1 1        R                   SCALITDGR</span></span>
+<span><span class="co">## 25  214.12985 y2_   y_   2 1       GR                   SCALITDGR</span></span>
+<span><span class="co">## 26  430.20447 y4_   y_   4 1     TDGR                   SCALITDGR</span></span>
+<span><span class="co">## 27   88.03931  b1    b   1 1        S         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 28  248.06996  b2    b   2 1       SC         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 29  319.10707  b3    b   3 1      SCA         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 30  432.19113  b4    b   4 1     SCAL         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 31  545.27519  b5    b   5 1    SCALI         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 32  646.32287  b6    b   6 1   SCALIT         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 33  761.34981  b7    b   7 1  SCALITD         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 34  818.37127  b8    b   8 1 SCALITDG         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 35  175.11895  y1    y   1 1        R         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 36  232.14041  y2    y   2 1       GR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 37  347.16735  y3    y   3 1      DGR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 38  448.21503  y4    y   4 1     TDGR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 39  561.29909  y5    y   5 1    ITDGR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 40  674.38315  y6    y   6 1   LITDGR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 41  745.42026  y7    y   7 1  ALITDGR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 42  905.45091  y8    y   8 1 CALITDGR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 43  743.33924 b7_   b_   7 1  SCALITD         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 44  800.36070 b8_   b_   8 1 SCALITDG         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 45  329.15679 y3_   y_   3 1      DGR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 46  543.28853 y5_   y_   5 1    ITDGR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 47  656.37259 y6_   y_   6 1   LITDGR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 48  727.40970 y7_   y_   7 1  ALITDGR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 49  887.44035 y8_   y_   8 1 CALITDGR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 50  157.10839 y1_   y_   1 1        R         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 51  214.12985 y2_   y_   2 1       GR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 52  430.20447 y4_   y_   4 1     TDGR         SC[57.02146]ALITDGR</span></span>
+<span><span class="co">## 53   88.03931  b1    b   1 1        S           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 54  191.04850  b2    b   2 1       SC           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 55  262.08561  b3    b   3 1      SCA           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 56  375.16967  b4    b   4 1     SCAL           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 57  488.25373  b5    b   5 1    SCALI           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 58  669.26741  b6    b   6 1   SCALIT           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 59  784.29435  b7    b   7 1  SCALITD           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 60  841.31581  b8    b   8 1 SCALITDG           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 61  175.11895  y1    y   1 1        R           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 62  232.14041  y2    y   2 1       GR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 63  347.16735  y3    y   3 1      DGR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 64  528.18103  y4    y   4 1     TDGR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 65  641.26509  y5    y   5 1    ITDGR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 66  754.34915  y6    y   6 1   LITDGR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 67  825.38626  y7    y   7 1  ALITDGR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 68  928.39545  y8    y   8 1 CALITDGR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 69  766.28378 b7_   b_   7 1  SCALITD           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 70  823.30524 b8_   b_   8 1 SCALITDG           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 71  329.15679 y3_   y_   3 1      DGR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 72  623.25453 y5_   y_   5 1    ITDGR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 73  736.33859 y6_   y_   6 1   LITDGR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 74  807.37570 y7_   y_   7 1  ALITDGR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 75  910.38489 y8_   y_   8 1 CALITDGR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 76  157.10839 y1_   y_   1 1        R           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 77  214.12985 y2_   y_   2 1       GR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 78  510.17047 y4_   y_   4 1     TDGR           SCALIT[79.966]DGR</span></span>
+<span><span class="co">## 79   88.03931  b1    b   1 1        S SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 80  248.06996  b2    b   2 1       SC SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 81  319.10707  b3    b   3 1      SCA SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 82  432.19113  b4    b   4 1     SCAL SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 83  545.27519  b5    b   5 1    SCALI SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 84  726.28887  b6    b   6 1   SCALIT SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 85  841.31581  b7    b   7 1  SCALITD SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 86  898.33727  b8    b   8 1 SCALITDG SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 87  175.11895  y1    y   1 1        R SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 88  232.14041  y2    y   2 1       GR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 89  347.16735  y3    y   3 1      DGR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 90  528.18103  y4    y   4 1     TDGR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 91  641.26509  y5    y   5 1    ITDGR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 92  754.34915  y6    y   6 1   LITDGR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 93  825.38626  y7    y   7 1  ALITDGR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 94  985.41691  y8    y   8 1 CALITDGR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 95  823.30524 b7_   b_   7 1  SCALITD SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 96  880.32670 b8_   b_   8 1 SCALITDG SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 97  329.15679 y3_   y_   3 1      DGR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 98  623.25453 y5_   y_   5 1    ITDGR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 99  736.33859 y6_   y_   6 1   LITDGR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 100 807.37570 y7_   y_   7 1  ALITDGR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 101 967.40635 y8_   y_   8 1 CALITDGR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 102 157.10839 y1_   y_   1 1        R SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 103 214.12985 y2_   y_   2 1       GR SC[57.02146]ALIT[79.966]DGR</span></span>
+<span><span class="co">## 104 510.17047 y4_   y_   4 1     TDGR SC[57.02146]ALIT[79.966]DGR</span></span></code></pre>
+<p>Additional parameters can limit the maximum number of allowed
+modifications, the type of ions produced or the charge applied. See
+<code><a href="../reference/calculateFragments.html">?calculateFragments</a></code> for more details on those.</p>
 </div>
 <div class="section level2">
 <h2 id="visualising-fragment-ions">Visualising fragment ions<a class="anchor" aria-label="anchor" href="#visualising-fragment-ions"></a>
 </h2>
 <p>We can now visualise these fragments directly on the MS spectrum.
 Let’s first visualise the spectrum as is:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra</a></span><span class="op">(</span><span class="va">sp5449</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Fragments_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra</a></span><span class="op">(</span><span class="va">sp5449</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, labels <span class="op">=</span> <span class="va">labelFragments</span>, labelPos <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Fragments_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p><code><a href="../reference/plotSpectraPTM.html">plotSpectraPTM()</a></code> allows a more in depth visualisation of
+a PSM by providing a delta mass plot of matched fragments and a direct
+visualisation of matched b- and y-ion fragment sequences.</p>
+<p>Labels are automatically applied based on the <code>sequence</code>
+defined in the <code>spectraVariables</code> with carbamidomethylation
+of cysteines set as default fixed modification.</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">dataOrigin</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"TMT_Erwinia"</span> <span class="co">## Reduces the mzspec text</span></span>
+<span><span class="fu"><a href="../reference/plotSpectraPTM.html">plotSpectraPTM</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
+<span>               main <span class="op">=</span> <span class="st">"Scan 1158 with carbamidomethylation"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Fragments_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p>More importantly, <code><a href="../reference/plotSpectraPTM.html">plotSpectraPTM()</a></code> allows to visualise
+and compare the matches with different modifications. For instance,
+there is a better match when carbamidomethylation of cysteines is
+applied (as above) compared to no modifications at all.</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotSpectraPTM.html">plotSpectraPTM</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, </span>
+<span>               fixed_modifications <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>               variable_modifications <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>               main <span class="op">=</span> <span class="st">"Scan 1158 without modifications"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Fragments_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<p>As glycine has the same mass as carbamidomethylation, the b7 and b8
+ions are overlapping in both spectra).</p>
+<p>Both plots can be created at once using the
+<code>variable_modifications</code> parameter.</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotSpectraPTM.html">plotSpectraPTM</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, </span>
+<span>               fixed_modifications <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>               variable_modifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>C <span class="op">=</span> <span class="fl">57.02146</span><span class="op">)</span>,</span>
+<span>               deltaMz <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Fragments_files/figure-html/unnamed-chunk-12-1.png" width="1000px"></p>
+<p>For more details on what <code><a href="../reference/plotSpectraPTM.html">plotSpectraPTM()</a></code> can do, run
+<code><a href="../reference/plotSpectraPTM.html">?plotSpectraPTM</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.5.0 (2025-04-11)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
