@@ -77,8 +77,7 @@ abline(v = precursorMz(sp1158)[2], col = "red", lty = "dotted")
 
 # Calculating fragment ions
 
-The MS2 scan was matched to `SCALITDGR` (there was obviously no match for 
-the MS1 scan):
+The MS2 scan was matched to the sequence `SCALITDGR`.
 
 ```{r}
 sp1158$sequence
@@ -124,9 +123,9 @@ plotSpectra(sp1158[2])
 a delta mass plot of matched fragments and a direct visualisation of matched 
 b- and y-ion fragment sequences. 
 
-Labels are automatically applied based on the 
-provided `sequence` in the `spectraVariables` with carbamidomethylation of 
-cysteine set as default fixed modification. 
+Labels are automatically applied based on the `sequence` defined in the
+`spectraVariables` with carbamidomethylation of 
+cysteines set as default fixed modification. 
 
 ```{r}
 dataOrigin(sp1158)[2] <- "TMT_Erwinia" ## Reduces the mzspec text
@@ -134,8 +133,9 @@ plotSpectraPTM(sp1158[2],
                main = "Scan 1158 with carbamidomethylation")
 ```
 
-More importantly, `plotSpectraPTM()` allows the comparison of used modifications.
-For instance, there is a better match when carbamidomethylation of cysteine 
+More importantly, `plotSpectraPTM()` allows to visualise and compare the matches
+with different modifications.
+For instance, there is a better match when carbamidomethylation of cysteines 
 is applied (as above) compared to no modifications at all.
 
 ```{r}
@@ -145,8 +145,8 @@ plotSpectraPTM(sp1158[2],
                main = "Scan 1158 without modifications")
 ```
 
-Interestingly, as glycine has the same mass as carbamidomethylation, 
-the b7 and b8 ions are overlapping in both spectra).
+As glycine has the same mass as carbamidomethylation, the b7 and b8 ions are 
+overlapping in both spectra).
 
 Both plots can be created at once using the `variable_modifications` parameter.
 
