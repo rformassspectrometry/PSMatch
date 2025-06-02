@@ -61,36 +61,54 @@ sp <- joinSpectraData(sp, id, by.x = "spectrumId", by.y = "spectrumID")
 sp
 ```
 
-In this example, we are going to focus the MS2 scan with index 5449
-and its parent MS1 scan (index 5447, selected automatically with the
+In this example, we are going to focus the MS2 scan with index 1158
+and its parent MS1 scan (index 1148, selected automatically with the
 [filterPrecursorScan()](https://rformassspectrometry.github.io/Spectra/reference/MsBackend.html)
 function).
 
 ```{r}
-sp5449 <- filterPrecursorScan(sp, 5449)
+sp1158 <- filterPrecursorScan(sp, 1158)
 ```
 
 ```{r}
-plotSpectra(sp5449[1], xlim = c(550, 1200))
-abline(v = precursorMz(sp5449)[2], col = "red", lty = "dotted")
+plotSpectra(sp1158[1], xlim = c(400, 600))
+abline(v = precursorMz(sp1158)[2], col = "red", lty = "dotted")
 ```
 
 # Calculating fragment ions
 
-The MS2 scan was matched to `SQILQQAGTSVLSQANQVPQTVLSLLR` (there was
-obviously no match the the MS1 scan):
+The MS2 scan was matched to the sequence `SCALITDGR`.
 
 ```{r}
-sp5449$sequence
+sp1158$sequence
 ```
 
 The `calculateFragments()` simply takes a peptide sequence as input
 and returns a `data.frame` with the fragment sequences, M/Z, ion type,
-charge and position.
+charge, position and the peptide sequence of the parent ion.
 
 ```{r}
-calculateFragments(sp5449$sequence[2])
+calculateFragments(sp1158$sequence[2])
 ```
+
+The function also allows to generate fragment sequences with fixed and/or
+variable modifications. By default, `fixed_modifications = c(C = 57.02146)` for
+carbamidomethylation of cysteine.
+
+With variable modifications, multiple sets of fragments are generated. The 
+fragments can be traced to their parent ion by checking the `peptide` column.
+A fragment can have multiple modifications.
+
+```{r}
+calculateFragments(sp1158$sequence[2], 
+                   fixed_modifications = NULL,
+                   variable_modifications = c(C = 57.02146, 
+                                              T = 79.966))
+```
+
+Additional parameters can limit the maximum number of allowed modifications, 
+the type of ions produced or the charge applied. See `?calculateFragments` for
+more details on those. 
 
 # Visualising fragment ions
 
@@ -98,12 +116,49 @@ We can now visualise these fragments directly on the MS
 spectrum. Let's first visualise the spectrum as is:
 
 ```{r}
-plotSpectra(sp5449[2])
+plotSpectra(sp1158[2])
 ```
 
+`plotSpectraPTM()` allows a more in depth visualisation of a PSM by providing 
+a delta mass plot of matched fragments and a direct visualisation of matched 
+b- and y-ion fragment sequences. 
+
+Labels are automatically applied based on the `sequence` defined in the
+`spectraVariables` with carbamidomethylation of 
+cysteines set as default fixed modification. 
+
 ```{r}
-plotSpectra(sp5449[2], labels = labelFragments, labelPos = 3)
+dataOrigin(sp1158)[2] <- "TMT_Erwinia" ## Reduces the mzspec text
+plotSpectraPTM(sp1158[2],
+               main = "Scan 1158 with carbamidomethylation")
 ```
+
+More importantly, `plotSpectraPTM()` allows to visualise and compare the matches
+with different modifications.
+For instance, there is a better match when carbamidomethylation of cysteines 
+is applied (as above) compared to no modifications at all.
+
+```{r}
+plotSpectraPTM(sp1158[2], 
+               fixed_modifications = NULL,
+               variable_modifications = NULL,
+               main = "Scan 1158 without modifications")
+```
+
+As glycine has the same mass as carbamidomethylation, the b7 and b8 ions are 
+overlapping in both spectra).
+
+Both plots can be created at once using the `variable_modifications` parameter.
+
+```{r, fig.width = 8, fig.height = 8, out.width="1000px"}
+plotSpectraPTM(sp1158[2], 
+               fixed_modifications = NULL,
+               variable_modifications = c(C = 57.02146),
+               deltaMz = FALSE)
+```
+
+
+For more details on what `plotSpectraPTM()` can do, run `?plotSpectraPTM`.
 
 # Session information
 
