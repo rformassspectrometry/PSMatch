@@ -1,8 +1,12 @@
 # PSMatch 1.13
 
-## PSMatch 1.13.2
+## PSMatch 1.13.3
 
 - Nothing yet.
+
+## PSMatch 1.13.2
+
+- Update Fragments vignette.
 
 ## PSMatch 1.13.1
 
