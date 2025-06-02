@@ -46,9 +46,8 @@ are used by default.}
 \item{ylim}{\code{numeric(2)} defining the y-axis limits. The range of intensity
 values are used by default.}
 
-\item{main}{\code{character(1)} with the title for the each spectrum. By default
-\code{NULL}, if variable modifications are used, the same title is applied on all
-plots originating from a common spectrum.}
+\item{main}{\code{character(1)} with the title for the plot. By default the
+spectrum's MS level and retention time (in seconds) is used.}
 
 \item{col}{Named \code{character(4L)}. Colors for the labels, the character names
 need to be "b", "y", "acxz" and "other", respectively for the b-ions,
@@ -66,7 +65,7 @@ parameter \code{srt} in \code{text()}.}
 
 \item{labelOffset}{see parameter \code{offset} in \code{text()}.}
 
-\item{asp}{for \code{plotSpectra()}, the target ratio (columns / rows) when
+\item{asp}{for \code{plotSpectraPTM()}, the target ratio (columns / rows) when
 plotting mutliple spectra (e.g. for 20 spectra use asp = 4/5 for 4
 columns and 5 rows or asp = 5/4 for 5 columns and 4 rows; see
 \code{grDevices::n2mfrow()} for details).  If \code{deltaMz} is \code{TRUE}, \code{asp} is
@@ -128,7 +127,7 @@ sp$intensity <- list(c(83143.03, 65473.8, 192735.53, 3649178.5,
 sp <- Spectra(sp)
 
 ## Annotate the spectum with the fragment labels
-plotSpectraPTM(sp, main = "An example of a annotated plot")
+plotSpectraPTM(sp, main = "An example of an annotated plot")
 
 ## Annotate the spectrum without the delta m/z plot
 plotSpectraPTM(sp, deltaMz = FALSE)
@@ -140,7 +139,7 @@ plotSpectraPTM(sp, type = c("a", "b", "x", "y"))
 plotSpectraPTM(sp, variable_modifications = c(R = 49.469))
 
 ## Annotate multiple spectra at a time
-plotSpectraPTM(c(sp,sp), variable_modifications = c(R = 490469))
+plotSpectraPTM(c(sp,sp), variable_modifications = c(R = 49.469))
 
 ## Color the peaks with different colors
 plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))

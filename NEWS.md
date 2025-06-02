@@ -1,9 +1,23 @@
+# PSMatch 1.13
+
+## PSMatch 1.13.2
+
+- Nothing yet.
+
+## PSMatch 1.13.1
+
+- Refactor and improve `plotSpectraPTM()`.
+
+## PSMatch 1.13.0
+
+- New Bioconductor devel.
+
 # PSMatch 1.11
 
 ## PSMatch 1.11.5
 
 - Correct `plotSpectraPTM` annotations.
-  
+
 ## PSMatch 1.11.4
 
 - Added `plotSpectraPTM`: a plotting function to visualise
