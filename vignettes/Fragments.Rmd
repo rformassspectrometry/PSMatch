@@ -130,7 +130,8 @@ cysteine set as default fixed modification.
 
 ```{r}
 dataOrigin(sp1158)[2] <- "TMT_Erwinia" ## Reduces the mzspec text
-plotSpectraPTM(sp1158[2])
+plotSpectraPTM(sp1158[2],
+               main = "Scan 1158 with carbamidomethylation")
 ```
 
 More importantly, `plotSpectraPTM()` allows the comparison of used modifications.
@@ -140,7 +141,8 @@ is applied (as above) compared to no modifications at all.
 ```{r}
 plotSpectraPTM(sp1158[2], 
                fixed_modifications = NULL,
-               variable_modifications = NULL)
+               variable_modifications = NULL,
+               main = "Scan 1158 without modifications")
 ```
 
 Interestingly, as glycine has the same mass as carbamidomethylation, 
@@ -148,7 +150,7 @@ the b7 and b8 ions are overlapping in both spectra).
 
 Both plots can be created at once using the `variable_modifications` parameter.
 
-```{r}
+```{r, fig.width = 8, fig.height = 8, out.width="1000px"}
 plotSpectraPTM(sp1158[2], 
                fixed_modifications = NULL,
                variable_modifications = c(C = 57.02146),
