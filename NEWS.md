@@ -1,8 +1,12 @@
 # PSMatch 1.13
 
+## PSMatch 1.13.3
+
+- Improve `labelFragments()`.
+
 ## PSMatch 1.13.2
 
-- Update Fragments vignette.
+- Update Fragments vignette. 
 
 ## PSMatch 1.13.1
 
