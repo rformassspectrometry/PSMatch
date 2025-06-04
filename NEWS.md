@@ -2,6 +2,7 @@
 
 ## PSMatch 1.13.2
 
+- Add Selenocysteine and Pyrrolysine to `getAminoAcids()`.
 - Update Fragments vignette.
 
 ## PSMatch 1.13.1
