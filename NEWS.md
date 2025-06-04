@@ -5,6 +5,7 @@
 - Update Fragments vignette. 
 - Improve `labelFragments()`runtime 
 (see [issue #25](https://github.com/rformassspectrometry/PSMatch/issues/25)).
+- Add Selenocysteine and Pyrrolysine to `getAminoAcids()`.
 
 ## PSMatch 1.13.1
 
