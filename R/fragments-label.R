@@ -90,11 +90,12 @@ labelFragments <- function(x, tolerance = 0, ppm = 20,
     what <- match.arg(what)
     super_labels <- vector("list", length = length(x))
     k <- integer()
+    v <- peaksData(x)
 
     for (j in seq_along(x)) {
         stopifnot("sequence" %in% Spectra::spectraVariables(x[j]))
         y <- Spectra::spectraData(x[j])[["sequence"]]
-        x_data <- Spectra::peaksData(x[j])[[1L]]
+        x_data <- v[[j]]
         y_data <- calculateFragments(y, verbose = FALSE, ...)
 
         y_data <- split(y_data, y_data$peptide)
