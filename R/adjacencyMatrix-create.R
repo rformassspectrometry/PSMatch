@@ -12,15 +12,14 @@
 ##' adjacency matrix from a `character` or an instance of class
 ##' [PSM()].
 ##'
-##' The character is formatted as `x <- c("ProtA", "ProtB",
-##' "ProtA;ProtB", ...)`, as commonly encoutered in proteomics data
-##' spreadsheets. It defines that the first peptide is mapped to
-##' protein "ProtA", the second one to protein "ProtB", the third one
-##' to "ProtA" and "ProtB", and so on. The resulting matrix contain
-##' `length(x)` rows an as many columns as there are unique protein
-##' idenifiers in `x`. The columns are named after the protein
-##' idenifiers and the peptide/protein vector namesa are used to name
-##' to matrix rows (even if these aren't unique).
+##' The character is formatted as `x <- c("ProtA", "ProtB", "ProtA;ProtB",
+##' ...)`, as commonly encoutered in proteomics data spreadsheets. It defines
+##' that the first peptide is mapped to protein "ProtA", the second one to
+##' protein "ProtB", the third one to "ProtA" and "ProtB", and so on. The
+##' resulting matrix contains `length(x)` rows and as many columns as there are
+##' unique protein idenifiers in `x`. The columns are named after the protein
+##' idenifiers and the peptide/protein vector namesa are used to name to matrix
+##' rows (even if these aren't unique).
 ##'
 ##' The [makePeptideProteinVector()] function does the opposite
 ##' operation, taking an adjacency matrix as input and retruning a
