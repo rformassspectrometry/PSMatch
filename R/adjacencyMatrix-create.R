@@ -8,9 +8,8 @@
 ##'
 ##' @details
 ##'
-##' The [makeAdjacencyMatrix()] function creates a peptide-by-protein
-##' adjacency matrix from a `character` or an instance of class
-##' [PSM()].
+##' The [makeAdjacencyMatrix()] function creates a peptide-by-protein adjacency
+##' matrix from a `character` or an instance of class [PSM()].
 ##'
 ##' The character is formatted as `x <- c("ProtA", "ProtB", "ProtA;ProtB",
 ##' ...)`, as commonly encoutered in proteomics data spreadsheets. It defines
@@ -18,53 +17,47 @@
 ##' protein "ProtB", the third one to "ProtA" and "ProtB", and so on. The
 ##' resulting matrix contains `length(x)` rows and as many columns as there are
 ##' unique protein idenifiers in `x`. The columns are named after the protein
-##' idenifiers and the peptide/protein vector namesa are used to name to matrix
+##' identifiers and the peptide/protein vector names are used to name to matrix
 ##' rows (even if these aren't unique).
 ##'
-##' The [makePeptideProteinVector()] function does the opposite
-##' operation, taking an adjacency matrix as input and retruning a
-##' peptide/protein vector. The matrix colnames are used to populate
-##' the vector and the matrix rownames are used to name the vector
-##' elements.
+##' The [makePeptideProteinVector()] function does the opposite operation,
+##' taking an adjacency matrix as input and retruning a peptide/protein
+##' vector. The matrix colnames are used to populate the vector and the matrix
+##' rownames are used to name the vector elements.
 ##'
-##' Note that when creating an adjacency matrix from a PSM object, the
-##' matrix is not necessarily binary, as multiple PSMs can match the
-##' same peptide (sequence), such as for example precursors with
-##' different charge states. A binary matrix can either be generated
-##' with the `binary` argument (setting all non-0 values to 1) or by
-##' reducing the PSM object accordingly (see example below).
+##' Note that when creating an adjacency matrix from a PSM object, the matrix is
+##' not necessarily binary, as multiple PSMs can match the same peptide
+##' (sequence), such as for example precursors with different charge states. A
+##' binary matrix can either be generated with the `binary` argument (setting
+##' all non-0 values to 1) or by reducing the PSM object accordingly (see
+##' example below).
 ##'
 ##' It is also possible to generate adjacency matrices populated with
-##' identification scores or probabilites by setting the "score" PSM
-##' variable upon construction of the PSM object (see [PSM()] for
-##' details). In case multiple PSMs occur, their respective scores get
-##' summed.
+##' identification scores or probabilites by setting the "score" PSM variable
+##' upon construction of the PSM object (see [PSM()] for details). In case
+##' multiple PSMs occur, their respective scores get summed.
 ##'
-##' The `plotAdjacencyMatrix()` function is useful to visualise small
-##' adjacency matrices, such as those representing protein groups
-##' modelled as connected components, as described and illustrated in
-##' [ConnectedComponents()]. The function generates a graph modelling
-##' the relation between proteins (represented as squares) and
-##' peptides (represented as circes), which can further be coloured
-##' (see the `protColors` and `pepColors` arguments). The function
-##' invisibly returns the graph `igraph` object for additional tuning
-##' and/or interactive visualisation using, for example
-##' [igraph::tkplot()].
+##' The `plotAdjacencyMatrix()` function is useful to visualise small adjacency
+##' matrices, such as those representing protein groups modelled as connected
+##' components, as described and illustrated in [ConnectedComponents()]. The
+##' function generates a graph modelling the relation between proteins
+##' (represented as squares) and peptides (represented as circes), which can
+##' further be coloured (see the `protColors` and `pepColors` arguments). The
+##' function invisibly returns the graph `igraph` object for additional tuning
+##' and/or interactive visualisation using, for example [igraph::tkplot()].
 ##'
-##' There exists some important differences in the creation of an
-##' adjacency matrix from a PSM object or a vector, other than the
-##' input variable itself:
+##' There exists some important differences in the creation of an adjacency
+##' matrix from a PSM object or a vector, other than the input variable itself:
 ##'
-##' - In a `PSM` object, each row (PSM) refers to an *individual*
-##'   proteins; rows/PSMs never refer to a protein group. There is
-##'   thus no need for a `split` argument, which is used exclusively
-##'   when creating a matrix from a character.
+##' - In a `PSM` object, each row (PSM) refers to an *individual* proteins;
+##'   rows/PSMs never refer to a protein group. There is thus no need for a
+##'   `split` argument, which is used exclusively when creating a matrix from a
+##'   character.
 ##'
-##' - Conversely, when using protein vectors, such as those
-##'   illustrated in the example below or retrieved from tabular
-##'   quantitative proteomics data, each row/peptide is expected to
-##'   refer to protein groups and individual proteins (groups of size
-##'   1). These have to be split accordingly.
+##' - Conversely, when using protein vectors, such as those illustrated in the
+##'   example below or retrieved from tabular quantitative proteomics data, each
+##'   row/peptide is expected to refer to protein groups or individual proteins
+##'   (groups of size 1). These have to be split accordingly.
 ##'
 ##' @param x Either an instance of class `PSM` or a `character`. See
 ##'     example below for details.
@@ -243,7 +236,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
                                 score = psmVariables(x)["score"],
                                 binary = FALSE) {
     if (inherits(x, "PSM")) {
-        adj <- .makeSparseAdjacencyMatrixFromPSM(x, peptide, protein, score)
+        adj <- .makeSparseAdjacencyMatrixFromPSM(x, peptide, protein, score, split)
     } else if (is.character(x)) {
         adj <- .makeSparseAdjacencyMatrixFromChar(x, split)
     } else stop("'x' must be a character or a PSM object.")
