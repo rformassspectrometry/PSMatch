@@ -236,7 +236,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
                                 score = psmVariables(x)["score"],
                                 binary = FALSE) {
     if (inherits(x, "PSM")) {
-        adj <- .makeSparseAdjacencyMatrixFromPSM(x, peptide, protein, score, split)
+        adj <- .makeSparseAdjacencyMatrixFromPSM(x, peptide, protein, score)
     } else if (is.character(x)) {
         adj <- .makeSparseAdjacencyMatrixFromChar(x, split)
     } else stop("'x' must be a character or a PSM object.")
