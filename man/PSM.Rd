@@ -36,7 +36,7 @@ psmVariables(object, which = "all")
 
 reducePSMs(object, k = object[[psmVariables(object)["spectrum"]]])
 
-\S4method{adjacencyMatrix}{PSM}(object)
+\S4method{adjacencyMatrix}{PSM}(object, ...)
 }
 \arguments{
 \item{x}{\code{character()} of mzid file names, an instance of class
@@ -263,7 +263,7 @@ psm
 psmVariables(psm)
 
 ## no PSM variables set
-try(adjacencyMatrix(psm))
+try(adjacencyMatrix(psm, split = ";"))
 
 ## set PSM variables
 psm <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
@@ -271,5 +271,5 @@ psm <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
 psm
 psmVariables(psm)
 
-adjacencyMatrix(psm)
+adjacencyMatrix(psm, split = ";")
 }

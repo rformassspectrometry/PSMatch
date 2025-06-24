@@ -15,13 +15,13 @@
 ##' ...)`, as commonly encoutered in proteomics data spreadsheets. It defines
 ##' that the first peptide is mapped to protein "ProtA", the second one to
 ##' protein "ProtB", the third one to "ProtA" and "ProtB", and so on. The
-##' resulting matrix contains `length(x)` rows and as many columns as there are
-##' unique protein idenifiers in `x`. The columns are named after the protein
-##' identifiers and the peptide/protein vector names are used to name to matrix
-##' rows (even if these aren't unique).
+##' resulting matrix contains as many rows as there are unique peptides and as
+##' many columns as there are unique protein identifiers in `x`. The columns 
+##' are named after the protein identifiers and the peptide/protein vector 
+##' names are used to name the matrix rows (retaining only the unique names).
 ##'
 ##' The [makePeptideProteinVector()] function does the opposite operation,
-##' taking an adjacency matrix as input and retruning a peptide/protein
+##' taking an adjacency matrix as input and returning a peptide/protein
 ##' vector. The matrix colnames are used to populate the vector and the matrix
 ##' rownames are used to name the vector elements.
 ##'
@@ -45,19 +45,6 @@
 ##' further be coloured (see the `protColors` and `pepColors` arguments). The
 ##' function invisibly returns the graph `igraph` object for additional tuning
 ##' and/or interactive visualisation using, for example [igraph::tkplot()].
-##'
-##' There exists some important differences in the creation of an adjacency
-##' matrix from a PSM object or a vector, other than the input variable itself:
-##'
-##' - In a `PSM` object, each row (PSM) refers to an *individual* proteins;
-##'   rows/PSMs never refer to a protein group. There is thus no need for a
-##'   `split` argument, which is used exclusively when creating a matrix from a
-##'   character.
-##'
-##' - Conversely, when using protein vectors, such as those illustrated in the
-##'   example below or retrieved from tabular quantitative proteomics data, each
-##'   row/peptide is expected to refer to protein groups or individual proteins
-##'   (groups of size 1). These have to be split accordingly.
 ##'
 ##' @param x Either an instance of class `PSM` or a `character`. See
 ##'     example below for details.
@@ -236,7 +223,8 @@ makeAdjacencyMatrix <- function(x, split = ";",
                                 score = psmVariables(x)["score"],
                                 binary = FALSE) {
     if (inherits(x, "PSM")) {
-        adj <- .makeSparseAdjacencyMatrixFromPSM(x, peptide, protein, score)
+        adj <- .makeSparseAdjacencyMatrixFromPSM(x, peptide, protein, 
+                                                 score, split)
     } else if (is.character(x)) {
         adj <- .makeSparseAdjacencyMatrixFromChar(x, split)
     } else stop("'x' must be a character or a PSM object.")
@@ -259,20 +247,28 @@ makeAdjacencyMatrix <- function(x, split = ";",
     sparseMatrix(i, j, x = 1, dimnames = list(row_names, col_names))
 }
 
-.makeSparseAdjacencyMatrixFromPSM <- function(x, peptide, protein, score) {
-    if (is.na(peptide) | is.na(protein))
+.makeSparseAdjacencyMatrixFromPSM <- function(x, 
+                                              peptide, 
+                                              protein, 
+                                              score, 
+                                              split = ";") {
+    if (is.na(peptide) | is.na(protein)) 
         stop("Please define the 'protein' and 'peptide' PSM variables.")
-    if (!protein %in% names(x) | !peptide %in% names(x))
+    if (!protein %in% names(x) | !peptide %in% names(x)) 
         stop("PSM variables 'protein' and 'peptide' must be defined.")
+    if (is.null(split)) 
+        col_list <- x[[protein]]
+    else col_list <- strsplit(x[[protein]], split)
+    col_list_names <- x[[peptide]]
     row_names <- unique(x[[peptide]])
-    col_names <- unique(x[[protein]])
-    i <- match(x[[peptide]], row_names)
-    j <- match(x[[protein]], col_names)
+    col_names <- unique(unlist(col_list))
+    i <- rep(col_list_names, lengths(col_list))
+    i <- match(i, row_names)
+    j <- unname(unlist(lapply(col_list, match, col_names)))
     adj_values <- 1
-     if (!is.na(score))
-        adj_values <- x[[score]]
-    sparseMatrix(i, j, x = adj_values,
-                 dimnames = list(row_names, col_names))
+    if (!is.na(score)) 
+        adj_values <- rep(x[[score]], lengths(col_list))
+    sparseMatrix(i, j, x = adj_values, dimnames = list(row_names, col_names))
 }
 
 

@@ -173,7 +173,7 @@
 ##' psmVariables(psm)
 ##'
 ##' ## no PSM variables set
-##' try(adjacencyMatrix(psm))
+##' try(adjacencyMatrix(psm, split = ";"))
 ##'
 ##' ## set PSM variables
 ##' psm <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
@@ -181,7 +181,7 @@
 ##' psm
 ##' psmVariables(psm)
 ##'
-##' adjacencyMatrix(psm)
+##' adjacencyMatrix(psm, split = ";")
 NULL
 
 

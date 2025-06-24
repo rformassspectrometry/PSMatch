@@ -5,13 +5,15 @@
 \alias{describePeptides}
 \title{Describe protein and peptide compositions}
 \usage{
-describeProteins(object)
+describeProteins(object, ...)
 
-describePeptides(object)
+describePeptides(object, ...)
 }
 \arguments{
 \item{object}{Either an instance of class \code{Matrix}, \code{\link[=PSM]{PSM()}} or
 \code{\link[=ConnectedComponents]{ConnectedComponents()}}.}
+
+\item{...}{Additional arguments passed to \code{\link[=makeAdjacencyMatrix]{makeAdjacencyMatrix()}}.}
 }
 \value{
 \code{describePeptides()} invisibly return the table of unique
