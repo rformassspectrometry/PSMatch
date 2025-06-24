@@ -2,6 +2,7 @@
 ##'
 ##' @importFrom ProtGenerics adjacencyMatrix
 ##'
+##' @param ... Additional arguments passed to [makeAdjacencyMatrix()]. 
 ##' @rdname PSM
 setMethod("adjacencyMatrix", "PSM",
           function(object, ...) {
