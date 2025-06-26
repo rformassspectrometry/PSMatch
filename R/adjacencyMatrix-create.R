@@ -12,13 +12,13 @@
 ##' matrix from a `character` or an instance of class [PSM()].
 ##'
 ##' The character is formatted as `x <- c("ProtA", "ProtB", "ProtA;ProtB",
-##' ...)`, as commonly encoutered in proteomics data spreadsheets. It defines
+##' ...)`, as commonly encountered in proteomics data spreadsheets. It defines
 ##' that the first peptide is mapped to protein "ProtA", the second one to
 ##' protein "ProtB", the third one to "ProtA" and "ProtB", and so on. The
 ##' resulting matrix contains as many rows as there are unique peptides and as
 ##' many columns as there are unique protein identifiers in `x`. The columns 
 ##' are named after the protein identifiers and the peptide/protein vector 
-##' names are used to name the matrix rows (retaining only the unique names).
+##' names are used to name the matrix rows (retaining only the unique names). 
 ##'
 ##' The [makePeptideProteinVector()] function does the opposite operation,
 ##' taking an adjacency matrix as input and returning a peptide/protein
@@ -45,6 +45,10 @@
 ##' further be coloured (see the `protColors` and `pepColors` arguments). The
 ##' function invisibly returns the graph `igraph` object for additional tuning
 ##' and/or interactive visualisation using, for example [igraph::tkplot()].
+##' 
+##' Such as illustrated in the examples below, each row/peptide is 
+##' expected to refer to protein groups or individual proteins (groups of 
+##' size 1). These have to be split accordingly.
 ##'
 ##' @param x Either an instance of class `PSM` or a `character`. See
 ##'     example below for details.

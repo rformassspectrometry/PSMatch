@@ -102,7 +102,7 @@ described below convert between these two format.
 The \code{\link[=makeAdjacencyMatrix]{makeAdjacencyMatrix()}} function creates a peptide-by-protein adjacency
 matrix from a \code{character} or an instance of class \code{\link[=PSM]{PSM()}}.
 
-The character is formatted as \code{x <- c("ProtA", "ProtB", "ProtA;ProtB", ...)}, as commonly encoutered in proteomics data spreadsheets. It defines
+The character is formatted as \code{x <- c("ProtA", "ProtB", "ProtA;ProtB", ...)}, as commonly encountered in proteomics data spreadsheets. It defines
 that the first peptide is mapped to protein "ProtA", the second one to
 protein "ProtB", the third one to "ProtA" and "ProtB", and so on. The
 resulting matrix contains as many rows as there are unique peptides and as
@@ -135,6 +135,10 @@ function generates a graph modelling the relation between proteins
 further be coloured (see the \code{protColors} and \code{pepColors} arguments). The
 function invisibly returns the graph \code{igraph} object for additional tuning
 and/or interactive visualisation using, for example \code{\link[igraph:tkplot]{igraph::tkplot()}}.
+
+Such as illustrated in the examples below, each row/peptide is
+expected to refer to protein groups or individual proteins (groups of
+size 1). These have to be split accordingly.
 }
 \examples{
 
