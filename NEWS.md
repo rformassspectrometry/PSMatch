@@ -4,6 +4,9 @@
 
 - Add possibility to split protein groups in PSM data with `makeAdjacencyMatrix`
 (see [issue #30](https://github.com/rformassspectrometry/PSMatch/issues/30))
+- Removed `showDetails()` from `setMethod("show", "PSM")` as discussed in 
+[issue #30](https://github.com/rformassspectrometry/PSMatch/issues/30)
+
 - Update Fragments vignette. 
 - Improve `labelFragments()`runtime 
 (see [issue #25](https://github.com/rformassspectrometry/PSMatch/issues/25)).

@@ -78,7 +78,7 @@ describeProteins <- function(object, ...) {
     if (is(object, "PSM")) {
         adj <- makeAdjacencyMatrix(object, ...)
     } else if (is(object, "ConnectedComponents")) {
-        adj <- adjacencyMatrix(object, ...)
+        adj <- adjacencyMatrix(object)
     } else if (is(object, "Matrix")) {
         adj <- object
     } else stop("Object must be of class 'Matrix', 'PSM' or 'ConnectedComponents'")
@@ -109,7 +109,7 @@ describePeptides <- function(object, ...) {
     if (is(object, "PSM")) {
         adj <- makeAdjacencyMatrix(object, ...)
     } else if (is(object, "ConnectedComponents")) {
-        adj <- adjacencyMatrix(object, ...)
+        adj <- adjacencyMatrix(object)
     } else if (is(object, "Matrix")) {
         adj <- object
     } else stop("Object must be of class 'Matrix', 'PSM' or 'ConnectedComponents'")

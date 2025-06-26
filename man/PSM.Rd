@@ -36,7 +36,7 @@ psmVariables(object, which = "all")
 
 reducePSMs(object, k = object[[psmVariables(object)["spectrum"]]])
 
-\S4method{adjacencyMatrix}{PSM}(object, ...)
+\S4method{adjacencyMatrix}{PSM}(object)
 }
 \arguments{
 \item{x}{\code{character()} of mzid file names, an instance of class
@@ -90,8 +90,6 @@ returned. See \code{\link[=PSM]{PSM()}} for valid PSM variables.}
 defines the primary key used to reduce \code{x}. This typically
 corresponds to the spectrum identifier. The defauls is to use
 the spectrum PSM variable.}
-
-\item{...}{Additional arguments passed to \code{\link[=makeAdjacencyMatrix]{makeAdjacencyMatrix()}}.}
 }
 \value{
 \code{PSM()} returns a \code{PSM} object.

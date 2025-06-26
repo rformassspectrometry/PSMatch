@@ -159,7 +159,9 @@ identical(prots, vec)
 
 ## ----------------------------
 ## PSM object from a data.frame
+
 ## ----------------------------
+## Case 1: Duplicate identifications
 
 psmdf <- data.frame(psm = paste0("psm", 1:10),
                     peptide = paste0("pep", c(1, 1, 2, 2, 3, 4, 6, 7, 8, 8)),
@@ -176,6 +178,17 @@ makeAdjacencyMatrix(rpsm)
 
 ## Or set binary to TRUE
 makeAdjacencyMatrix(psm, binary = TRUE)
+
+## ----------------------------
+## Case 2: Protein groups are separated by a semicolon
+psmdf <- data.frame(psm = paste0("psm", 1:5),
+                    peptide = paste0("pep", c(1, 2, 3, 4, 5)),
+                    protein = c("ProtA", "ProtB;ProtD", "ProtA;ProtC", 
+                                "ProtC", "ProtA;ProtC;ProtD"))
+psmdf
+psm <- PSM(psmdf, peptide = "peptide", protein = "protein")
+psm
+makeAdjacencyMatrix(psm, split = ";")
 
 ## ----------------------------
 ## PSM object from an mzid file
@@ -224,7 +237,7 @@ psm <- PSM(psmdf, spectrum = "spectrum", peptide = "sequence",
 ## binary matrix
 makeAdjacencyMatrix(psm)
 
-## Case 2: sp1 and sp11 match the same peptide (NKAVRTYHEQ)
+## Case 2: sp1 and sp11 match the same peptide (NKAVRTYHEQ) as different PSMs
 psmdf2 <- rbind(psmdf,
                 data.frame(spectrum = "sp11",
                            sequence = psmdf$sequence[1],
@@ -242,30 +255,42 @@ makeAdjacencyMatrix(psm2)
 ## Force a binary matrix
 makeAdjacencyMatrix(psm2, binary = TRUE)
 
+## Case 3: Peptide (NKAVRTYHEQ) stems from multiple proteins (ProtB and 
+## ProtG). They are separated by a semicolon.
+psmdf3 <- psmdf
+psmdf3[psmdf3$sequence == "NKAVRTYHEQ","protein"] <- "ProtB;ProtG"
+psmdf3
+psm3 <- PSM(psmdf3, spectrum = "spectrum", peptide = "sequence",
+            protein = "protein", decoy = "decoy", rank = "rank")
+
+## Now ProtB & ProtG count 2 PSMs each: NKAVRTYHEQ and IYNHSQGFCA & 
+## EDHINCTQWP respectively
+makeAdjacencyMatrix(psm3, split = ";")
+
 ## --------------------------------
-## Case 3: set the score PSM values
+## Case 4: set the score PSM values
 psmVariables(psm) ## no score defined
-psm3 <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
+psm4 <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
             protein = "protein", decoy = "decoy", rank = "rank",
             score = "score")
-psmVariables(psm3) ## score defined
+psmVariables(psm4) ## score defined
 
 ## adjacency matrix with scores
-makeAdjacencyMatrix(psm3)
+makeAdjacencyMatrix(psm4)
 
 ## Force a binary matrix
-makeAdjacencyMatrix(psm3, binary = TRUE)
+makeAdjacencyMatrix(psm4, binary = TRUE)
 
 ## ---------------------------------
-## Case 4: scores with multiple PSMs
+## Case 5: scores with multiple PSMs
 
-psm4 <- PSM(psm2, spectrum = "spectrum", peptide = "sequence",
+psm5 <- PSM(psm2, spectrum = "spectrum", peptide = "sequence",
             protein = "protein", decoy = "decoy", rank = "rank",
             score = "score")
 
 ## Now NKAVRTYHEQ/ProtB has a summed score of 0.093 computed as
 ## 0.082 (from sp1) + 0.011 (from sp11)
-makeAdjacencyMatrix(psm4)
+makeAdjacencyMatrix(psm5)
 }
 \author{
 Laurent Gatto

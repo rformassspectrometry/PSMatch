@@ -224,8 +224,6 @@ setMethod("show", "PSM",
                   cl <- paste("Reduced", cl)
               cat(cl, "with", nrow(object), "rows and",
                   ncol(object), "columns.\n")
-              if (!any(is.na(psmVariables(object))) & !isTRUE(reduced(object)) & nrow(object) > 0)
-                  showDetails(object)
               if (ncol(object) <= 4) {
                   cat("names(", ncol(object), "): ",
                       paste(names(object), collapse = " "), "\n",

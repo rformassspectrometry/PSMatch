@@ -2,10 +2,9 @@
 ##'
 ##' @importFrom ProtGenerics adjacencyMatrix
 ##'
-##' @param ... Additional arguments passed to [makeAdjacencyMatrix()]. 
 ##' @rdname PSM
 setMethod("adjacencyMatrix", "PSM",
-          function(object, ...) {
+          function(object) {
               if (is.na(psmVariables(object)[["protein"]]) |
                   is.na(psmVariables(object)[["peptide"]]))
                   stop("Please define the 'protein' and 'peptide' PSM variables.")
@@ -17,7 +16,7 @@ setMethod("adjacencyMatrix", "PSM",
               ## NB: Note that we ignore any score here and always
               ## return a binary matrix. Use makeAdjacencyMatrix() for
               ## these features.
-              makeAdjacencyMatrix(vec, binary = TRUE, ...)
+              makeAdjacencyMatrix(vec, binary = TRUE)
           })
 
 
