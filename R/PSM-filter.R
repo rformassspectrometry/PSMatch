@@ -169,6 +169,6 @@ filterPsmFdr <- function(x,
     x <- x[x[, fdr] < FDR, ]
     n1 <- nrow(x)
     if (verbose)
-        message("Removed ", n0 - n1, " PSMs with FDR < ", fdr, ".")
+        message("Removed ", n0 - n1, " PSMs with FDR > ", FDR, ".") 
     x
 }
