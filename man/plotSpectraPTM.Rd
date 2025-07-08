@@ -21,6 +21,7 @@ plotSpectraPTM(
   labelOffset = 0.5,
   asp = 1,
   minorTicks = TRUE,
+  USI = TRUE,
   ...
 )
 }
@@ -73,6 +74,9 @@ ignored.}
 
 \item{minorTicks}{\code{logical(1L)}. If \code{TRUE}, minor ticks are added to the
 plots.  Default is set to \code{TRUE}.}
+
+\item{USI}{\code{logical(1L)}. If \code{TRUE}, the universal spectrum identifier is
+displayed.}
 
 \item{...}{additional parameters to be passed to the \code{labelFragments()}
 function.}
