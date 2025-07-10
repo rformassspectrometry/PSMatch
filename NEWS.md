@@ -2,6 +2,7 @@
 
 ## PSMatch 1.13.2
 
+- Add `USI` parameter to `plotSpectraPTM`.
 - Correct `filterPsmFdr` output message
 - Update Fragments vignette. 
 - Improve `labelFragments()`runtime 

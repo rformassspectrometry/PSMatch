@@ -61,6 +61,9 @@
 ##'
 ##' @param minorTicks `logical(1L)`. If `TRUE`, minor ticks are added to the
 ##'     plots.  Default is set to `TRUE`.
+##' 
+##' @param USI `logical(1L)`. If `TRUE`, the universal spectrum identifier is
+##'     displayed.
 ##'
 ##' @param ... additional parameters to be passed to the `labelFragments()`
 ##'     function.
@@ -142,7 +145,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                                    other = "grey40"),
                            labelCex = 1, labelSrt = 0,
                            labelAdj = NULL, labelPos = 3, labelOffset = 0.5,
-                           asp = 1, minorTicks = TRUE,
+                           asp = 1, minorTicks = TRUE, USI = TRUE,
                            ...) {
     if (!("sequence" %in% Spectra::spectraVariables(x))) {
         stop("Missing 'sequence' in Spectra::spectraVariables(x)")
@@ -177,7 +180,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                                       labelOffset = labelOffset,
                                       minorTicks = minorTicks,
                                       deltaMzData = deltaMzData[[i]],
-                                      ppm = ppm)
+                                      ppm = ppm, USI = USI)
     }
 }
 
@@ -199,17 +202,18 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
 ##'
 ##' @noRd
 .plot_single_spectrum_PTM <- function(x, xlab = "m/z", ylab = "intensity",
-                                          xlim = numeric(),
-                                          ylim = numeric(), main = character(),
-                                          col = c(y = "darkred",
-                                                  b = "darkblue",
-                                                  acxy = "darkgreen",
-                                                  other = "grey40"),
-                                          labels = list(),
-                                          labelCol = col, labelCex = 1, labelSrt = 0,
-                                          labelAdj = NULL, labelPos = 3,
-                                          labelOffset = 0.5, minorTicks = TRUE,
-                                          ppm = 20, deltaMzData = NULL) {
+                                      xlim = numeric(),
+                                      ylim = numeric(), main = character(),
+                                      col = c(y = "darkred",
+                                              b = "darkblue",
+                                              acxy = "darkgreen",
+                                              other = "grey40"),
+                                      labels = list(),
+                                      labelCol = col, labelCex = 1, labelSrt = 0,
+                                      labelAdj = NULL, labelPos = 3,
+                                      labelOffset = 0.5, minorTicks = TRUE,
+                                      ppm = 20, deltaMzData = NULL,
+                                      USI = TRUE) {
     v <- peaksData(x)[[1L]]
     mzs <- v[, "mz"]
     ints <- v[, "intensity"]
@@ -302,7 +306,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
         "/peptide: ", peptide_sequence
     )
     
-    mtext(subtxt, line = -1, cex = 0.9)
+    if (USI) mtext(subtxt, line = -1, cex = 0.9)
     
     base_peak <- which.max(abs(ints))
     text(mzs[base_peak], ints[base_peak] * 0.60,
