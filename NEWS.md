@@ -2,6 +2,7 @@
 
 ## PSMatch 1.13.2
 
+- Correct `filterPsmFdr` output message
 - Update Fragments vignette. 
 - Improve `labelFragments()`runtime 
 (see [issue #25](https://github.com/rformassspectrometry/PSMatch/issues/25)).
