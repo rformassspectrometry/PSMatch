@@ -6,6 +6,8 @@
 (see [issue #30](https://github.com/rformassspectrometry/PSMatch/issues/30))
 - Removed `showDetails()` from `setMethod("show", "PSM")` as discussed in 
 [issue #30](https://github.com/rformassspectrometry/PSMatch/issues/30)
+- Add `USI` parameter to `plotSpectraPTM`.
+- Correct `filterPsmFdr` output message
 - Update Fragments vignette. 
 - Improve `labelFragments()`runtime 
 (see [issue #25](https://github.com/rformassspectrometry/PSMatch/issues/25)).
