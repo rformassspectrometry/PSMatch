@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.22/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [ctb] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2025-07-10 15:33:31.353461<br><strong>Compiled</strong>: Thu Jul 10 15:47:11 2025</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [ctb] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2025-07-11 16:03:21.180022<br><strong>Compiled</strong>: Fri Jul 11 16:12:43 2025</p>
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
@@ -334,14 +334,14 @@ backend fails.</p></li>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.167   0.002   0.169</span></span></code></pre>
+<span><span class="co">##   0.177   0.002   0.179</span></span></code></pre>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required namespace: mzID</span></span></code></pre>
 <pre><code><span><span class="co">## reading TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid...</span></span></code></pre>
 <pre><code><span><span class="co">##  DONE!</span></span></code></pre>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   5.641   0.050   5.692</span></span></code></pre>
+<span><span class="co">##   5.804   0.048   5.852</span></span></code></pre>
 <p>Other differences in the two parsers include the columns that are
 returned, the way they name them, and, as will shown below the matches
 that are returned. Note for instance (and this will be important later),
@@ -517,7 +517,7 @@ same number of PSMs than with the <code>mzID</code> parser.</p>
 <span><span class="co">## [39] MetaboCoreUtils_1.17.1      foreach_1.5.2              </span></span>
 <span><span class="co">## [41] abind_1.4-8                 tidyselect_1.2.1           </span></span>
 <span><span class="co">## [43] digest_0.6.37               stringi_1.8.7              </span></span>
-<span><span class="co">## [45] purrr_1.0.4                 dplyr_1.1.4                </span></span>
+<span><span class="co">## [45] purrr_1.1.0                 dplyr_1.1.4                </span></span>
 <span><span class="co">## [47] reshape2_1.4.4              bookdown_0.43              </span></span>
 <span><span class="co">## [49] fastmap_1.2.0               grid_4.5.1                 </span></span>
 <span><span class="co">## [51] cli_3.6.5                   SparseArray_1.9.0          </span></span>
