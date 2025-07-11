@@ -44,9 +44,23 @@ test_that("Check makeAjacendyMatrix() fails with wrong input", {
     expect_error(makeAdjacencyMatrix(list()))
 })
 
-test_that("makeAjacendyMatrix() works on PMS data (1)", {
+test_that("makeAjacendyMatrix() works on PSM data (1)", {
+    vec2 <- c(vec, vec[5]) ## Duplicated sequence  
+    psm <- data.frame(peptide = names(vec2), protein = vec2)
+    psm <- PSM(psm, peptide = "peptide", protein = "protein")
+    adj <- makeAdjacencyMatrix(psm)
+    n_pep <- length(unique(psm[[psmVariables(psm)["peptide"]]]))
+    expect_identical(nrow(adj), n_pep)
+    n_prot <- length(unique(unlist(strsplit(psm[[psmVariables(psm)["protein"]]], ";"))))
+    expect_identical(ncol(adj), n_prot)
+    adj2 <- makeAdjacencyMatrix(psm, binary = TRUE)
+    expect_true(all(as.vector(adj2) %in% c(0, 1)))
+    expect_identical(dimnames(adj), dimnames(adj2))
+})
+
+test_that("makeAjacendyMatrix() works on PSM data (2)", {
     f <- msdata::ident(full.names = TRUE, pattern = "TMT")
-    psm <- filterPSMs(PSM(f))
+    psm <- PSM(f)
     adj <- makeAdjacencyMatrix(psm)
     n_pep <- length(unique(psm[[psmVariables(psm)["peptide"]]]))
     expect_identical(nrow(adj), n_pep)
@@ -67,25 +81,11 @@ test_that("makeAjacendyMatrix() works on PMS data (1)", {
     expect_error(adjacencyMatrix(psm))
 })
 
-test_that("makeAjacendyMatrix() works on PMS data (2)", {
-    f <- msdata::ident(full.names = TRUE, pattern = "TMT")
-    psm <- PSM(f)
-    adj <- makeAdjacencyMatrix(psm)
-    n_pep <- length(unique(psm[[psmVariables(psm)["peptide"]]]))
-    expect_identical(nrow(adj), n_pep)
-    n_prot <- length(unique(psm[[psmVariables(psm)["protein"]]]))
-    expect_identical(ncol(adj), n_prot)
-    adj2 <- makeAdjacencyMatrix(psm, binary = TRUE)
-    expect_true(all(as.vector(adj2) %in% c(0, 1)))
-    expect_identical(dimnames(adj), dimnames(adj2))
-})
-
 
 test_that("ajacendyMatrix() accessor works", {
-    psm <-  msdata::ident(full.names = TRUE, pattern = "TMT") |>
-    PSM() |>
-    filterPsmDecoy() |>
-    filterPsmRank()
+    vec2 <- c(vec, vec[5]) ## Duplicated sequence  
+    psm <- data.frame(peptide = names(vec2), protein = vec2) |> 
+        PSM(peptide = "peptide", protein = "protein")
     ## set to binary to get the same result as the adjacencyMatrix,PSM
     ## accessor that created adj1
     cc <- ConnectedComponents(psm, binary = TRUE)
@@ -96,17 +96,11 @@ test_that("ajacendyMatrix() accessor works", {
     expect_true(is(adj2, "sparseMatrix"))
     expect_identical(sum(adj1@x), sum(adj2@x))
     expect_identical(colnames(adj1), colnames(adj2))
-    ## remove duplicated sequences to make adjacency matrices
-    ## identical
-    psm <- psm[!duplicated(psm$sequence), ]
-    cc <- ConnectedComponents(psm)
-    adj1 <- adjacencyMatrix(psm)
-    adj2 <- adjacencyMatrix(cc)
     expect_identical(adj1, adj2)
 })
 
 
-test_that("plotAjacendyMatrix() works", {
+test_that("plotAdjacencyMatrix() works", {
     cc <-  msdata::ident(full.names = TRUE, pattern = "TMT") |>
     PSM() |>
     filterPsmDecoy() |>
@@ -122,7 +116,7 @@ test_that("plotAjacendyMatrix() works", {
     dev.off()
 })
 
-test_that("plotAjacendyMatrix() attributes work", {
+test_that("plotAdjacencyMatrix() attributes work", {
     adj <-  msdata::ident(full.names = TRUE, pattern = "TMT") |>
     PSM() |>
     filterPsmDecoy() |>
@@ -175,7 +169,7 @@ test_that("plotAjacendyMatrix() attributes work", {
 })
 
 
-test_that("ajacendyMatrix() with scores works", {
+test_that("adjacencyMatrix() with scores works", {
     psmdf <- data.frame(spectrum = c("sp1", "sp2", "sp3", "sp4", "sp5"),
                     sequence = c(c("A", LETTERS[1:4])),
                     protein = c("ProtA", "ProtA", "ProtB", "ProtC", "ProtD"),

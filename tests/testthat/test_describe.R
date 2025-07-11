@@ -43,3 +43,4 @@ test_that("describeProteins works", {
     ans <- data.frame(t(ans))
     expect_identical(d1, ans)
 })
+

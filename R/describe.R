@@ -72,9 +72,11 @@ NULL
 ##'
 ##' @param object Either an instance of class `Matrix`, [PSM()] or
 ##'     [ConnectedComponents()].
-describeProteins <- function(object) {
+##'     
+##' @param ... Additional arguments passed to [makeAdjacencyMatrix()].
+describeProteins <- function(object, ...) {
     if (is(object, "PSM")) {
-        adj <- makeAdjacencyMatrix(object)
+        adj <- makeAdjacencyMatrix(object, ...)
     } else if (is(object, "ConnectedComponents")) {
         adj <- adjacencyMatrix(object)
     } else if (is(object, "Matrix")) {
@@ -103,9 +105,9 @@ describeProteins <- function(object) {
 ##' @export
 ##'
 ##' @rdname describeProteins
-describePeptides <- function(object) {
+describePeptides <- function(object, ...) {
     if (is(object, "PSM")) {
-        adj <- makeAdjacencyMatrix(object)
+        adj <- makeAdjacencyMatrix(object, ...)
     } else if (is(object, "ConnectedComponents")) {
         adj <- adjacencyMatrix(object)
     } else if (is(object, "Matrix")) {

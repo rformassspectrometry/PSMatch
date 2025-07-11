@@ -99,63 +99,46 @@ stored: either as a vector or an adjacency matrix. The functions
 described below convert between these two format.
 }
 \details{
-The \code{\link[=makeAdjacencyMatrix]{makeAdjacencyMatrix()}} function creates a peptide-by-protein
-adjacency matrix from a \code{character} or an instance of class
-\code{\link[=PSM]{PSM()}}.
+The \code{\link[=makeAdjacencyMatrix]{makeAdjacencyMatrix()}} function creates a peptide-by-protein adjacency
+matrix from a \code{character} or an instance of class \code{\link[=PSM]{PSM()}}.
 
-The character is formatted as \code{x <- c("ProtA", "ProtB", "ProtA;ProtB", ...)}, as commonly encoutered in proteomics data
-spreadsheets. It defines that the first peptide is mapped to
-protein "ProtA", the second one to protein "ProtB", the third one
-to "ProtA" and "ProtB", and so on. The resulting matrix contain
-\code{length(x)} rows an as many columns as there are unique protein
-idenifiers in \code{x}. The columns are named after the protein
-idenifiers and the peptide/protein vector namesa are used to name
-to matrix rows (even if these aren't unique).
+The character is formatted as \code{x <- c("ProtA", "ProtB", "ProtA;ProtB", ...)}, as commonly encountered in proteomics data spreadsheets. It defines
+that the first peptide is mapped to protein "ProtA", the second one to
+protein "ProtB", the third one to "ProtA" and "ProtB", and so on. The
+resulting matrix contains as many rows as there are unique peptides and as
+many columns as there are unique protein identifiers in \code{x}. The columns
+are named after the protein identifiers and the peptide/protein vector
+names are used to name the matrix rows (retaining only the unique names).
 
-The \code{\link[=makePeptideProteinVector]{makePeptideProteinVector()}} function does the opposite
-operation, taking an adjacency matrix as input and retruning a
-peptide/protein vector. The matrix colnames are used to populate
-the vector and the matrix rownames are used to name the vector
-elements.
+The \code{\link[=makePeptideProteinVector]{makePeptideProteinVector()}} function does the opposite operation,
+taking an adjacency matrix as input and returning a peptide/protein
+vector. The matrix colnames are used to populate the vector and the matrix
+rownames are used to name the vector elements.
 
-Note that when creating an adjacency matrix from a PSM object, the
-matrix is not necessarily binary, as multiple PSMs can match the
-same peptide (sequence), such as for example precursors with
-different charge states. A binary matrix can either be generated
-with the \code{binary} argument (setting all non-0 values to 1) or by
-reducing the PSM object accordingly (see example below).
+Note that when creating an adjacency matrix from a PSM object, the matrix is
+not necessarily binary, as multiple PSMs can match the same peptide
+(sequence), such as for example precursors with different charge states. A
+binary matrix can either be generated with the \code{binary} argument (setting
+all non-0 values to 1) or by reducing the PSM object accordingly (see
+example below).
 
 It is also possible to generate adjacency matrices populated with
-identification scores or probabilites by setting the "score" PSM
-variable upon construction of the PSM object (see \code{\link[=PSM]{PSM()}} for
-details). In case multiple PSMs occur, their respective scores get
-summed.
+identification scores or probabilites by setting the "score" PSM variable
+upon construction of the PSM object (see \code{\link[=PSM]{PSM()}} for details). In case
+multiple PSMs occur, their respective scores get summed.
 
-The \code{plotAdjacencyMatrix()} function is useful to visualise small
-adjacency matrices, such as those representing protein groups
-modelled as connected components, as described and illustrated in
-\code{\link[=ConnectedComponents]{ConnectedComponents()}}. The function generates a graph modelling
-the relation between proteins (represented as squares) and
-peptides (represented as circes), which can further be coloured
-(see the \code{protColors} and \code{pepColors} arguments). The function
-invisibly returns the graph \code{igraph} object for additional tuning
-and/or interactive visualisation using, for example
-\code{\link[igraph:tkplot]{igraph::tkplot()}}.
+The \code{plotAdjacencyMatrix()} function is useful to visualise small adjacency
+matrices, such as those representing protein groups modelled as connected
+components, as described and illustrated in \code{\link[=ConnectedComponents]{ConnectedComponents()}}. The
+function generates a graph modelling the relation between proteins
+(represented as squares) and peptides (represented as circes), which can
+further be coloured (see the \code{protColors} and \code{pepColors} arguments). The
+function invisibly returns the graph \code{igraph} object for additional tuning
+and/or interactive visualisation using, for example \code{\link[igraph:tkplot]{igraph::tkplot()}}.
 
-There exists some important differences in the creation of an
-adjacency matrix from a PSM object or a vector, other than the
-input variable itself:
-\itemize{
-\item In a \code{PSM} object, each row (PSM) refers to an \emph{individual}
-proteins; rows/PSMs never refer to a protein group. There is
-thus no need for a \code{split} argument, which is used exclusively
-when creating a matrix from a character.
-\item Conversely, when using protein vectors, such as those
-illustrated in the example below or retrieved from tabular
-quantitative proteomics data, each row/peptide is expected to
-refer to protein groups and individual proteins (groups of size
-1). These have to be split accordingly.
-}
+Such as illustrated in the examples below, each row/peptide is
+expected to refer to protein groups or individual proteins (groups of
+size 1). These have to be split accordingly.
 }
 \examples{
 
@@ -180,7 +163,9 @@ identical(prots, vec)
 
 ## ----------------------------
 ## PSM object from a data.frame
+
 ## ----------------------------
+## Case 1: Duplicate identifications
 
 psmdf <- data.frame(psm = paste0("psm", 1:10),
                     peptide = paste0("pep", c(1, 1, 2, 2, 3, 4, 6, 7, 8, 8)),
@@ -197,6 +182,17 @@ makeAdjacencyMatrix(rpsm)
 
 ## Or set binary to TRUE
 makeAdjacencyMatrix(psm, binary = TRUE)
+
+## ----------------------------
+## Case 2: Protein groups are separated by a semicolon
+psmdf <- data.frame(psm = paste0("psm", 1:5),
+                    peptide = paste0("pep", c(1, 2, 3, 4, 5)),
+                    protein = c("ProtA", "ProtB;ProtD", "ProtA;ProtC", 
+                                "ProtC", "ProtA;ProtC;ProtD"))
+psmdf
+psm <- PSM(psmdf, peptide = "peptide", protein = "protein")
+psm
+makeAdjacencyMatrix(psm, split = ";")
 
 ## ----------------------------
 ## PSM object from an mzid file
@@ -245,7 +241,7 @@ psm <- PSM(psmdf, spectrum = "spectrum", peptide = "sequence",
 ## binary matrix
 makeAdjacencyMatrix(psm)
 
-## Case 2: sp1 and sp11 match the same peptide (NKAVRTYHEQ)
+## Case 2: sp1 and sp11 match the same peptide (NKAVRTYHEQ) as different PSMs
 psmdf2 <- rbind(psmdf,
                 data.frame(spectrum = "sp11",
                            sequence = psmdf$sequence[1],
@@ -263,30 +259,42 @@ makeAdjacencyMatrix(psm2)
 ## Force a binary matrix
 makeAdjacencyMatrix(psm2, binary = TRUE)
 
+## Case 3: Peptide (NKAVRTYHEQ) stems from multiple proteins (ProtB and 
+## ProtG). They are separated by a semicolon.
+psmdf3 <- psmdf
+psmdf3[psmdf3$sequence == "NKAVRTYHEQ","protein"] <- "ProtB;ProtG"
+psmdf3
+psm3 <- PSM(psmdf3, spectrum = "spectrum", peptide = "sequence",
+            protein = "protein", decoy = "decoy", rank = "rank")
+
+## Now ProtB & ProtG count 2 PSMs each: NKAVRTYHEQ and IYNHSQGFCA & 
+## EDHINCTQWP respectively
+makeAdjacencyMatrix(psm3, split = ";")
+
 ## --------------------------------
-## Case 3: set the score PSM values
+## Case 4: set the score PSM values
 psmVariables(psm) ## no score defined
-psm3 <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
+psm4 <- PSM(psm, spectrum = "spectrum", peptide = "sequence",
             protein = "protein", decoy = "decoy", rank = "rank",
             score = "score")
-psmVariables(psm3) ## score defined
+psmVariables(psm4) ## score defined
 
 ## adjacency matrix with scores
-makeAdjacencyMatrix(psm3)
+makeAdjacencyMatrix(psm4)
 
 ## Force a binary matrix
-makeAdjacencyMatrix(psm3, binary = TRUE)
+makeAdjacencyMatrix(psm4, binary = TRUE)
 
 ## ---------------------------------
-## Case 4: scores with multiple PSMs
+## Case 5: scores with multiple PSMs
 
-psm4 <- PSM(psm2, spectrum = "spectrum", peptide = "sequence",
+psm5 <- PSM(psm2, spectrum = "spectrum", peptide = "sequence",
             protein = "protein", decoy = "decoy", rank = "rank",
             score = "score")
 
 ## Now NKAVRTYHEQ/ProtB has a summed score of 0.093 computed as
 ## 0.082 (from sp1) + 0.011 (from sp11)
-makeAdjacencyMatrix(psm4)
+makeAdjacencyMatrix(psm5)
 }
 \author{
 Laurent Gatto
