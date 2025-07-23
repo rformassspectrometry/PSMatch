@@ -8,8 +8,8 @@ citEntry(entry = "Manual",
            person(given = "Laurent", family = "Gatto")),
          institution = "OSF",
          year = "2025",
-         url = "https://osf.io/preprints/osf/62v9p_v1",
+         doi = "https://doi.org/10.31219/osf.io/62v9p_v1",
          textVersion = paste("G. Deflandre, S. Gibbs and L. Gatto.",
                              "PSMatch: an R/Bioconductor package to explore proteomics identification data.",
-                             "OSF; https://osf.io/preprints/osf/62v9p_v1")
+                             "OSF; doi: https://doi.org/10.31219/osf.io/62v9p_v1")
          )
