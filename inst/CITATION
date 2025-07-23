@@ -1,0 +1,15 @@
+citHeader("To cite the PSMatch package in publications use:")
+
+citEntry(entry = "Manual",  
+         title  = "PSMatch: an R/Bioconductor package to explore proteomics identification data.",
+         author = personList(
+           person(given = "Guillaume", family = "Deflandre"),
+           person(given = "Sebastian", family = "Gibbs"),
+           person(given = "Laurent", family = "Gatto")),
+         institution = "OSF",
+         year = "2025",
+         url = "https://osf.io/preprints/osf/62v9p_v1",
+         textVersion = paste("G. Deflandre, S. Gibbs and L. Gatto.",
+                             "PSMatch: an R/Bioconductor package to explore proteomics identification data.",
+                             "OSF; https://osf.io/preprints/osf/62v9p_v1")
+         )
