@@ -2,6 +2,7 @@
 
 ## PSMatch 1.13.2
 
+- Add CITATION to the pre-print (https://doi.org/10.31219/osf.io/62v9p_v2)
 - Add possibility to split protein groups in PSM data with `makeAdjacencyMatrix`
 (see [issue #30](https://github.com/rformassspectrometry/PSMatch/issues/30))
 - Removed `showDetails()` from `setMethod("show", "PSM")` as discussed in 
