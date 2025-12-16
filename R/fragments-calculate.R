@@ -204,8 +204,9 @@ setMethod("calculateFragments", c("character", "missing"),
     parsed_modifications <- .parseModifiedSequence(sequence)
     canonical_sequence <- gsub("\\[.*?\\]", "", sequence)
     
-    if (canonical_sequence != sequence & length(variable_modifications)) {
-        stop("Choose either variable_modifications or positional modifications")
+    if (canonical_sequence != sequence & length(variable_modifications) | 
+        canonical_sequence != sequence & length(fixed_modifications)) {
+        stop("Choose either variable_modifications and fixed_modifications or positional modifications")
     }
     
     if (nchar(canonical_sequence) <= 1L) {
@@ -423,7 +424,7 @@ setMethod("calculateFragments", c("character", "missing"),
 #' @noRd
 #'
 #' @examples
-#' .modificationPositions("ARGHKA", variable_modifications = c(A = 4, K = 5, S = 8), max_mods = 3)
+#' .modificationPositions(strsplit('ARGHKA', '')[[1]], variable_modifications = c(A = 4, K = 5, S = 8), max_mods = 3)
 #'
 .modificationPositions <- function(fragment.seq,
                                    variable_modifications = numeric(),
