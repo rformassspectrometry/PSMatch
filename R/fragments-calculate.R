@@ -77,6 +77,8 @@
 #' @author Guillaume Deflandre <guillaume.deflandre@uclouvain.be>
 #'
 #' @importFrom ProtGenerics calculateFragments
+#' 
+#' @importFrom unimod convertAnnotation
 #'
 #' @exportMethod calculateFragments
 #'
@@ -201,12 +203,14 @@ setMethod("calculateFragments", c("character", "missing"),
                                 verbose = TRUE,
                                 modifications = NULL) {
     
+    # To be added once unimod PR is accepted
+    # sequence <- convertAnnotation(sequence)
+    
     parsed_modifications <- .parseModifiedSequence(sequence)
     canonical_sequence <- gsub("\\[.*?\\]", "", sequence)
     
-    if (canonical_sequence != sequence & length(variable_modifications) | 
-        canonical_sequence != sequence & length(fixed_modifications)) {
-        stop("Choose either variable_modifications and fixed_modifications or positional modifications")
+    if (canonical_sequence != sequence & length(variable_modifications)) {
+        stop("Choose either variable_modifications or positional modifications")
     }
     
     if (nchar(canonical_sequence) <= 1L) {
