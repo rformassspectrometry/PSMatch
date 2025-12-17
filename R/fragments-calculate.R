@@ -21,7 +21,7 @@
 #'   package that implements a method for objects of class
 #'   `Spectrum2`.
 #'
-#' @param sequence `character()` providing a peptide sequence. If positional 
+#' @param sequence `character()` providing a peptide sequence. If positional
 #' modifications are included in the sequence, variable modifications may not be
 #' used. See examples below for more detail.
 #'
@@ -39,12 +39,12 @@
 #'
 #' @param variable_modifications A named `numeric` vector of variable modifications.
 #' Depending on the maximum number of modifications (`max_mods`), all possible
-#' combinations are returned. If positional modifications are present in the 
-#' given sequence, 
+#' combinations are returned. If positional modifications are present in the
+#' given sequence,
 #'
 #' @param max_mods A numeric indicating the maximum number of variable modifications
 #' allowed on the sequence at once. Does not include fixed modifications.
-#' Default value is positive infinity. Is ignored when positional modifications 
+#' Default value is positive infinity. Is ignored when positional modifications
 #' are in effect.
 #'
 #' @param neutralLoss `list`, it has to have two named elments,
@@ -77,7 +77,7 @@
 #' @author Guillaume Deflandre <guillaume.deflandre@uclouvain.be>
 #'
 #' @importFrom ProtGenerics calculateFragments
-#' 
+#'
 #' @importFrom unimod convertAnnotation
 #'
 #' @exportMethod calculateFragments
@@ -108,7 +108,7 @@
 #'
 #'## calculate fragments for ACE with an added positional modification
 #' calculateFragments("A[+43.25]CE")
-#' 
+#'
 #' ## Error when combined positional modification and variable modification
 #' calculateFragments("A[+43.25]CE", variable_modifications = c(A = 43.25))
 #'
@@ -202,17 +202,17 @@ setMethod("calculateFragments", c("character", "missing"),
                                 neutralLoss = defaultNeutralLoss(),
                                 verbose = TRUE,
                                 modifications = NULL) {
-    
+
     # To be added once unimod PR is accepted
     # sequence <- convertAnnotation(sequence)
-    
+
     parsed_modifications <- .parseModifiedSequence(sequence)
     canonical_sequence <- gsub("\\[.*?\\]", "", sequence)
-    
+
     if (canonical_sequence != sequence & length(variable_modifications)) {
         stop("Choose either variable_modifications or positional modifications")
     }
-    
+
     if (nchar(canonical_sequence) <= 1L) {
         stop("'sequence' has to have two or more residues.")
     }
@@ -383,8 +383,8 @@ setMethod("calculateFragments", c("character", "missing"),
 #' @title Generates a numeric with positioned modifications
 #'
 #' @param sequence Character. A peptide sequence that may have modifications
-#' 
-#' @return Numeric of length equal to canonical sequence with specified 
+#'
+#' @return Numeric of length equal to canonical sequence with specified
 #' modifications.
 #'
 #' @author Guillaume Deflandre <guillaume.deflandre@uclouvain.be>
@@ -397,7 +397,7 @@ setMethod("calculateFragments", c("character", "missing"),
     result <- c()
     matches <- gregexpr("([A-Z])(?:\\[(.*?)\\])?", sequence, perl = TRUE)
     parsed <- regmatches(sequence, matches)[[1]]
-    
+
     for (match in parsed) {
         aa <- sub("\\[.*", "", match)  # get the amino acid letter
         if (grepl("\\[", match)) {
@@ -405,7 +405,7 @@ setMethod("calculateFragments", c("character", "missing"),
         } else {mod <- 0}
         result <- c(result, mod)
     }
-    
+
     return(result)
 }
 
@@ -435,17 +435,17 @@ setMethod("calculateFragments", c("character", "missing"),
                                    max_mods = Inf) {
     modifiable_positions_var <-
         which(fragment.seq %in% names(variable_modifications))
-    
+
     l <- length(modifiable_positions_var)
-    
+
     ## take the maximum amount of modifications possible
     max_mods <- min(max_mods, l)
-    
+
     if (!length(variable_modifications) || max_mods <= 0)
         return(
             list(setNames(integer(length(fragment.seq)), fragment.seq))
         )
-    
+
     .mod <- function(cmb,
                      seq_split = fragment.seq,
                      var_mods = variable_modifications) {
@@ -453,7 +453,7 @@ setMethod("calculateFragments", c("character", "missing"),
         m[cmb] <- var_mods[seq_split[cmb]]
         m
     }
-    
+
     c(
         list(setNames(integer(length(fragment.seq)), fragment.seq)),
         if (length(modifiable_positions_var) == 1)
