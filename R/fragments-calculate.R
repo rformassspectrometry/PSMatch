@@ -2,6 +2,7 @@
 #'
 #' @aliases calculateFragments modificationPositions defaultNeutralLoss calculateFragments,character,missing-method
 #'
+#'
 #' @name calculateFragments
 #'
 #' @description
