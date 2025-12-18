@@ -203,7 +203,7 @@ setMethod("calculateFragments", c("character", "missing"),
                                 verbose = TRUE,
                                 modifications = NULL) {
 
-    # To be added once unimod PR is accepted
+    ## To be added once unimod PR is accepted
     # sequence <- convertAnnotation(sequence)
 
     parsed_modifications <- .parseModifiedSequence(sequence)
