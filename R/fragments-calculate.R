@@ -78,8 +78,6 @@
 #'
 #' @importFrom ProtGenerics calculateFragments
 #'
-#' @importFrom unimod convertAnnotation
-#'
 #' @exportMethod calculateFragments
 #'
 #' @examples
@@ -203,7 +201,7 @@ setMethod("calculateFragments", c("character", "missing"),
                                 verbose = TRUE,
                                 modifications = NULL) {
 
-    ## To be added once unimod PR is accepted
+    ## To be added shortly (allows to convert different annotation styles)
     # sequence <- convertAnnotation(sequence)
 
     parsed_modifications <- .parseModifiedSequence(sequence)
