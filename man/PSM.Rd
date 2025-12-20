@@ -131,8 +131,8 @@ unknown. The flag can also be set explicitly with the
 describes some apparent differences in their outputs. The
 constructor input is a character of one more multiple file
 names.
-\item \code{PSM} objects can also be created from a \code{data.frame} object (or
-any variable that can be coerced into a \link{DataFrame}.
+\item \code{PSM} objects can also be created from a \code{data.frame} object (or any
+variable that can be coerced into a \link[S4Vectors:DataFrame-class]{S4Vectors::DataFrame}.
 \item Finally, \code{\link[=PSM]{PSM()}} can also take a \code{PSM} object as input, which
 leaves the PSM data as is and is used to set/update the PSM
 variables.
