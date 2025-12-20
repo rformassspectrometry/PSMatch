@@ -1,3 +1,13 @@
+# PSMatch 1.15
+
+## PSMatch 1.15.1
+
+- Fix minor check notes (Rd link and IRanges import)
+
+## PSMatch 1.15.0
+
+- New devel version
+
 # PSMatch 1.13
 
 ## PSMatch 1.13.3
