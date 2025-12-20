@@ -44,8 +44,7 @@ Imports:
     BiocGenerics,
     ProtGenerics (>= 1.27.1),
     QFeatures,
-    MsCoreUtils,
-    IRanges
+    MsCoreUtils
 Suggests:
     msdata,
     rpx,
