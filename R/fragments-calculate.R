@@ -206,7 +206,7 @@ setMethod("calculateFragments", c("character", "missing"),
     # sequence <- convertAnnotation(sequence)
 
     parsed_modifications <- .parseModifiedSequence(sequence)
-    canonical_sequence <- gsub("\\[.*?\\]", "", sequence)
+    canonical_sequence <- .getCleanSequences(sequence)
 
     if (canonical_sequence != sequence & length(variable_modifications)) {
         stop("Choose either variable_modifications or positional modifications")
@@ -379,6 +379,19 @@ setMethod("calculateFragments", c("character", "missing"),
     df
 }
 
+#' @title Clean peptide sequences
+#' @param x `character`, ProForma sequence.
+#' @return `character`, a `character` cleaned of all modifications.
+#' @noRd
+#' @examples
+#' .getCleanSequences(
+#'    c("EM[+15.9949]EVEES[+79.9663]PEK",
+#'      "EM[+15.995]EVEES[-18.01]PEK")
+#' )
+.getCleanSequences <- function(x) {
+    gsub("\\[.*?\\]", "", x)
+}
+
 #' @title Generates a numeric with positioned modifications
 #'
 #' @param sequence `character()`. A peptide sequence that may have modifications
@@ -386,26 +399,28 @@ setMethod("calculateFragments", c("character", "missing"),
 #' @return `numeric()` of length equal to canonical sequence with specified
 #' modifications.
 #'
-#' @author Guillaume Deflandre <guillaume.deflandre@uclouvain.be>
-#'
 #' @noRd
 #'
 #' @examples
 #' .parseModifiedSequence("APEPT[+79.966]IDEK")
+#' .parseModifiedSequence("EM[+15.9949]EVEES[+79.9663]PEK")
+#' .parseModifiedSequence("EM[M:+15.995]EVEES[U:-18.01]PEK")
 .parseModifiedSequence <- function(sequence) {
-    result <- c()
-    matches <- gregexpr("([A-Z])(?:\\[(.*?)\\])?", sequence, perl = TRUE)
-    parsed <- regmatches(sequence, matches)[[1]]
+    rx <- gregexpr(
+        pattern =
+            "(?<AA>[A-Z])(?:\\[(?:[GMURX]:)?(?<DeltaMass>[+-][0-9.]+)\\])?",
+        text = sequence,
+        perl = TRUE
+    )[[1]]
 
-    for (match in parsed) {
-        aa <- sub("\\[.*", "", match)  # get the amino acid letter
-        if (grepl("\\[", match)) {
-            mod <- as.numeric(gsub(".*\\[|\\]", "", match))  # get numeric modification
-        } else {mod <- 0}
-        result <- c(result, mod)
-    }
+    start <- attr(rx, "capture.start")[, "DeltaMass"]
+    matched_length <- attr(rx, "capture.length")[, "DeltaMass"]
 
-    return(result)
+    mod <- as.double(
+        substring(sequence, start, start + matched_length - 1L)
+    )
+    mod[is.na(mod)] <- 0
+    mod
 }
 
 #' @title Generates list of possible combinations of modifications

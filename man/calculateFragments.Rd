@@ -39,7 +39,8 @@ be added to the amino respectively carboxyl-terminus.}
 \item{variable_modifications}{A named \code{numeric} vector of variable modifications.
 Depending on the maximum number of modifications (\code{max_mods}), all possible
 combinations are returned. If positional modifications are present in the
-given sequence,}
+given sequence, the function throws an error as only one or the other should
+be used.}
 
 \item{max_mods}{A numeric indicating the maximum number of variable modifications
 allowed on the sequence at once. Does not include fixed modifications.

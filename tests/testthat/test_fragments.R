@@ -20,7 +20,7 @@ test_that("calculateFragments", {
                 "QR"),
         peptide = rep("PQR", 15),
         stringsAsFactors=FALSE)
-    
+
     ace <- data.frame(
         mz = c(22.528, 102.544,  # a
                36.526, 116.541,  # b
@@ -37,10 +37,10 @@ test_that("calculateFragments", {
                 rep(c("E", "CE"), 3)),
         peptide = rep("ACE", 12),
         stringsAsFactors=FALSE)
-    
+
     expect_warning(calculateFragments("PQR", modifications = c(P=2)),
                    "'modifications' is deprecated, please use 'fixed_modifications' instead.")
-    
+
     expect_equal(pqr[1:12,],
                  calculateFragments("PQR",
                                     type = c("a", "b", "c", "x", "y", "z"),
@@ -55,13 +55,13 @@ test_that("calculateFragments", {
                  calculateFragments("PQR", type = c("x", "z"),
                                     neutralLoss = NULL, verbose = FALSE),
                  check.attributes = FALSE, tolerance = 1e-5)
-    
+
     ## neutral loss
     ## rownames always differ
     expect_equal(pqr[c(3:4, 9:10, 13:15),],
                  calculateFragments("PQR", verbose = FALSE),
                  check.attributes = FALSE, tolerance = 1e-5)
-    
+
     ## neutral loss (water=cterm disabled),
     ## rownames always differ
     expect_equal(pqr[c(3:4, 9:10, 15),],
@@ -69,7 +69,7 @@ test_that("calculateFragments", {
                                     neutralLoss = defaultNeutralLoss(disableWaterLoss = "Cterm"),
                                     verbose = FALSE),
                  check.attributes = FALSE, tolerance = 1e-5)
-    
+
     ## neutral loss (ammonia=Q disabled),
     ## rownames always differ
     expect_equal(pqr[c(3:4, 9:10, 13:14),],
@@ -77,7 +77,7 @@ test_that("calculateFragments", {
                                     neutralLoss = defaultNeutralLoss(disableAmmoniaLoss = "Q"),
                                     verbose = FALSE),
                  check.attributes = FALSE, tolerance = 1e-5)
-    
+
     ## neutral loss + nterm mod, rownames always differ
     tpqr <- pqr[c(3:4, 9:10, 13:15),]
     tpqr$mz[1:2] <- tpqr$mz[1:2] + 229
@@ -85,7 +85,7 @@ test_that("calculateFragments", {
                  calculateFragments("PQR", fixed_modifications = c(C = 57.02146, Nterm = 229),
                                     verbose = FALSE),
                  check.attributes = FALSE, tolerance = 1e-5)
-    
+
     ## neutral loss + nterm + cterm mod, rownames always differ
     tpqr$mz[3:7] <- tpqr$mz[3:7] - 100
     expect_equal(tpqr,
@@ -94,7 +94,7 @@ test_that("calculateFragments", {
                                                              Cterm = -100),
                                     verbose = FALSE),
                  check.attributes = FALSE, tolerance = 1e-5)
-    
+
     expect_equal(ace,
                  calculateFragments("ACE", type = c("a", "b", "c", "x", "y", "z"),
                                     z = 2, neutralLoss = NULL, verbose = FALSE),
@@ -102,9 +102,9 @@ test_that("calculateFragments", {
     expect_equal(ace[1:6,],
                  calculateFragments("ACE", type = letters[1:3], z = 2, verbose = FALSE),
                  tolerance = 1e-5)
-    
+
     expect_error(calculateFragments("A"), "two or more residues")
-    
+
     ## issue #200 (mz are not calculated correctly for terminal fixed_modifications
     ## and z > 1)
     p <- getAtomicMass()["p"]
@@ -120,7 +120,7 @@ test_that("calculateFragments", {
                  (calculateFragments("AA", z = 1, neutralLoss = NULL,
                                      fixed_modifications = c(Cterm = 10),
                                      type = "y")$mz - p) / 2)
-    
+
     ## See issue 573 in MSnbase (charge is ignored in neutral loss
     ## calculation)
     expect_equal(
@@ -136,7 +136,7 @@ test_that("calculateFragments", {
         ),
         check.attributes = FALSE # row.names differ
     )
-    
+
 })
 
 test_that("defaultNeutralLoss", {
@@ -155,7 +155,7 @@ test_that("defaultNeutralLoss", {
 })
 
 test_that("calculateFragments: Default behaviour without modifications", {
-    
+
     ## Test 1: Default behavior without modifications
     sequence <- "PQR"
     result <- calculateFragments(
@@ -168,13 +168,13 @@ test_that("calculateFragments: Default behaviour without modifications", {
         neutralLoss = defaultNeutralLoss(),
         verbose = FALSE
     )
-    
+
     ## Check unique peptide without modifications
     expect_identical(unique(result$peptide), "PQR")
     })
 
 test_that("calculateFragments: Default behaviour with positional modifications", {
-    
+
     ## Test 1: Default behavior with positional modifications
     sequence <- "PQ[+10]R"
     result <- calculateFragments(
@@ -187,7 +187,7 @@ test_that("calculateFragments: Default behaviour with positional modifications",
         neutralLoss = defaultNeutralLoss(),
         verbose = FALSE
     )
-    
+
     ## Check unique peptide without modifications
     expect_identical(unique(result$peptide), "PQ[+10]R")
 })
@@ -218,11 +218,11 @@ test_that("calculateFragments: Behaviour with fixed modifications", {
         verbose = FALSE,
         modifications = NULL
     )
-    
+
     ## Fixed modifications do not produce additional unique peptides
     expect_identical(unique(result_fixed$peptide), "PQR")
     expect_identical(nrow(result), nrow(result_fixed))
-    
+
     ## Fixed modifications do change the fragment masses
     expect_false(all(result$mz == result_fixed$mz))
 })
@@ -240,7 +240,7 @@ test_that("calculateFragments: Behaviour with variable modifications", {
         neutralLoss = list(water = c(), ammonia = c()),
         verbose = FALSE
     )
-    
+
     fixed_modifications <- c(P = 79.966)
     result_fixed <- calculateFragments(
         sequence = sequence,
@@ -252,7 +252,7 @@ test_that("calculateFragments: Behaviour with variable modifications", {
         neutralLoss = list(water = c(), ammonia = c()),
         verbose = FALSE
     )
-    
+
     variable_modifications <- c(P = 79.966, Q = 20, R = 10)
     max_mods <- 2
     result_var <- calculateFragments(
@@ -265,14 +265,14 @@ test_that("calculateFragments: Behaviour with variable modifications", {
         neutralLoss = list(water = c(), ammonia = c()),
         verbose = FALSE
     )
-    
+
     ## Calculate expected combinations
-    expected_combinations <- 
+    expected_combinations <-
         choose(3, 0) + choose(3, 1) + choose(3, 2) + choose(3, 3)
-    
+
     ## Check if number of unique peptides matches expectations
     expect_equal(length(unique(result_var$peptide)), expected_combinations)
-    
+
     ## Check if it's true in case there are less modifications than max_mods
     variable_modifications <- c(P = 79.966)
     max_mods <- 2
@@ -286,13 +286,13 @@ test_that("calculateFragments: Behaviour with variable modifications", {
         neutralLoss = list(water = c(), ammonia = c()),
         verbose = FALSE
     )
-    
+
     ## Calculate expected combinations
     expected_combinations <- choose(1, 0) + choose(1,1)
-    
+
     ## Check if number of unique peptides matches expectations
     expect_equal(length(unique(result_var$peptide)), expected_combinations)
-    
+
     ## Test 4: Fixed and variable modifications combined
     result_combined <- calculateFragments(
         sequence = sequence,
@@ -304,29 +304,71 @@ test_that("calculateFragments: Behaviour with variable modifications", {
         neutralLoss = list(water = c(), ammonia = c()),
         verbose = FALSE
     )
-    
+
     ## Check equal mass of variable mods fragments and no mods fragments
     expect_true(all(result$mz == result_var[result_var$peptide == "PQR","mz"]))
-    
+
     ## Check equal mass of variable mods fragments and fixed mods fragments
     expect_true(all(result_fixed$mz == result_var[result_var$peptide == "[P]QR","mz"]))
 })
 
 test_that(".cumsumFragmentMasses: Behaviour with any modification", {
     ## Test4: Check behaviour of .cumsumFragmentMasses function
-    
+
     ## Modifications used
     mods_forward <- c(P = 5, Q = 0, R = 7)
     mods_backward <- c(R = 7, Q = 0, P = 5)
-    
+
     ## theoretical masses P = 15, Q = 25, R = 10)
     fragments_forward <- c(P = 15, Q = 40) ## representing cumsum forward ions
     fragments_backward <- c(R = 10, Q = 35) ## representing cumsum backward ions
-    
+
     result_forward <- .cumsumFragmentMasses(mods_forward, fragments_forward)
     result_backward <- .cumsumFragmentMasses(mods_backward, fragments_backward)
-    
+
     expect_identical(c(P = 20, Q = 45), result_forward)
     expect_identical(c(R = 17, Q = 42), result_backward)
 })
 
+test_that("clean sequences works", {
+    expect_identical(
+        .getCleanSequences(
+            c("EM[+15.9949]EVEES[+79.9663]PEK", "EM[+15.995]EVEES[-18.01]PEK")
+        ),
+        c("EMEVEESPEK", "EMEVEESPEK")
+    )
+})
+
+test_that("proforma delta masses without prefixes are supported", {
+    expect_equal(
+        .parseModifiedSequence(
+            c("EMEVEESPEK", "EM[+15.995]EVEESPEK")
+        ),
+        list(
+            rep(0, 10),
+            c(0, 15.995, 0, 0, 0, 0, 0, 0, 0, 0)
+        )
+    )
+    expect_equal(
+        .parseModifiedSequence(
+            c("EM[+15.9949]EVEES[+79.9663]PEK", "EM[+15.995]EVEES[-18.01]PEK")
+        ),
+        list(
+            c(0, 15.9949, 0, 0, 0, 0, 79.9663, 0, 0, 0),
+            c(0, 15.995, 0, 0, 0, 0, -18.01, 0, 0, 0)
+        )
+    )
+})
+
+test_that("proforma delta masses with prefixes are supported", {
+    expect_equal(
+        .parseModifiedSequence(
+            c("EM[U:+15.9949]EVEES[M:+79.9663]PEK",
+              "EM[X:+15.995]EVEES[R:-18.01]PEK")
+        ),
+        list(
+            c(0, 15.9949, 0, 0, 0, 0, 79.9663, 0, 0, 0),
+            c(0, 15.995, 0, 0, 0, 0, -18.01, 0, 0, 0)
+        )
+    )
+})
