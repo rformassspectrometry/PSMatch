@@ -53,8 +53,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: 'devel', bioc: '3.22', cont: "bioconductor/bioconductor_docker:devel", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
-          - { os: ubuntu-latest, r: '4.5', bioc: '3.21', cont: "bioconductor/bioconductor_docker:devel", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
+          - { os: ubuntu-latest, r: 'devel', bioc: '3.23', cont: "bioconductor/bioconductor_docker:devel", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
+          - { os: ubuntu-latest, r: '4.5', bioc: '3.22', cont: "bioconductor/bioconductor_docker:RELEASE_3_22", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
           ## - { os: ubuntu-latest, r: '4.4', bioc: '3.21', cont: "bioconductor/bioconductor_docker:devel", rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest" }
           ## - { os: macOS-latest, r: '4.2', bioc: '3.15'}
           ## - { os: windows-latest, r: '4.2', bioc: '3.15'}
@@ -201,12 +201,6 @@ jobs:
         run: |
           ## Install BiocGenerics
           BiocManager::install("BiocGenerics")
-        shell: Rscript {0}
-
-      - name: Install latest Spectra >= 1.17.10 (from github)
-        run: |
-          ## Install BiocGenerics
-          BiocManager::install("RforMassSpectrometry/Spectra")
         shell: Rscript {0}
 
       - name: Install covr

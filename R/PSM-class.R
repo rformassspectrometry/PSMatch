@@ -40,8 +40,8 @@
 ##'   constructor input is a character of one more multiple file
 ##'   names.
 ##'
-##' - `PSM` objects can also be created from a `data.frame` object (or
-##'   any variable that can be coerced into a [DataFrame].
+##' - `PSM` objects can also be created from a `data.frame` object (or any
+##'   variable that can be coerced into a [S4Vectors::DataFrame].
 ##'
 ##' - Finally, [PSM()] can also take a `PSM` object as input, which
 ##'   leaves the PSM data as is and is used to set/update the PSM
