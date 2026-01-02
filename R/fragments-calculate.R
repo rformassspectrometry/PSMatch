@@ -383,7 +383,7 @@ setMethod("calculateFragments", c("character", "missing"),
 #'
 #' @param sequence `character()`. A peptide sequence that may have modifications
 #'
-#' @return Numeric of length equal to canonical sequence with specified
+#' @return `numeric()` of length equal to canonical sequence with specified
 #' modifications.
 #'
 #' @author Guillaume Deflandre <guillaume.deflandre@uclouvain.be>
