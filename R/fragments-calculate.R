@@ -40,7 +40,8 @@
 #' @param variable_modifications A named `numeric` vector of variable modifications.
 #' Depending on the maximum number of modifications (`max_mods`), all possible
 #' combinations are returned. If positional modifications are present in the
-#' given sequence,
+#' given sequence, the function throws an error as only one or the other should
+#' be used.
 #'
 #' @param max_mods A numeric indicating the maximum number of variable modifications
 #' allowed on the sequence at once. Does not include fixed modifications.
