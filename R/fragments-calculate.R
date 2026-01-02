@@ -381,7 +381,7 @@ setMethod("calculateFragments", c("character", "missing"),
 
 #' @title Generates a numeric with positioned modifications
 #'
-#' @param sequence Character. A peptide sequence that may have modifications
+#' @param sequence `character()`. A peptide sequence that may have modifications
 #'
 #' @return Numeric of length equal to canonical sequence with specified
 #' modifications.
