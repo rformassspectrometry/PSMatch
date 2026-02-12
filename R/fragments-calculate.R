@@ -202,9 +202,6 @@ setMethod("calculateFragments", c("character", "missing"),
                                 verbose = TRUE,
                                 modifications = NULL) {
 
-    ## To be added shortly (allows to convert different annotation styles)
-    # sequence <- convertAnnotation(sequence)
-
     parsed_modifications <- .parseModifiedSequence(sequence)
     canonical_sequence <- .getCleanSequences(sequence)
 
