@@ -14,7 +14,7 @@
 
 ## PSMatch 1.13.3
 
-- Allow for positional modifications in `calculateFragments()`.
+- Nothing yet
 
 ## PSMatch 1.13.2
 
