@@ -118,7 +118,7 @@ calculateFragments("VESITARHGEVLQLRPK",
 calculateFragments("A[+43.25]CE")
 
 ## Error when combined positional modification and variable modification
-calculateFragments("A[+43.25]CE", variable_modifications = c(A = 43.25))
+# calculateFragments("A[+43.25]CE", variable_modifications = c(A = 43.25))
 
 ## neutral loss
 defaultNeutralLoss()
