@@ -2,6 +2,8 @@
 
 ## PSMatch 1.15.1
 
+- Add positional modfifications in `calculateFragments()` (see
+[pull 37](https://github.com/rformassspectrometry/PSMatch/pull/37))
 - Fix minor check notes (Rd link and IRanges import)
 
 ## PSMatch 1.15.0
