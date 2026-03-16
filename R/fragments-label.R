@@ -75,8 +75,11 @@
 ##' ## The fragment mz labels
 ##' labelFragments(sp, what = "mz")
 ##'
-##' ## Call additional parameters sur as variable modifications to calculateFragments
-##' labelFragments(sp, type = c("a", "b", "x", "y"), variable_modifications = c(R = 5))
+##' ## Pass additional parameters to calculateFragments using a PTMods modified sequence
+##' sp_mod <- sp
+##' sp_mod$sequence <- PTMods::addFixedModifications("SIGFEGDSIGR",
+##'                                                   fixedModifications = c(Nterm = 5))
+##' labelFragments(sp_mod, type = c("a", "b", "x", "y"))
 ##'
 ##' ## Annotate the spectum with the fragment labels
 ##' plotSpectra(sp, labels = labelFragments, labelPos = 3)

@@ -30,23 +30,27 @@
 #'
 #' @param z numeric with a desired charge state; default is 1.
 #'
-#' @param fixed_modifications A named `numeric` vector of used fixed modifications.
-#' The name must correspond to the one-letter-code of the modified amino acid
-#' and the numeric value must represent the mass that should be added to the
-#' original amino accid mass, default: Carbamidomethyl modifications =
-#' c(C = 57.02146). Use Nterm or Cterm as names for modifications that should
-#' be added to the amino respectively carboxyl-terminus.
+#' @param fixed_modifications Deprecated parameter. Please use
+#' [PTMods::addFixedModifications()] to generate sequences with positional
+#' modifications instead. Named `numeric` or `character`. If a `character` is
+#' given, values must be in UniMod name or UniMod ID format
+#' (e.g. `"Phospho"`, `"UNIMOD:21"`). The annotation style of
+#' the values is preserved in the output. Specifies which fixed
+#' modifications are applied to which amino acids.
 #'
-#' @param variable_modifications A named `numeric` vector of variable modifications.
-#' Depending on the maximum number of modifications (`max_mods`), all possible
-#' combinations are returned. If positional modifications are present in the
-#' given sequence, the function throws an error as only one or the other should
-#' be used.
+#' @param variable_modifications Deprecated parameter. Please use
+#' [PTMods::addVariableModifications()] to generate sequences with positional
+#' modifications instead. Named `numeric` or `character`. If a `character`
+#' is given, values must be in UniMod name or UniMod ID format
+#' (e.g. `"Phospho"`, `"UNIMOD:21"`). The annotation style of
+#' the values is preserved in the output. Specifies which
+#' variable modifications are used on which amino acids.
 #'
-#' @param max_mods A numeric indicating the maximum number of variable modifications
+#' @param max_mods Deprecated parameter. Please use in combination with
+#' PTMods::addVariableModifications() instead. A numeric indicating the
+#' maximum number of variable modifications
 #' allowed on the sequence at once. Does not include fixed modifications.
-#' Default value is positive infinity. Is ignored when positional modifications
-#' are in effect.
+#' Default value is positive infinity.
 #'
 #' @param neutralLoss `list`, it has to have two named elments,
 #'     namely `water` and `ammonia` that contain a `character` vector
@@ -61,7 +65,8 @@
 #'     `disableAmmoniaLoss` to remove single neutral loss options. See
 #'     the example section for use cases.
 #'
-#' @param verbose `logical(1)`. If `TRUE` (default) the used modifications are printed.
+#' @param verbose `logical(1)`. Deprecated parameter.
+#' If `TRUE` (default) the used modifications are printed.
 #'
 #' @param modifications Named `numeric()`. Deprecated modifications parameter.
 #' Will override `fixed_modifications` but is set to `NULL` by default. Please
@@ -82,34 +87,20 @@
 #' @exportMethod calculateFragments
 #'
 #' @examples
-#' ## General use
-#' calculateFragments(sequence = "ARGSHKATC",
-#'                    type = c("b", "y"), z = 1,
-#'                    fixed_modifications = c(C = 57),
-#'                    variable_modifications = c(S = 79, Y = 79, T = 79),
-#'                    max_mods = 2)
 #'
-#' ## calculate fragments for ACE with default modification
-#' calculateFragments("ACE", fixed_modifications = c(C = 57.02146))
+#' ## No modifications
+#' calculateFragments("ACE")
 #'
-#' #' ## calculate fragments for ACE with an added variable modification
-#' calculateFragments("ACE", variable_modifications = c(A = 43.25))
-#'
-#' ## calculate fragments for ACE with an added N-terminal modification
-#' calculateFragments("ACE", fixed_modifications = c(C = 57.02146, Nterm = 229.1629))
-#'
-#' ## calculate fragments for ACE without any modifications
-#' calculateFragments("ACE", fixed_modifications = NULL)
-#'
-#' calculateFragments("VESITARHGEVLQLRPK",
+#' ## Multiple ion types and charge states
+#' calculateFragments("ACE",
 #'                    type = c("a", "b", "c", "x", "y", "z"),
 #'                    z = 1:2)
 #'
-#'## calculate fragments for ACE with an added positional modification
+#' ## Positional modification written directly in the sequence string
+#' ## The annotation style must be supported by PTMods::convertAnnotation
 #' calculateFragments("A[+43.25]CE")
-#'
-#' ## Error when combined positional modification and variable modification
-#' # calculateFragments("A[+43.25]CE", variable_modifications = c(A = 43.25))
+#' calculateFragments("T[Phospho]CE")
+#' calculateFragments("T[UNIMOD:21]C[Carbamidomethyl]E")
 #'
 #' ## neutral loss
 #' defaultNeutralLoss()
@@ -127,25 +118,97 @@
 #' ## disable neutral loss completely
 #' calculateFragments("PQR", neutralLoss=NULL)
 #'
+#' ## Recommended workflow: use PTMods functions to produce positional sequences
+#' ## before calling calculateFragments.
+#'
+#' ## Fixed modification (Carbamidomethyl on C) using addFixedModifications
+#' seq_fixed <- PTMods::addFixedModifications("ACE",
+#'                                            fixedModifications = c(C = 57.02))
+#' calculateFragments(seq_fixed)
+#'
+#' ## Fixed modification including N-terminus using addFixedModifications
+#' seq_nterm <- PTMods::addFixedModifications(
+#'     "ACE",
+#'     fixedModifications = c(C = 57.02, Nterm = 229.16))
+#' calculateFragments(seq_nterm)
+#'
+#' ## Variable modification (delta mass on A) using addVariableModifications
+#' seq_var <- PTMods::addVariableModifications("ACE",
+#'                                             variableModifications = c(A = 43.25))
+#' calculateFragments(seq_var)
+#'
+#' ## Both fixed and variable modifications using addModifications
+#' seq_mods <- PTMods::addModifications("ARGSHKATC",
+#'                                      fixedModifications = c(C = 57),
+#'                                      variableModifications = c(S = 79, T = 79),
+#'                                      maxMods = 2)
+#' calculateFragments(seq_mods)
 setMethod("calculateFragments", c("character", "missing"),
           function(sequence, type = c("b", "y"), z = 1,
-                   fixed_modifications = c(C = 57.02146),
-                   variable_modifications = numeric(),
+                   fixed_modifications = NULL,
+                   variable_modifications = NULL,
                    max_mods = Inf,
                    neutralLoss = defaultNeutralLoss(),
                    verbose = TRUE,
                    modifications = NULL) {
-              l <- lapply(sequence, .calculateFragments,
-                          type = type, z = z,
-                          fixed_modifications = fixed_modifications,
-                          variable_modifications = variable_modifications,
-                          max_mods = Inf,
-                          neutralLoss = neutralLoss,
-                          verbose = verbose,
-                          modifications = modifications)
-              return(do.call(rbind, l))
-          })
 
+        if (!is.null(modifications)) {
+            warning("'modifications' is deprecated,
+                please use 'PTMods::addFixedModifications' instead.")
+            fixed_modifications <- modifications
+        }
+
+        if (!is.null(fixed_modifications)) {
+            warning("'fixed_modifications' is deprecated,
+                please use 'PTMods::addFixedModifications' instead.")
+            fixed_modifications <- modifications
+        }
+
+        if (!is.null(variable_modifications)) {
+            warning("'variable_modifications' is deprecated,
+                please use 'PTMods::addVariableModifications' instead.")
+            fixed_modifications <- modifications
+        }
+
+        if (!is.null(fixed_modifications) | !is.null(variable_modifications)) {
+            sequence <- sequence |>
+                PTMods::addFixedModifications(
+                    fixedModifications = fixed_modifications) |>
+                PTMods::addVariableModifications(
+                    variable_modifications, maxMods = max_mods)
+        }
+
+        ## message used modifications
+        if (verbose) {
+            if (length(fixed_modifications)) {
+                mods <-paste0(names(fixed_modifications),
+                          "=",
+                          fixed_modifications,
+                          collapse=", ")
+            } else {
+                mods <- "None"
+            }
+            if (length(variable_modifications)) {
+                mods2 <- paste0(names(variable_modifications),
+                    "=",
+                    variable_modifications,
+                    collapse = ", ")
+            } else {
+                mods2 <- "None"
+            }
+
+            if (length(fixed_modifications) | length(variable_modifications)) {
+                message("Fixed modifications used: ", mods,
+                    "\nVariable modifications used: ", mods2)
+            }
+        }
+
+        l <- lapply(sequence, .calculateFragments,
+            type = type, z = z, neutralLoss = neutralLoss)
+
+        return(do.call(rbind, l))
+    }
+)
 
 #' calculate fragments from a peptide sequence
 #'
@@ -154,21 +217,6 @@ setMethod("calculateFragments", c("character", "missing"),
 #' @param type could be c("a", "b", "c", "x", "y", "z")
 #'
 #' @param z charge
-#'
-#' @param fixed_modifications A named `numeric` vector of used fixed modifications.
-#' The name must correspond to the one-letter-code of the modified amino acid
-#' and the numeric value must represent the mass that should be added to the
-#' original amino accid mass, default: Carbamidomethyl modifications =
-#' c(C = 57.02146). Use Nterm or Cterm as names for modifications that should
-#' be added to the amino respectively carboxyl-terminus.
-#'
-#' @param variable_modifications A named `numeric` vector of variable modifications.
-#' Depending on the maximum number of modifications (`max_mods`), all possible
-#' combinations are returned.
-#'
-#' @param max_mods A numeric indicating the maximum number of variable modifications
-#' allowed on the sequence at once. Does not include fixed modifications.
-#' Default value is positive infinity.
 #'
 #' @param neutralLoss `list`, it has to have two named elments,
 #'     namely `water` and `ammonia` that contain a `character` vector
@@ -183,49 +231,28 @@ setMethod("calculateFragments", c("character", "missing"),
 #'     `disableAmmoniaLoss` to remove single neutral loss options. See
 #'     the example section for use cases.
 #'
-#' @param verbose `logical(1)`. If `TRUE` (default) the used modifications are printed.
-#'
-#' @param modifications Named `numeric()`. Deprecated modifications parameter.
-#' Will override `fixed_modifications` but is set to `NULL` by default. Please
-#' refrain from using it, opt for `fixed_modifications` instead.
-#'
 #' @importFrom stats setNames
 #'
 #' @noRd
 .calculateFragments <- function(sequence,
                                 type = c("b", "y"),
                                 z = 1,
-                                fixed_modifications = c(C = 57.02146),
-                                variable_modifications = numeric(),
-                                max_mods = Inf,
-                                neutralLoss = defaultNeutralLoss(),
-                                verbose = TRUE,
-                                modifications = NULL) {
+                                neutralLoss = defaultNeutralLoss()) {
 
-    parsed_modifications <- .parseModifiedSequence(sequence)
-    canonical_sequence <- .getCleanSequences(sequence)
+    initial_sequence <- sequence
+    sequence <- convertAnnotation(sequence)
 
-    if (canonical_sequence != sequence & length(variable_modifications)) {
-        stop("Choose either variable_modifications or positional modifications")
-    }
+    parsed_modifications <- PTMods:::.parseModifiedSequence(sequence)
+    canonical_sequence <- PTMods::getCanonicalSequence(sequence)
 
     if (nchar(canonical_sequence) <= 1L) {
         stop("'sequence' has to have two or more residues.")
-    }
-
-    if (!is.null(modifications)) {
-        warning("'modifications' is deprecated, please use 'fixed_modifications' instead.")
-        fixed_modifications <- modifications
     }
 
     ## split peptide sequence into aa
     fragment.seq <- strsplit(canonical_sequence, "")[[1]]
     fn <- length(fragment.seq)
 
-    mod_combinations <-
-        .modificationPositions(fragment.seq,
-                               variable_modifications,
-                               max_mods)
     type <- match.arg(type,
                       choices = c("a", "b", "c", "x", "y", "z"),
                       several.ok=TRUE)
@@ -253,34 +280,6 @@ setMethod("calculateFragments", c("character", "missing"),
     aa <- getAminoAcids()
     aamass <- setNames(aa$ResidueMass, aa$AA)
 
-    ## replace default mass by masses with fixed modifications
-    if (length(fixed_modifications)) {
-        aamass[names(fixed_modifications)] <-
-            aamass[names(fixed_modifications)] + fixed_modifications
-    }
-
-    ## message used modifications
-    if (verbose) {
-        if (length(fixed_modifications)) {
-            mods <-paste0(names(fixed_modifications),
-                          "=",
-                          fixed_modifications,
-                          collapse=", ")
-        } else {
-            mods <- "None"
-        }
-        if (length(variable_modifications)) {
-            mods2 <- paste0(names(variable_modifications),
-                            "=",
-                            variable_modifications,
-                            collapse=", ")
-        } else {
-            mods2 <- "None"
-        }
-        message("Fixed modifications used: ", mods,
-                "\nVariable modifications used: ", mods2)
-    }
-
     ## calculate cumulative mass starting at the amino-terminus (for a, b, c)
     amz <- cumsum(parsed_modifications[-fn]) + cumsum(aamass[fragment.seq[-fn]])
     ## calculate cumulative mass starting at the carboxyl-terminus (for x, y, z)
@@ -290,12 +289,21 @@ setMethod("calculateFragments", c("character", "missing"),
     tn <- length(amz)
     atype <- c("a", "b", "c") %in% type
     nat <- sum(atype)
+    amz <- rep(amz, nat) + rep(add[1:3][atype], each=tn)
+
     ## calculate fragment mass (carboxyl-terminus)
     ctype <- c("x", "y", "z") %in% type
     nct <- sum(ctype)
+    cmz <- rep(cmz, nct) + rep(add[4:6][ctype], each=tn)
 
     ## devide by charge
     zn <- length(z)
+    amz <- rep(amz, each = zn)/z
+    cmz <- rep(cmz, each = zn)/z
+
+    ## add protons (H+)
+    amz <- amz + mass["p"]
+    cmz <- cmz + mass["p"]
 
     ## fragment seq (amino-terminus)
     aseq <- rep(rep(substring(canonical_sequence, rep(1L, fn - 1L),
@@ -304,26 +312,6 @@ setMethod("calculateFragments", c("character", "missing"),
     ## fragment seq (carboxyl-terminus)
     cseq <- rep(rep(rev(substring(canonical_sequence, 2L:fn,
                                   rep(fn, fn - 1L))), each=zn), nct)
-
-    ## add the variable modifications and apply steps above
-    amz_mod <- vector("list", length(mod_combinations))
-    cmz_mod <- vector("list", length(mod_combinations))
-    df <- vector("list", length(mod_combinations))
-
-    for (i in 1:length(mod_combinations)) {
-        amz_mod[[i]] <- .cumsumFragmentMasses(mod_combinations[[i]], amz)
-        cmz_mod[[i]] <- .cumsumFragmentMasses(rev(mod_combinations[[i]]), cmz)
-
-        amz_mod[[i]] <- rep(amz_mod[[i]], nat) + rep(add[1:3][atype], each=tn)
-        cmz_mod[[i]] <- rep(cmz_mod[[i]], nct) + rep(add[4:6][ctype], each=tn)
-
-        amz_mod[[i]] <- rep(amz_mod[[i]], each = zn)/z
-        cmz_mod[[i]] <- rep(cmz_mod[[i]], each = zn)/z
-
-        ## add protons (H+)
-        amz_mod[[i]] <- amz_mod[[i]] + mass["p"]
-        cmz_mod[[i]] <- cmz_mod[[i]] + mass["p"]
-    }
 
     ## fragment str (amino-terminus)
     atype <- rep(c("a", "b", "c")[atype], each = tn * zn)
@@ -343,152 +331,23 @@ setMethod("calculateFragments", c("character", "missing"),
     }
 
     ## generate unique dataframe with all fragments and modifications
-    for (i in 1:length(mod_combinations)) {
-        df[[i]] <- data.frame(mz = c(amz_mod[[i]], cmz_mod[[i]]),
-                              ion = c(aion, cion),
-                              type = c(atype, ctype),
-                              pos = pos,
-                              z = z,
-                              seq = c(aseq, cseq),
-                              stringsAsFactors = FALSE)
-        df[[i]] <- .neutralLoss(df[[i]],
-                                water = neutralLoss$water,
-                                ammonia = neutralLoss$ammonia)
-        df[[i]] <- .terminalModifications(df[[i]],
-                                          modifications = fixed_modifications)
-        rownames(df[[i]]) <- NULL
-        if (sequence != canonical_sequence) {
-            df[[i]][["peptide"]] <- sequence
-        } else {
-            non_zero <- mod_combinations[[i]] != 0
-            names(mod_combinations[[i]])[non_zero] <-
-                paste0(names(mod_combinations[[i]])[non_zero],
-                       "[",
-                       mod_combinations[[i]][non_zero],
-                       "]")
-            df[[i]][["peptide"]] <- paste(names(mod_combinations[[i]]),
-                                          collapse = "")
-            }
-    }
 
-    df <- do.call(rbind, df)
+    df <- data.frame(mz = c(amz, cmz),
+                      ion = c(aion, cion),
+                      type = c(atype, ctype),
+                      pos = pos,
+                      z = z,
+                      seq = c(aseq, cseq),
+                      stringsAsFactors = FALSE)
+    df <- .neutralLoss(df,
+        water = neutralLoss$water,
+        ammonia = neutralLoss$ammonia)
+    df <- .addTerminalMasses(df,
+        parsedModifications = parsed_modifications)
+
+    df$peptide <- initial_sequence
     rownames(df) <- NULL
     df
-}
-
-#' @title Clean peptide sequences
-#' @param x `character`, ProForma sequence.
-#' @return `character`, a `character` cleaned of all modifications.
-#' @noRd
-#' @examples
-#' .getCleanSequences(
-#'    c("EM[+15.9949]EVEES[+79.9663]PEK",
-#'      "EM[+15.995]EVEES[-18.01]PEK")
-#' )
-.getCleanSequences <- function(x) {
-    gsub("\\[.*?\\]", "", x)
-}
-
-#' @title Generates a numeric with positioned modifications
-#'
-#' @param sequence `character()`. A peptide sequence that may have modifications
-#'
-#' @return `numeric()` of length equal to canonical sequence with specified
-#' modifications.
-#'
-#' @noRd
-#'
-#' @examples
-#' .parseModifiedSequence("APEPT[+79.966]IDEK")
-#' .parseModifiedSequence("EM[+15.9949]EVEES[+79.9663]PEK")
-#' .parseModifiedSequence("EM[M:+15.995]EVEES[U:-18.01]PEK")
-.parseModifiedSequence <- function(sequence) {
-    rx <- gregexpr(
-        pattern =
-            "(?<AA>[A-Z])(?:\\[(?:[GMURX]:)?(?<DeltaMass>[+-][0-9.]+)\\])?",
-        text = sequence,
-        perl = TRUE
-    )[[1]]
-
-    start <- attr(rx, "capture.start")[, "DeltaMass"]
-    matched_length <- attr(rx, "capture.length")[, "DeltaMass"]
-
-    mod <- as.double(
-        substring(sequence, start, start + matched_length - 1L)
-    )
-    mod[is.na(mod)] <- 0
-    mod
-}
-
-#' @title Generates list of possible combinations of modifications
-#'
-#' @param sequence Character. A peptide sequence that may have modifications or not
-#'
-#' @param fixed_modifications Named numeric. Specifies which fixed modifications are used
-#'
-#' @param variable_modifications Named numeric. Specifies which variable modifications are used
-#'
-#' @param max_mods Numeric. Indicates how many modifications can be applied at once.
-#'
-#' @return list with all possible combinations of modifications
-#'
-#' @author Guillaume Deflandre <guillaume.deflandre@uclouvain.be>
-#'
-#' @importFrom utils combn
-#'
-#' @noRd
-#'
-#' @examples
-#' .modificationPositions(strsplit('ARGHKA', '')[[1]], variable_modifications = c(A = 4, K = 5, S = 8), max_mods = 3)
-#'
-.modificationPositions <- function(fragment.seq,
-                                   variable_modifications = numeric(),
-                                   max_mods = Inf) {
-    modifiable_positions_var <-
-        which(fragment.seq %in% names(variable_modifications))
-
-    l <- length(modifiable_positions_var)
-
-    ## take the maximum amount of modifications possible
-    max_mods <- min(max_mods, l)
-
-    if (!length(variable_modifications) || max_mods <= 0)
-        return(
-            list(setNames(integer(length(fragment.seq)), fragment.seq))
-        )
-
-    .mod <- function(cmb,
-                     seq_split = fragment.seq,
-                     var_mods = variable_modifications) {
-        m <- setNames(integer(length(seq_split)), seq_split)
-        m[cmb] <- var_mods[seq_split[cmb]]
-        m
-    }
-
-    c(
-        list(setNames(integer(length(fragment.seq)), fragment.seq)),
-        if (length(modifiable_positions_var) == 1)
-            lapply(modifiable_positions_var, .mod)
-        else
-            unlist(
-                lapply(seq_len(max_mods),
-                       function(n)combn(
-                           modifiable_positions_var, n,
-                           FUN = .mod,
-                           simplify = FALSE
-                       )
-                ),
-                recursive = FALSE
-            )
-    )
-}
-
-.cumsumFragmentMasses <- function(modificationCombination, fragmentMasses) {
-
-    modificationCombination <-
-        modificationCombination[-NROW(modificationCombination)]
-
-    fragmentMasses + cumsum(modificationCombination)
 }
 
 #' adds neutral loss to data.frame generated by .calculateFragments
@@ -561,27 +420,29 @@ setMethod("calculateFragments", c("character", "missing"),
 #'
 #' @param df data.frame generated by. calculateFragments
 #'
-#' @return modified data.frame
+#' @return termini-modified data.frame
 #'
 #' @noRd
-.terminalModifications <- function(df, modifications) {
+.addTerminalMasses <- function(df, parsedModifications) {
 
-    if ("Nterm" %in% names(modifications)) {
+    nterm <- attr(parsedModifications, "Nterm")
+    cterm <- attr(parsedModifications, "Cterm")
+
+    if (!is.na(nterm)) {
         isABC <- grep("[abc]", df$type)
 
         if (length(isABC)) {
-            df$mz[isABC] <- df$mz[isABC] + modifications["Nterm"] / df$z[isABC]
+            df$mz[isABC] <- df$mz[isABC] + nterm / df$z[isABC]
         }
     }
 
-    if ("Cterm" %in% names(modifications)) {
-        isXYZ <- grep("[xyz]", df$type)
+    if (!is.na(cterm)) {
+            isXYZ <- grep("[xyz]", df$type)
 
-        if (length(isXYZ)) {
-            df$mz[isXYZ] <- df$mz[isXYZ] + modifications["Cterm"] / df$z[isXYZ]
+            if (length(isXYZ)) {
+                df$mz[isXYZ] <- df$mz[isXYZ] + cterm / df$z[isXYZ]
+            }
         }
-    }
-
     df
 }
 

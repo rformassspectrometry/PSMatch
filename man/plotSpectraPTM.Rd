@@ -139,11 +139,14 @@ plotSpectraPTM(sp, deltaMz = FALSE)
 ## Annotate the spectrum with different ion types
 plotSpectraPTM(sp, type = c("a", "b", "x", "y"))
 
-## Annotate the spectrum with variable modifications
-plotSpectraPTM(sp, variable_modifications = c(R = 49.469))
+## Annotate the spectrum with modifications using PTMods
+sp_mod <- sp
+sp_mod$sequence <- PTMods::addFixedModifications("SIGFEGDSIGR",
+                                                  fixedModifications = c(Nterm = 49.469))
+plotSpectraPTM(sp_mod)
 
 ## Annotate multiple spectra at a time
-plotSpectraPTM(c(sp,sp), variable_modifications = c(R = 49.469))
+plotSpectraPTM(c(sp, sp))
 
 ## Color the peaks with different colors
 plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
