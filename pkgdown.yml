@@ -1,8 +1,8 @@
-pandoc: 3.8.2.1
+pandoc: '3.9'
 pkgdown: 2.2.0.9000
 pkgdown_sha: a6abe43ed48e58b1de42eba5e5541a5b6c46b46f
 articles:
   AdjacencyMatrix: AdjacencyMatrix.html
   Fragments: Fragments.html
   PSM: PSM.html
-last_built: 2026-03-16T21:23Z
+last_built: 2026-03-16T21:32Z
