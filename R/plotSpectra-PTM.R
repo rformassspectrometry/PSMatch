@@ -300,13 +300,13 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     title(ylab = ylab, line = 2.5, cex = 0.9)
     mtext(xlab, side = 1, line = -0.5, at = c(par("usr")[2]))
 
-    subtxt <- paste0(
-        "mzspec/",
-        basename(spectraData(x)[["dataOrigin"]]),
-        "/scan: ", spectraData(x)[["scanIndex"]],
-        "/rt: ", round(spectraData(x)[["rtime"]], 2L),
-        "/charge: ", spectraData(x)[["charge"]],
-        "/peptide: ", peptide_sequence
+    subtxt <- bquote(
+    "mzspec/" *
+    .(basename(spectraData(x)[["dataOrigin"]])) *
+    "/scan: " * .(spectraData(x)[["scanIndex"]]) *
+    "/rt: " * .(round(spectraData(x)[["rtime"]], 2L)) *
+    "/charge: " * .(spectraData(x)[["charge"]]) *
+    "/peptide: " * bold(.(peptide_sequence))
     )
 
     if (USI) mtext(subtxt, line = -1.75, cex = 0.9)
@@ -417,8 +417,8 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
 
     ## Extract plain amino acid letters, stripping all modifications and
     ## any non-letter characters (e.g. hyphens in N/C-terminal notation)
-    stripped <- gsub("\\[[^\\]]*\\]", "", peptide_sequence)
-    plain_aas <- strsplit(gsub("[^A-Z]", "", stripped), "")[[1L]]
+    stripped <- PTMods::getCanonicalSequence(peptide_sequence)
+    plain_aas <- strsplit(stripped, "")[[1L]]
 
     xlimit <- par("usr")[1L:2L]
     ## we added 10x strheight space in .plot_single_spectrum_PTM;

@@ -68,10 +68,6 @@
 #' @param verbose `logical(1)`. Deprecated parameter.
 #' If `TRUE` (default) the used modifications are printed.
 #'
-#' @param modifications Named `numeric()`. Deprecated modifications parameter.
-#' Will override `fixed_modifications` but is set to `NULL` by default. Please
-#' refrain from using it, opt for `fixed_modifications` instead.
-#'
 #' @return A `data.frame` showing all the
 #' ions produced by fragmentation with all possible combinations of modifications.
 #' The used variable modifications are displayed in the `peptide` column through the
@@ -98,7 +94,7 @@
 #'
 #' ## Positional modification written directly in the sequence string
 #' ## The annotation style must be supported by PTMods::convertAnnotation
-#' calculateFragments("A[+43.25]CE")
+#' calculateFragments("T[+79.966]CE")
 #' calculateFragments("T[Phospho]CE")
 #' calculateFragments("T[UNIMOD:21]C[Carbamidomethyl]E")
 #'
@@ -149,25 +145,16 @@ setMethod("calculateFragments", c("character", "missing"),
                    variable_modifications = NULL,
                    max_mods = Inf,
                    neutralLoss = defaultNeutralLoss(),
-                   verbose = TRUE,
-                   modifications = NULL) {
-
-        if (!is.null(modifications)) {
-            warning("'modifications' is deprecated,
-                please use 'PTMods::addFixedModifications' instead.")
-            fixed_modifications <- modifications
-        }
+                   verbose = TRUE) {
 
         if (!is.null(fixed_modifications)) {
             warning("'fixed_modifications' is deprecated,
-                please use 'PTMods::addFixedModifications' instead.")
-            fixed_modifications <- modifications
+                please use 'PTMods::addFixedModifications()' instead.")
         }
 
         if (!is.null(variable_modifications)) {
             warning("'variable_modifications' is deprecated,
-                please use 'PTMods::addVariableModifications' instead.")
-            fixed_modifications <- modifications
+                please use 'PTMods::addVariableModifications()' instead.")
         }
 
         if (!is.null(fixed_modifications) | !is.null(variable_modifications)) {

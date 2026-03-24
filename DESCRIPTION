@@ -32,7 +32,8 @@ Description: The PSMatch package helps proteomics practitioners to
     provides functions to calculate and visualise MS2 fragment ions.
 Depends:
     S4Vectors,
-    R (>= 4.1.0)
+    R (>= 4.1.0),
+    PTMods (>= 0.99.3)
 Imports:
     utils,
     stats,

@@ -15,8 +15,7 @@
   variable_modifications = NULL,
   max_mods = Inf,
   neutralLoss = defaultNeutralLoss(),
-  verbose = TRUE,
-  modifications = NULL
+  verbose = TRUE
 )
 }
 \arguments{
@@ -67,10 +66,6 @@ the example section for use cases.
 
 \item{verbose}{\code{logical(1)}. Deprecated parameter.
 If \code{TRUE} (default) the used modifications are printed.}
-
-\item{modifications}{Named \code{numeric()}. Deprecated modifications parameter.
-Will override \code{fixed_modifications} but is set to \code{NULL} by default. Please
-refrain from using it, opt for \code{fixed_modifications} instead.}
 }
 \value{
 A \code{data.frame} showing all the
@@ -107,7 +102,7 @@ calculateFragments("ACE",
 
 ## Positional modification written directly in the sequence string
 ## The annotation style must be supported by PTMods::convertAnnotation
-calculateFragments("A[+43.25]CE")
+calculateFragments("T[+79.966]CE")
 calculateFragments("T[Phospho]CE")
 calculateFragments("T[UNIMOD:21]C[Carbamidomethyl]E")
 

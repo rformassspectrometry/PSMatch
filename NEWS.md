@@ -2,8 +2,11 @@
 
 ## PSMatch 1.15.1
 
-- Add positional modfifications in `calculateFragments()` (see
-[pull 37](https://github.com/rformassspectrometry/PSMatch/pull/37))
+- Annotations in `plotSpectraPTM()` are canonical, actual identification is
+highlighted in bold in the USI.
+- Add PTMods dependency and thus positional modifications in
+`calculateFragments()` (see
+[issue 38](https://github.com/rformassspectrometry/PSMatch/issues/38))
 - Fix minor check notes (Rd link and IRanges import)
 
 ## PSMatch 1.15.0
