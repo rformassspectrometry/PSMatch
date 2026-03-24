@@ -2,8 +2,8 @@
 
 ## PSMatch 1.15.1
 
-- Annotations in `plotSpectraPTM()` are canonical, actual identification is
-highlighted in bold in the USI.
+- Corrected `plotSpectraPTM()` relative `PTMods` dependencies, identifications
+are highlighted in bold in the USI.
 - Add PTMods dependency and thus positional modifications in
 `calculateFragments()` (see
 [issue 38](https://github.com/rformassspectrometry/PSMatch/issues/38))
