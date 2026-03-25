@@ -1,6 +1,6 @@
 citHeader("To cite the PSMatch package in publications use:")
 
-citEntry(entry = "Manual",  
+citEntry(entry = "Manual",
          title  = "PSMatch: an R/Bioconductor package to explore proteomics identification data.",
          author = personList(
            person(given = "Guillaume", family = "Deflandre"),
@@ -11,5 +11,5 @@ citEntry(entry = "Manual",
          doi = "https://doi.org/10.31219/osf.io/62v9p_v2",
          textVersion = paste("G. Deflandre, S. Gibbs and L. Gatto.",
                              "PSMatch: an R/Bioconductor package to explore proteomics identification data.",
-                             "OSF; doi: https://doi.org/10.31219/osf.io/62v9p_v2")
+                             "OSF; doi: https://doi.org/10.31219/osf.io/62v9p_v3")
          )
