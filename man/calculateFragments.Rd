@@ -13,6 +13,7 @@
   z = 1,
   fixed_modifications = NULL,
   variable_modifications = NULL,
+  addCarbamidomethyl = TRUE,
   max_mods = Inf,
   neutralLoss = defaultNeutralLoss(),
   verbose = TRUE
@@ -43,6 +44,10 @@ is given, values must be in UniMod name or UniMod ID format
 (e.g. \code{"Phospho"}, \code{"UNIMOD:21"}). The annotation style of
 the values is preserved in the output. Specifies which
 variable modifications are used on which amino acids.}
+
+\item{addCarbamidomethyl}{logical(1L) set to \code{TRUE} by default. Applies
+carbamidomethylation as a fixed modification unless \code{fixed_modifications} is
+not \code{NULL} or if a carbamidomethyl is already present in the given sequences.}
 
 \item{max_mods}{Deprecated parameter. Please use in combination with
 PTMods::addVariableModifications() instead. A numeric indicating the
