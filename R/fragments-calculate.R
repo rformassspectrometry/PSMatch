@@ -41,6 +41,8 @@
 #' @param addCarbamidomethyl logical(1L) set to `TRUE` by default. Applies
 #' carbamidomethylation as a fixed modification unless `fixed_modifications` is
 #' not `NULL` or if a carbamidomethyl is already present in the given sequences.
+#' It is strongly suggested to rely on `PTMods::addFixedModifications()`
+#' instead.
 #'
 #' @param variable_modifications Deprecated parameter. Please use
 #' [PTMods::addVariableModifications()] to generate sequences with positional
@@ -100,6 +102,8 @@
 #' ## The annotation style must be supported by PTMods::convertAnnotation
 #' calculateFragments("T[+79.966]CE")
 #' calculateFragments("T[Phospho]CE")
+#' ## Notice carbamidomethylation applied by default, but ignored if already
+#' ## present.
 #' calculateFragments("T[UNIMOD:21]C[Carbamidomethyl]E")
 #'
 #' ## neutral loss

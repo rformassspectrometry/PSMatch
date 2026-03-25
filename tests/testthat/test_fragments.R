@@ -38,8 +38,17 @@ test_that("calculateFragments", {
         peptide = rep("ACE", 12),
         stringsAsFactors=FALSE)
 
-    expect_warning(calculateFragments("PQR", modifications = c(P=2)),
-                   "'modifications' is deprecated, please use 'fixed_modifications' instead.")
+    ## Deprecated parameters produce warnings
+    expect_warning(
+        calculateFragments("PQR", fixed_modifications = c(P = 2),
+                           verbose = FALSE),
+        "'fixed_modifications'.*deprecated"
+    )
+    expect_warning(
+        calculateFragments("PQR", variable_modifications = c(P = 2),
+                           verbose = FALSE),
+        "'variable_modifications'.*deprecated"
+    )
 
     expect_equal(pqr[1:12,],
                  calculateFragments("PQR",
@@ -82,25 +91,35 @@ test_that("calculateFragments", {
     tpqr <- pqr[c(3:4, 9:10, 13:15),]
     tpqr$mz[1:2] <- tpqr$mz[1:2] + 229
     expect_equal(tpqr,
-                 calculateFragments("PQR", fixed_modifications = c(C = 57.02146, Nterm = 229),
-                                    verbose = FALSE),
+                 suppressWarnings(
+                     calculateFragments(
+                         "PQR",
+                         fixed_modifications = c(C = 57.02146, Nterm = 229),
+                         verbose = FALSE)),
                  check.attributes = FALSE, tolerance = 1e-5)
 
     ## neutral loss + nterm + cterm mod, rownames always differ
     tpqr$mz[3:7] <- tpqr$mz[3:7] - 100
     expect_equal(tpqr,
-                 calculateFragments("PQR", fixed_modifications = c(C = 57.02146,
-                                                             Nterm = 229,
-                                                             Cterm = -100),
-                                    verbose = FALSE),
+                 suppressWarnings(
+                     calculateFragments(
+                         "PQR",
+                         fixed_modifications = c(C = 57.02146,
+                                                 Nterm = 229,
+                                                 Cterm = -100),
+                         verbose = FALSE)),
                  check.attributes = FALSE, tolerance = 1e-5)
 
     expect_equal(ace,
                  calculateFragments("ACE", type = c("a", "b", "c", "x", "y", "z"),
-                                    z = 2, neutralLoss = NULL, verbose = FALSE),
+                                    z = 2, neutralLoss = NULL,
+                                    addCarbamidomethyl = FALSE,
+                                    verbose = FALSE),
                  tolerance = 1e-5)
     expect_equal(ace[1:6,],
-                 calculateFragments("ACE", type = letters[1:3], z = 2, verbose = FALSE),
+                 calculateFragments("ACE", type = letters[1:3], z = 2,
+                                    addCarbamidomethyl = FALSE,
+                                    verbose = FALSE),
                  tolerance = 1e-5)
 
     expect_error(calculateFragments("A"), "two or more residues")
@@ -108,18 +127,24 @@ test_that("calculateFragments", {
     ## issue #200 (mz are not calculated correctly for terminal fixed_modifications
     ## and z > 1)
     p <- getAtomicMass()["p"]
-    expect_equal(calculateFragments("AA", z = 2,
-                                    fixed_modifications = c(Nterm = 10),
-                                    type = "b")$mz - p,
-                 (calculateFragments("AA", z = 1,
-                                     fixed_modifications = c(Nterm = 10),
-                                     type = "b")$mz - p )/ 2)
-    expect_equal(calculateFragments("AA", z = 2, neutralLoss = NULL,
-                                    fixed_modifications = c(Cterm = 10),
-                                    type = "y")$mz - p,
-                 (calculateFragments("AA", z = 1, neutralLoss = NULL,
-                                     fixed_modifications = c(Cterm = 10),
-                                     type = "y")$mz - p) / 2)
+    expect_equal(
+        suppressWarnings(
+            calculateFragments("AA", z = 2,
+                               fixed_modifications = c(Nterm = 10),
+                               type = "b"))$mz - p,
+        (suppressWarnings(
+            calculateFragments("AA", z = 1,
+                               fixed_modifications = c(Nterm = 10),
+                               type = "b"))$mz - p) / 2)
+    expect_equal(
+        suppressWarnings(
+            calculateFragments("AA", z = 2, neutralLoss = NULL,
+                               fixed_modifications = c(Cterm = 10),
+                               type = "y"))$mz - p,
+        (suppressWarnings(
+            calculateFragments("AA", z = 1, neutralLoss = NULL,
+                               fixed_modifications = c(Cterm = 10),
+                               type = "y"))$mz - p) / 2)
 
     ## See issue 573 in MSnbase (charge is ignored in neutral loss
     ## calculation)
@@ -156,67 +181,59 @@ test_that("defaultNeutralLoss", {
 
 test_that("calculateFragments: Default behaviour without modifications", {
 
-    ## Test 1: Default behavior without modifications
+    ## Default behavior without modifications
     sequence <- "PQR"
     result <- calculateFragments(
         sequence = sequence,
         type = c("b", "y"),
         z = 1,
-        fixed_modifications = NULL,
-        variable_modifications = numeric(),
-        max_mods = Inf,
+        addCarbamidomethyl = FALSE,
         neutralLoss = defaultNeutralLoss(),
         verbose = FALSE
     )
 
     ## Check unique peptide without modifications
     expect_identical(unique(result$peptide), "PQR")
-    })
+})
 
 test_that("calculateFragments: Default behaviour with positional modifications", {
 
-    ## Test 1: Default behavior with positional modifications
+    ## Default behavior with positional modifications in sequence string
     sequence <- "PQ[+10]R"
     result <- calculateFragments(
         sequence = sequence,
         type = c("b", "y"),
         z = 1,
-        fixed_modifications = NULL,
-        variable_modifications = numeric(),
-        max_mods = Inf,
+        addCarbamidomethyl = FALSE,
         neutralLoss = defaultNeutralLoss(),
         verbose = FALSE
     )
 
-    ## Check unique peptide without modifications
+    ## Check unique peptide label preserved
     expect_identical(unique(result$peptide), "PQ[+10]R")
 })
 
 test_that("calculateFragments: Behaviour with fixed modifications", {
-    ## Test 2: Fixed modifications
+    ## Deprecated fixed_modifications path: still works, produces a warning
     sequence <- "PQR"
     result <- calculateFragments(
         sequence = sequence,
         type = c("b", "y"),
         z = 1,
-        fixed_modifications = NULL,
-        variable_modifications = NULL,
-        max_mods = Inf,
+        addCarbamidomethyl = FALSE,
         neutralLoss = list(water = c(), ammonia = c()),
-        verbose = FALSE,
-        modifications = NULL
+        verbose = FALSE
     )
     fixed_modifications <- c(P = 79.966)
-    result_fixed <- calculateFragments(
-        sequence = sequence,
-        type = c("b", "y"),
-        z = 1,
-        fixed_modifications = fixed_modifications,
-        variable_modifications = NULL,
-        max_mods = 0,
-        neutralLoss = list(water = c(), ammonia = c()),
-        verbose = FALSE,
-        modifications = NULL
+    result_fixed <- suppressWarnings(
+        calculateFragments(
+            sequence = sequence,
+            type = c("b", "y"),
+            z = 1,
+            fixed_modifications = fixed_modifications,
+            neutralLoss = list(water = c(), ammonia = c()),
+            verbose = FALSE
+        )
     )
 
     ## Fixed modifications do not produce additional unique peptides
@@ -228,42 +245,41 @@ test_that("calculateFragments: Behaviour with fixed modifications", {
 })
 
 test_that("calculateFragments: Behaviour with variable modifications", {
-    ## Test 3: Variable modifications only
+    ## Deprecated variable_modifications path: still works, produces warnings
     sequence <- "PQR"
     result <- calculateFragments(
         sequence = sequence,
         type = c("b", "y"),
         z = 1,
-        fixed_modifications = NULL,
-        variable_modifications = NULL,
-        max_mods = Inf,
+        addCarbamidomethyl = FALSE,
         neutralLoss = list(water = c(), ammonia = c()),
         verbose = FALSE
     )
 
     fixed_modifications <- c(P = 79.966)
-    result_fixed <- calculateFragments(
-        sequence = sequence,
-        type = c("b", "y"),
-        z = 1,
-        fixed_modifications = fixed_modifications,
-        variable_modifications = NULL,
-        max_mods = 0,
-        neutralLoss = list(water = c(), ammonia = c()),
-        verbose = FALSE
+    result_fixed <- suppressWarnings(
+        calculateFragments(
+            sequence = sequence,
+            type = c("b", "y"),
+            z = 1,
+            fixed_modifications = fixed_modifications,
+            neutralLoss = list(water = c(), ammonia = c()),
+            verbose = FALSE
+        )
     )
 
     variable_modifications <- c(P = 79.966, Q = 20, R = 10)
     max_mods <- 2
-    result_var <- calculateFragments(
-        sequence = sequence,
-        type = c("b", "y"),
-        z = 1,
-        fixed_modifications = NULL,
-        variable_modifications = variable_modifications,
-        max_mods = max_mods,
-        neutralLoss = list(water = c(), ammonia = c()),
-        verbose = FALSE
+    result_var <- suppressWarnings(
+        calculateFragments(
+            sequence = sequence,
+            type = c("b", "y"),
+            z = 1,
+            variable_modifications = variable_modifications,
+            max_mods = max_mods,
+            neutralLoss = list(water = c(), ammonia = c()),
+            verbose = FALSE
+        )
     )
 
     ## Calculate expected combinations
@@ -273,41 +289,100 @@ test_that("calculateFragments: Behaviour with variable modifications", {
     ## Check if number of unique peptides matches expectations
     expect_equal(length(unique(result_var$peptide)), expected_combinations)
 
-    ## Check if it's true in case there are less modifications than max_mods
+    ## Check if it's true in case there are fewer modifications than max_mods
     variable_modifications <- c(P = 79.966)
     max_mods <- 2
-    result_var <- calculateFragments(
-        sequence = sequence,
-        type = c("b", "y"),
-        z = 1,
-        fixed_modifications = NULL,
-        variable_modifications = variable_modifications,
-        max_mods = max_mods,
-        neutralLoss = list(water = c(), ammonia = c()),
-        verbose = FALSE
+    result_var <- suppressWarnings(
+        calculateFragments(
+            sequence = sequence,
+            type = c("b", "y"),
+            z = 1,
+            variable_modifications = variable_modifications,
+            max_mods = max_mods,
+            neutralLoss = list(water = c(), ammonia = c()),
+            verbose = FALSE
+        )
     )
 
     ## Calculate expected combinations
-    expected_combinations <- choose(1, 0) + choose(1,1)
+    expected_combinations <- choose(1, 0) + choose(1, 1)
 
     ## Check if number of unique peptides matches expectations
     expect_equal(length(unique(result_var$peptide)), expected_combinations)
 
-    ## Test 4: Fixed and variable modifications combined
-    result_combined <- calculateFragments(
-        sequence = sequence,
-        type = c("b", "y"),
-        z = 1,
-        fixed_modifications = fixed_modifications,
-        variable_modifications = variable_modifications,
-        max_mods = max_mods,
-        neutralLoss = list(water = c(), ammonia = c()),
-        verbose = FALSE
+    ## Fixed and variable modifications combined
+    result_combined <- suppressWarnings(
+        calculateFragments(
+            sequence = sequence,
+            type = c("b", "y"),
+            z = 1,
+            fixed_modifications = fixed_modifications,
+            variable_modifications = variable_modifications,
+            max_mods = max_mods,
+            neutralLoss = list(water = c(), ammonia = c()),
+            verbose = FALSE
+        )
     )
 
     ## Check equal mass of variable mods fragments and no mods fragments
-    expect_true(all(result$mz == result_var[result_var$peptide == "PQR","mz"]))
+    expect_true(all(result$mz == result_var[result_var$peptide == "PQR", "mz"]))
 
     ## Check equal mass of variable mods fragments and fixed mods fragments
-    expect_true(all(result_fixed$mz == result_var[result_var$peptide == "[P]QR","mz"]))
+    expect_true(
+        all(result_fixed$mz == result_var[result_var$peptide == "[P]QR", "mz"])
+    )
+})
+
+test_that("calculateFragments: addCarbamidomethyl parameter", {
+
+    ## addCarbamidomethyl = FALSE: no extra mass on C-containing fragments
+    result_no <- calculateFragments(
+        "ACE",
+        type = "b",
+        neutralLoss = NULL,
+        addCarbamidomethyl = FALSE,
+        verbose = FALSE
+    )
+
+    ## addCarbamidomethyl = TRUE (default): adds 57.02146 to C-containing
+    ## fragments
+    result_cbm <- calculateFragments(
+        "ACE",
+        type = "b",
+        neutralLoss = NULL,
+        addCarbamidomethyl = TRUE,
+        verbose = FALSE
+    )
+
+    ## b2 contains C (seq = "AC"), mass difference should be 57.02146
+    b2_no  <- result_no[result_no$ion == "b2", "mz"]
+    b2_cbm <- result_cbm[result_cbm$ion == "b2", "mz"]
+    expect_equal(b2_cbm - b2_no, 57.02146, tolerance = 1e-5)
+
+    ## b1 contains only A (seq = "A"), no difference expected
+    b1_no  <- result_no[result_no$ion == "b1", "mz"]
+    b1_cbm <- result_cbm[result_cbm$ion == "b1", "mz"]
+    expect_equal(b1_cbm - b1_no, 0, tolerance = 1e-5)
+
+    ## If [Carbamidomethyl] is already present in the sequence, it should not
+    ## be added again
+    result_present <- calculateFragments(
+        "AC[Carbamidomethyl]E",
+        type = "b",
+        neutralLoss = NULL,
+        addCarbamidomethyl = TRUE,
+        verbose = FALSE
+    )
+    expect_equal(result_cbm$mz, result_present$mz, tolerance = 1e-5)
+
+    ## Sequences without C are unaffected by addCarbamidomethyl
+    result_pqr_false <- calculateFragments(
+        "PQR", type = "b", neutralLoss = NULL,
+        addCarbamidomethyl = FALSE, verbose = FALSE
+    )
+    result_pqr_true <- calculateFragments(
+        "PQR", type = "b", neutralLoss = NULL,
+        addCarbamidomethyl = TRUE, verbose = FALSE
+    )
+    expect_equal(result_pqr_false$mz, result_pqr_true$mz, tolerance = 1e-5)
 })
