@@ -28,8 +28,8 @@ test_that("labelFragments() works", {
 
 test_that("labelFragments() works with multiple Spectra", {
     seq <- c("PQR", "ACE")
-    frags_pqr <- calculateFragments(seq)[1:7,]
-    frags_ace <- calculateFragments(seq)[8:13,]
+    frags_pqr <- calculateFragments(seq, addCarbamidomethyl = FALSE)[1:7,]
+    frags_ace <- calculateFragments(seq, addCarbamidomethyl = FALSE)[8:13,]
     o_pqr <- order(frags_pqr$mz)
     o_ace <- order(frags_ace$mz)
     sp <- DataFrame(msLevel = c(2L, 2L), rtime = c(2345, 2346), sequence = seq)
@@ -37,7 +37,7 @@ test_that("labelFragments() works with multiple Spectra", {
     sp$intensity <- c(list(rep(1, 7)), list(rep(1, 6)))
     sp <- Spectra(sp)
     ## all fragments
-    ans <- labelFragments(sp)
+    ans <- labelFragments(sp, addCarbamidomethyl = FALSE)
     ## Number of elements equal the possibilities of peptide sequences
     ## This instance: no mod, 1 mod on Q: 2 possibilities
     expect_equal(length(ans), 2)
