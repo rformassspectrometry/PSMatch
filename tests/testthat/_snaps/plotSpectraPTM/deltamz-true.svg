@@ -159,16 +159,16 @@
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='691.20' y='425.57' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='19.34px' lengthAdjust='spacingAndGlyphs'>m/z</text>
-<text x='199.70' y='34.48' style='font-size: 10.80px; font-family: sans;' textLength='40.23px' lengthAdjust='spacingAndGlyphs'>mzspec/</text>
-<text x='239.92' y='34.48' style='font-size: 10.80px; font-family: sans;' textLength='63.63px' lengthAdjust='spacingAndGlyphs'>testfile.mzML</text>
-<text x='303.55' y='34.48' style='font-size: 10.80px; font-family: sans;' textLength='31.82px' lengthAdjust='spacingAndGlyphs'>/scan: </text>
-<text x='335.37' y='34.48' style='font-size: 10.80px; font-family: sans;' textLength='6.01px' lengthAdjust='spacingAndGlyphs'>1</text>
-<text x='341.38' y='34.48' style='font-size: 10.80px; font-family: sans;' textLength='15.60px' lengthAdjust='spacingAndGlyphs'>/rt: </text>
-<text x='356.98' y='34.48' style='font-size: 10.80px; font-family: sans;' textLength='24.03px' lengthAdjust='spacingAndGlyphs'>2345</text>
-<text x='381.01' y='34.48' style='font-size: 10.80px; font-family: sans;' textLength='42.03px' lengthAdjust='spacingAndGlyphs'>/charge: </text>
-<text x='423.04' y='34.48' style='font-size: 10.80px; font-family: sans;' textLength='6.01px' lengthAdjust='spacingAndGlyphs'>2</text>
-<text x='429.04' y='34.48' style='font-size: 10.80px; font-family: sans;' textLength='44.43px' lengthAdjust='spacingAndGlyphs'>/peptide: </text>
-<text x='473.48' y='34.48' style='font-size: 10.80px; font-weight: bold; font-family: sans;' textLength='75.63px' lengthAdjust='spacingAndGlyphs'>HIGFEGDSIGR</text>
+<text x='199.70' y='34.05' style='font-size: 10.80px; font-family: sans;' textLength='40.23px' lengthAdjust='spacingAndGlyphs'>mzspec/</text>
+<text x='239.92' y='34.05' style='font-size: 10.80px; font-family: sans;' textLength='63.63px' lengthAdjust='spacingAndGlyphs'>testfile.mzML</text>
+<text x='303.55' y='34.05' style='font-size: 10.80px; font-family: sans;' textLength='31.82px' lengthAdjust='spacingAndGlyphs'>/scan: </text>
+<text x='335.37' y='34.05' style='font-size: 10.80px; font-family: sans;' textLength='6.01px' lengthAdjust='spacingAndGlyphs'>1</text>
+<text x='341.38' y='34.05' style='font-size: 10.80px; font-family: sans;' textLength='15.60px' lengthAdjust='spacingAndGlyphs'>/rt: </text>
+<text x='356.98' y='34.05' style='font-size: 10.80px; font-family: sans;' textLength='24.03px' lengthAdjust='spacingAndGlyphs'>2345</text>
+<text x='381.01' y='34.05' style='font-size: 10.80px; font-family: sans;' textLength='42.03px' lengthAdjust='spacingAndGlyphs'>/charge: </text>
+<text x='423.04' y='34.05' style='font-size: 10.80px; font-family: sans;' textLength='6.01px' lengthAdjust='spacingAndGlyphs'>2</text>
+<text x='429.04' y='34.05' style='font-size: 10.80px; font-family: sans;' textLength='44.43px' lengthAdjust='spacingAndGlyphs'>/peptide: </text>
+<text x='473.48' y='34.05' style='font-size: 10.80px; font-weight: bold; font-family: sans;' textLength='75.63px' lengthAdjust='spacingAndGlyphs'>HIGFEGDSIGR</text>
 </g>
 <g clip-path='url(#cpNTcuNjB8NjkxLjIwfDE0LjQwfDQyMS4yNQ==)'>
 <text transform='translate(596.11,220.79) rotate(-90)' style='font-size: 10.80px; font-family: sans;' textLength='45.35px' lengthAdjust='spacingAndGlyphs'>1.96e+06</text>
