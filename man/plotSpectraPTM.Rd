@@ -22,6 +22,8 @@ plotSpectraPTM(
   asp = 1,
   minorTicks = TRUE,
   USI = TRUE,
+  fixedModifications = NULL,
+  variableModifications = NULL,
   ...
 )
 }
@@ -77,6 +79,15 @@ plots.  Default is set to \code{TRUE}.}
 
 \item{USI}{\code{logical(1L)}. If \code{TRUE}, the universal spectrum identifier is
 displayed.}
+
+\item{fixedModifications}{Named \code{numeric} or \code{character}, passed to
+\code{PTMods::addFixedModifications()}. Applied to all sequences before
+plotting. \code{NULL} by default (no fixed modifications applied).}
+
+\item{variableModifications}{Named \code{numeric} or \code{character}, passed to
+\code{PTMods::addVariableModifications()}. Each unique combination of
+variable modifications generates a separate copy of the corresponding
+spectrum. \code{NULL} by default (no variable modifications applied).}
 
 \item{...}{additional parameters to be passed to the \code{labelFragments()}
 function.}
@@ -144,6 +155,10 @@ sp_mod <- sp
 sp_mod$sequence <- PTMods::addFixedModifications("SIGFEGDSIGR",
                                                   fixedModifications = c(Nterm = 49.469))
 plotSpectraPTM(sp_mod)
+
+## Or call them within the function directly:
+plotSpectraPTM(sp, fixedModifications = c(Nterm = 49.496),
+variableModifications = c(T = "Phospho"))
 
 ## Annotate multiple spectra at a time
 plotSpectraPTM(c(sp, sp))
