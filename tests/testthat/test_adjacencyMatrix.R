@@ -45,7 +45,7 @@ test_that("Check makeAjacendyMatrix() fails with wrong input", {
 })
 
 test_that("makeAjacendyMatrix() works on PSM data (1)", {
-    vec2 <- c(vec, vec[5]) ## Duplicated sequence  
+    vec2 <- c(vec, vec[5]) ## Duplicated sequence
     psm <- data.frame(peptide = names(vec2), protein = vec2)
     psm <- PSM(psm, peptide = "peptide", protein = "protein")
     adj <- makeAdjacencyMatrix(psm)
@@ -59,7 +59,7 @@ test_that("makeAjacendyMatrix() works on PSM data (1)", {
 })
 
 test_that("makeAjacendyMatrix() works on PSM data (2)", {
-    f <- msdata::ident(full.names = TRUE, pattern = "TMT")
+    f <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
     psm <- PSM(f)
     adj <- makeAdjacencyMatrix(psm)
     n_pep <- length(unique(psm[[psmVariables(psm)["peptide"]]]))
@@ -83,8 +83,8 @@ test_that("makeAjacendyMatrix() works on PSM data (2)", {
 
 
 test_that("ajacendyMatrix() accessor works", {
-    vec2 <- c(vec, vec[5]) ## Duplicated sequence  
-    psm <- data.frame(peptide = names(vec2), protein = vec2) |> 
+    vec2 <- c(vec, vec[5]) ## Duplicated sequence
+    psm <- data.frame(peptide = names(vec2), protein = vec2) |>
         PSM(peptide = "peptide", protein = "protein")
     ## set to binary to get the same result as the adjacencyMatrix,PSM
     ## accessor that created adj1
@@ -101,11 +101,11 @@ test_that("ajacendyMatrix() accessor works", {
 
 
 test_that("plotAdjacencyMatrix() works", {
-    cc <-  msdata::ident(full.names = TRUE, pattern = "TMT") |>
-    PSM() |>
-    filterPsmDecoy() |>
-    filterPsmRank() |>
-    ConnectedComponents()
+    cc <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid() |>
+        PSM() |>
+        filterPsmDecoy() |>
+        filterPsmRank() |>
+        ConnectedComponents()
     g <- plotAdjacencyMatrix(connectedComponents(cc, 672))
     expect_true(is(g, "igraph"))
     expect_identical(V(g)$color, c(NA_character_, "steelblue"))
@@ -117,12 +117,12 @@ test_that("plotAdjacencyMatrix() works", {
 })
 
 test_that("plotAdjacencyMatrix() attributes work", {
-    adj <-  msdata::ident(full.names = TRUE, pattern = "TMT") |>
-    PSM() |>
-    filterPsmDecoy() |>
-    filterPsmRank() |>
-    ConnectedComponents() |>
-    connectedComponents(1082)
+    adj <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid() |>
+        PSM() |>
+        filterPsmDecoy() |>
+        filterPsmRank() |>
+        ConnectedComponents() |>
+        connectedComponents(1082)
     ## ------------------------
     ## Test default colours
     g <- plotAdjacencyMatrix(adj)

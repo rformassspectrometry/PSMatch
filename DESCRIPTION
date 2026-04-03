@@ -1,6 +1,6 @@
 Package: PSMatch
 Title: Handling and Managing Peptide Spectrum Matches
-Version: 1.15.1
+Version: 1.15.2
 Authors@R:
    c(person(given = "Laurent", family = "Gatto",
             email = "laurent.gatto@uclouvain.be",
@@ -46,7 +46,7 @@ Imports:
     QFeatures,
     MsCoreUtils
 Suggests:
-    msdata,
+    MsDataHub,
     rpx,
     mzID,
     mzR,

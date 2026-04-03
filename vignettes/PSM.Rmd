@@ -8,7 +8,7 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
     %\VignettePackage{PSMatch}
-    %\VignetteDepends{mzR,mzID,BiocStyle,msdata}
+    %\VignetteDepends{mzR,mzID,BiocStyle,MsDataHub}
 ---
 
 ```{r style, echo = FALSE, results = 'asis', message=FALSE}
@@ -48,11 +48,10 @@ overview of the package, see the `PSMatch` package manual page
 
 ## Loading PSM data
 
-We are going to use an `mzid` file from the `msdata` package.
+We are going to use an `mzid` file from the `MsDataHub` package.
 
 ```{r}
-f <- msdata::ident(full.names = TRUE, pattern = "TMT")
-basename(f)
+f <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
 ```
 
 The `PSM()` function parses one or multiple `mzid` files and returns

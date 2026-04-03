@@ -25,9 +25,8 @@
 ##' @noRd
 ##'
 ##' @examples
-##' ## find path to an mzIdentML file
-##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
-##' basename(f)
+##' ## Get an mzIdentML file
+##' f <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
 ##'
 ##' library("mzR")
 ##' x <- openIDfile(f)

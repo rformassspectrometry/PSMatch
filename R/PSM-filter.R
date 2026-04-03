@@ -46,8 +46,8 @@
 ##' @export
 ##'
 ##' @examples
-##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
-##' basename(f)
+##' f <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
+##'
 ##' id <- PSM(f)
 ##' filterPSMs(id)
 filterPSMs <- function(x,
@@ -169,6 +169,6 @@ filterPsmFdr <- function(x,
     x <- x[x[, fdr] < FDR, ]
     n1 <- nrow(x)
     if (verbose)
-        message("Removed ", n0 - n1, " PSMs with FDR > ", FDR, ".") 
+        message("Removed ", n0 - n1, " PSMs with FDR > ", FDR, ".")
     x
 }

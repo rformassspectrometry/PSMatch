@@ -8,7 +8,7 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
     %\VignettePackage{PSMatch}
-    %\VignetteDepends{mzR,mzID,BiocStyle,msdata}
+    %\VignetteDepends{mzR,mzID,BiocStyle,MsDataHub}
 ---
 
 ```{r style, echo = FALSE, results = 'asis', message=FALSE}
@@ -33,15 +33,15 @@ MS2 fragment ions. For a general overview of the package, see the
 
 
 To illustrate this vignette, we will import and merge raw and
-identification data from the `r Biocpkg("msdata")`. For details about
-this section, please visit the
+identification data from the `r Biocpkg("MsDataHub")`. For details
+about this section, please visit the
 [Spectra](https://rformassspectrometry.github.io/Spectra/articles/Spectra.html)
 package webpage.
 
 Load the raw MS data:
 
 ```{r, message = FALSE}
-(spf <- msdata::proteomics(pattern = "2014", full.names = TRUE))
+spf <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzML.gz()
 library(Spectra)
 sp <- Spectra(spf)
 ```
@@ -49,7 +49,7 @@ sp <- Spectra(spf)
 Load the identification data:
 
 ```{r}
-(idf <- msdata::ident(pattern = "2014", full.names = TRUE))
+idf <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
 id <- PSM(idf) |> filterPSMs()
 id
 ```
@@ -95,20 +95,20 @@ The function also allows to generate fragment sequences with fixed and/or
 variable modifications. By default, `fixed_modifications = c(C = 57.02146)` for
 carbamidomethylation of cysteine.
 
-With variable modifications, multiple sets of fragments are generated. The 
+With variable modifications, multiple sets of fragments are generated. The
 fragments can be traced to their parent ion by checking the `peptide` column.
 A fragment can have multiple modifications.
 
 ```{r}
-calculateFragments(sp1158$sequence[2], 
+calculateFragments(sp1158$sequence[2],
                    fixed_modifications = NULL,
-                   variable_modifications = c(C = 57.02146, 
+                   variable_modifications = c(C = 57.02146,
                                               T = 79.966))
 ```
 
-Additional parameters can limit the maximum number of allowed modifications, 
+Additional parameters can limit the maximum number of allowed modifications,
 the type of ions produced or the charge applied. See `?calculateFragments` for
-more details on those. 
+more details on those.
 
 # Visualising fragment ions
 
@@ -119,13 +119,13 @@ spectrum. Let's first visualise the spectrum as is:
 plotSpectra(sp1158[2])
 ```
 
-`plotSpectraPTM()` allows a more in depth visualisation of a PSM by providing 
-a delta mass plot of matched fragments and a direct visualisation of matched 
-b- and y-ion fragment sequences. 
+`plotSpectraPTM()` allows a more in depth visualisation of a PSM by providing
+a delta mass plot of matched fragments and a direct visualisation of matched
+b- and y-ion fragment sequences.
 
 Labels are automatically applied based on the `sequence` defined in the
-`spectraVariables` with carbamidomethylation of 
-cysteines set as default fixed modification. 
+`spectraVariables` with carbamidomethylation of
+cysteines set as default fixed modification.
 
 ```{r}
 dataOrigin(sp1158)[2] <- "TMT_Erwinia" ## Reduces the mzspec text
@@ -135,23 +135,23 @@ plotSpectraPTM(sp1158[2],
 
 More importantly, `plotSpectraPTM()` allows to visualise and compare the matches
 with different modifications.
-For instance, there is a better match when carbamidomethylation of cysteines 
+For instance, there is a better match when carbamidomethylation of cysteines
 is applied (as above) compared to no modifications at all.
 
 ```{r}
-plotSpectraPTM(sp1158[2], 
+plotSpectraPTM(sp1158[2],
                fixed_modifications = NULL,
                variable_modifications = NULL,
                main = "Scan 1158 without modifications")
 ```
 
-As glycine has the same mass as carbamidomethylation, the b7 and b8 ions are 
+As glycine has the same mass as carbamidomethylation, the b7 and b8 ions are
 overlapping in both spectra).
 
 Both plots can be created at once using the `variable_modifications` parameter.
 
 ```{r, fig.width = 8, fig.height = 8, out.width="1000px"}
-plotSpectraPTM(sp1158[2], 
+plotSpectraPTM(sp1158[2],
                fixed_modifications = NULL,
                variable_modifications = c(C = 57.02146),
                deltaMz = FALSE)
