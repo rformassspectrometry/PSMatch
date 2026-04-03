@@ -24,7 +24,6 @@ BiocStyle::markdown()
 library("PSMatch")
 ```
 
-
 # Installation instructions
 
 To install the package from Bioconductor, make sure you have the
