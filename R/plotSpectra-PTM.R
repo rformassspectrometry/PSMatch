@@ -138,8 +138,7 @@
 ##'
 ##' ## Annotate the spectrum with modifications using PTMods
 ##' sp_mod <- sp
-##' sp_mod$sequence <- PTMods::addFixedModifications("SIGFEGDSIGR",
-##'                                                   fixedModifications = c(Nterm = "Acetyl"))
+##' sp_mod$sequence <- PTMods::addFixedModifications("SIGFEGDSIGR", fixedModifications = c(Nterm = "Acetyl"))
 ##' plotSpectraPTM(sp_mod)
 ##'
 ##' ## Or call them within the function directly:
