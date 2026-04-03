@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.2</span>
       </span>
     </div>
 
@@ -104,10 +104,10 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.23/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.22/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [ctb] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-03-16 21:11:41.173101<br><strong>Compiled</strong>: Mon Mar 16 21:33:46 2026</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [ctb] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-04-03 21:24:16.096013<br><strong>Compiled</strong>: Fri Apr 3 21:46:50 2026</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -117,37 +117,36 @@ visualisation of MS2 fragment ions. For a general overview of the
 package, see the <code>PSMatch</code> package manual page
 (<code><a href="../reference/PSMatch.html">?PSMatch</a></code>) and references therein.</p>
 <p>To illustrate this vignette, we will import and merge raw and
-identification data from the <em><a href="https://bioconductor.org/packages/3.23/msdata" class="external-link">msdata</a></em>.
+identification data from the <em><a href="https://bioconductor.org/packages/3.22/MsDataHub" class="external-link">MsDataHub</a></em>.
 For details about this section, please visit the <a href="https://rformassspectrometry.github.io/Spectra/articles/Spectra.html" class="external-link">Spectra</a>
 package webpage.</p>
 <p>Load the raw MS data:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="va">spf</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">proteomics</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"2014"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/__w/_temp/Library/msdata/proteomics/TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML.gz"</span></span></code></pre>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/Spectra" class="external-link">Spectra</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">spf</span> <span class="op">&lt;-</span> <span class="fu">MsDataHub</span><span class="fu">::</span><span class="fu"><a href="https://rformassspectrometry.github.io/MsDataHub/reference/PXD000001.html" class="external-link">TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzML.gz</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/Spectra" class="external-link">Spectra</a></span><span class="op">)</span></span>
 <span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/Spectra.html" class="external-link">Spectra</a></span><span class="op">(</span><span class="va">spf</span><span class="op">)</span></span></code></pre></div>
 <p>Load the identification data:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="va">idf</span> <span class="op">&lt;-</span> <span class="fu">msdata</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msdata/man/proteomics.html" class="external-link">ident</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"2014"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/__w/_temp/Library/msdata/ident/TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid"</span></span></code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">idf</span> <span class="op">&lt;-</span> <span class="fu">MsDataHub</span><span class="fu">::</span><span class="fu"><a href="https://rformassspectrometry.github.io/MsDataHub/reference/PXD000001.html" class="external-link">TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## see ?MsDataHub and browseVignettes('MsDataHub') for documentation</span></span></code></pre>
+<pre><code><span><span class="co">## loading from cache</span></span></code></pre>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">idf</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Starting with 5802 PSMs:</span></span></code></pre>
 <pre><code><span><span class="co">## Removed 2896 decoy hits.</span></span></code></pre>
 <pre><code><span><span class="co">## Removed 155 PSMs with rank &gt; 1.</span></span></code></pre>
 <pre><code><span><span class="co">## Removed 85 shared peptides.</span></span></code></pre>
 <pre><code><span><span class="co">## 2666 PSMs left.</span></span></code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span></span></code></pre></div>
 <pre><code><span><span class="co">## PSM with 2666 rows and 35 columns.</span></span>
 <span><span class="co">## names(35): sequence spectrumID ... subReplacementResidue subLocation</span></span></code></pre>
 <p>Merge both:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/combineSpectra.html" class="external-link">joinSpectraData</a></span><span class="op">(</span><span class="va">sp</span>, <span class="va">id</span>, by.x <span class="op">=</span> <span class="st">"spectrumId"</span>, by.y <span class="op">=</span> <span class="st">"spectrumID"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning in joinSpectraData(sp, id, by.x = "spectrumId", by.y = "spectrumID"):</span></span>
 <span><span class="co">## Duplicates found in the 'y' key. Only last instance will be kept!</span></span></code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sp</span></span></code></pre></div>
 <pre><code><span><span class="co">## MSn data (Spectra) with 7534 spectra in a MsBackendMzR backend:</span></span>
 <span><span class="co">##        msLevel     rtime scanIndex</span></span>
@@ -166,13 +165,13 @@ package webpage.</p>
 <span><span class="co">##  ... 68 more variables/columns.</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## file(s):</span></span>
-<span><span class="co">## TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML.gz</span></span></code></pre>
+<span><span class="co">## ee521658566_7858</span></span></code></pre>
 <p>In this example, we are going to focus the MS2 scan with index 1158
 and its parent MS1 scan (index 1148, selected automatically with the <a href="https://rformassspectrometry.github.io/Spectra/reference/MsBackend.html" class="external-link">filterPrecursorScan()</a>
 function).</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sp1158</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterPrecursorScan</a></span><span class="op">(</span><span class="va">sp</span>, <span class="fl">1158</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">400</span>, <span class="fl">600</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">precursorMz</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, col <span class="op">=</span> <span class="st">"red"</span>, lty <span class="op">=</span> <span class="st">"dotted"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Fragments_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="700"></p>
@@ -181,14 +180,14 @@ function).</p>
 <h2 id="calculating-fragment-ions">Calculating fragment ions<a class="anchor" aria-label="anchor" href="#calculating-fragment-ions"></a>
 </h2>
 <p>The MS2 scan was matched to the sequence <code>SCALITDGR</code>.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sp1158</span><span class="op">$</span><span class="va">sequence</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] NA          "SCALITDGR"</span></span></code></pre>
 <p>The <code><a href="../reference/calculateFragments.html">calculateFragments()</a></code> simply takes a peptide sequence
 as input and returns a <code>data.frame</code> with the fragment
 sequences, M/Z, ion type, charge, position and the peptide sequence of
 the parent ion.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/calculateFragments.html">calculateFragments</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fixed modifications used: C=57.02146</span></span>
 <span><span class="co">## Variable modifications used: None</span></span></code></pre>
@@ -227,10 +226,10 @@ carbamidomethylation of cysteine.</p>
 generated. The fragments can be traced to their parent ion by checking
 the <code>peptide</code> column. A fragment can have multiple
 modifications.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/calculateFragments.html">calculateFragments</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, </span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/calculateFragments.html">calculateFragments</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
 <span>                   fixed_modifications <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                   variable_modifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>C <span class="op">=</span> <span class="fl">57.02146</span>, </span>
+<span>                   variable_modifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>C <span class="op">=</span> <span class="fl">57.02146</span>,</span>
 <span>                                              T <span class="op">=</span> <span class="fl">79.966</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fixed modifications used: None</span></span>
 <span><span class="co">## Variable modifications used: C=57.02146, T=79.966</span></span></code></pre>
@@ -348,7 +347,7 @@ modifications, the type of ions produced or the charge applied. See
 </h2>
 <p>We can now visualise these fragments directly on the MS spectrum.
 Let’s first visualise the spectrum as is:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Fragments_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="700"></p>
 <p><code><a href="../reference/plotSpectraPTM.html">plotSpectraPTM()</a></code> allows a more in depth visualisation of
@@ -357,7 +356,7 @@ visualisation of matched b- and y-ion fragment sequences.</p>
 <p>Labels are automatically applied based on the <code>sequence</code>
 defined in the <code>spectraVariables</code> with carbamidomethylation
 of cysteines set as default fixed modification.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">dataOrigin</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"TMT_Erwinia"</span> <span class="co">## Reduces the mzspec text</span></span>
 <span><span class="fu"><a href="../reference/plotSpectraPTM.html">plotSpectraPTM</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
 <span>               main <span class="op">=</span> <span class="st">"Scan 1158 with carbamidomethylation"</span><span class="op">)</span></span></code></pre></div>
@@ -366,8 +365,8 @@ of cysteines set as default fixed modification.</p>
 and compare the matches with different modifications. For instance,
 there is a better match when carbamidomethylation of cysteines is
 applied (as above) compared to no modifications at all.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotSpectraPTM.html">plotSpectraPTM</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, </span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotSpectraPTM.html">plotSpectraPTM</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
 <span>               fixed_modifications <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>               variable_modifications <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>               main <span class="op">=</span> <span class="st">"Scan 1158 without modifications"</span><span class="op">)</span></span></code></pre></div>
@@ -376,8 +375,8 @@ applied (as above) compared to no modifications at all.</p>
 ions are overlapping in both spectra).</p>
 <p>Both plots can be created at once using the
 <code>variable_modifications</code> parameter.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotSpectraPTM.html">plotSpectraPTM</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, </span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotSpectraPTM.html">plotSpectraPTM</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
 <span>               fixed_modifications <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>               variable_modifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>C <span class="op">=</span> <span class="fl">57.02146</span><span class="op">)</span>,</span>
 <span>               deltaMz <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
@@ -388,11 +387,11 @@ ions are overlapping in both spectra).</p>
 <div class="section level2">
 <h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R Under development (unstable) (2026-03-15 r89629)</span></span>
+<pre><code><span><span class="co">## R version 4.5.2 (2025-10-31)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 24.04.4 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.3 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -414,49 +413,60 @@ ions are overlapping in both spectra).</p>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] Spectra_1.21.4      BiocParallel_1.45.0 PSMatch_1.15.1     </span></span>
-<span><span class="co">## [4] S4Vectors_0.49.0    BiocGenerics_0.57.0 generics_0.1.4     </span></span>
-<span><span class="co">## [7] BiocStyle_2.39.0   </span></span>
+<span><span class="co">## [1] Spectra_1.20.1      BiocParallel_1.44.0 MsDataHub_1.10.0   </span></span>
+<span><span class="co">## [4] PSMatch_1.15.2      S4Vectors_0.48.0    BiocGenerics_0.56.0</span></span>
+<span><span class="co">## [7] generics_0.1.4      BiocStyle_2.38.0   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] SummarizedExperiment_1.41.1 xfun_0.56                  </span></span>
-<span><span class="co">##  [3] bslib_0.10.0                htmlwidgets_1.6.4          </span></span>
-<span><span class="co">##  [5] QFeatures_1.21.0            Biobase_2.71.0             </span></span>
-<span><span class="co">##  [7] lattice_0.22-9              vctrs_0.7.1                </span></span>
-<span><span class="co">##  [9] tools_4.6.0                 parallel_4.6.0             </span></span>
-<span><span class="co">## [11] tibble_3.3.1                cluster_2.1.8.2            </span></span>
-<span><span class="co">## [13] pkgconfig_2.0.3             Matrix_1.7-4               </span></span>
-<span><span class="co">## [15] data.table_1.18.2.1         desc_1.4.3                 </span></span>
-<span><span class="co">## [17] lifecycle_1.0.5             compiler_4.6.0             </span></span>
-<span><span class="co">## [19] stringr_1.6.0               textshaping_1.0.5          </span></span>
-<span><span class="co">## [21] Seqinfo_1.1.0               codetools_0.2-20           </span></span>
-<span><span class="co">## [23] ncdf4_1.24                  clue_0.3-67                </span></span>
-<span><span class="co">## [25] htmltools_0.5.9             sass_0.4.10                </span></span>
-<span><span class="co">## [27] yaml_2.3.12                 lazyeval_0.2.2             </span></span>
-<span><span class="co">## [29] pkgdown_2.2.0.9000          pillar_1.11.1              </span></span>
-<span><span class="co">## [31] jquerylib_0.1.4             tidyr_1.3.2                </span></span>
-<span><span class="co">## [33] MASS_7.3-65                 cachem_1.1.0               </span></span>
-<span><span class="co">## [35] DelayedArray_0.37.0         MetaboCoreUtils_1.19.2     </span></span>
-<span><span class="co">## [37] abind_1.4-8                 tidyselect_1.2.1           </span></span>
-<span><span class="co">## [39] digest_0.6.39               stringi_1.8.7              </span></span>
-<span><span class="co">## [41] purrr_1.2.1                 dplyr_1.2.0                </span></span>
-<span><span class="co">## [43] reshape2_1.4.5              bookdown_0.46              </span></span>
-<span><span class="co">## [45] fastmap_1.2.0               grid_4.6.0                 </span></span>
-<span><span class="co">## [47] cli_3.6.5                   SparseArray_1.11.11        </span></span>
-<span><span class="co">## [49] magrittr_2.0.4              S4Arrays_1.11.1            </span></span>
-<span><span class="co">## [51] rmarkdown_2.30              XVector_0.51.0             </span></span>
-<span><span class="co">## [53] matrixStats_1.5.0           igraph_2.2.2               </span></span>
-<span><span class="co">## [55] otel_0.2.0                  ragg_1.5.1                 </span></span>
-<span><span class="co">## [57] evaluate_1.0.5              knitr_1.51                 </span></span>
-<span><span class="co">## [59] GenomicRanges_1.63.1        IRanges_2.45.0             </span></span>
-<span><span class="co">## [61] MultiAssayExperiment_1.37.2 rlang_1.1.7                </span></span>
-<span><span class="co">## [63] Rcpp_1.1.1                  glue_1.8.0                 </span></span>
-<span><span class="co">## [65] mzR_2.45.0                  BiocManager_1.30.27        </span></span>
-<span><span class="co">## [67] msdata_0.51.1               jsonlite_2.0.0             </span></span>
-<span><span class="co">## [69] AnnotationFilter_1.35.0     R6_2.6.1                   </span></span>
-<span><span class="co">## [71] plyr_1.8.9                  MatrixGenerics_1.23.0      </span></span>
-<span><span class="co">## [73] systemfonts_1.3.2           fs_1.6.7                   </span></span>
-<span><span class="co">## [75] ProtGenerics_1.43.0         MsCoreUtils_1.23.6</span></span></code></pre>
+<span><span class="co">##  [1] DBI_1.3.0                   httr2_1.2.2                </span></span>
+<span><span class="co">##  [3] rlang_1.1.7                 magrittr_2.0.4             </span></span>
+<span><span class="co">##  [5] clue_0.3-68                 otel_0.2.0                 </span></span>
+<span><span class="co">##  [7] matrixStats_1.5.0           compiler_4.5.2             </span></span>
+<span><span class="co">##  [9] RSQLite_2.4.6               png_0.1-9                  </span></span>
+<span><span class="co">## [11] systemfonts_1.3.2           vctrs_0.7.2                </span></span>
+<span><span class="co">## [13] reshape2_1.4.5              stringr_1.6.0              </span></span>
+<span><span class="co">## [15] ProtGenerics_1.42.0         pkgconfig_2.0.3            </span></span>
+<span><span class="co">## [17] MetaboCoreUtils_1.18.1      crayon_1.5.3               </span></span>
+<span><span class="co">## [19] fastmap_1.2.0               dbplyr_2.5.2               </span></span>
+<span><span class="co">## [21] XVector_0.50.0              rmarkdown_2.31             </span></span>
+<span><span class="co">## [23] ragg_1.5.2                  purrr_1.2.1                </span></span>
+<span><span class="co">## [25] bit_4.6.0                   xfun_0.57                  </span></span>
+<span><span class="co">## [27] MultiAssayExperiment_1.36.2 cachem_1.1.0               </span></span>
+<span><span class="co">## [29] jsonlite_2.0.0              blob_1.3.0                 </span></span>
+<span><span class="co">## [31] DelayedArray_0.36.1         parallel_4.5.2             </span></span>
+<span><span class="co">## [33] cluster_2.1.8.2             R6_2.6.1                   </span></span>
+<span><span class="co">## [35] bslib_0.10.0                stringi_1.8.7              </span></span>
+<span><span class="co">## [37] GenomicRanges_1.62.1        jquerylib_0.1.4            </span></span>
+<span><span class="co">## [39] Rcpp_1.1.1                  Seqinfo_1.0.0              </span></span>
+<span><span class="co">## [41] bookdown_0.46               SummarizedExperiment_1.40.0</span></span>
+<span><span class="co">## [43] knitr_1.51                  IRanges_2.44.0             </span></span>
+<span><span class="co">## [45] BiocBaseUtils_1.12.0        Matrix_1.7-5               </span></span>
+<span><span class="co">## [47] igraph_2.2.2                tidyselect_1.2.1           </span></span>
+<span><span class="co">## [49] abind_1.4-8                 yaml_2.3.12                </span></span>
+<span><span class="co">## [51] codetools_0.2-20            curl_7.0.0                 </span></span>
+<span><span class="co">## [53] lattice_0.22-9              tibble_3.3.1               </span></span>
+<span><span class="co">## [55] plyr_1.8.9                  Biobase_2.70.0             </span></span>
+<span><span class="co">## [57] withr_3.0.2                 KEGGREST_1.50.0            </span></span>
+<span><span class="co">## [59] evaluate_1.0.5              desc_1.4.3                 </span></span>
+<span><span class="co">## [61] BiocFileCache_3.0.0         ExperimentHub_3.0.0        </span></span>
+<span><span class="co">## [63] Biostrings_2.78.0           pillar_1.11.1              </span></span>
+<span><span class="co">## [65] BiocManager_1.30.27         filelock_1.0.3             </span></span>
+<span><span class="co">## [67] MatrixGenerics_1.22.0       ncdf4_1.24                 </span></span>
+<span><span class="co">## [69] BiocVersion_3.22.0          glue_1.8.0                 </span></span>
+<span><span class="co">## [71] lazyeval_0.2.2              tools_4.5.2                </span></span>
+<span><span class="co">## [73] AnnotationHub_4.0.0         mzR_2.44.0                 </span></span>
+<span><span class="co">## [75] QFeatures_1.20.0            fs_2.0.1                   </span></span>
+<span><span class="co">## [77] grid_4.5.2                  tidyr_1.3.2                </span></span>
+<span><span class="co">## [79] MsCoreUtils_1.23.6          AnnotationDbi_1.72.0       </span></span>
+<span><span class="co">## [81] cli_3.6.5                   rappdirs_0.3.4             </span></span>
+<span><span class="co">## [83] textshaping_1.0.5           S4Arrays_1.10.1            </span></span>
+<span><span class="co">## [85] dplyr_1.2.0                 AnnotationFilter_1.34.0    </span></span>
+<span><span class="co">## [87] sass_0.4.10                 digest_0.6.39              </span></span>
+<span><span class="co">## [89] SparseArray_1.10.10         htmlwidgets_1.6.4          </span></span>
+<span><span class="co">## [91] memoise_2.0.1               htmltools_0.5.9            </span></span>
+<span><span class="co">## [93] pkgdown_2.2.0.9000          lifecycle_1.0.5            </span></span>
+<span><span class="co">## [95] httr_1.4.8                  bit64_4.6.0-1              </span></span>
+<span><span class="co">## [97] MASS_7.3-65</span></span></code></pre>
 </div>
   </div>
 
