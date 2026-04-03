@@ -139,12 +139,12 @@
 ##' ## Annotate the spectrum with modifications using PTMods
 ##' sp_mod <- sp
 ##' sp_mod$sequence <- PTMods::addFixedModifications("SIGFEGDSIGR",
-##'                                                   fixedModifications = c(Nterm = 49.469))
+##'                                                   fixedModifications = c(Nterm = "Acetyl"))
 ##' plotSpectraPTM(sp_mod)
 ##'
 ##' ## Or call them within the function directly:
-##' plotSpectraPTM(sp, fixedModifications = c(Nterm = 49.496),
-##' variableModifications = c(T = "Phospho"))
+##' plotSpectraPTM(sp, fixedModifications = NULL,
+##' variableModifications = c(R = "Methyl"))
 ##'
 ##' ## Annotate multiple spectra at a time
 ##' plotSpectraPTM(c(sp, sp))
