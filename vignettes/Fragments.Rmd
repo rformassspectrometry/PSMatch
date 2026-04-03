@@ -92,26 +92,26 @@ calculateFragments(sp1158$sequence[2])
 ```
 
 The function also allows to generate fragment sequences with fixed and/or
-variable modifications. By default, `fixed_modifications = c(C = 57.02146)` for
-carbamidomethylation of cysteine.
+variable modifications. To do so, ideally add modifications using the `PTMods`
+package. For instance, for `PTMods::addFixedModifications()`, by default,
+`fixedModifications = c(C = 57.02146)` for carbamidomethylation of cysteines.
 
 With variable modifications, multiple sets of fragments are generated. The
 fragments can be traced to their parent ion by checking the `peptide` column.
 A fragment can have multiple modifications.
 
 ```{r}
-calculateFragments(sp1158$sequence[2],
-    fixed_modifications = NULL,
-    variable_modifications = c(
-        C = 57.02146,
-        T = 79.966
-    )
+var_seq <- PTMods::addVariableModifications(sp1158$sequence[2],
+    variableModifications = c(C = 57.02146, T = 79.966)
 )
+
+calculateFragments(var_seq)
 ```
 
-Additional parameters can limit the maximum number of allowed modifications,
-the type of ions produced or the charge applied. See `?calculateFragments` for
-more details on those.
+Additional parameters can limit the maximum number of allowed modifications in
+`addVariableModifications()`, or the type of ions produced or the charge
+applied in `calculateFragments`. See `?calculateFragments` and
+`?PTMods::addVariableModifications` for more details on those.
 
 # Visualising fragment ions
 
