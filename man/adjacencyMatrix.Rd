@@ -187,7 +187,7 @@ makeAdjacencyMatrix(psm, binary = TRUE)
 ## Case 2: Protein groups are separated by a semicolon
 psmdf <- data.frame(psm = paste0("psm", 1:5),
                     peptide = paste0("pep", c(1, 2, 3, 4, 5)),
-                    protein = c("ProtA", "ProtB;ProtD", "ProtA;ProtC", 
+                    protein = c("ProtA", "ProtB;ProtD", "ProtA;ProtC",
                                 "ProtC", "ProtA;ProtC;ProtD"))
 psmdf
 psm <- PSM(psmdf, peptide = "peptide", protein = "protein")
@@ -198,7 +198,8 @@ makeAdjacencyMatrix(psm, split = ";")
 ## PSM object from an mzid file
 ## ----------------------------
 
-f <- msdata::ident(full.names = TRUE, pattern = "TMT")
+f <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
+
 psm <- PSM(f) |>
        filterPsmDecoy() |>
        filterPsmRank()
@@ -259,7 +260,7 @@ makeAdjacencyMatrix(psm2)
 ## Force a binary matrix
 makeAdjacencyMatrix(psm2, binary = TRUE)
 
-## Case 3: Peptide (NKAVRTYHEQ) stems from multiple proteins (ProtB and 
+## Case 3: Peptide (NKAVRTYHEQ) stems from multiple proteins (ProtB and
 ## ProtG). They are separated by a semicolon.
 psmdf3 <- psmdf
 psmdf3[psmdf3$sequence == "NKAVRTYHEQ","protein"] <- "ProtB;ProtG"
@@ -267,7 +268,7 @@ psmdf3
 psm3 <- PSM(psmdf3, spectrum = "spectrum", peptide = "sequence",
             protein = "protein", decoy = "decoy", rank = "rank")
 
-## Now ProtB & ProtG count 2 PSMs each: NKAVRTYHEQ and IYNHSQGFCA & 
+## Now ProtB & ProtG count 2 PSMs each: NKAVRTYHEQ and IYNHSQGFCA &
 ## EDHINCTQWP respectively
 makeAdjacencyMatrix(psm3, split = ";")
 

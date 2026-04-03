@@ -8,7 +8,7 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
     %\VignettePackage{PSMatch}
-    %\VignetteDepends{mzR,BiocStyle,msdata,SummarizedExperiment,factoextra}
+    %\VignetteDepends{mzR,BiocStyle,MsDataHub,SummarizedExperiment,factoextra}
 ---
 
 ```{r style, echo = FALSE, results = 'asis', message=FALSE}
@@ -41,10 +41,10 @@ data*](https://rformassspectrometry.github.io/PSMatch/articles/PSM.html) vignett
 
 ```{r}
 library("PSMatch")
-id <- msdata::ident(full.names = TRUE, pattern = "TMT") |>
-PSM() |>
-filterPsmDecoy() |>
-filterPsmRank()
+id <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid() |>
+    PSM() |>
+    filterPsmDecoy() |>
+    filterPsmRank()
 id
 ```
 
@@ -73,8 +73,8 @@ adj[1:5, 1:5]
 This matrix models the relation between the `r length(unique(id$sequence))`
 peptides and the `r length(unique(id$DatabaseAccess))` is our identification
 data. These numbers can be verified by checking the number of unique
-peptides sequences and database accession numbers. For the latter, if the 
-peptide stems from multiple proteins, these proteins are separated by default 
+peptides sequences and database accession numbers. For the latter, if the
+peptide stems from multiple proteins, these proteins are separated by default
 with a semicolon `;`.
 
 
@@ -85,8 +85,8 @@ length(unique(unlist(strsplit(id$DatabaseAccess, ";"))))
 
 Some values are > 1 because some peptide sequences are observed more
 than once, for example carrying different modifications or the same
-one at different sites or having different precursor charge states. 
-The adjacency matrix can be made binary by setting 
+one at different sites or having different precursor charge states.
+The adjacency matrix can be made binary by setting
 `madeAdjacencyMatrix(id, binary = TRUE)`.
 
 This large matrix is too large to be explored manually and is anyway
@@ -252,7 +252,7 @@ plotAdjacencyMatrix(cx, pepColors = cls)
 
 To conclude this vignette, we show how this same data modelling and
 exploration can be initiated from a quantitative dataset. We will use
-part of the CPTAC data that is available in the `msdata` package.
+part of the CPTAC data that is available in the `MsDataHub` package.
 
 Once we have the path to the tsv data, we identify the columns that
 contain quantitation values (i.e. those starting with `Intensity.`)
@@ -261,7 +261,8 @@ and them create a `SummarizedExperiment` using the
 function from the `r Biocpkg("QFeatures")` package.
 
 ```{r, message = FALSE}
-basename(f <- msdata::quant(full.names = TRUE))
+f <- MsDataHub::cptac_a_b_peptides.txt()
+
 (i <- grep("Intensity\\.", names(read.delim(f))))
 library(QFeatures)
 se <- readSummarizedExperiment(f, quantCols = i, sep = "\t")

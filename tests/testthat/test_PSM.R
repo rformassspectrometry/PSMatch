@@ -1,7 +1,7 @@
 ## Data for construction from mzid. Strangely, the test fails when
 ## creating the object with the mzID parser due to parallel
 ## processing.
-f <- msdata::ident(full.names = TRUE, pattern = "TMT")
+f <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
 psm_mzR <- PSM(f, parser = "mzR")
 psm_mzID <- PSM(f, parser = "mzID")
 

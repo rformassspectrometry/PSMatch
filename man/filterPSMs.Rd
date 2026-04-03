@@ -98,8 +98,8 @@ match multiple proteins.
 }
 }
 \examples{
-f <- msdata::ident(full.names = TRUE, pattern = "TMT")
-basename(f)
+f <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
+
 id <- PSM(f)
 filterPSMs(id)
 }

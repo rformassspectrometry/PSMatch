@@ -16,9 +16,9 @@
 ##' that the first peptide is mapped to protein "ProtA", the second one to
 ##' protein "ProtB", the third one to "ProtA" and "ProtB", and so on. The
 ##' resulting matrix contains as many rows as there are unique peptides and as
-##' many columns as there are unique protein identifiers in `x`. The columns 
-##' are named after the protein identifiers and the peptide/protein vector 
-##' names are used to name the matrix rows (retaining only the unique names). 
+##' many columns as there are unique protein identifiers in `x`. The columns
+##' are named after the protein identifiers and the peptide/protein vector
+##' names are used to name the matrix rows (retaining only the unique names).
 ##'
 ##' The [makePeptideProteinVector()] function does the opposite operation,
 ##' taking an adjacency matrix as input and returning a peptide/protein
@@ -45,9 +45,9 @@
 ##' further be coloured (see the `protColors` and `pepColors` arguments). The
 ##' function invisibly returns the graph `igraph` object for additional tuning
 ##' and/or interactive visualisation using, for example [igraph::tkplot()].
-##' 
-##' Such as illustrated in the examples below, each row/peptide is 
-##' expected to refer to protein groups or individual proteins (groups of 
+##'
+##' Such as illustrated in the examples below, each row/peptide is
+##' expected to refer to protein groups or individual proteins (groups of
 ##' size 1). These have to be split accordingly.
 ##'
 ##' @param x Either an instance of class `PSM` or a `character`. See
@@ -113,10 +113,10 @@
 ##'
 ##' ## ----------------------------
 ##' ## PSM object from a data.frame
-##' 
+##'
 ##' ## ----------------------------
 ##' ## Case 1: Duplicate identifications
-##' 
+##'
 ##' psmdf <- data.frame(psm = paste0("psm", 1:10),
 ##'                     peptide = paste0("pep", c(1, 1, 2, 2, 3, 4, 6, 7, 8, 8)),
 ##'                     protein = paste0("Prot", LETTERS[c(1, 1, 2, 2, 3, 4, 3, 5, 6, 6)]))
@@ -132,23 +132,24 @@
 ##'
 ##' ## Or set binary to TRUE
 ##' makeAdjacencyMatrix(psm, binary = TRUE)
-##' 
+##'
 ##' ## ----------------------------
 ##' ## Case 2: Protein groups are separated by a semicolon
 ##' psmdf <- data.frame(psm = paste0("psm", 1:5),
 ##'                     peptide = paste0("pep", c(1, 2, 3, 4, 5)),
-##'                     protein = c("ProtA", "ProtB;ProtD", "ProtA;ProtC", 
+##'                     protein = c("ProtA", "ProtB;ProtD", "ProtA;ProtC",
 ##'                                 "ProtC", "ProtA;ProtC;ProtD"))
 ##' psmdf
 ##' psm <- PSM(psmdf, peptide = "peptide", protein = "protein")
 ##' psm
 ##' makeAdjacencyMatrix(psm, split = ";")
-##' 
+##'
 ##' ## ----------------------------
 ##' ## PSM object from an mzid file
 ##' ## ----------------------------
 ##'
-##' f <- msdata::ident(full.names = TRUE, pattern = "TMT")
+##' f <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
+##'
 ##' psm <- PSM(f) |>
 ##'        filterPsmDecoy() |>
 ##'        filterPsmRank()
@@ -211,7 +212,7 @@
 ##' makeAdjacencyMatrix(psm2, binary = TRUE)
 ##'
 ##  ## --------------------------------------------------------
-##' ## Case 3: Peptide (NKAVRTYHEQ) stems from multiple proteins (ProtB and 
+##' ## Case 3: Peptide (NKAVRTYHEQ) stems from multiple proteins (ProtB and
 ##' ## ProtG). They are separated by a semicolon.
 ##' psmdf3 <- psmdf
 ##' psmdf3[psmdf3$sequence == "NKAVRTYHEQ","protein"] <- "ProtB;ProtG"
@@ -219,10 +220,10 @@
 ##' psm3 <- PSM(psmdf3, spectrum = "spectrum", peptide = "sequence",
 ##'             protein = "protein", decoy = "decoy", rank = "rank")
 ##'
-##' ## Now ProtB & ProtG count 2 PSMs each: NKAVRTYHEQ and IYNHSQGFCA & 
+##' ## Now ProtB & ProtG count 2 PSMs each: NKAVRTYHEQ and IYNHSQGFCA &
 ##' ## EDHINCTQWP respectively
 ##' makeAdjacencyMatrix(psm3, split = ";")
-##' 
+##'
 ##' ## --------------------------------
 ##' ## Case 4: set the score PSM values
 ##' psmVariables(psm) ## no score defined
@@ -253,7 +254,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
                                 score = psmVariables(x)["score"],
                                 binary = FALSE) {
     if (inherits(x, "PSM")) {
-        adj <- .makeSparseAdjacencyMatrixFromPSM(x, peptide, protein, 
+        adj <- .makeSparseAdjacencyMatrixFromPSM(x, peptide, protein,
                                                  score, split)
     } else if (is.character(x)) {
         adj <- .makeSparseAdjacencyMatrixFromChar(x, split)
@@ -277,16 +278,16 @@ makeAdjacencyMatrix <- function(x, split = ";",
     sparseMatrix(i, j, x = 1, dimnames = list(row_names, col_names))
 }
 
-.makeSparseAdjacencyMatrixFromPSM <- function(x, 
-                                              peptide, 
-                                              protein, 
-                                              score, 
+.makeSparseAdjacencyMatrixFromPSM <- function(x,
+                                              peptide,
+                                              protein,
+                                              score,
                                               split = ";") {
-    if (is.na(peptide) | is.na(protein)) 
+    if (is.na(peptide) | is.na(protein))
         stop("Please define the 'protein' and 'peptide' PSM variables.")
-    if (!protein %in% names(x) | !peptide %in% names(x)) 
+    if (!protein %in% names(x) | !peptide %in% names(x))
         stop("PSM variables 'protein' and 'peptide' must be defined.")
-    if (is.null(split)) 
+    if (is.null(split))
         col_list <- x[[protein]]
     else col_list <- strsplit(x[[protein]], split)
     col_list_names <- x[[peptide]]
@@ -296,7 +297,7 @@ makeAdjacencyMatrix <- function(x, split = ";",
     i <- match(i, row_names)
     j <- unname(unlist(lapply(col_list, match, col_names)))
     adj_values <- 1
-    if (!is.na(score)) 
+    if (!is.na(score))
         adj_values <- rep(x[[score]], lengths(col_list))
     sparseMatrix(i, j, x = adj_values, dimnames = list(row_names, col_names))
 }

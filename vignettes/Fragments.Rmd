@@ -8,7 +8,7 @@ vignette: >
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
     %\VignettePackage{PSMatch}
-    %\VignetteDepends{mzR,mzID,BiocStyle,msdata}
+    %\VignetteDepends{mzR,mzID,BiocStyle,MsDataHub}
 ---
 
 ```{r style, echo = FALSE, results = 'asis', message=FALSE}
@@ -33,15 +33,15 @@ MS2 fragment ions. For a general overview of the package, see the
 
 
 To illustrate this vignette, we will import and merge raw and
-identification data from the `r Biocpkg("msdata")`. For details about
-this section, please visit the
+identification data from the `r Biocpkg("MsDataHub")`. For details
+about this section, please visit the
 [Spectra](https://rformassspectrometry.github.io/Spectra/articles/Spectra.html)
 package webpage.
 
 Load the raw MS data:
 
 ```{r, message = FALSE}
-(spf <- msdata::proteomics(pattern = "2014", full.names = TRUE))
+spf <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzML.gz()
 library(Spectra)
 sp <- Spectra(spf)
 ```
@@ -49,7 +49,7 @@ sp <- Spectra(spf)
 Load the identification data:
 
 ```{r}
-(idf <- msdata::ident(pattern = "2014", full.names = TRUE))
+idf <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
 id <- PSM(idf) |> filterPSMs()
 id
 ```
