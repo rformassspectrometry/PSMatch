@@ -86,6 +86,8 @@
 #'
 #' @importFrom ProtGenerics calculateFragments
 #'
+#' @import PTMods
+#'
 #' @exportMethod calculateFragments
 #'
 #' @examples
@@ -249,7 +251,7 @@ setMethod("calculateFragments", c("character", "missing"),
                                 neutralLoss = defaultNeutralLoss()) {
 
     initial_sequence <- sequence
-    sequence <- convertAnnotation(sequence)
+    sequence <- PTMods::convertAnnotation(sequence)
 
     parsed_modifications <- PTMods:::.parseModifiedSequence(sequence)
     canonical_sequence <- PTMods::getCanonicalSequence(sequence)
