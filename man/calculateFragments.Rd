@@ -11,34 +11,49 @@
   sequence,
   type = c("b", "y"),
   z = 1,
-  fixed_modifications = c(C = 57.02146),
-  variable_modifications = numeric(),
+  fixed_modifications = NULL,
+  variable_modifications = NULL,
+  addCarbamidomethyl = TRUE,
   max_mods = Inf,
   neutralLoss = defaultNeutralLoss(),
-  verbose = TRUE,
-  modifications = NULL
+  verbose = TRUE
 )
 }
 \arguments{
-\item{sequence}{\code{character()} providing a peptide sequence.}
+\item{sequence}{\code{character()} providing a peptide sequence. If positional
+modifications are included in the sequence, variable modifications may not be
+used. See examples below for more detail.}
 
 \item{type}{\code{character} vector of target ions; possible values:
 \code{c("a", "b", "c", "x", "y", "z")}. Default is \code{type = c("b", "y")}.}
 
 \item{z}{numeric with a desired charge state; default is 1.}
 
-\item{fixed_modifications}{A named \code{numeric} vector of used fixed modifications.
-The name must correspond to the one-letter-code of the modified amino acid
-and the numeric value must represent the mass that should be added to the
-original amino accid mass, default: Carbamidomethyl modifications =
-c(C = 57.02146). Use Nterm or Cterm as names for modifications that should
-be added to the amino respectively carboxyl-terminus.}
+\item{fixed_modifications}{Deprecated parameter. Please use
+\code{\link[PTMods:addFixedModifications]{PTMods::addFixedModifications()}} to generate sequences with positional
+modifications instead. Named \code{numeric} or \code{character}. If a \code{character} is
+given, values must be in UniMod name or UniMod ID format
+(e.g. \code{"Phospho"}, \code{"UNIMOD:21"}). The annotation style of
+the values is preserved in the output. Specifies which fixed
+modifications are applied to which amino acids.}
 
-\item{variable_modifications}{A named \code{numeric} vector of variable modifications.
-Depending on the maximum number of modifications (\code{max_mods}), all possible
-combinations are returned.}
+\item{variable_modifications}{Deprecated parameter. Please use
+\code{\link[PTMods:addVariableModifications]{PTMods::addVariableModifications()}} to generate sequences with positional
+modifications instead. Named \code{numeric} or \code{character}. If a \code{character}
+is given, values must be in UniMod name or UniMod ID format
+(e.g. \code{"Phospho"}, \code{"UNIMOD:21"}). The annotation style of
+the values is preserved in the output. Specifies which
+variable modifications are used on which amino acids.}
 
-\item{max_mods}{A numeric indicating the maximum number of variable modifications
+\item{addCarbamidomethyl}{logical(1L) set to \code{TRUE} by default. Applies
+carbamidomethylation as a fixed modification unless \code{fixed_modifications} is
+not \code{NULL} or if a carbamidomethyl is already present in the given sequences.
+It is strongly suggested to rely on \code{PTMods::addFixedModifications()}
+instead.}
+
+\item{max_mods}{Deprecated parameter. Please use in combination with
+PTMods::addVariableModifications() instead. A numeric indicating the
+maximum number of variable modifications
 allowed on the sequence at once. Does not include fixed modifications.
 Default value is positive infinity.}
 
@@ -56,11 +71,8 @@ the correct list. It has two arguments `disableWaterLoss` and
 the example section for use cases.
 }\if{html}{\out{</div>}}}
 
-\item{verbose}{\code{logical(1)}. If \code{TRUE} (default) the used modifications are printed.}
-
-\item{modifications}{Named \code{numeric()}. Deprecated modifications parameter.
-Will override \code{fixed_modifications} but is set to \code{NULL} by default. Please
-refrain from using it, opt for \code{fixed_modifications} instead.}
+\item{verbose}{\code{logical(1)}. Deprecated parameter.
+If \code{TRUE} (default) the used modifications are printed.}
 }
 \value{
 A \code{data.frame} showing all the
@@ -86,28 +98,22 @@ package that implements a method for objects of class
 }
 }
 \examples{
-## General use
-calculateFragments(sequence = "ARGSHKATC",
-                   type = c("b", "y"), z = 1,
-                   fixed_modifications = c(C = 57),
-                   variable_modifications = c(S = 79, Y = 79, T = 79),
-                   max_mods = 2)
 
-## calculate fragments for ACE with default modification
-calculateFragments("ACE", fixed_modifications = c(C = 57.02146))
+## No modifications
+calculateFragments("ACE")
 
-#' ## calculate fragments for ACE with an added variable modification
-calculateFragments("ACE", variable_modifications = c(A = 43.25))
-
-## calculate fragments for ACE with an added N-terminal modification
-calculateFragments("ACE", fixed_modifications = c(C = 57.02146, Nterm = 229.1629))
-
-## calculate fragments for ACE without any modifications
-calculateFragments("ACE", fixed_modifications = NULL)
-
-calculateFragments("VESITARHGEVLQLRPK",
+## Multiple ion types and charge states
+calculateFragments("ACE",
                    type = c("a", "b", "c", "x", "y", "z"),
                    z = 1:2)
+
+## Positional modification written directly in the sequence string
+## The annotation style must be supported by PTMods::convertAnnotation
+calculateFragments("T[+79.966]CE")
+calculateFragments("T[Phospho]CE")
+## Notice carbamidomethylation applied by default, but ignored if already
+## present.
+calculateFragments("T[UNIMOD:21]C[Carbamidomethyl]E")
 
 ## neutral loss
 defaultNeutralLoss()
@@ -125,6 +131,31 @@ calculateFragments("PQR",
 ## disable neutral loss completely
 calculateFragments("PQR", neutralLoss=NULL)
 
+## Recommended workflow: use PTMods functions to produce positional sequences
+## before calling calculateFragments.
+
+## Fixed modification (Carbamidomethyl on C) using addFixedModifications
+seq_fixed <- PTMods::addFixedModifications("ACE",
+                                           fixedModifications = c(C = 57.02))
+calculateFragments(seq_fixed)
+
+## Fixed modification including N-terminus using addFixedModifications
+seq_nterm <- PTMods::addFixedModifications(
+    "ACE",
+    fixedModifications = c(C = 57.02, Nterm = 229.16))
+calculateFragments(seq_nterm)
+
+## Variable modification (delta mass on A) using addVariableModifications
+seq_var <- PTMods::addVariableModifications("ACE",
+                                            variableModifications = c(A = 43.25))
+calculateFragments(seq_var)
+
+## Both fixed and variable modifications using addModifications
+seq_mods <- PTMods::addModifications("ARGSHKATC",
+                                     fixedModifications = c(C = 57),
+                                     variableModifications = c(S = 79, T = 79),
+                                     maxMods = 2)
+calculateFragments(seq_mods)
 }
 \author{
 Sebastian Gibb \href{mailto:mail@sebastiangibb.de}{mail@sebastiangibb.de}

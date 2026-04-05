@@ -28,6 +28,13 @@ To install the package from Bioconductor, make sure you have the
 ```r
 BiocManager::install("PSMatch")
 ```
+## Contributions
+
+Contributions are welcome, and should ideally be provided through a Github pull
+request. Feel free to discuss any more non-trivial suggestions or changes first
+in an issue. See also the main
+[R for Mass Spectrometry contribution guide](https://rformassspectrometry.github.io/RforMassSpectrometry/articles/RforMassSpectrometry.html#contributions) and
+[code of conduct](https://rformassspectrometry.github.io/RforMassSpectrometry/articles/RforMassSpectrometry.html#code-of-conduct)
 
 ## Credit
 

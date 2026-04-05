@@ -61,9 +61,18 @@
 ##'
 ##' @param minorTicks `logical(1L)`. If `TRUE`, minor ticks are added to the
 ##'     plots.  Default is set to `TRUE`.
-##' 
+##'
 ##' @param USI `logical(1L)`. If `TRUE`, the universal spectrum identifier is
 ##'     displayed.
+##'
+##' @param fixedModifications Named `numeric` or `character`, passed to
+##'     `PTMods::addFixedModifications()`. Applied to all sequences before
+##'     plotting. `NULL` by default (no fixed modifications applied).
+##'
+##' @param variableModifications Named `numeric` or `character`, passed to
+##'     `PTMods::addVariableModifications()`. Each unique combination of
+##'     variable modifications generates a separate copy of the corresponding
+##'     spectrum. `NULL` by default (no variable modifications applied).
 ##'
 ##' @param ... additional parameters to be passed to the `labelFragments()`
 ##'     function.
@@ -127,11 +136,17 @@
 ##' ## Annotate the spectrum with different ion types
 ##' plotSpectraPTM(sp, type = c("a", "b", "x", "y"))
 ##'
-##' ## Annotate the spectrum with variable modifications
-##' plotSpectraPTM(sp, variable_modifications = c(R = 49.469))
+##' ## Annotate the spectrum with modifications using PTMods
+##' sp_mod <- sp
+##' sp_mod$sequence <- PTMods::addFixedModifications("SIGFEGDSIGR", fixedModifications = c(Nterm = "Acetyl"))
+##' plotSpectraPTM(sp_mod)
+##'
+##' ## Or call them within the function directly:
+##' plotSpectraPTM(sp, fixedModifications = NULL,
+##' variableModifications = c(R = "Methyl"))
 ##'
 ##' ## Annotate multiple spectra at a time
-##' plotSpectraPTM(c(sp,sp), variable_modifications = c(R = 49.469))
+##' plotSpectraPTM(c(sp, sp))
 ##'
 ##' ## Color the peaks with different colors
 ##' plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
@@ -146,18 +161,43 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                            labelCex = 1, labelSrt = 0,
                            labelAdj = NULL, labelPos = 3, labelOffset = 0.5,
                            asp = 1, minorTicks = TRUE, USI = TRUE,
+                           fixedModifications = NULL,
+                           variableModifications = NULL,
                            ...) {
     if (!("sequence" %in% Spectra::spectraVariables(x))) {
         stop("Missing 'sequence' in Spectra::spectraVariables(x)")
     }
+
+    ## Apply fixed modifications to all sequences if provided
+    if (!is.null(fixedModifications)) {
+        x$sequence <- PTMods::addFixedModifications(x$sequence,
+            fixedModifications = fixedModifications)
+    }
+
+    ## Apply variable modifications, expanding spectra for each combination.
+    if (!is.null(variableModifications)) {
+        seqsIn <- x$sequence
+        parts <- lapply(seq_along(x), function(i) {
+            combs <- PTMods::addVariableModifications(
+                seqsIn[i],
+                variableModifications = variableModifications)
+            lapply(combs, function(s) {
+                xi <- x[i]
+                xi$sequence <- s
+                xi
+            })
+        })
+        x <- do.call(c, unlist(parts, recursive = FALSE))
+    }
+
     nsp <- length(x)
     old_par <- par(no.readonly = TRUE)
     on.exit(par(old_par))
-    
+
     if (length(main) != nsp) main <- rep(main[1], nsp)
-    
+
     labels <- labelFragments(x, ppm = ppm, what = "ion", ...)
-    
+
     if (deltaMz) { ## Generate deltaMzData labels for .plot_single_spectrum_PTM
         deltaMzData <- labelFragments(x, ppm = ppm, what = "mz", ...)
         layout_matrix <- .make_layout_matrix(length(labels))
@@ -168,7 +208,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
         deltaMzData <- NULL
     }
     spectrum_number <- attr(labels, "group")
-    
+
     for (i in seq_along(spectrum_number)) {
         .plot_single_spectrum_PTM(x[spectrum_number[i]], xlab = xlab,
                                       ylab = ylab, xlim = xlim,
@@ -217,10 +257,10 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     v <- peaksData(x)[[1L]]
     mzs <- v[, "mz"]
     ints <- v[, "intensity"]
-    
+
     old_mar <- par("mar")
     on.exit(par(mar = old_mar))
-    
+
     if (!length(xlim))
         suppressWarnings(xlim <- range(mzs, na.rm = TRUE))
     if (!length(ylim))
@@ -241,41 +281,41 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     } else par(mar = c(par("mar")[1L] * 0.8, 4, 1, 2))
     plot.new()
     plot.window(xlim = xlim, ylim = ylim)
-    
+
     peptide_sequence <- names(labels)
     labels <- labels[[1L]]
     wdths <- max(strwidth(labels, cex = labelCex)) / 2
     xlim[1L] <- xlim[1L] - wdths
     xlim[2L] <- xlim[2L] + wdths
-    
+
     ## add space for the annotation
     ## The choice of 10L * chrhgt is explained in .build_annotations
     chrwdh <- strwidth("M")
     chrhgt <- strheight("M")
     ylim[2L] <- ylim[2L] + 10L * chrhgt
-    
+
     plot.window(xlim = xlim, ylim = ylim)
-    
+
     peakCol <- rep_len(col[["other"]], length(labels))
     peakCol[startsWith(labels, "b")] <- col[["b"]]
     peakCol[startsWith(labels, "y")] <- col[["y"]]
     peakCol[grepl("^[acxz]", labels)] <- col[["acxy"]]
-    
+
     labelCol <- rep_len(col[["acxy"]], length(labels))
     labelCol[startsWith(labels, "b")] <- col[["b"]]
     labelCol[startsWith(labels, "y")] <- col[["y"]]
-    
+
     text(mzs, ints, labels = labels, adj = labelAdj, pos = labelPos,
          col = labelCol, cex = labelCex, srt = labelSrt, offset = labelOffset)
-    
+
     .buildAnnotations(x, mzs, ints, col, labels, peptide_sequence, chrwdh, chrhgt)
-    
+
     plot.xy(xy.coords(mzs, ints), type = "h", col = peakCol)
-    
+
     major_ticks <- pretty(mzs, n = 8)
     axis(side = 1, lwd = 1, at = major_ticks, pos = 0,
          col.ticks = "grey45", col = "grey45")
-    
+
     if (minorTicks) {
         nm <- length(major_ticks)
         ticks <- seq.int(
@@ -286,46 +326,46 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
             tck = par("tcl") / 50 , col.ticks = "grey75", pos = 0
         )
     }
-    
+
     axis(
         side = 2, las = 0,
         at = seq(0, max(abs(ints)), length.out = 5),
         labels = seq(0, 100, length.out = 5)
     )
-    
+
     title(main = main)
     title(ylab = ylab, line = 2.5, cex = 0.9)
     mtext(xlab, side = 1, line = -0.5, at = c(par("usr")[2]))
-    
-    subtxt <- paste0(
-        "mzspec/",
-        basename(spectraData(x)[["dataOrigin"]]),
-        "/scan: ", spectraData(x)[["scanIndex"]],
-        "/rt: ", round(spectraData(x)[["rtime"]], 2L),
-        "/charge: ", spectraData(x)[["charge"]],
-        "/peptide: ", peptide_sequence
+
+    subtxt <- bquote(
+    "mzspec/" *
+    .(basename(spectraData(x)[["dataOrigin"]])) *
+    "/scan: " * .(spectraData(x)[["scanIndex"]]) *
+    "/rt: " * .(round(spectraData(x)[["rtime"]], 2L)) *
+    "/charge: " * .(spectraData(x)[["charge"]]) *
+    "/peptide: " * bold(.(peptide_sequence))
     )
-    
-    if (USI) mtext(subtxt, line = -1, cex = 0.9)
-    
+
+    if (USI) mtext(subtxt, line = -1.72, cex = 0.9)
+
     base_peak <- which.max(abs(ints))
     text(mzs[base_peak], ints[base_peak] * 0.60,
          paste0(formatC(ints[base_peak])),
          pos = 4, offset = 0.6, cex = 0.9, srt = 90)
-    
+
     abline(h = 0, col = "grey45")
-    
+
     if (!is.null(deltaMzData)) {
         deltaMzData <-
             ((mzs - deltaMzData) / deltaMzData) * 10^6
-        
+
         par(
             mar = par("mar") -
                 c(par("mar")[1L], 0, par("mar")[3L], 0) * 0.8
         )
-        
+
         true_hits <- !is.na(labels)
-        
+
         plot(
             mzs[true_hits],
             deltaMzData[true_hits],
@@ -334,20 +374,20 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
             ann = FALSE, xaxt = "n",
             xlim = xlim, ylim = c(-ppm, ppm),
             lwd = 2)
-        
+
         points(
             mzs[true_hits], deltaMzData[true_hits],
             col = labelCol[true_hits],
             type = "p", pch = 19, cex = 0.7)
-        
+
         abline(h = 0, col = "#808080", lty = 2)
         title(ylab = "delta m/z\n[ppm]", cex.lab = 0.9, line = 2)
-        
+
         axis(
             side = 3, lwd = 1, at = major_ticks,
             col.ticks = "grey45", col = "grey45", labels = FALSE
         )
-        
+
         if (minorTicks) {
             axis(
                 side = 3, at = ticks[!ticks %in% major_ticks], labels = FALSE,
@@ -369,20 +409,20 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
 .make_layout_matrix <- function(n) {
     n_cols <- ceiling(sqrt(n))
     n_rows <- ceiling(n / n_cols)
-    
+
     layout_matrix <- matrix(0, nrow = 2 * n_rows, ncol = n_cols)
-    
+
     plot_index <- 1
     for (i in seq_len(n)) {
         row_block <- ((i - 1) %/% n_cols) * 2
         col_block <- ((i - 1) %% n_cols) + 1
-        
+
         layout_matrix[row_block + 1, col_block] <- plot_index     # MSMS
         layout_matrix[row_block + 2, col_block] <- plot_index + 1 # delta m/z
-        
+
         plot_index <- plot_index + 2
     }
-    
+
     layout_matrix
 }
 
@@ -411,51 +451,43 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                               peptide_sequence = peptide_sequence,
                               chrwdh = chrwdh,
                               chrhgt = chrhgt) {
-    
-    # split peptide sequence by amino acid or modification
-    pep_seq <- unlist(
-        strsplit(
-            peptide_sequence,
-            "(?<=[A-Za-z])(?=[A-Z])|(?<=\\])(?=[A-Z])",
-            perl = TRUE
-        ))
-    
-    # clean modifications for plotting
-    mod_pep_seq <- gsub(
-        "([A-Za-z])\\[[-+]?\\d+\\.?\\d*\\]", "[\\1]", pep_seq
-    )
-    
+
+    ## Extract plain amino acid letters, stripping all modifications and
+    ## any non-letter characters (e.g. hyphens in N/C-terminal notation)
+    stripped <- PTMods::getCanonicalSequence(peptide_sequence)
+    plain_aas <- strsplit(stripped, "")[[1L]]
+
     xlimit <- par("usr")[1L:2L]
-    # we added 10x strheight space in .plot_single_spectrum_PTM;
-    # the text is 5x M + a slight adjustment, we left some space below and above
-    # for the fragment labels and the mzspec string, respectively
-    # ypos and xmid are the mid of the text position
+    ## we added 10x strheight space in .plot_single_spectrum_PTM;
+    ## the text is 5x M + a slight adjustment, we left some space below and above
+    ## for the fragment labels and the mzspec string, respectively
+    ## ypos and xmid are the mid of the text position
     ypos <- par("usr")[4L] - 6L * chrhgt
     xmid <- mean(xlimit)
-    
-    n <- length(mod_pep_seq)
+
+    n <- length(plain_aas)
     xpos <- seq(xmid - n * chrwdh, xmid + n * chrwdh, length.out = 2L * n + 1L)
     is_letter <- !as.logical(seq_along(xpos) %% 2L)
-    
+
     text(
         xpos[is_letter], ypos,
-        labels = mod_pep_seq,
+        labels = plain_aas,
         cex = 1,
         adj = 0.5
     )
-    
+
     ionb <- paste0("b", c(0, seq_len(n)))
     ionbpos <- xpos[!is_letter][ionb %in% labels]
-    
+
     if (length(ionbpos)) {
         segments(
             ionbpos, ypos, ionbpos, ypos - chrhgt,
             col = col[["b"]], lwd = 2L
         )
-        
+
         num <- which(xpos %in% ionbpos)
         num_pos <- xpos[num] - (xpos[num] - xpos[num - 1]) * 0.5
-        
+
         segments(
             ionbpos, ypos - chrhgt, num_pos, ypos - 1.5 * chrhgt,
             col = col[["b"]], lwd = 2L
@@ -467,19 +499,19 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
             cex = 1, col = col[["b"]]
         )
     }
-    
+
     iony <- paste0("y", rev(c(0, seq_len(n))))
     ionypos <- xpos[!is_letter][iony %in% labels]
-    
+
     if (length(ionypos)) {
         segments(
             ionypos, ypos, ionypos, ypos + chrhgt,
             col = col[["y"]], lwd = 2L
         )
-        
+
         num <- which(xpos %in% ionypos)
         num_pos <- xpos[num] + (xpos[num + 1] - xpos[num]) * 0.5
-        
+
         segments(
             ionypos, ypos + chrhgt, num_pos, ypos + 1.5 * chrhgt,
             col = col[["y"]], lwd = 2L

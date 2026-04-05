@@ -1,5 +1,14 @@
 # PSMatch 1.15
 
+## PSMatch 1.15.3
+
+- Corrected `plotSpectraPTM()` relative `PTMods` dependencies, identifications
+are highlighted in bold in the USI. Added parameters to call addFixed and
+addVariable within `plotSpectraPTM()`.
+- Add PTMods dependency and thus positional modifications in
+`calculateFragments()` (see
+[issue 38](https://github.com/rformassspectrometry/PSMatch/issues/38))
+
 ## PSMatch 1.15.2
 
 - Use `MsDataHub` instead of `msdata`.

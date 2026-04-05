@@ -2,12 +2,9 @@
 % Please edit documentation in R/fragments-label.R
 \name{labelFragments}
 \alias{labelFragments}
-\alias{addFragments}
 \title{labels MS2 Fragments}
 \usage{
 labelFragments(x, tolerance = 0, ppm = 20, what = c("ion", "mz"), ...)
-
-addFragments(x, tolerance = 0, ppm = 20, ...)
 }
 \arguments{
 \item{x}{An instance of class \code{Spectra} of length 1, containing a
@@ -15,10 +12,10 @@ spectra variable \code{"sequence"} with a \code{character(1)}
 representing a valid peptide sequence.}
 
 \item{tolerance}{absolute acceptable difference of m/z values for peaks to
-be considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::common()}} for more details).}
+be considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::closest()}} for more details).}
 
 \item{ppm}{m/z relative acceptable difference (in ppm) for peaks to be
-considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::common()}} for more details).}
+considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::closest()}} for more details).}
 
 \item{what}{\code{character(1)}, one of \code{"ion"} (default) or \code{"mz"}, defining
 whether labels should be fragment ions, , or their m/z values. If the
@@ -35,10 +32,6 @@ modifications included).
 }
 \description{
 Creates a list of annotations based on \code{calculateFragments} results.
-}
-\details{
-\code{addFragments} is deprecated and will be made defunct; use \code{labelFragments}
-instead.
 }
 \examples{
 library("Spectra")
@@ -82,8 +75,11 @@ labelFragments(sp)
 ## The fragment mz labels
 labelFragments(sp, what = "mz")
 
-## Call additional parameters sur as variable modifications to calculateFragments
-labelFragments(sp, type = c("a", "b", "x", "y"), variable_modifications = c(R = 5))
+## Pass additional parameters to calculateFragments using a PTMods modified sequence
+sp_mod <- sp
+sp_mod$sequence <- PTMods::addFixedModifications("SIGFEGDSIGR",
+                                                  fixedModifications = c(Nterm = 5))
+labelFragments(sp_mod, type = c("a", "b", "x", "y"))
 
 ## Annotate the spectum with the fragment labels
 plotSpectra(sp, labels = labelFragments, labelPos = 3)

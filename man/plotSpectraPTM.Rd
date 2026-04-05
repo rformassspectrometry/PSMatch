@@ -22,6 +22,8 @@ plotSpectraPTM(
   asp = 1,
   minorTicks = TRUE,
   USI = TRUE,
+  fixedModifications = NULL,
+  variableModifications = NULL,
   ...
 )
 }
@@ -77,6 +79,15 @@ plots.  Default is set to \code{TRUE}.}
 
 \item{USI}{\code{logical(1L)}. If \code{TRUE}, the universal spectrum identifier is
 displayed.}
+
+\item{fixedModifications}{Named \code{numeric} or \code{character}, passed to
+\code{PTMods::addFixedModifications()}. Applied to all sequences before
+plotting. \code{NULL} by default (no fixed modifications applied).}
+
+\item{variableModifications}{Named \code{numeric} or \code{character}, passed to
+\code{PTMods::addVariableModifications()}. Each unique combination of
+variable modifications generates a separate copy of the corresponding
+spectrum. \code{NULL} by default (no variable modifications applied).}
 
 \item{...}{additional parameters to be passed to the \code{labelFragments()}
 function.}
@@ -139,11 +150,17 @@ plotSpectraPTM(sp, deltaMz = FALSE)
 ## Annotate the spectrum with different ion types
 plotSpectraPTM(sp, type = c("a", "b", "x", "y"))
 
-## Annotate the spectrum with variable modifications
-plotSpectraPTM(sp, variable_modifications = c(R = 49.469))
+## Annotate the spectrum with modifications using PTMods
+sp_mod <- sp
+sp_mod$sequence <- PTMods::addFixedModifications("SIGFEGDSIGR", fixedModifications = c(Nterm = "Acetyl"))
+plotSpectraPTM(sp_mod)
+
+## Or call them within the function directly:
+plotSpectraPTM(sp, fixedModifications = NULL,
+variableModifications = c(R = "Methyl"))
 
 ## Annotate multiple spectra at a time
-plotSpectraPTM(c(sp,sp), variable_modifications = c(R = 49.469))
+plotSpectraPTM(c(sp, sp))
 
 ## Color the peaks with different colors
 plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
