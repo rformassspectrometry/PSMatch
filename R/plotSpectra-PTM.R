@@ -72,10 +72,14 @@
 ##' @param variableModifications Named `numeric` or `character`, passed to
 ##'     `PTMods::addVariableModifications()`. Each unique combination of
 ##'     variable modifications generates a separate copy of the corresponding
-##'     spectrum. `NULL` by default (no variable modifications applied).
+##'     spectrum. `NULL` by default (no variable modifications applied). If
+##'     carbamidomethylation should be applied as a variable modification, do
+##'     call an extra parameter `addCarbamidomethylation = FALSE`. For more
+##'     details on this, see the appropriate vignette by running
+##'     `vignette("Fragments", package = "PSMatch")`
 ##'
 ##' @param ... additional parameters to be passed to the `labelFragments()`
-##'     function.
+##'     and as such, `calculateFragments()` functions.
 ##'
 ##' @importFrom graphics layout par
 ##'

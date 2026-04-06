@@ -2,6 +2,8 @@
 
 ## PSMatch 1.15.3
 
+- Adjusted documentation on `addCarbamidomethyl = TRUE` in
+`calculateFragments()` set by default.
 - Corrected `plotSpectraPTM()` relative `PTMods` dependencies, identifications
 are highlighted in bold in the USI. Added parameters to call addFixed and
 addVariable within `plotSpectraPTM()`.
