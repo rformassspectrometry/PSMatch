@@ -72,11 +72,16 @@
 ##' @param variableModifications Named `numeric` or `character`, passed to
 ##'     `PTMods::addVariableModifications()`. Each unique combination of
 ##'     variable modifications generates a separate copy of the corresponding
-##'     spectrum. `NULL` by default (no variable modifications applied). If
-##'     carbamidomethylation should be applied as a variable modification, do
-##'     call an extra parameter `addCarbamidomethylation = FALSE`. For more
-##'     details on this, see the appropriate vignette by running
-##'     `vignette("Fragments", package = "PSMatch")`
+##'     spectrum. `NULL` by default (no variable modifications applied).
+##'
+##' @param addCarbamidomethyl logical(1L) set to `TRUE` by default. Applies
+##' carbamidomethylation as a fixed modification unless carbamidomethyl is
+##' already present in the given sequences.
+##' If carbamidomethylation should be applied as a variable modification, do
+##' call an extra parameter `addCarbamidomethylation = FALSE`. For more
+##' details on this, see the appropriate vignette by running
+##' `vignette("Fragments", package = "PSMatch")
+
 ##'
 ##' @param ... additional parameters to be passed to the `labelFragments()`
 ##'     and as such, `calculateFragments()` functions.
@@ -167,6 +172,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                            asp = 1, minorTicks = TRUE, USI = TRUE,
                            fixedModifications = NULL,
                            variableModifications = NULL,
+                           addCarbamidomethyl = TRUE,
                            ...) {
     if (!("sequence" %in% Spectra::spectraVariables(x))) {
         stop("Missing 'sequence' in Spectra::spectraVariables(x)")
@@ -200,10 +206,12 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
 
     if (length(main) != nsp) main <- rep(main[1], nsp)
 
-    labels <- labelFragments(x, ppm = ppm, what = "ion", ...)
+    labels <- labelFragments(x, ppm = ppm, what = "ion",
+        addCarbamidomethyl = addCarbamidomethyl, ...)
 
     if (deltaMz) { ## Generate deltaMzData labels for .plot_single_spectrum_PTM
-        deltaMzData <- labelFragments(x, ppm = ppm, what = "mz", ...)
+        deltaMzData <- labelFragments(x, ppm = ppm, what = "mz",
+            addCarbamidomethyl = addCarbamidomethyl, ...)
         layout_matrix <- .make_layout_matrix(length(labels))
         layout(layout_matrix,
                heights = rep(c(5, 1), length.out = nrow(layout_matrix)))

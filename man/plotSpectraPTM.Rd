@@ -24,6 +24,7 @@ plotSpectraPTM(
   USI = TRUE,
   fixedModifications = NULL,
   variableModifications = NULL,
+  addCarbamidomethyl = TRUE,
   ...
 )
 }
@@ -87,11 +88,15 @@ plotting. \code{NULL} by default (no fixed modifications applied).}
 \item{variableModifications}{Named \code{numeric} or \code{character}, passed to
 \code{PTMods::addVariableModifications()}. Each unique combination of
 variable modifications generates a separate copy of the corresponding
-spectrum. \code{NULL} by default (no variable modifications applied). If
-carbamidomethylation should be applied as a variable modification, do
+spectrum. \code{NULL} by default (no variable modifications applied).}
+
+\item{addCarbamidomethyl}{logical(1L) set to \code{TRUE} by default. Applies
+carbamidomethylation as a fixed modification unless carbamidomethyl is
+already present in the given sequences.
+If carbamidomethylation should be applied as a variable modification, do
 call an extra parameter \code{addCarbamidomethylation = FALSE}. For more
 details on this, see the appropriate vignette by running
-\code{vignette("Fragments", package = "PSMatch")}}
+`vignette("Fragments", package = "PSMatch")}
 
 \item{...}{additional parameters to be passed to the \code{labelFragments()}
 and as such, \code{calculateFragments()} functions.}
