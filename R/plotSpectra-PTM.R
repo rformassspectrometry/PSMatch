@@ -81,10 +81,9 @@
 ##' set `addCarbamidomethylation = FALSE`. For more
 ##' details on this, see the appropriate vignette by running
 ##' `vignette("Fragments", package = "PSMatch")
-
 ##'
 ##' @param ... additional parameters to be passed to the `labelFragments()`
-##'     and as such, `calculateFragments()` functions.
+##'     and `calculateFragments()` functions.
 ##'
 ##' @importFrom graphics layout par
 ##'

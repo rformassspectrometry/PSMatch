@@ -99,7 +99,7 @@ details on this, see the appropriate vignette by running
 `vignette("Fragments", package = "PSMatch")}
 
 \item{...}{additional parameters to be passed to the \code{labelFragments()}
-and as such, \code{calculateFragments()} functions.}
+and \code{calculateFragments()} functions.}
 }
 \value{
 Creates a plot depicting an MS/MS-MS spectrum.

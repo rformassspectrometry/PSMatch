@@ -94,9 +94,9 @@ calculateFragments(sp1158$sequence[2], addCarbamidomethyl = FALSE)
 ```
 
 The function also allows to generate fragment sequences with fixed and/or
-variable modifications. To do so, ideally add modifications using the `PTMods`
-package functions `PTMods::addFixedModifications()` and
-`PTMods::addVariableModifications()`.
+variable modifications using the `PTMods::addFixedModifications()` and
+`PTMods::addVariableModifications()` functions from the `r
+BiocStyle::Biocpkg("PTMods")` package.
 
 With variable modifications, multiple sets of fragments are generated based on
 the peptide-modifications combinations available. The fragments can be traced
@@ -113,8 +113,11 @@ calculateFragments(var_seq)
 
 Additional parameters can alter the type of ions produced or the charge applied
 in `calculateFragments`. See `?calculateFragments` for more details on those.
-See the `PTMods` functions for how to handle/apply/change the annotation style
-of modifications on your sequences.
+See the `PTMods` functions (`?PTMods::convertAnnotation`,
+`?PTMods::getCanonicalSequence`, `?PTMods::combineModifications`) for how to
+handle/apply/change the annotation style of modifications on your sequences or
+check out the corresponding vignette with `vignette("PTMods", package =
+"PTMods")`.
 
 # Visualising fragment ions
 
