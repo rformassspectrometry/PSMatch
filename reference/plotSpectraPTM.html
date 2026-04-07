@@ -23,7 +23,7 @@ labelFragments() and calculateFragments()."><!-- mathjax --><script src="https:/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.3</span>
       </span>
     </div>
 
@@ -101,6 +101,7 @@ theoretical fragment ions (e.g., b, y, a, c, x, z) computed using
 <span>  USI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  fixedModifications <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  variableModifications <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  addCarbamidomethyl <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -208,9 +209,19 @@ variable modifications generates a separate copy of the corresponding
 spectrum. <code>NULL</code> by default (no variable modifications applied).</p></dd>
 
 
+<dt id="arg-addcarbamidomethyl">addCarbamidomethyl<a class="anchor" aria-label="anchor" href="#arg-addcarbamidomethyl"></a></dt>
+<dd><p>logical(1L) set to <code>TRUE</code> by default. Applies
+carbamidomethylation as a fixed modification unless carbamidomethyl is
+already present in the given sequences.
+If carbamidomethylation should be applied as a variable modification, do
+set <code>addCarbamidomethylation = FALSE</code>. For more
+details on this, see the appropriate vignette by running
+`vignette("Fragments", package = "PSMatch")</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>additional parameters to be passed to the <code><a href="labelFragments.html">labelFragments()</a></code>
-function.</p></dd>
+and <code><a href="calculateFragments.html">calculateFragments()</a></code> functions.</p></dd>
 
 </dl></div>
     <div id="value">

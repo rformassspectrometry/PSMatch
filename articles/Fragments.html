@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.3</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.23/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [ctb] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-04-05 06:12:12.230124<br><strong>Compiled</strong>: Sun Apr 5 06:47:07 2026</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [ctb] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-04-07 10:36:13.237983<br><strong>Compiled</strong>: Tue Apr 7 10:49:43 2026</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -165,7 +165,7 @@ package webpage.</p>
 <span><span class="co">##  ... 68 more variables/columns.</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## file(s):</span></span>
-<span><span class="co">## 44dd5ac16260_7858</span></span></code></pre>
+<span><span class="co">## 12ce3cbc23bb_7858</span></span></code></pre>
 <p>In this example, we are going to focus the MS2 scan with index 1158
 and its parent MS1 scan (index 1148, selected automatically with the <a href="https://rformassspectrometry.github.io/Spectra/reference/MsBackend.html" class="external-link">filterPrecursorScan()</a>
 function).</p>
@@ -186,49 +186,48 @@ function).</p>
 <p>The <code><a href="../reference/calculateFragments.html">calculateFragments()</a></code> simply takes a peptide sequence
 as input and returns a <code>data.frame</code> with the fragment
 sequences, M/Z, ion type, charge, position and the peptide sequence of
-the parent ion.</p>
+the parent ion. By default, carbamidomethylation of cysteines is
+applied, but it can be turned off with the parameter
+<code>addCarbamidomethyl = FALSE</code>.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/calculateFragments.html">calculateFragments</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Fixed modifications used: C=57.02146</span></span>
-<span><span class="co">## Variable modifications used: None</span></span></code></pre>
-<pre><code><span><span class="co">##           mz ion type pos z      seq              peptide</span></span>
-<span><span class="co">## 1   88.03931  b1    b   1 1        S SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 2  248.06996  b2    b   2 1       SC SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 3  319.10707  b3    b   3 1      SCA SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 4  432.19113  b4    b   4 1     SCAL SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 5  545.27519  b5    b   5 1    SCALI SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 6  646.32287  b6    b   6 1   SCALIT SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 7  761.34981  b7    b   7 1  SCALITD SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 8  818.37127  b8    b   8 1 SCALITDG SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 9  175.11895  y1    y   1 1        R SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 10 232.14041  y2    y   2 1       GR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 11 347.16735  y3    y   3 1      DGR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 12 448.21503  y4    y   4 1     TDGR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 13 561.29909  y5    y   5 1    ITDGR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 14 674.38315  y6    y   6 1   LITDGR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 15 745.42026  y7    y   7 1  ALITDGR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 16 905.45091  y8    y   8 1 CALITDGR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 17 743.33924 b7_   b_   7 1  SCALITD SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 18 800.36070 b8_   b_   8 1 SCALITDG SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 19 329.15679 y3_   y_   3 1      DGR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 20 543.28853 y5_   y_   5 1    ITDGR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 21 656.37259 y6_   y_   6 1   LITDGR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 22 727.40970 y7_   y_   7 1  ALITDGR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 23 887.44035 y8_   y_   8 1 CALITDGR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 24 157.10839 y1_   y_   1 1        R SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 25 214.12985 y2_   y_   2 1       GR SC[+57.02146]ALITDGR</span></span>
-<span><span class="co">## 26 430.20447 y4_   y_   4 1     TDGR SC[+57.02146]ALITDGR</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/calculateFragments.html">calculateFragments</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, addCarbamidomethyl <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##           mz ion type pos z      seq   peptide</span></span>
+<span><span class="co">## 1   88.03931  b1    b   1 1        S SCALITDGR</span></span>
+<span><span class="co">## 2  191.04850  b2    b   2 1       SC SCALITDGR</span></span>
+<span><span class="co">## 3  262.08561  b3    b   3 1      SCA SCALITDGR</span></span>
+<span><span class="co">## 4  375.16967  b4    b   4 1     SCAL SCALITDGR</span></span>
+<span><span class="co">## 5  488.25373  b5    b   5 1    SCALI SCALITDGR</span></span>
+<span><span class="co">## 6  589.30141  b6    b   6 1   SCALIT SCALITDGR</span></span>
+<span><span class="co">## 7  704.32835  b7    b   7 1  SCALITD SCALITDGR</span></span>
+<span><span class="co">## 8  761.34981  b8    b   8 1 SCALITDG SCALITDGR</span></span>
+<span><span class="co">## 9  175.11895  y1    y   1 1        R SCALITDGR</span></span>
+<span><span class="co">## 10 232.14041  y2    y   2 1       GR SCALITDGR</span></span>
+<span><span class="co">## 11 347.16735  y3    y   3 1      DGR SCALITDGR</span></span>
+<span><span class="co">## 12 448.21503  y4    y   4 1     TDGR SCALITDGR</span></span>
+<span><span class="co">## 13 561.29909  y5    y   5 1    ITDGR SCALITDGR</span></span>
+<span><span class="co">## 14 674.38315  y6    y   6 1   LITDGR SCALITDGR</span></span>
+<span><span class="co">## 15 745.42026  y7    y   7 1  ALITDGR SCALITDGR</span></span>
+<span><span class="co">## 16 848.42945  y8    y   8 1 CALITDGR SCALITDGR</span></span>
+<span><span class="co">## 17 686.31778 b7_   b_   7 1  SCALITD SCALITDGR</span></span>
+<span><span class="co">## 18 743.33924 b8_   b_   8 1 SCALITDG SCALITDGR</span></span>
+<span><span class="co">## 19 329.15679 y3_   y_   3 1      DGR SCALITDGR</span></span>
+<span><span class="co">## 20 543.28853 y5_   y_   5 1    ITDGR SCALITDGR</span></span>
+<span><span class="co">## 21 656.37259 y6_   y_   6 1   LITDGR SCALITDGR</span></span>
+<span><span class="co">## 22 727.40970 y7_   y_   7 1  ALITDGR SCALITDGR</span></span>
+<span><span class="co">## 23 830.41889 y8_   y_   8 1 CALITDGR SCALITDGR</span></span>
+<span><span class="co">## 24 157.10839 y1_   y_   1 1        R SCALITDGR</span></span>
+<span><span class="co">## 25 214.12985 y2_   y_   2 1       GR SCALITDGR</span></span>
+<span><span class="co">## 26 430.20447 y4_   y_   4 1     TDGR SCALITDGR</span></span></code></pre>
 <p>The function also allows to generate fragment sequences with fixed
-and/or variable modifications. To do so, ideally add modifications using
-the <code>PTMods</code> package. For instance, for
-<code><a href="https://rdrr.io/pkg/PTMods/man/addFixedModifications.html" class="external-link">PTMods::addFixedModifications()</a></code>, by default,
-<code>fixedModifications = c(C = 57.02146)</code> for
-carbamidomethylation of cysteines.</p>
-<p>With variable modifications, multiple sets of fragments are
-generated. The fragments can be traced to their parent ion by checking
-the <code>peptide</code> column. A fragment can have multiple
-modifications.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+and/or variable modifications using the
+<code><a href="https://rdrr.io/pkg/PTMods/man/addFixedModifications.html" class="external-link">PTMods::addFixedModifications()</a></code> and
+<code><a href="https://rdrr.io/pkg/PTMods/man/addVariableModifications.html" class="external-link">PTMods::addVariableModifications()</a></code> functions from the
+<code>r BiocStyle::Biocpkg("PTMods")</code> package.</p>
+<p>With variable modifications, multiple sets of fragments are generated
+based on the peptide-modifications combinations available. The fragments
+can be traced to their parent ion by checking the <code>peptide</code>
+column. A fragment can have multiple modifications.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">var_seq</span> <span class="op">&lt;-</span> <span class="fu">PTMods</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/PTMods/man/addVariableModifications.html" class="external-link">addVariableModifications</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">$</span><span class="va">sequence</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
 <span>    variableModifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>C <span class="op">=</span> <span class="fl">57.02146</span>, T <span class="op">=</span> <span class="fl">79.966</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -339,19 +338,22 @@ modifications.</p>
 <span><span class="co">## 102 157.10839 y1_   y_   1 1        R SC[+57.02146]ALIT[+79.966]DGR</span></span>
 <span><span class="co">## 103 214.12985 y2_   y_   2 1       GR SC[+57.02146]ALIT[+79.966]DGR</span></span>
 <span><span class="co">## 104 510.17047 y4_   y_   4 1     TDGR SC[+57.02146]ALIT[+79.966]DGR</span></span></code></pre>
-<p>Additional parameters can limit the maximum number of allowed
-modifications in <code><a href="https://rdrr.io/pkg/PTMods/man/addVariableModifications.html" class="external-link">addVariableModifications()</a></code>, or the type of
-ions produced or the charge applied in <code>calculateFragments</code>.
-See <code><a href="../reference/calculateFragments.html">?calculateFragments</a></code> and
-<code><a href="https://rdrr.io/pkg/PTMods/man/addVariableModifications.html" class="external-link">?PTMods::addVariableModifications</a></code> for more details on
-those.</p>
+<p>Additional parameters can alter the type of ions produced or the
+charge applied in <code>calculateFragments</code>. See
+<code><a href="../reference/calculateFragments.html">?calculateFragments</a></code> for more details on those. See the
+<code>PTMods</code> functions (<code><a href="https://rdrr.io/pkg/PTMods/man/convertAnnotation.html" class="external-link">?PTMods::convertAnnotation</a></code>,
+<code><a href="https://rdrr.io/pkg/PTMods/man/getCanonicalSequence.html" class="external-link">?PTMods::getCanonicalSequence</a></code>,
+<code><a href="https://rdrr.io/pkg/PTMods/man/combineModifications.html" class="external-link">?PTMods::combineModifications</a></code>) for how to
+handle/apply/change the annotation style of modifications on your
+sequences or check out the corresponding vignette with
+<code>vignette("PTMods", package = "PTMods")</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="visualising-fragment-ions">Visualising fragment ions<a class="anchor" aria-label="anchor" href="#visualising-fragment-ions"></a>
 </h2>
 <p>We can now visualise these fragments directly on the MS spectrum.
 Let’s first visualise the spectrum as is:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Fragments_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="700"></p>
 <p><code><a href="../reference/plotSpectraPTM.html">plotSpectraPTM()</a></code> allows a more in depth visualisation of
@@ -361,33 +363,39 @@ visualisation of matched b- and y-ion fragment sequences.</p>
 defined in the <code>spectraVariables</code>. Additionally, variable or
 fixed modifications such as carbamidomethylation of cysteines can be
 added using the <code>variableModifications</code> and
-<code>fixedModifications</code> parameters.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code>fixedModifications</code> parameters. Remember, by default,
+carbamidomethylation is applied on all sequences.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">dataOrigin</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"TMT_Erwinia"</span> <span class="co">## Reduces the mzspec text</span></span>
 <span><span class="fu"><a href="../reference/plotSpectraPTM.html">plotSpectraPTM</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
-<span>    main <span class="op">=</span> <span class="st">"Scan 1158 with carbamidomethylation"</span>,</span>
 <span>    fixedModifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>C <span class="op">=</span> <span class="st">"Carbamidomethyl"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="Fragments_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="700"></p>
 <p>For instance, there is a better match when carbamidomethylation of
 cysteines is applied (as above) compared to no modifications at all.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotSpectraPTM.html">plotSpectraPTM</a></span><span class="op">(</span><span class="va">sp1158</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
 <span>    variableModifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>C <span class="op">=</span> <span class="st">"Carbamidomethyl"</span><span class="op">)</span>,</span>
-<span>    main <span class="op">=</span> <span class="st">"Scan 1158 without modifications"</span></span>
+<span>    addCarbamidomethyl <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co">## Remove carbamidomethyl by default</span></span>
+<span>    asp <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>,</span>
+<span>    deltaMz <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Scan 1158 without carbamidomethyl"</span>, <span class="st">"Scan 1158 with carbamidomethyl"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="Fragments_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="700"></p>
 <p>As glycine has the same mass as carbamidomethylation, the b7 and b8
-ions are overlapping in both spectra).</p>
+ions are overlapping in both spectra.</p>
+<p>The spectra displayed in this vignette might be overlapping due to
+the restricted windows. For a better visualisation, we suggest running
+the code locally.</p>
 <p>For more details on what <code><a href="../reference/plotSpectraPTM.html">plotSpectraPTM()</a></code> can do, run
 <code><a href="../reference/plotSpectraPTM.html">?plotSpectraPTM</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R Under development (unstable) (2026-04-02 r89783)</span></span>
+<pre><code><span><span class="co">## R Under development (unstable) (2026-04-05 r89793)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">## Running under: Ubuntu 24.04.4 LTS</span></span>
 <span><span class="co">## </span></span>
@@ -412,12 +420,12 @@ ions are overlapping in both spectra).</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
 <span><span class="co">## [1] Spectra_1.21.6      BiocParallel_1.45.0 MsDataHub_1.11.2   </span></span>
-<span><span class="co">## [4] PSMatch_1.15.2      PTMods_0.99.3       S4Vectors_0.49.0   </span></span>
+<span><span class="co">## [4] PSMatch_1.15.3      PTMods_0.99.4       S4Vectors_0.49.1   </span></span>
 <span><span class="co">## [7] BiocGenerics_0.57.0 generics_0.1.4      BiocStyle_2.39.0   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] DBI_1.3.0                   httr2_1.2.2                </span></span>
-<span><span class="co">##  [3] rlang_1.1.7                 magrittr_2.0.5             </span></span>
+<span><span class="co">##  [3] rlang_1.2.0                 magrittr_2.0.5             </span></span>
 <span><span class="co">##  [5] clue_0.3-68                 otel_0.2.0                 </span></span>
 <span><span class="co">##  [7] matrixStats_1.5.0           compiler_4.7.0             </span></span>
 <span><span class="co">##  [9] RSQLite_2.4.6               png_0.1-9                  </span></span>
@@ -438,7 +446,7 @@ ions are overlapping in both spectra).</p>
 <span><span class="co">## [39] Rcpp_1.1.1                  Seqinfo_1.1.0              </span></span>
 <span><span class="co">## [41] bookdown_0.46               SummarizedExperiment_1.41.1</span></span>
 <span><span class="co">## [43] knitr_1.51                  IRanges_2.45.0             </span></span>
-<span><span class="co">## [45] Matrix_1.7-5                igraph_2.2.2               </span></span>
+<span><span class="co">## [45] Matrix_1.7-5                igraph_2.2.3               </span></span>
 <span><span class="co">## [47] tidyselect_1.2.1            abind_1.4-8                </span></span>
 <span><span class="co">## [49] yaml_2.3.12                 codetools_0.2-20           </span></span>
 <span><span class="co">## [51] curl_7.0.0                  lattice_0.22-9             </span></span>
