@@ -94,7 +94,7 @@ spectrum. \code{NULL} by default (no variable modifications applied).}
 carbamidomethylation as a fixed modification unless carbamidomethyl is
 already present in the given sequences.
 If carbamidomethylation should be applied as a variable modification, do
-call an extra parameter \code{addCarbamidomethylation = FALSE}. For more
+set \code{addCarbamidomethylation = FALSE}. For more
 details on this, see the appropriate vignette by running
 `vignette("Fragments", package = "PSMatch")}
 
