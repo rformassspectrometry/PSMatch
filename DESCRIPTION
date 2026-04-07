@@ -33,7 +33,7 @@ Description: The PSMatch package helps proteomics practitioners to
 Depends:
     S4Vectors,
     R (>= 4.1.0),
-    PTMods (>= 0.99.3)
+    PTMods (>= 0.99.4)
 Imports:
     utils,
     stats,
