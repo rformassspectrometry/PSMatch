@@ -24,6 +24,7 @@ plotSpectraPTM(
   USI = TRUE,
   fixedModifications = NULL,
   variableModifications = NULL,
+  addCarbamidomethyl = TRUE,
   ...
 )
 }
@@ -89,8 +90,16 @@ plotting. \code{NULL} by default (no fixed modifications applied).}
 variable modifications generates a separate copy of the corresponding
 spectrum. \code{NULL} by default (no variable modifications applied).}
 
+\item{addCarbamidomethyl}{logical(1L) set to \code{TRUE} by default. Applies
+carbamidomethylation as a fixed modification unless carbamidomethyl is
+already present in the given sequences.
+If carbamidomethylation should be applied as a variable modification, do
+set \code{addCarbamidomethylation = FALSE}. For more
+details on this, see the appropriate vignette by running
+`vignette("Fragments", package = "PSMatch")}
+
 \item{...}{additional parameters to be passed to the \code{labelFragments()}
-function.}
+and \code{calculateFragments()} functions.}
 }
 \value{
 Creates a plot depicting an MS/MS-MS spectrum.

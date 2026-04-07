@@ -85,20 +85,23 @@ sp1158$sequence
 
 The `calculateFragments()` simply takes a peptide sequence as input
 and returns a `data.frame` with the fragment sequences, M/Z, ion type,
-charge, position and the peptide sequence of the parent ion.
+charge, position and the peptide sequence of the parent ion. By default,
+carbamidomethylation of cysteines is applied, but it can be turned off with the
+parameter `addCarbamidomethyl = FALSE`.
 
 ```{r}
-calculateFragments(sp1158$sequence[2])
+calculateFragments(sp1158$sequence[2], addCarbamidomethyl = FALSE)
 ```
 
 The function also allows to generate fragment sequences with fixed and/or
-variable modifications. To do so, ideally add modifications using the `PTMods`
-package. For instance, for `PTMods::addFixedModifications()`, by default,
-`fixedModifications = c(C = 57.02146)` for carbamidomethylation of cysteines.
+variable modifications using the `PTMods::addFixedModifications()` and
+`PTMods::addVariableModifications()` functions from the `r
+BiocStyle::Biocpkg("PTMods")` package.
 
-With variable modifications, multiple sets of fragments are generated. The
-fragments can be traced to their parent ion by checking the `peptide` column.
-A fragment can have multiple modifications.
+With variable modifications, multiple sets of fragments are generated based on
+the peptide-modifications combinations available. The fragments can be traced
+to their parent ion by checking the `peptide` column. A fragment can have
+multiple modifications.
 
 ```{r}
 var_seq <- PTMods::addVariableModifications(sp1158$sequence[2],
@@ -108,10 +111,13 @@ var_seq <- PTMods::addVariableModifications(sp1158$sequence[2],
 calculateFragments(var_seq)
 ```
 
-Additional parameters can limit the maximum number of allowed modifications in
-`addVariableModifications()`, or the type of ions produced or the charge
-applied in `calculateFragments`. See `?calculateFragments` and
-`?PTMods::addVariableModifications` for more details on those.
+Additional parameters can alter the type of ions produced or the charge applied
+in `calculateFragments`. See `?calculateFragments` for more details on those.
+See the `PTMods` functions (`?PTMods::convertAnnotation`,
+`?PTMods::getCanonicalSequence`, `?PTMods::combineModifications`) for how to
+handle/apply/change the annotation style of modifications on your sequences or
+check out the corresponding vignette with `vignette("PTMods", package =
+"PTMods")`.
 
 # Visualising fragment ions
 
@@ -129,12 +135,12 @@ b- and y-ion fragment sequences.
 Labels are automatically applied based on the `sequence` defined in the
 `spectraVariables`. Additionally, variable or fixed modifications such as
 carbamidomethylation of cysteines can be added using the
-`variableModifications` and `fixedModifications` parameters.
+`variableModifications` and `fixedModifications` parameters. Remember, by
+default, carbamidomethylation is applied on all sequences.
 
 ```{r}
 dataOrigin(sp1158)[2] <- "TMT_Erwinia" ## Reduces the mzspec text
 plotSpectraPTM(sp1158[2],
-    main = "Scan 1158 with carbamidomethylation",
     fixedModifications = c(C = "Carbamidomethyl")
 )
 ```
@@ -145,12 +151,19 @@ is applied (as above) compared to no modifications at all.
 ```{r}
 plotSpectraPTM(sp1158[2],
     variableModifications = c(C = "Carbamidomethyl"),
-    main = "Scan 1158 without modifications"
+    addCarbamidomethyl = FALSE, ## Remove carbamidomethyl by default
+    asp = 1/2,
+    deltaMz = FALSE,
+    main = c("Scan 1158 without carbamidomethyl", "Scan 1158 with carbamidomethyl")
 )
 ```
 
 As glycine has the same mass as carbamidomethylation, the b7 and b8 ions are
-overlapping in both spectra).
+overlapping in both spectra.
+
+The spectra displayed in this vignette might be overlapping due to the
+restricted windows. For a better visualisation, we suggest running the code
+locally.
 
 For more details on what `plotSpectraPTM()` can do, run `?plotSpectraPTM`.
 
