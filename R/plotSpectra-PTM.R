@@ -82,6 +82,10 @@
 ##' details on this, see the appropriate vignette by running
 ##' `vignette("Fragments", package = "PSMatch")
 ##'
+##' @param z `numeric()` passed to `calculateFragments()`. Defines the charge
+##      states to generate fragments from. Set to `1:precursorCharge(x)` by
+##      default.
+##'
 ##' @param ... additional parameters to be passed to the `labelFragments()`
 ##'     and `calculateFragments()` functions.
 ##'
@@ -172,9 +176,20 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                            fixedModifications = NULL,
                            variableModifications = NULL,
                            addCarbamidomethyl = TRUE,
+                           z = NULL,
                            ...) {
     if (!("sequence" %in% Spectra::spectraVariables(x))) {
         stop("Missing 'sequence' in Spectra::spectraVariables(x)")
+    }
+
+    ## If z not provided, set to 1:precursorCharge(x) by default
+    if (is.null(z)) {
+        if (!is.na(x$precursorCharge)) { ## PROBLEM BECAUSE Z IS NOT FIXED FOR EVERY SPECTRUM INSTANCE !!!
+            z <- 1:x$precursorCharge
+        } else {
+            ## If no precursorCharge, set z = 1
+            z <- 1
+        }
     }
 
     ## Apply fixed modifications to all sequences if provided
@@ -206,7 +221,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     if (length(main) != nsp) main <- rep(main[1], nsp)
 
     labels <- labelFragments(x, ppm = ppm, what = "ion",
-        addCarbamidomethyl = addCarbamidomethyl, ...)
+        addCarbamidomethyl = addCarbamidomethyl, z = z, ...)
 
     if (deltaMz) { ## Generate deltaMzData labels for .plot_single_spectrum_PTM
         deltaMzData <- labelFragments(x, ppm = ppm, what = "mz",

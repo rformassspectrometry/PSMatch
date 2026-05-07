@@ -25,6 +25,7 @@ plotSpectraPTM(
   fixedModifications = NULL,
   variableModifications = NULL,
   addCarbamidomethyl = TRUE,
+  z = NULL,
   ...
 )
 }
@@ -97,6 +98,8 @@ If carbamidomethylation should be applied as a variable modification, do
 set \code{addCarbamidomethylation = FALSE}. For more
 details on this, see the appropriate vignette by running
 `vignette("Fragments", package = "PSMatch")}
+
+\item{z}{\code{numeric()} passed to \code{calculateFragments()}. Defines the charge}
 
 \item{...}{additional parameters to be passed to the \code{labelFragments()}
 and \code{calculateFragments()} functions.}
@@ -175,7 +178,7 @@ plotSpectraPTM(c(sp, sp))
 plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
 }
 \seealso{
-\code{\link[Spectra:spectra-plotting]{Spectra::plotSpectra()}}
+\code{\link[Spectra:plotSpectra]{Spectra::plotSpectra()}}
 }
 \author{
 Johannes Rainer, Sebastian Gibb, Guillaume Deflandre, Laurent Gatto
