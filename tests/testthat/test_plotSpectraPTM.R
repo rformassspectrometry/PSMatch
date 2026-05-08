@@ -29,7 +29,8 @@ test_that("plotSpectraPTM works with deltaMz = TRUE", {
             plotSpectraPTM(
                 spectra,
                 type = c("a", "b", "c", "x", "y", "z"),
-                deltaMz = TRUE
+                deltaMz = TRUE,
+                z = 1
             )
         }
     )
@@ -42,7 +43,8 @@ test_that("plotSpectraPTM works with deltaMz = FALSE", {
             plotSpectraPTM(
                 spectra,
                 type = c("a", "b", "c", "x", "y", "z"),
-                deltaMz = FALSE
+                deltaMz = FALSE,
+                z = 1
             )
         }
     )
@@ -71,7 +73,8 @@ test_that("plotSpectraPTM works with different col", {
                 spectra,
                 col = c(y = "red", b = "blue", acxy = "orange", other = "violet"),
                 type = c("a", "b", "c", "x", "y", "z"),
-                deltaMz = FALSE
+                deltaMz = FALSE,
+                z = 1
             )
         }
     )
@@ -113,7 +116,8 @@ test_that("plotSpectraPTM works with USI = FALSE", {
             plotSpectraPTM(
                 spectra,
                 type = c("a", "b", "c", "x", "y", "z"),
-                USI = FALSE
+                USI = FALSE,
+                z = 1
             )
         }
     )
