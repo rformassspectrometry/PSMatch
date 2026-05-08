@@ -10,12 +10,16 @@ sp <- DataFrame(
     scanIndex = 1L,
     charge = 2L
 )
-sp$mz <- list(c(223.1583, 251.15432, 308.168017, 455.24801, 604.30949,
-                641.30842, 667.2244, 778.30164, 813.34935, 923.350391,
-                995.45281, 1017.43394, 1065.46197, 1112.5069, 1130.5874))
-sp$intensity <- list(c(83000, 65000, 190000, 379000, 281000, 112000, 39000,
-                       139000, 1015000, 63000, 58000, 1960000, 240000,
-                       1338000, 40700))
+sp$mz <- list(c(
+    223.1583, 251.15432, 308.168017, 455.24801, 604.30949,
+    641.30842, 667.2244, 778.30164, 813.34935, 923.350391,
+    995.45281, 1017.43394, 1065.46197, 1112.5069, 1130.5874
+))
+sp$intensity <- list(c(
+    83000, 65000, 190000, 379000, 281000, 112000, 39000,
+    139000, 1015000, 63000, 58000, 1960000, 240000,
+    1338000, 40700
+))
 spectra <- Spectra(sp)
 
 test_that("plotSpectraPTM works with deltaMz = TRUE", {
@@ -70,6 +74,35 @@ test_that("plotSpectraPTM works with different col", {
                 deltaMz = FALSE
             )
         }
+    )
+})
+
+test_that("plotSpectraPTM expands per-spectrum z list in sync with variableModifications", {
+    ## Two spectra with different precursor charges.
+    ## variableModifications = c(A = 1.0, Q = 1.0) expands each by one combination:
+    ##   "ACE" -> "ACE", "A[+1.0]CE"   (2 spectra)
+    ##   "PQR" -> "PQR", "PQ[+1.0]R"   (2 spectra)
+    ## z = list(1:2, 1:3) must be replicated to list(1:2, 1:2, 1:3, 1:3).
+    ## Without the replication, labelFragments throws "subscript out of bounds".
+    sp2 <- DataFrame(
+        msLevel = c(2L, 2L),
+        rtime = c(100, 200),
+        sequence = c("ACE", "PQR"),
+        dataOrigin = c("f.mzML", "f.mzML"),
+        scanIndex = c(1L, 2L),
+        charge = c(2L, 3L)
+    )
+    sp2$mz <- list(c(100.0, 200.0, 300.0), c(150.0, 250.0, 350.0))
+    sp2$intensity <- list(c(1000.0, 2000.0, 3000.0), c(1500.0, 2500.0, 3500.0))
+    sps2 <- Spectra(sp2)
+
+    expect_no_error(
+        plotSpectraPTM(sps2,
+            z = list(1:2, 1:3),
+            variableModifications = c(A = 1.0, Q = 1.0),
+            addCarbamidomethyl = FALSE,
+            deltaMz = FALSE
+        )
     )
 })
 

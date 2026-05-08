@@ -19,6 +19,11 @@
 ##'     whether labels should be fragment ions, , or their m/z values. If the
 ##'     latter, then the m/z values are named with the ion labels.
 ##'
+##' @param z `numeric()` or `list()`. Charge states passed to
+##'     [calculateFragments()]. A plain vector is applied uniformly to all
+##'     spectra; a list of the same length as `x` applies per-spectrum charge
+##'     states. Default is `1L`.
+##'
 ##' @param ... additional parameters (except `verbose`) passed to
 ##'     [calculateFragments()] to calculate fragment m/z values to be
 ##'     added to the spectra in `x`.
@@ -87,7 +92,7 @@
 ##' ## By default used in `plotSpectraPTM()`.
 ##' plotSpectraPTM(sp)
 labelFragments <- function(x, tolerance = 0, ppm = 20,
-                           what = c("ion", "mz"), ...) {
+                           what = c("ion", "mz"), z = 1L, ...) {
     stopifnot(requireNamespace("Spectra"))
     stopifnot(inherits(x, "Spectra"))
     what <- match.arg(what)
@@ -99,7 +104,8 @@ labelFragments <- function(x, tolerance = 0, ppm = 20,
         stopifnot("sequence" %in% Spectra::spectraVariables(x[j]))
         y <- Spectra::spectraData(x[j])[["sequence"]]
         x_data <- v[[j]]
-        y_data <- calculateFragments(y, verbose = FALSE, ...)
+        z_j <- if (is.list(z)) z[[j]] else z
+        y_data <- calculateFragments(y, verbose = FALSE, z = z_j, ...)
 
         y_data <- split(y_data, y_data$peptide)
 

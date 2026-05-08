@@ -82,9 +82,11 @@
 ##' details on this, see the appropriate vignette by running
 ##' `vignette("Fragments", package = "PSMatch")
 ##'
-##' @param z `numeric()` passed to `calculateFragments()`. Defines the charge
-##      states to generate fragments from. Set to `1:precursorCharge(x)` by
-##      default.
+##' @param z `numeric()` or `list()` passed to `calculateFragments()` via
+##'     `labelFragments()`. A plain vector is applied uniformly to all spectra;
+##'     a list of the same length as `x` applies per-spectrum charge states.
+##'     When `NULL` (default), each spectrum uses `1:precursorCharge` for that
+##'     spectrum, falling back to `1L` when the precursor charge is missing.
 ##'
 ##' @param ... additional parameters to be passed to the `labelFragments()`
 ##'     and `calculateFragments()` functions.
@@ -93,7 +95,7 @@
 ##'
 ##' @importFrom grDevices n2mfrow
 ##'
-##' @importFrom Spectra spectraVariables
+##' @importFrom Spectra spectraVariables precursorCharge
 ##'
 ##' @author Johannes Rainer, Sebastian Gibb, Guillaume Deflandre, Laurent Gatto
 ##'
@@ -182,16 +184,6 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
         stop("Missing 'sequence' in Spectra::spectraVariables(x)")
     }
 
-    ## If z not provided, set to 1:precursorCharge(x) by default
-    if (is.null(z)) {
-        if (!is.na(x$precursorCharge)) { ## PROBLEM BECAUSE Z IS NOT FIXED FOR EVERY SPECTRUM INSTANCE !!!
-            z <- 1:x$precursorCharge
-        } else {
-            ## If no precursorCharge, set z = 1
-            z <- 1
-        }
-    }
-
     ## Apply fixed modifications to all sequences if provided
     if (!is.null(fixedModifications)) {
         x$sequence <- PTMods::addFixedModifications(x$sequence,
@@ -211,7 +203,22 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                 xi
             })
         })
+        ## in case spectrum-specific charges states are given
+        if (is.list(z) && length(z) == length(x)) {
+            expansion_counts <- lengths(parts)
+            z <- rep(z, times = expansion_counts)
+        }
+
         x <- do.call(c, unlist(parts, recursive = FALSE))
+    }
+
+    ## Build per-spectrum charge state list when z is not provided.
+    ## Done after modifications for correct length if variable mods used.
+    if (is.null(z)) {
+        charges <- Spectra::precursorCharge(x)
+        z <- lapply(charges, function(ch) {
+            if (!is.na(ch) && ch > 0L) seq_len(ch) else 1L
+        })
     }
 
     nsp <- length(x)
@@ -225,7 +232,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
 
     if (deltaMz) { ## Generate deltaMzData labels for .plot_single_spectrum_PTM
         deltaMzData <- labelFragments(x, ppm = ppm, what = "mz",
-            addCarbamidomethyl = addCarbamidomethyl, ...)
+            addCarbamidomethyl = addCarbamidomethyl, z = z, ...)
         layout_matrix <- .make_layout_matrix(length(labels))
         layout(layout_matrix,
                heights = rep(c(5, 1), length.out = nrow(layout_matrix)))
@@ -368,7 +375,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     .(basename(spectraData(x)[["dataOrigin"]])) *
     "/scan: " * .(spectraData(x)[["scanIndex"]]) *
     "/rt: " * .(round(spectraData(x)[["rtime"]], 2L)) *
-    "/charge: " * .(spectraData(x)[["charge"]]) *
+    "/charge: " * .(spectraData(x)[["precursorCharge"]]) *
     "/peptide: " * bold(.(peptide_sequence))
     )
 

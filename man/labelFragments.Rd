@@ -4,7 +4,7 @@
 \alias{labelFragments}
 \title{labels MS2 Fragments}
 \usage{
-labelFragments(x, tolerance = 0, ppm = 20, what = c("ion", "mz"), ...)
+labelFragments(x, tolerance = 0, ppm = 20, what = c("ion", "mz"), z = 1L, ...)
 }
 \arguments{
 \item{x}{An instance of class \code{Spectra} of length 1, containing a
@@ -12,14 +12,19 @@ spectra variable \code{"sequence"} with a \code{character(1)}
 representing a valid peptide sequence.}
 
 \item{tolerance}{absolute acceptable difference of m/z values for peaks to
-be considered matching (see \code{\link[MsCoreUtils:closest]{MsCoreUtils::closest()}} for more details).}
+be considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::closest()}} for more details).}
 
 \item{ppm}{m/z relative acceptable difference (in ppm) for peaks to be
-considered matching (see \code{\link[MsCoreUtils:closest]{MsCoreUtils::closest()}} for more details).}
+considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::closest()}} for more details).}
 
 \item{what}{\code{character(1)}, one of \code{"ion"} (default) or \code{"mz"}, defining
 whether labels should be fragment ions, , or their m/z values. If the
 latter, then the m/z values are named with the ion labels.}
+
+\item{z}{\code{numeric()} or \code{list()}. Charge states passed to
+\code{\link[=calculateFragments]{calculateFragments()}}. A plain vector is applied uniformly to all
+spectra; a list of the same length as \code{x} applies per-spectrum charge
+states. Default is \code{1L}.}
 
 \item{...}{additional parameters (except \code{verbose}) passed to
 \code{\link[=calculateFragments]{calculateFragments()}} to calculate fragment m/z values to be

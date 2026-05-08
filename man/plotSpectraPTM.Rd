@@ -99,7 +99,11 @@ set \code{addCarbamidomethylation = FALSE}. For more
 details on this, see the appropriate vignette by running
 `vignette("Fragments", package = "PSMatch")}
 
-\item{z}{\code{numeric()} passed to \code{calculateFragments()}. Defines the charge}
+\item{z}{\code{numeric()} or \code{list()} passed to \code{calculateFragments()} via
+\code{labelFragments()}. A plain vector is applied uniformly to all spectra;
+a list of the same length as \code{x} applies per-spectrum charge states.
+When \code{NULL} (default), each spectrum uses \code{1:precursorCharge} for that
+spectrum, falling back to \code{1L} when the precursor charge is missing.}
 
 \item{...}{additional parameters to be passed to the \code{labelFragments()}
 and \code{calculateFragments()} functions.}
@@ -178,7 +182,7 @@ plotSpectraPTM(c(sp, sp))
 plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
 }
 \seealso{
-\code{\link[Spectra:plotSpectra]{Spectra::plotSpectra()}}
+\code{\link[Spectra:spectra-plotting]{Spectra::plotSpectra()}}
 }
 \author{
 Johannes Rainer, Sebastian Gibb, Guillaume Deflandre, Laurent Gatto
