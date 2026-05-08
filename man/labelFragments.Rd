@@ -12,10 +12,10 @@ spectra variable \code{"sequence"} with a \code{character(1)}
 representing a valid peptide sequence.}
 
 \item{tolerance}{absolute acceptable difference of m/z values for peaks to
-be considered matching (see \code{\link[MsCoreUtils:closest]{MsCoreUtils::closest()}} for more details).}
+be considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::closest()}} for more details).}
 
 \item{ppm}{m/z relative acceptable difference (in ppm) for peaks to be
-considered matching (see \code{\link[MsCoreUtils:closest]{MsCoreUtils::closest()}} for more details).}
+considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::closest()}} for more details).}
 
 \item{what}{\code{character(1)}, one of \code{"ion"} (default) or \code{"mz"}, defining
 whether labels should be fragment ions, , or their m/z values. If the

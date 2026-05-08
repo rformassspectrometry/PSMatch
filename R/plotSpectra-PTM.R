@@ -184,16 +184,6 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
         stop("Missing 'sequence' in Spectra::spectraVariables(x)")
     }
 
-    ## If z not provided, set to 1:precursorCharge(x) by default
-    if (is.null(z)) {
-        if (!is.na(x$precursorCharge)) { ## PROBLEM BECAUSE Z IS NOT FIXED FOR EVERY SPECTRUM INSTANCE !!!
-            z <- 1:x$precursorCharge
-        } else {
-            ## If no precursorCharge, set z = 1
-            z <- 1
-        }
-    }
-
     ## Apply fixed modifications to all sequences if provided
     if (!is.null(fixedModifications)) {
         x$sequence <- PTMods::addFixedModifications(x$sequence,
