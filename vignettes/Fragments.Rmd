@@ -174,11 +174,11 @@ the specified value (`TRUE`, the default) or only for the exact charge
 specified (`FALSE`).
 
 ```{r, eval = FALSE}
-## Use only singly-charged fragments
-plotSpectraPTM(sp1158[2], allCharges = FALSE)
+## Use fragments with a custom charge state
+plotSpectraPTM(sp1158[2], z = 2, allCharges = FALSE)
 
-## Use custom charge states for multiple spectra
-plotSpectraPTM(sp1158[1:2], z = c(2, 3), allCharges = TRUE)
+## Use all charges from 1 to the precursor charge state or a custom charge
+plotSpectraPTM(sp1158[2], z = 2, allCharges = TRUE)
 ```
 
 Note that `z` cannot be used simultaneously with `variableModifications`.
