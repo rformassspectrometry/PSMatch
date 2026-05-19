@@ -2,8 +2,10 @@
 
 ## PSMatch 1.17.1
 
-- Added parameter `z` in `plotSpectraPTM()` and set it to `1:precursorCharge(x)`
-  by default when it used to only display charge 1 before.
+- Added parameter `z` and `allCharges` in `plotSpectraPTM()` and
+  `labelFragments()` and set it to `1:precursorCharge(x)` by default when it used
+  to only display charge 1 before. See this
+  [PR](https://github.com/rformassspectrometry/PSMatch/pull/44).
 
 ## PSMatch 1.17.0
 
