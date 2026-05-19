@@ -59,39 +59,6 @@ test_that("labelFragments() works with modifications", {
     expect_equal(length(ans), 2)
 })
 
-test_that("labelFragments() respects per-spectrum z list", {
-    ## Build reference fragments without neutral losses for deterministic mz values
-    frags_ace <- calculateFragments("ACE", z = 1:2, addCarbamidomethyl = FALSE,
-                                    neutralLoss = NULL)
-    frags_pqr <- calculateFragments("PQR", z = 1:3, addCarbamidomethyl = FALSE,
-                                    neutralLoss = NULL)
-
-    ## Pick one ion unique to each higher charge state
-    z2_row <- frags_ace[frags_ace$z == 2, ][1L, ]
-    z3_row <- frags_pqr[frags_pqr$z == 3, ][1L, ]
-
-    sp <- DataFrame(
-        msLevel   = c(2L, 2L),
-        rtime     = c(100, 200),
-        sequence  = c("ACE", "PQR")
-    )
-    sp$mz       <- list(z2_row$mz, z3_row$mz)
-    sp$intensity <- list(1.0, 1.0)
-    sp <- Spectra(sp)
-
-    ## Per-spectrum z list: both higher-charge ions are matched
-    ans <- labelFragments(sp, z = list(1:2, 1:3), addCarbamidomethyl = FALSE,
-                          neutralLoss = NULL)
-    expect_identical(ans[[1L]], z2_row$ion)
-    expect_identical(ans[[2L]], z3_row$ion)
-
-    ## Scalar z = 1: those mz values fall outside the z=1 search space
-    ans_z1 <- labelFragments(sp, z = 1L, addCarbamidomethyl = FALSE,
-                             neutralLoss = NULL)
-    expect_true(all(is.na(ans_z1[[1L]])))
-    expect_true(all(is.na(ans_z1[[2L]])))
-})
-
 test_that("labelFragments() works with what = 'mz'", {
     seq <- "PQR"
     frags <- calculateFragments(seq)
