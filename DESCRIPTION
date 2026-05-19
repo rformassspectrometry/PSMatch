@@ -1,6 +1,6 @@
 Package: PSMatch
 Title: Handling and Managing Peptide Spectrum Matches
-Version: 1.15.2
+Version: 1.17.1
 Authors@R:
    c(person(given = "Laurent", family = "Gatto",
             email = "laurent.gatto@uclouvain.be",
@@ -33,7 +33,7 @@ Description: The PSMatch package helps proteomics practitioners to
 Depends:
     S4Vectors,
     R (>= 4.1.0),
-    PTMods (>= 0.99.3)
+    PTMods (>= 0.99.4)
 Imports:
     utils,
     stats,
@@ -66,3 +66,4 @@ BugReports: https://github.com/RforMassSpectrometry/PSM/issues
 URL: https://github.com/RforMassSpectrometry/PSM
 biocViews: Infrastructure, Proteomics, MassSpectrometry
 Config/roxygen2/version: 8.0.0
+RoxygenNote: 7.3.3

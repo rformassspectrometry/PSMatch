@@ -100,7 +100,7 @@
 ##'
 ##' @importFrom grDevices n2mfrow
 ##'
-##' @importFrom Spectra spectraVariables
+##' @importFrom Spectra spectraVariables precursorCharge
 ##'
 ##' @author Johannes Rainer, Sebastian Gibb, Guillaume Deflandre, Laurent Gatto
 ##'
@@ -235,7 +235,22 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                 xi
             })
         })
+        ## in case spectrum-specific charges states are given
+        if (is.list(z) && length(z) == length(x)) {
+            expansion_counts <- lengths(parts)
+            z <- rep(z, times = expansion_counts)
+        }
+
         x <- do.call(c, unlist(parts, recursive = FALSE))
+    }
+
+    ## Build per-spectrum charge state list when z is not provided.
+    ## Done after modifications for correct length if variable mods used.
+    if (is.null(z)) {
+        charges <- Spectra::precursorCharge(x)
+        z <- lapply(charges, function(ch) {
+            if (!is.na(ch) && ch > 0L) seq_len(ch) else 1L
+        })
     }
 
     nsp <- length(x)
@@ -394,7 +409,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     .(basename(spectraData(x)[["dataOrigin"]])) *
     "/scan: " * .(spectraData(x)[["scanIndex"]]) *
     "/rt: " * .(round(spectraData(x)[["rtime"]], 2L)) *
-    "/charge: " * .(spectraData(x)[["charge"]]) *
+    "/charge: " * .(spectraData(x)[["precursorCharge"]]) *
     "/peptide: " * bold(.(peptide_sequence))
     )
 
