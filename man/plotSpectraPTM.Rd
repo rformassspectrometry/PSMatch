@@ -26,6 +26,7 @@ plotSpectraPTM(
   variableModifications = NULL,
   addCarbamidomethyl = TRUE,
   z = NULL,
+  allCharges = TRUE,
   ...
 )
 }
@@ -99,7 +100,16 @@ set \code{addCarbamidomethylation = FALSE}. For more
 details on this, see the appropriate vignette by running
 `vignette("Fragments", package = "PSMatch")}
 
-\item{z}{\code{numeric()} passed to \code{calculateFragments()}. Defines the charge}
+\item{z}{\code{numeric()} vector of length equal to \code{length(x)} or \code{NULL}. Each
+element specifies the charge state (or maximum charge state if
+\code{allCharges = TRUE}) for the corresponding spectrum. If \code{NULL}
+(default), uses \code{precursorCharge(x)} for each spectrum. Cannot be
+used simultaneously with \code{variableModifications}.}
+
+\item{allCharges}{\code{logical(1L)}. If \code{TRUE} (default), generates fragments
+for all charge states from 1 up to the value specified (either from
+\code{z} or \code{precursorCharge(x)}). If \code{FALSE}, generates fragments only
+for the specified charge state.}
 
 \item{...}{additional parameters to be passed to the \code{labelFragments()}
 and \code{calculateFragments()} functions.}
@@ -176,6 +186,17 @@ plotSpectraPTM(c(sp, sp))
 
 ## Color the peaks with different colors
 plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
+
+## Use only singly-charged fragments (allCharges = FALSE)
+plotSpectraPTM(sp, allCharges = FALSE)
+
+## Specify custom charge states for multiple spectra
+sp2 <- c(sp, sp)
+sp2$precursorCharge <- c(2L, 3L)
+plotSpectraPTM(sp2, z = c(2, 3))
+
+## Use only the specified charge (no range)
+plotSpectraPTM(sp2, z = c(1, 2), allCharges = FALSE)
 }
 \seealso{
 \code{\link[Spectra:plotSpectra]{Spectra::plotSpectra()}}

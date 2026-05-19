@@ -2,6 +2,8 @@
 #' # that could be called by `vdiffr::expect_doppelganger()`
 #' Run devtools::test_active_file(file = "tests/testthat/test_plotSpectraPTM.R")
 
+library("Spectra")
+
 sp <- DataFrame(
     msLevel = 2L,
     rtime = 2345,
@@ -83,5 +85,54 @@ test_that("plotSpectraPTM works with USI = FALSE", {
                 USI = FALSE
             )
         }
+    )
+})
+
+test_that("plotSpectraPTM works with allCharges = FALSE", {
+    expect_doppelganger(
+        "allCharges-false",
+        function() {
+            plotSpectraPTM(
+                spectra,
+                type = c("a", "b", "c", "x", "y", "z"),
+                allCharges = FALSE,
+                deltaMz = FALSE
+            )
+        }
+    )
+})
+
+test_that("plotSpectraPTM works with custom z parameter", {
+    sp2 <- c(spectra, spectra)
+    sp2$precursorCharge <- c(2L, 3L)
+    expect_doppelganger(
+        "custom-z",
+        function() {
+            plotSpectraPTM(
+                sp2,
+                type = c("a", "b", "c", "x", "y", "z"),
+                z = c(2, 3),
+                deltaMz = FALSE
+            )
+        }
+    )
+})
+
+test_that("plotSpectraPTM errors with z and variableModifications", {
+    expect_error(
+        plotSpectraPTM(
+            spectra,
+            z = c(2),
+            variableModifications = c(H = 15.994915)
+        ),
+        "Cannot use both 'z' and 'variableModifications'"
+    )
+})
+
+test_that("plotSpectraPTM errors with wrong length z", {
+    sp2 <- c(spectra, spectra)
+    expect_error(
+        plotSpectraPTM(sp2, z = c(2)),
+        "'z' must be NULL or a numeric vector of length equal to length\\(x\\)"
     )
 })
