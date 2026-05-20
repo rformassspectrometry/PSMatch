@@ -125,7 +125,7 @@ labelFragments <- function(x, tolerance = 0, ppm = 20,
             z_val <- z[i]
         } else {
             pc <- x$precursorCharge[i]
-            z_val <- if (!is.na(pc)) pc else 1L
+            z_val <- if (!is.na(pc) & pc != 0) pc else 1L
         }
         if (allCharges) {
             seq_len(z_val)
