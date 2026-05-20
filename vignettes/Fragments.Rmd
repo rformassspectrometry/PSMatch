@@ -161,6 +161,28 @@ plotSpectraPTM(sp1158[2],
 As glycine has the same mass as carbamidomethylation, the b7 and b8 ions are
 overlapping in both spectra.
 
+## Customising charge states
+
+By default, `plotSpectraPTM()` generates fragments for all charge states from
+1 up to the precursor charge. You can customise this behaviour using the `z`
+and `allCharges` parameters.
+
+The `z` parameter accepts a numeric vector with one value per spectrum,
+specifying the charge state (or maximum charge state) to use. The `allCharges`
+parameter controls whether to generate fragments for all charges from 1 up to
+the specified value (`TRUE`, the default) or only for the exact charge
+specified (`FALSE`).
+
+```{r, eval = FALSE}
+## Use fragments with a custom charge state
+plotSpectraPTM(sp1158[2], z = 2, allCharges = FALSE)
+
+## Use all charges from 1 to the precursor charge state or a custom charge
+plotSpectraPTM(sp1158[2], z = 2, allCharges = TRUE)
+```
+
+Note that `z` cannot be used simultaneously with `variableModifications`.
+
 The spectra displayed in this vignette might be overlapping due to the
 restricted windows. For a better visualisation, we suggest running the code
 locally.
