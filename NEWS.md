@@ -1,5 +1,10 @@
 # PSMatch 1.15
 
+## PSMatch 1.17.2
+
+- Added `validatePSM()` and its corresponding vignette and tests.
+- Added data bundled with the package: `spBoekweg` and `psmBoekweg`
+
 ## PSMatch 1.17.1
 
 - Added parameter `z` and `allCharges` in `plotSpectraPTM()` and
