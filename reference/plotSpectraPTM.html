@@ -23,7 +23,7 @@ labelFragments() and calculateFragments()."><!-- mathjax --><script src="https:/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.17.1</span>
       </span>
     </div>
 
@@ -102,6 +102,8 @@ theoretical fragment ions (e.g., b, y, a, c, x, z) computed using
 <span>  fixedModifications <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  variableModifications <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  addCarbamidomethyl <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  allCharges <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -219,6 +221,21 @@ details on this, see the appropriate vignette by running
 `vignette("Fragments", package = "PSMatch")</p></dd>
 
 
+<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
+<dd><p><code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code> vector of length equal to <code>length(x)</code> or <code>NULL</code>. Each
+element specifies the charge state (or maximum charge state if
+<code>allCharges = TRUE</code>) for the corresponding spectrum. If <code>NULL</code>
+(default), uses <code>precursorCharge(x)</code> for each spectrum. Cannot be
+used simultaneously with <code>variableModifications</code>.</p></dd>
+
+
+<dt id="arg-allcharges">allCharges<a class="anchor" aria-label="anchor" href="#arg-allcharges"></a></dt>
+<dd><p><code>logical(1L)</code>. If <code>TRUE</code> (default), generates fragments
+for all charge states from 1 up to the value specified (either from
+<code>z</code> or <code>precursorCharge(x)</code>). If <code>FALSE</code>, generates fragments only
+for the specified charge state.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>additional parameters to be passed to the <code><a href="labelFragments.html">labelFragments()</a></code>
 and <code><a href="calculateFragments.html">calculateFragments()</a></code> functions.</p></dd>
@@ -295,7 +312,6 @@ and <code><a href="calculateFragments.html">calculateFragments()</a></code> func
 <span class="r-in"><span><span class="co">## Or call them within the function directly:</span></span></span>
 <span class="r-in"><span><span class="fu">plotSpectraPTM</span><span class="op">(</span><span class="va">sp</span>, fixedModifications <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
 <span class="r-in"><span>variableModifications <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>R <span class="op">=</span> <span class="st">"Methyl"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping rownames: duplicated rownames present or rownames not available for all data.frames</span>
 <span class="r-plt img"><img src="plotSpectraPTM-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Annotate multiple spectra at a time</span></span></span>
@@ -305,6 +321,20 @@ and <code><a href="calculateFragments.html">calculateFragments()</a></code> func
 <span class="r-in"><span><span class="co">## Color the peaks with different colors</span></span></span>
 <span class="r-in"><span><span class="fu">plotSpectraPTM</span><span class="op">(</span><span class="va">sp</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"red"</span>, b <span class="op">=</span> <span class="st">"blue"</span>, acxy <span class="op">=</span> <span class="st">"chartreuse3"</span>, other <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotSpectraPTM-7.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Use only singly-charged fragments (allCharges = FALSE)</span></span></span>
+<span class="r-in"><span><span class="fu">plotSpectraPTM</span><span class="op">(</span><span class="va">sp</span>, allCharges <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plotSpectraPTM-8.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Specify custom charge states for multiple spectra</span></span></span>
+<span class="r-in"><span><span class="va">sp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sp</span>, <span class="va">sp</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sp2</span><span class="op">$</span><span class="va">precursorCharge</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2L</span>, <span class="fl">3L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plotSpectraPTM</span><span class="op">(</span><span class="va">sp2</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plotSpectraPTM-9.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Use only the specified charge (no range)</span></span></span>
+<span class="r-in"><span><span class="fu">plotSpectraPTM</span><span class="op">(</span><span class="va">sp2</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, allCharges <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plotSpectraPTM-10.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>

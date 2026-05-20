@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">PSMatch</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.17.1</span>
       </span>
     </div>
 
@@ -69,7 +69,15 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">labelFragments</span><span class="op">(</span><span class="va">x</span>, tolerance <span class="op">=</span> <span class="fl">0</span>, ppm <span class="op">=</span> <span class="fl">20</span>, what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ion"</span>, <span class="st">"mz"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">labelFragments</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  tolerance <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  ppm <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ion"</span>, <span class="st">"mz"</span><span class="op">)</span>,</span>
+<span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  allCharges <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -98,8 +106,22 @@ whether labels should be fragment ions, , or their m/z values. If the
 latter, then the m/z values are named with the ion labels.</p></dd>
 
 
+<dt id="arg-z">z<a class="anchor" aria-label="anchor" href="#arg-z"></a></dt>
+<dd><p><code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code> vector of length equal to <code>length(x)</code> or <code>NULL</code>. Each
+element specifies the charge state (or maximum charge state if
+<code>allCharges = TRUE</code>) for the corresponding spectrum. If <code>NULL</code>
+(default), uses <code>precursorCharge(x)</code> for each spectrum.</p></dd>
+
+
+<dt id="arg-allcharges">allCharges<a class="anchor" aria-label="anchor" href="#arg-allcharges"></a></dt>
+<dd><p><code>logical(1L)</code>. If <code>TRUE</code> (default), generates fragments
+for all charge states from 1 up to the value specified (either from
+<code>z</code> or <code>precursorCharge(x)</code>). If <code>FALSE</code>, generates fragments only
+for the specified charge state.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>additional parameters (except <code>verbose</code>) passed to
+<dd><p>additional parameters (except <code>verbose</code> and <code>z</code>) passed to
 <code><a href="calculateFragments.html">calculateFragments()</a></code> to calculate fragment m/z values to be
 added to the spectra in <code>x</code>.</p></dd>
 
@@ -203,6 +225,43 @@ modifications included).</p>
 <span class="r-in"><span><span class="co">## By default used in `plotSpectraPTM()`.</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plotSpectraPTM.html">plotSpectraPTM</a></span><span class="op">(</span><span class="va">sp</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="labelFragments-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Use custom charge states</span></span></span>
+<span class="r-in"><span><span class="va">sp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sp</span>, <span class="va">sp</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sp2</span><span class="op">$</span><span class="va">precursorCharge</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2L</span>, <span class="fl">3L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">labelFragments</span><span class="op">(</span><span class="va">sp2</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $SIGFEGDSIGR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] NA    NA    NA    NA    NA    NA    "y1"  NA    "y2_" "y2"  NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    "y5_"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] NA    NA    NA    "y8"  NA    NA    NA    NA    "y10" NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $SIGFEGDSIGR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] NA    NA    NA    NA    NA    NA    "y1"  "y5_" "y2_" "y2"  NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    "y5_"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] NA    NA    NA    "y8"  NA    NA    NA    NA    "y10" NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"group")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Use only the specified charge (no range)</span></span></span>
+<span class="r-in"><span><span class="fu">labelFragments</span><span class="op">(</span><span class="va">sp2</span>, z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, allCharges <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $SIGFEGDSIGR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] NA    NA    NA    NA    NA    NA    "y1"  NA    "y2_" "y2"  NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    "y5_"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] NA    NA    NA    "y8"  NA    NA    NA    NA    "y10" NA    NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] NA    NA   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $SIGFEGDSIGR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [26] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"group")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2</span>
 </code></pre></div>
     </div>
   </div>
