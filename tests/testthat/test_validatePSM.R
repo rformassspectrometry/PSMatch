@@ -115,7 +115,7 @@ test_that("validatePSM() returns a data.frame with expected columns", {
     seq_var <- psmVariables(psmBoekweg)[["peptide"]]
     fdr_var <- psmVariables(psmBoekweg)[["fdr"]]
     res <- suppressWarnings(
-        validatePSM(sp[15:16], peptideVariable = seq_var,
+        validatePSM(sp[9:10], peptideVariable = seq_var,
                     fdr = fdr_var))
     expect_s3_class(res, "data.frame")
     expect_true(all(c("spectrumId", "scanIndex", "peptide", "canonicalSeq",
