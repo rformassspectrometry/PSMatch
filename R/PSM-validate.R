@@ -52,6 +52,8 @@
 #' (seq <- psmVariables(psmBoekweg)[["peptide"]])
 #' (fdr <- psmVariables(psmBoekweg)[["fdr"]])
 #'
+#' ## Keep only those spectra for which
+#'
 #' sp$sequence <- sp$peptide ## add 'sequence' for plotSpectraPTM
 #'
 #' ## All checks at once with validatePSM()
@@ -119,8 +121,8 @@ validatePSM <- function(x, peptideVariable = "peptide", fdr = "fdr", ...) {
 #'
 #' @examples
 #'
-#' checkABpresence(sp[c(8, 12)])
-#' plotSpectraPTM(sp[c(8,12)], type = c("a","b"))
+#' checkABpresence(sp[c(16, 18)])
+#' plotSpectraPTM(sp[c(16, 18)], type = c("a","b"))
 #'
 #' @export
 checkABpresence <- function(x, fragments = NULL) {
@@ -142,8 +144,8 @@ checkABpresence <- function(x, fragments = NULL) {
 #'
 #' @examples
 #'
-#' checkXYpresence(sp[c(2, 4)])
-#' plotSpectraPTM(sp[c(2,4)], type = c("x","y"))
+#' checkXYpresence(sp[c(32, 34)])
+#' plotSpectraPTM(sp[c(32, 34)], type = c("x","y"))
 #'
 #' @export
 checkXYpresence <- function(x, fragments = NULL) {
@@ -161,6 +163,9 @@ checkXYpresence <- function(x, fragments = NULL) {
 #'
 #' @param fragments The result of `labelFragments()` on `x`.
 #'
+#' @param strippedSeq The canonical sequences. Should be the same length as
+#' `peptideVariable`.
+#'
 #' @returns `checkOverlap()` : Detects a gap in the coverage of b- and y-ions.
 #' Returns `FALSE` when a gap is found (b- and y-ions do not jointly cover the
 #' full sequence), which may indicate an unsearched modification. Returns
@@ -169,9 +174,9 @@ checkXYpresence <- function(x, fragments = NULL) {
 #' @examples
 #'
 #' ## Sparse fragment coverage -> gap detected (FALSE)
-#' checkOverlap(sp[c(8, 14)]) ## FALSE and TRUE respectively
+#' checkOverlap(sp[c(6, 14)]) ## FALSE and TRUE respectively
 #' ## Visualise it with plotSpectraPTM()
-#' plotSpectraPTM(sp[c(8, 14)])
+#' plotSpectraPTM(sp[c(6, 14)])
 #'
 #' @export
 checkOverlap <- function(x, peptideVariable = "peptide",
@@ -222,12 +227,11 @@ checkOverlap <- function(x, peptideVariable = "peptide",
 #' ## checkShiftConsistency() on a sequence without modifications gives NA
 #' checkShiftConsistency(sp[10], "sequence")
 #'
-#' ## checkShiftConsistency() on a modified sequence without matched
-#' ## modifications gives 0
+#' ## checkShiftConsistency() on a modified sequence gives a value between 0-1
 #' sp_ms2 <- filterMsLevel(sp, 2L)
 ## 7 out of 12 fragments (=0.5833) with the modification are matched:
-#' checkShiftConsistency(sp_ms2[19], "sequence")
-#' plotSpectraPTM(sp_ms2[19])
+#' checkShiftConsistency(sp_ms2[14], "sequence")
+#' plotSpectraPTM(sp_ms2[14])
 #'
 #' @export
 checkShiftConsistency <- function(x, peptideVariable = "peptide",
@@ -292,11 +296,11 @@ checkShiftConsistency <- function(x, peptideVariable = "peptide",
 #'
 #' @examples
 #'
-#' ## Precursor ion is the most intense peak → ratio of 1
-#' checkParentIonIntensity(sp[20])
+#' ## Precursor ion is the most intense peak -> ratio of 1
+#' checkParentIonIntensity(sp_ms2[7])
 #'
-#' ## Precursor absent from spectrum → ratio of 0
-#' checkParentIonIntensity(sp[2]) ## Full fragmentation of precursor ion
+#' ## Precursor absent from spectrum -> ratio of 0
+#' checkParentIonIntensity(sp_ms2[2]) ## Full fragmentation of precursor ion
 #'
 #' @export
 checkParentIonIntensity <- function (x,
@@ -336,8 +340,7 @@ checkParentIonIntensity <- function (x,
 #' @examples
 #'
 #' ## Check precursor purity on an ordered spectrum object: MS1 followed by MS2
-#' checkPrecursorPurity(sp[7:10])
-#' purity
+#' checkPrecursorPurity(sp[4:6])
 #'
 #' @param x A `Spectra` object containing **both MS1 and MS2 spectra** from
 #'   the same run(s). MS1 spectra are used as the source for isolation window

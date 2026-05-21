@@ -56,6 +56,9 @@ identification.}
 
 \item{fragments}{The result of \code{labelFragments()} on \code{x}.}
 
+\item{strippedSeq}{The canonical sequences. Should be the same length as
+\code{peptideVariable}.}
+
 \item{peaks}{The spectrum peak data (result from \code{Spectra::peaksData()}).}
 
 \item{tolerance}{\code{Numeric(1)} Absolute m/z half-width (in Da) of the
@@ -129,46 +132,46 @@ sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
 (seq <- psmVariables(psmBoekweg)[["peptide"]])
 (fdr <- psmVariables(psmBoekweg)[["fdr"]])
 
+## Keep only those spectra for which
+
 sp$sequence <- sp$peptide ## add 'sequence' for plotSpectraPTM
 
 ## All checks at once with validatePSM()
 validatePSM(sp[1:20], peptideVariable = seq, fdr = fdr)
 
 
-checkABpresence(sp[c(8, 12)])
-plotSpectraPTM(sp[c(8,12)], type = c("a","b"))
+checkABpresence(sp[c(16, 18)])
+plotSpectraPTM(sp[c(16, 18)], type = c("a","b"))
 
 
-checkXYpresence(sp[c(2, 4)])
-plotSpectraPTM(sp[c(2,4)], type = c("x","y"))
+checkXYpresence(sp[c(32, 34)])
+plotSpectraPTM(sp[c(32, 34)], type = c("x","y"))
 
 
 ## Sparse fragment coverage -> gap detected (FALSE)
-checkOverlap(sp[c(8, 14)]) ## FALSE and TRUE respectively
+checkOverlap(sp[c(6, 14)]) ## FALSE and TRUE respectively
 ## Visualise it with plotSpectraPTM()
-plotSpectraPTM(sp[c(8, 14)])
+plotSpectraPTM(sp[c(6, 14)])
 
 
 ## checkShiftConsistency() on a sequence without modifications gives NA
 checkShiftConsistency(sp[10], "sequence")
 
-## checkShiftConsistency() on a modified sequence without matched
-## modifications gives 0
+## checkShiftConsistency() on a modified sequence gives a value between 0-1
 sp_ms2 <- filterMsLevel(sp, 2L)
-checkShiftConsistency(sp_ms2[19], "sequence")
-plotSpectraPTM(sp_ms2[19])
+checkShiftConsistency(sp_ms2[14], "sequence")
+plotSpectraPTM(sp_ms2[14])
 
 
-## Precursor ion is the most intense peak → ratio of 1
-checkParentIonIntensity(sp[20])
+## Precursor ion is the most intense peak -> ratio of 1
+checkParentIonIntensity(sp_ms2[7])
 
-## Precursor absent from spectrum → ratio of 0
-checkParentIonIntensity(sp[2]) ## Full fragmentation of precursor ion
+## Precursor absent from spectrum -> ratio of 0
+checkParentIonIntensity(sp_ms2[2]) ## Full fragmentation of precursor ion
 
 
 ## Check precursor purity on an ordered spectrum object: MS1 followed by MS2
-checkPrecursorPurity(sp[7:10])
-purity
+checkPrecursorPurity(sp[4:6])
 
 }
 \author{
