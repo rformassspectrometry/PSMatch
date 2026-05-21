@@ -11,7 +11,6 @@ library(Spectra)
 ### bulk ###
 ############
 f <- MsDataHub::OR11_20160122_PG_HeLa_CVB3_CT_A.mzML()
-f <- "/home/guillaumedeflandre/Documents/drive_UCL/PHD/data/boekweg2022/OR11_20160122_PG_HeLa_CVB3_CT_A.mzML"
 sp <- Spectra(f)
 
 p <- MsDataHub::OR11_20160122_PG_HeLa_CVB3_CT_A.sage.tsv()
@@ -24,6 +23,7 @@ psms <- sagePSM(p)
 
 format(object.size(psms), units = "Mb") ## 44.7 Mb is too much
 
+set.seed(42)
 psmSubset <- sort(sample(NROW(psms), 10000))
 psms <- psms[psmSubset, ]
 
@@ -31,7 +31,7 @@ format(object.size(psms), units = "Mb") ## 4.8 Mb is better
 
 psmBoekweg <- psms
 
-save(psmBoekweg, file = "../../data/psmBoekweg.rda")
+save(psmBoekweg, file = "./data/psmBoekweg.rda", compress = "xz")
 
 psms <- filterPsmRank(psms)
 
@@ -44,6 +44,7 @@ format(object.size(spJoined), units = "Mb") ## 101.2 Mb: too big, take only a sa
 ms2 <- spJoined[which(spJoined$msLevel == 2 & !is.na(spJoined$peptide))]
 ms1 <- spJoined[which(spJoined$msLevel == 1)]
 
+set.seed(42) ## double check validatePSM examples and vignette, as well as test
 sampleMs2_prep <- sample(ms2, length(ms2) / 4)
 sampleMs2 <- which(spJoined$scanIndex %in% sampleMs2_prep$scanIndex)
 sampleMs1 <- which(spJoined$scanIndex %in% sampleMs2_prep$precScanNum)
@@ -63,5 +64,4 @@ spBoekweg <- sp[n]
 
 spBoekweg$dataOrigin <- basename(spBoekweg$dataOrigin)
 spBoekweg <- setBackend(spBoekweg, MsBackendMemory())
-save(spBoekweg, file =
-    "/home/guillaumedeflandre/Documents/drive_UCL/PHD/rformassspectrometry/PSMatch-oriented/guideflandre/PSMatch/data/spBoekweg.rda")
+save(spBoekweg, file = "../../data/spBoekweg.rda", compress = "xz")
