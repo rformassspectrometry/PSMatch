@@ -73,7 +73,8 @@ validatePSM <- function(x, peptideVariable = "peptide", fdr = "fdr", ...) {
     sub_v <- v[identifications] ## Identified spectra peak data
     stripped_sequence <- PTMods::getCanonicalSequence(sequenceIds[identifications])
 
-    stopifnot(length(sub_v) != 0)
+    if(length(sub_v) == 0)
+      stop("It seems like there are no identifications in `peptideVariable`.")
 
     frags <- suppressWarnings(labelFragments(x_sub,
         type = c("a", "b", "c", "x", "y", "z")))

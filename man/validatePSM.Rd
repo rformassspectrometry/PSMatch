@@ -171,3 +171,6 @@ checkPrecursorPurity(sp[7:10])
 purity
 
 }
+\author{
+Guillaume Deflandre
+}

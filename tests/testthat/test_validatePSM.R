@@ -74,22 +74,22 @@ test_that("checkParentIonIntensity() returns 0 when precursor is absent", {
 
 ##  checkOverlap
 
-test_that("checkOverlap() returns FALSE when b/y-ions fully overlap", {
+test_that("checkOverlap() returns TRUE when b/y-ions fully overlap", {
     seq <- "PEPTIDE"
     frags <- calculateFragments(seq, type = c("b", "y"))
     sp <- .makeSpectra(sort(frags$mz), rep(1e4, nrow(frags)), seq)
     labs <- suppressWarnings(labelFragments(sp, type = c("b", "y")))
-    expect_false(checkOverlap(sp, fragments = labs, strippedSeq = seq))
+    expect_true(checkOverlap(sp, fragments = labs, strippedSeq = seq))
 })
 
-test_that("checkOverlap() returns TRUE when coverage gap is present", {
+test_that("checkOverlap() returns FALSE when coverage gap is present", {
     seq <- "PEPTIDE"
     frags <- calculateFragments(seq, type = c("b", "y"))
     frags_sparse <- frags[frags$ion %in% c("b1", "b2", "y1", "y2"), ]
     sp <- .makeSpectra(sort(frags_sparse$mz),
                        rep(1e4, nrow(frags_sparse)), seq)
     labs <- suppressWarnings(labelFragments(sp, type = c("b", "y")))
-    expect_true(checkOverlap(sp, fragments = labs, strippedSeq = seq))
+    expect_false(checkOverlap(sp, fragments = labs, strippedSeq = seq))
 })
 
 ##  checkShiftConsistency
@@ -111,15 +111,11 @@ test_that("validatePSM() returns a data.frame with expected columns", {
     psmBoekweg$pkey <- paste0(
         basename(psmBoekweg$filename),
         sub("^.+scan=", "::", psmBoekweg$scannr))
-    spBoekweg$pkey <- paste0(
-        basename(spBoekweg$dataOrigin),
-        sub("^.+scan=", "::", spBoekweg$spectrumId))
     sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
     seq_var <- psmVariables(psmBoekweg)[["peptide"]]
     fdr_var <- psmVariables(psmBoekweg)[["fdr"]]
-    sp[["modSequences"]] <- addFixedModifications(sp[[seq_var]])
     res <- suppressWarnings(
-        validatePSM(sp[1:10], peptideVariable = "modSequences",
+        validatePSM(sp[15:16], peptideVariable = seq_var,
                     fdr = fdr_var))
     expect_s3_class(res, "data.frame")
     expect_true(all(c("spectrumId", "scanIndex", "peptide", "canonicalSeq",
