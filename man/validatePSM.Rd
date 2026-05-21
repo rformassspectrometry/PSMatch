@@ -156,13 +156,13 @@ plotSpectraPTM(sp_ms2[c(23, 24)], type = c("x","y"))
 
 
 ## Sparse fragment coverage -> gap detected (FALSE)
-checkOverlap(sp[c(2, 4)]) ## FALSE and TRUE respectively
+checkOverlap(sp_ms2[c(2, 4)]) ## FALSE and TRUE respectively
 ## Visualise it with plotSpectraPTM()
-plotSpectraPTM(sp[c(2, 4)])
+plotSpectraPTM(sp_ms2[c(2, 4)])
 
 
 ## checkShiftConsistency() on a sequence without modifications gives NA
-checkShiftConsistency(sp[10], "sequence")
+checkShiftConsistency(sp_ms2[10], "sequence")
 
 ## checkShiftConsistency() on a modified sequence gives a value between 0-1
 checkShiftConsistency(sp_ms2[3], "sequence")

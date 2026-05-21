@@ -181,9 +181,9 @@ checkXYpresence <- function(x, fragments = NULL) {
 #' @examples
 #'
 #' ## Sparse fragment coverage -> gap detected (FALSE)
-#' checkOverlap(sp[c(2, 4)]) ## FALSE and TRUE respectively
+#' checkOverlap(sp_ms2[c(2, 4)]) ## FALSE and TRUE respectively
 #' ## Visualise it with plotSpectraPTM()
-#' plotSpectraPTM(sp[c(2, 4)])
+#' plotSpectraPTM(sp_ms2[c(2, 4)])
 #'
 #' @export
 checkOverlap <- function(x, peptideVariable = "peptide",
@@ -232,7 +232,7 @@ checkOverlap <- function(x, peptideVariable = "peptide",
 #' @examples
 #'
 #' ## checkShiftConsistency() on a sequence without modifications gives NA
-#' checkShiftConsistency(sp[10], "sequence")
+#' checkShiftConsistency(sp_ms2[10], "sequence")
 #'
 #' ## checkShiftConsistency() on a modified sequence gives a value between 0-1
 ## 7 out of 12 fragments (=0.5833) with the modification are matched:
