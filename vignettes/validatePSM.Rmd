@@ -120,7 +120,7 @@ identification (it is not abnormal for small ions to be absent), but `TRUE` adds
 confidence.
 
 ```{r checkAB}
-ab <- checkABpresence(sp_psms[1:20])
+ab <- checkABpresence(sp_psms[1:100])
 table(ab)
 ```
 
@@ -129,7 +129,7 @@ table(ab)
 Analogous to `checkABpresence()` but for the C-terminal x2/y2 fragment pair.
 
 ```{r checkXY}
-xy <- checkXYpresence(sp_psms[1:20])
+xy <- checkXYpresence(sp_psms[1:100])
 table(xy)
 ```
 
@@ -161,22 +161,23 @@ table(overlap)
 **Interpretation of a gap.** A gap indicates a region of the peptide that is
 not covered by any matched fragment. This often points to an unaccounted-for
 modification sitting in the uncovered stretch. Consider the sequence
-`sp_psms[4]$sequence`:
+`sp_psms[10]$sequence`:
 
 ```{r overlapPlot}
-sp_psms[4]$sequence
-checkOverlap(sp_psms[4])
-plotSpectraPTM(sp_psms[4])
+sp_psms[10]$sequence
+checkOverlap(sp_psms[10])
+plotSpectraPTM(sp_psms[10])
 ```
+If the identified sequence does not contain a modification yet
+`checkOverlap()` returns `FALSE`, applying a modification on one of the
+residues in the identified gap could restore fragment coverage.
 
-Because there are no matched fragments that include the modified cysteine in
-the sequence, there is no guarantee that there might have been a
-carbamidomethylation. There is not even a guarantee that those specific amino
-acids within the gap are correct or in the correct order.
+Conversely, if there are no matched fragments that include the modified
+fragments in the sequence, there is no guarantee that there might have been a
+modification in the first place.
 
-Conversely, if the identified sequence does not contain a modification yet
-`checkOverlap()` returns `FALSE`, applying a modification at that position
-could restore fragment coverage.
+There is not even a guarantee that those specific amino acids within the gap
+are correct or in the correct order.
 
 In short, `checkOverlap()` acts as a ringing bell, indicating poor coverage of
 matched fragments within a spectrum and potentially revealing the need to
@@ -202,15 +203,15 @@ table(is.na(shifts))
 summary(shifts[!is.na(shifts)])
 ```
 
-Observe that very few fragments including a supposedly identified modifications
-are matched. The highest value being 0.5833 for sequence `r sp_psms$sequence[19]`
+Observe that very few fragments including a supposedly identified modification
+are matched. The highest value being 0.5833 for sequence `r sp_psms$sequence[3]`
 . Out of 12 potential sites including the identified modification, 7 have
 been matched:
 
 ```{r ex-checkShift}
-sp_psms[19]$sequence
-checkShiftConsistency(sp_psms[19])
-plotSpectraPTM(sp_psms[19])
+sp_psms[3]$sequence
+checkShiftConsistency(sp_psms[3])
+plotSpectraPTM(sp_psms[3])
 ```
 
 ## `checkParentIonIntensity()` : residual precursor in the MS2 spectrum {-}
@@ -225,7 +226,7 @@ close to 0 means the precursor was almost fully consumed; a ratio close to 1
 means the precursor dominates: a sign of poor fragmentation.
 
 ```{r checkParentIon}
-parent <- checkParentIonIntensity(sp_psms[1:20])
+parent <- checkParentIonIntensity(sp_psms[1:50])
 summary(parent)
 ```
 
@@ -246,11 +247,7 @@ Note that the full `sp` object (MS1 **and** MS2) must be passed here, not just
 the PSM subset.
 
 ```{r checkPurity}
-purity_all <- checkPrecursorPurity(sp)
-## Extract purity only for the first 20 identified PSMs
-ids_20 <- which(!is.na(sp[["sequence"]]) & sp$msLevel == 2L)[1:20]
-purity <- purity_all[ids_20]
-summary(purity)
+checkPrecursorPurity(sp[1:6])
 ```
 
 # Running all checks at once with `validatePSM()` {-}
@@ -261,7 +258,7 @@ The function operates on a `Spectra` object that contains **both MS1 and
 MS2 spectra** alongside the identification data.
 
 ```{r validatePSM}
-validatePSM(sp[1:30],
+validatePSM(sp[1:400],
     peptideVariable = seq_var,
     fdr = fdr_var
 )
@@ -283,6 +280,11 @@ following columns:
 | `shiftConsistency` | numeric | Fraction of shift-bearing fragments matched (`NA` if no PTM) |
 | `parentIonInt` | numeric | Relative precursor intensity in MS2 |
 | `precursorPurity` | numeric | Precursor isolation purity from MS1 |
+
+Note the small size of the final dataframe in comparison with the amount of
+spectra provided. This shows just how many spectra are not identified by search
+engines and the importance to improve the peptide identification in mass
+spectrometry-based proteomics.
 
 ## Relating metrics back to identification data {-}
 

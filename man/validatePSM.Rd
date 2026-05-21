@@ -132,46 +132,53 @@ sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
 (seq <- psmVariables(psmBoekweg)[["peptide"]])
 (fdr <- psmVariables(psmBoekweg)[["fdr"]])
 
-## Keep only those spectra for which
+## Keep only those spectra for which we have an identification and their
+## corresponding MS1
+scans_seq <- precScanNum(sp[!is.na(sp[[seq]])])
+sp <- filterPrecursorScan(sp, scans_seq)
 
 sp$sequence <- sp$peptide ## add 'sequence' for plotSpectraPTM
+
+## Keep a subset with only MS2 spectra
+sp_ms2 <- filterMsLevel(sp, 2L)
+sp_ms2 <- sp[!is.na(sp$sequence)]
 
 ## All checks at once with validatePSM()
 validatePSM(sp[1:20], peptideVariable = seq, fdr = fdr)
 
 
 checkABpresence(sp[c(16, 18)])
-plotSpectraPTM(sp[c(16, 18)], type = c("a","b"))
+plotSpectraPTM(sp[c(16, 18)], type = c("a","b")) ## See the coloured peaks
 
 
-checkXYpresence(sp[c(32, 34)])
-plotSpectraPTM(sp[c(32, 34)], type = c("x","y"))
+checkXYpresence(sp_ms2[c(23, 24)])
+plotSpectraPTM(sp_ms2[c(23, 24)], type = c("x","y"))
 
 
 ## Sparse fragment coverage -> gap detected (FALSE)
-checkOverlap(sp[c(6, 14)]) ## FALSE and TRUE respectively
+checkOverlap(sp[c(2, 4)]) ## FALSE and TRUE respectively
 ## Visualise it with plotSpectraPTM()
-plotSpectraPTM(sp[c(6, 14)])
+plotSpectraPTM(sp[c(2, 4)])
 
 
 ## checkShiftConsistency() on a sequence without modifications gives NA
 checkShiftConsistency(sp[10], "sequence")
 
 ## checkShiftConsistency() on a modified sequence gives a value between 0-1
-sp_ms2 <- filterMsLevel(sp, 2L)
-checkShiftConsistency(sp_ms2[14], "sequence")
-plotSpectraPTM(sp_ms2[14])
+checkShiftConsistency(sp_ms2[3], "sequence")
+plotSpectraPTM(sp_ms2[3])
 
 
 ## Precursor ion is the most intense peak -> ratio of 1
-checkParentIonIntensity(sp_ms2[7])
+checkParentIonIntensity(sp_ms2[8])
 
 ## Precursor absent from spectrum -> ratio of 0
-checkParentIonIntensity(sp_ms2[2]) ## Full fragmentation of precursor ion
+checkParentIonIntensity(sp_ms2[1]) ## Full fragmentation of precursor ion
 
 
 ## Check precursor purity on an ordered spectrum object: MS1 followed by MS2
-checkPrecursorPurity(sp[4:6])
+msLevel(sp[5:6])
+checkPrecursorPurity(sp[5:6])
 
 }
 \author{
