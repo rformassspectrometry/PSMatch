@@ -23,7 +23,12 @@ checkOverlap(
   strippedSeq = NULL
 )
 
-checkShiftConsistency(x, fragments = NULL, strippedSeq = NULL)
+checkShiftConsistency(
+  x,
+  peptideVariable = "peptide",
+  fragments = NULL,
+  strippedSeq = NULL
+)
 
 checkParentIonIntensity(x, peaks = NULL, tolerance = 0, ppm = 20)
 
@@ -100,7 +105,9 @@ Validate a PSM by checking some of its spectral features. Calling
 \code{validatePSM()} applies the different checks mentioned below. Failing a check
 does not guarantee a bad identification per se, but it does provide
 information to assess the confidence in dubious PSMs or confirm already good
-identifications.
+identifications. The checks can be called individually too. Some can only be
+applied on MS2 spectra, some need both MS1 and MS2 spectra. Use
+\code{Spectra::filterMsLevel()} accordingly.
 }
 \examples{
 
@@ -121,84 +128,46 @@ sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
 ## See ?PTMods::addFixedModifications
 (seq <- psmVariables(psmBoekweg)[["peptide"]])
 (fdr <- psmVariables(psmBoekweg)[["fdr"]])
-head(sp[["modSequences"]] <- addFixedModifications(sp[[seq]]))
 
-validatePSM(sp[1:20], peptideVariable = "modSequences", fdr = fdr)
+sp$sequence <- sp$peptide ## add 'sequence' for plotSpectraPTM
 
-
-library(Spectra)
-
-## Build a minimal spectrum containing a- and b-ions for "PEPTIDE"
-seq <- "PEPTIDE"
-frags_ab <- calculateFragments(seq, type = c("a", "b"))
-sp_ab <- DataFrame(msLevel = 2L, rtime = 100, sequence = seq)
-sp_ab$mz <- list(sort(frags_ab$mz))
-sp_ab$intensity <- list(rep(1e4, nrow(frags_ab)))
-sp_ab <- Spectra(sp_ab)
-## Both a2 and b2 are matched: returns TRUE
-checkABpresence(sp_ab)
+## All checks at once with validatePSM()
+validatePSM(sp[1:20], peptideVariable = seq, fdr = fdr)
 
 
-## Pass a fragment label list directly to checkXYpresence
-sp_xy <- DataFrame(msLevel = 2L, rtime = 100)
-sp_xy$mz <- list(c(100, 200, 300, 400))
-sp_xy$intensity <- list(rep(1e4, 4))
-sp_xy <- Spectra(sp_xy)
-## Fragment list containing x2 and y2: returns TRUE
-checkXYpresence(sp_xy, fragments = list(c("x2", "y2", "y3")))
-## Fragment list missing x2: returns FALSE
-checkXYpresence(sp_xy, fragments = list(c("y2", "y3", "y4")))
+checkABpresence(sp[c(8, 12)])
+plotSpectraPTM(sp[c(8,12)], type = c("a","b"))
 
 
-## Sparse fragment coverage → gap detected (FALSE)
-seq <- "PEPTIDE"
-frags_all <- calculateFragments(seq, type = c("b", "y"))
-frags_sparse <- frags_all[frags_all$ion \%in\% c("b1", "b2", "y1", "y2"), ]
-sp_gap <- DataFrame(msLevel = 2L, rtime = 100, sequence = seq)
-sp_gap$mz <- list(sort(frags_sparse$mz))
-sp_gap$intensity <- list(rep(1e4, nrow(frags_sparse)))
-sp_gap <- Spectra(sp_gap)
-labs_gap <- suppressWarnings(labelFragments(sp_gap, type = c("b", "y")))
-checkOverlap(sp_gap, fragments = labs_gap, strippedSeq = seq)
-
-## Full b and y coverage → no gap (TRUE)
-sp_full <- DataFrame(msLevel = 2L, rtime = 100, sequence = seq)
-sp_full$mz <- list(sort(frags_all$mz))
-sp_full$intensity <- list(rep(1e4, nrow(frags_all)))
-sp_full <- Spectra(sp_full)
-labs_full <- suppressWarnings(labelFragments(sp_full, type = c("b", "y")))
-checkOverlap(sp_full, fragments = labs_full, strippedSeq = seq)
+checkXYpresence(sp[c(2, 4)])
+plotSpectraPTM(sp[c(2,4)], type = c("x","y"))
 
 
-## Unmodified sequence → no shift to assess, returns NA
-seq <- "PEPTIDE"
-frags_sc <- calculateFragments(seq)
-sp_sc <- DataFrame(msLevel = 2L, rtime = 100, sequence = seq)
-sp_sc$mz <- list(sort(frags_sc$mz))
-sp_sc$intensity <- list(rep(1e4, nrow(frags_sc)))
-sp_sc <- Spectra(sp_sc)
-labs_sc <- suppressWarnings(labelFragments(sp_sc))
-checkShiftConsistency(sp_sc, fragments = labs_sc)
+## Sparse fragment coverage -> gap detected (FALSE)
+checkOverlap(sp[c(8, 14)]) ## FALSE and TRUE respectively
+## Visualise it with plotSpectraPTM()
+plotSpectraPTM(sp[c(8, 14)])
+
+
+## checkShiftConsistency() on a sequence without modifications gives NA
+checkShiftConsistency(sp[10], "sequence")
+
+## checkShiftConsistency() on a modified sequence without matched
+## modifications gives 0
+sp_ms2 <- filterMsLevel(sp, 2L)
+checkShiftConsistency(sp_ms2[19], "sequence")
+plotSpectraPTM(sp_ms2[19])
 
 
 ## Precursor ion is the most intense peak → ratio of 1
-sp_p <- DataFrame(msLevel = 2L, rtime = 100, precursorMz = 500.0)
-sp_p$mz <- list(c(100, 200, 300, 400, 500))
-sp_p$intensity <- list(c(100, 100, 100, 100, 1e6))
-sp_p <- Spectra(sp_p)
-checkParentIonIntensity(sp_p)
+checkParentIonIntensity(sp[20])
 
 ## Precursor absent from spectrum → ratio of 0
-sp_np <- DataFrame(msLevel = 2L, rtime = 100, precursorMz = 999.0)
-sp_np$mz <- list(c(100, 200, 300, 400, 500))
-sp_np$intensity <- list(c(100, 100, 100, 100, 1e6))
-sp_np <- Spectra(sp_np)
-checkParentIonIntensity(sp_np)
+checkParentIonIntensity(sp[2]) ## Full fragmentation of precursor ion
 
 
-## Check precursor purity on the bundled spectra dataset
-data("spBoekweg")
-purity <- checkPrecursorPurity(spBoekweg[1:5])
+## Check precursor purity on an ordered spectrum object: MS1 followed by MS2
+checkPrecursorPurity(sp[7:10])
 purity
 
 }
