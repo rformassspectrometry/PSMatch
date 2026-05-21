@@ -26,6 +26,8 @@
 #'
 #' @returns A `data.frame()` that checks the different validation metrics.
 #'
+#' @author Guillaume Deflandre
+#'
 #' @importFrom Spectra spectraData peaksData
 #'
 #' @export
