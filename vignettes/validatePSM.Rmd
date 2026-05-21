@@ -25,7 +25,7 @@ library("PSMatch")
 library("Spectra")
 ```
 
-# Introduction
+# Introduction {-}
 
 This vignette illustrates how to use the PSM validation functions in the
 `PSMatch` package. The validation metrics operate on `Spectra` objects that
@@ -37,9 +37,9 @@ The central function `validatePSM()` applies all checks at once and returns a
 `data.frame` summarising one row per identified PSM. Each individual check
 function can also be called in isolation when only a specific metric is needed.
 
-# Data
+# Data {-}
 
-## The bundled dataset
+## The bundled dataset {-}
 
 This vignette uses `psmBoekweg` and `spBoekweg`, two objects bundled with
 `PSMatch`. `psmBoekweg` is a `PSM` object and `spBoekweg` is a `Spectra` object
@@ -54,7 +54,7 @@ psmBoekweg
 spBoekweg
 ```
 
-## Merging spectra and identification data
+## Merging spectra and identification data {-}
 
 The two objects are joined on a shared key built from the file name and scan
 number. It is important to **keep both MS1 and MS2 spectra** in the merged
@@ -74,7 +74,7 @@ sp <- joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
 sp
 ```
 
-## Adding fixed modifications
+## Adding fixed modifications {-}
 
 Depending on the identification data/search engines, the sequence data might
 not include modifications such as carbamidomethylation of cysteines. If need be,
@@ -103,12 +103,12 @@ for use with the individual check functions below.
 sp_psms <- sp[!is.na(sp[["sequence"]]) & sp$msLevel == 2L]
 ```
 
-# Validation metrics
+# Validation metrics {-}
 
 Each section below explains what a metric measures, shows how to call it
 directly, and discusses how to interpret the result.
 
-## `checkABpresence()` : a2/b2 ion pair
+## `checkABpresence()` : a2/b2 ion pair {-}
 
 The a2 and b2 ions are among the smallest b-type and a-type fragments that
 can be generated from a peptide. Their simultaneous presence in a spectrum
@@ -124,7 +124,7 @@ ab <- checkABpresence(sp_psms[1:20])
 table(ab)
 ```
 
-## `checkXYpresence()` : x2/y2 ion pair
+## `checkXYpresence()` : x2/y2 ion pair {-}
 
 Analogous to `checkABpresence()` but for the C-terminal x2/y2 fragment pair.
 
@@ -133,7 +133,7 @@ xy <- checkXYpresence(sp_psms[1:20])
 table(xy)
 ```
 
-## `checkOverlap()` : coverage gap between b- and y-ions
+## `checkOverlap()` : coverage gap between b- and y-ions {-}
 
 This check evaluates whether the matched b-ions and y-ions together cover the
 entire peptide sequence. Given a peptide of length $n$, if the highest matched
@@ -182,7 +182,7 @@ In short, `checkOverlap()` acts as a ringing bell, indicating poor coverage of
 matched fragments within a spectrum and potentially revealing the need to
 include or remove a modification.
 
-## `checkShiftConsistency()` : mass shift coverage for modified sequences
+## `checkShiftConsistency()` : mass shift coverage for modified sequences {-}
 
 When a peptide carries a post-translational modification (PTM), every fragment
 ion that includes the modified residue should exhibit the corresponding mass
@@ -213,7 +213,7 @@ checkShiftConsistency(sp_psms[19])
 plotSpectraPTM(sp_psms[19])
 ```
 
-## `checkParentIonIntensity()` : residual precursor in the MS2 spectrum
+## `checkParentIonIntensity()` : residual precursor in the MS2 spectrum {-}
 
 After CID or HCD fragmentation, the precursor ion is ideally fully fragmented.
 If the precursor ion still appears as an intense peak in the MS2 spectrum, it
@@ -229,7 +229,7 @@ parent <- checkParentIonIntensity(sp_psms[1:20])
 summary(parent)
 ```
 
-## `checkPrecursorPurity()` : isolation window contamination
+## `checkPrecursorPurity()` : isolation window contamination {-}
 
 Before fragmentation, the quadrupole isolates a narrow m/z window around the
 precursor ion. If other co-eluting peptides happen to fall within this window,
@@ -253,7 +253,7 @@ purity <- purity_all[ids_20]
 summary(purity)
 ```
 
-# Running all checks at once with `validatePSM()`
+# Running all checks at once with `validatePSM()` {-}
 
 `validatePSM()` applies all metrics in a single call. It pre-computes
 `peaksData` and `labelFragments` internally to avoid redundant computation.
@@ -284,7 +284,7 @@ following columns:
 | `parentIonInt` | numeric | Relative precursor intensity in MS2 |
 | `precursorPurity` | numeric | Precursor isolation purity from MS1 |
 
-## Relating metrics back to identification data
+## Relating metrics back to identification data {-}
 
 The result can be merged with the original PSM table using the spectrum
 identifier or the scan index in order to include the metrics for rescoring:
@@ -298,7 +298,7 @@ combined <- merge(psm_df, res,
 )
 ```
 
-# Session information
+# Session information {-}
 
 ```{r si}
 sessionInfo()
