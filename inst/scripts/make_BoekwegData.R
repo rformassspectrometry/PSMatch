@@ -11,7 +11,7 @@ library(Spectra)
 ### bulk ###
 ############
 f <- MsDataHub::OR11_20160122_PG_HeLa_CVB3_CT_A.mzML()
-f <- "../../../../../data/boekweg2022/OR11_20160122_PG_HeLa_CVB3_CT_A.mzML"
+f <- "/home/guillaumedeflandre/Documents/drive_UCL/PHD/data/boekweg2022/OR11_20160122_PG_HeLa_CVB3_CT_A.mzML"
 sp <- Spectra(f)
 
 p <- MsDataHub::OR11_20160122_PG_HeLa_CVB3_CT_A.sage.tsv()
@@ -61,4 +61,6 @@ format(object.size(spJoined), units = "Mb") ## 1.6 Mb, much better
 n <- which(sp$pkey %in% spJoined$pkey)
 spBoekweg <- sp[n]
 
-save(spBoekweg, file = "../../data/spBoekweg.rda")
+spBoekweg$dataOrigin <- basename(spBoekweg$dataOrigin)
+spBoekweg <- setBackend(spBoekweg, MsBackendMemory())
+save(spBoekweg, file = "/home/guillaumedeflandre/Documents/drive_UCL/PHD/rformassspectrometry/PSMatch-oriented/PSMatch/data/spBoekweg.rda")

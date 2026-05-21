@@ -44,7 +44,7 @@ function can also be called in isolation when only a specific metric is needed.
 This vignette uses `psmBoekweg` and `spBoekweg`, two objects bundled with
 `PSMatch`. `psmBoekweg` is a `PSM` object and `spBoekweg` is a `Spectra` object
 containing the corresponding raw MS1 and MS2 spectra. More details on these
-datasets can be found by loading the `r Biocpkg("MsDataHub")` and using
+datasets can be found by loading the `r Biocpkg("MsDataHub")` package and using
 `?Boekweg2022`.
 
 ```{r load_data}
@@ -58,7 +58,7 @@ spBoekweg
 
 The two objects are joined on a shared key built from the file name and scan
 number. It is important to **keep both MS1 and MS2 spectra** in the merged
-object — MS1 spectra are required by `checkPrecursorPurity()`.
+object as MS1 spectra are required by `checkPrecursorPurity()`.
 
 ```{r merge}
 psmBoekweg$pkey <- paste0(
@@ -85,8 +85,14 @@ values.
 ```{r add_mods}
 seq_var <- psmVariables(psmBoekweg)[["peptide"]]
 fdr_var <- psmVariables(psmBoekweg)[["fdr"]]
-sp[["sequence"]] <- addFixedModifications(sp[[seq_var]])
 ## Preview the first few modified sequences
+head(sp[[seq_var]][!is.na(sp[[seq_var]])])
+
+## Carbamidomethyl is already present, no need to use:
+## sp[["sequence"]] <- addFixedModifications(sp[[seq_var]])
+
+## For converting the annotation style, use `PTMods::convertAnnotation()`
+sp[["sequence"]] <- convertAnnotation(sp[[seq_var]], convertToStyle = "name")
 head(sp[["sequence"]][!is.na(sp[["sequence"]])])
 ```
 
@@ -102,12 +108,11 @@ sp_psms <- sp[!is.na(sp[["sequence"]]) & sp$msLevel == 2L]
 Each section below explains what a metric measures, shows how to call it
 directly, and discusses how to interpret the result.
 
-## `checkABpresence()` — a2/b2 ion pair
+## `checkABpresence()` : a2/b2 ion pair
 
 The a2 and b2 ions are among the smallest b-type and a-type fragments that
-can be generated from a peptide. Their simultaneous presence in a spectrum is
-a straightforward sign that the N-terminal end of the identified sequence is
-supported by the data.
+can be generated from a peptide. Their simultaneous presence in a spectrum
+indicates good fragmentation of an actual peptide ion selected from the MS1.
 
 `checkABpresence()` returns `TRUE` if both the **a2** and **b2** ions are
 matched, `FALSE` otherwise. A `FALSE` result does not necessarily mean a bad
@@ -119,7 +124,7 @@ ab <- checkABpresence(sp_psms[1:20])
 table(ab)
 ```
 
-## `checkXYpresence()` — x2/y2 ion pair
+## `checkXYpresence()` : x2/y2 ion pair
 
 Analogous to `checkABpresence()` but for the C-terminal x2/y2 fragment pair.
 
@@ -128,7 +133,7 @@ xy <- checkXYpresence(sp_psms[1:20])
 table(xy)
 ```
 
-## `checkOverlap()` — coverage gap between b- and y-ions
+## `checkOverlap()` : coverage gap between b- and y-ions
 
 This check evaluates whether the matched b-ions and y-ions together cover the
 entire peptide sequence. Given a peptide of length $n$, if the highest matched
@@ -145,36 +150,42 @@ b- and y-ions jointly cover the sequence with overlap.
 frags <- labelFragments(sp_psms[1:20], type = c("a", "b", "c", "x", "y", "z"))
 
 overlap <- checkOverlap(sp_psms[1:20],
+    peptideVariable = "sequence",
     fragments = frags,
-    strippedSeq = PTMods::getCanonicalSequence(
-        sp_psms[["sequence"]][1:20]
-    )
+    strippedSeq = PTMods::getCanonicalSequence(sp_psms[["sequence"]][1:20])
 )
+
 table(overlap)
 ```
 
 **Interpretation of a gap.** A gap indicates a region of the peptide that is
 not covered by any matched fragment. This often points to an unaccounted-for
 modification sitting in the uncovered stretch. Consider the sequence
-`sp_psms[21]$sequence`:
+`sp_psms[4]$sequence`:
 
 ```{r overlapPlot}
-plotSpectraPTM(sp_psms[21])
+sp_psms[4]$sequence
+checkOverlap(sp_psms[4])
+plotSpectraPTM(sp_psms[4])
 ```
 
-Because there are no matched fragments that include the sixth amino acid in the
-sequence (`Y`), there is no guarantee that there might have been an
-unsearched for modification. For instance, applying a phosphorylation at that
-position could restore fragment coverage.
+Because there are no matched fragments that include the modified cysteine in
+the sequence, there is no guarantee that there might have been a
+carbamidomethylation. There is not even a guarantee that those specific amino
+acids within the gap are correct or in the correct order.
 
-Conversely, if the identified sequence already contains a modification yet
-`checkOverlap()` still returns `FALSE`, the modification placement could be
-wrong, or an additional modification is present.
+Conversely, if the identified sequence does not contain a modification yet
+`checkOverlap()` returns `FALSE`, applying a modification at that position
+could restore fragment coverage.
 
-## `checkShiftConsistency()` — mass shift coverage for modified sequences
+In short, `checkOverlap()` acts as a ringing bell, indicating poor coverage of
+matched fragments within a spectrum and potentially revealing the need to
+include or remove a modification.
+
+## `checkShiftConsistency()` : mass shift coverage for modified sequences
 
 When a peptide carries a post-translational modification (PTM), every fragment
-ion that *spans* the modified residue should exhibit the corresponding mass
+ion that includes the modified residue should exhibit the corresponding mass
 shift. `checkShiftConsistency()` counts how many of these shift-bearing
 fragment positions are actually matched, and returns the ratio as a value
 between 0 and 1.
@@ -185,13 +196,24 @@ strengthens confidence in both the identification and the modification site
 assignment.
 
 ```{r checkShift}
-shifts <- checkShiftConsistency(sp_psms[1:20], fragments = frags)
+shifts <- checkShiftConsistency(sp_psms[1:50])
 ## NA for unmodified sequences, numeric for modified ones
 table(is.na(shifts))
 summary(shifts[!is.na(shifts)])
 ```
 
-## `checkParentIonIntensity()` — residual precursor in the MS2 spectrum
+Observe that very few fragments including a supposedly identified modifications
+are matched. The highest value being 0.5833 for sequence `r sp_psms$sequence[19]`
+. Out of 12 potential sites including the identified modification, 7 have
+been matched:
+
+```{r ex-checkShift}
+sp_psms[19]$sequence
+checkShiftConsistency(sp_psms[19])
+plotSpectraPTM(sp_psms[19])
+```
+
+## `checkParentIonIntensity()` : residual precursor in the MS2 spectrum
 
 After CID or HCD fragmentation, the precursor ion is ideally fully fragmented.
 If the precursor ion still appears as an intense peak in the MS2 spectrum, it
@@ -200,14 +222,14 @@ suggests incomplete fragmentation.
 `checkParentIonIntensity()` reports the intensity of the matched precursor
 peak relative to the base peak (most intense peak) in the spectrum. A ratio
 close to 0 means the precursor was almost fully consumed; a ratio close to 1
-means the precursor dominates — a sign of poor fragmentation.
+means the precursor dominates: a sign of poor fragmentation.
 
 ```{r checkParentIon}
-parent <- checkParentIonIntensity(sp_psms[1:20], peaks = peaks_data)
+parent <- checkParentIonIntensity(sp_psms[1:20])
 summary(parent)
 ```
 
-## `checkPrecursorPurity()` — isolation window contamination
+## `checkPrecursorPurity()` : isolation window contamination
 
 Before fragmentation, the quadrupole isolates a narrow m/z window around the
 precursor ion. If other co-eluting peptides happen to fall within this window,
@@ -239,13 +261,10 @@ The function operates on a `Spectra` object that contains **both MS1 and
 MS2 spectra** alongside the identification data.
 
 ```{r validatePSM}
-res <- suppressWarnings(
-    validatePSM(sp[1:30],
-        peptideVariable = "sequence",
-        fdr = fdr_var
-    )
+validatePSM(sp[1:30],
+    peptideVariable = seq_var,
+    fdr = fdr_var
 )
-res
 ```
 
 The returned `data.frame` contains one row per identified PSM with the
