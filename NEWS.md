@@ -1,4 +1,4 @@
-# PSMatch 1.15
+# PSMatch 1.17
 
 ## PSMatch 1.17.2
 
@@ -15,6 +15,8 @@
 ## PSMatch 1.17.0
 
 - New Bioconductor devel.
+
+# PSMatch 1.15
 
 ## PSMatch 1.15.3
 
