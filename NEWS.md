@@ -1,4 +1,8 @@
-# PSMatch 1.15
+# PSMatch 1.17
+
+## PSMatch 1.17.2
+
+- Added paper reference in CITATION
 
 ## PSMatch 1.17.1
 
