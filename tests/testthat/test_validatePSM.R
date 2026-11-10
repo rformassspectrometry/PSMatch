@@ -108,9 +108,7 @@ test_that("checkShiftConsistency() returns NA for unmodified sequences", {
 test_that("validatePSM() returns a data.frame with expected columns", {
     data("psmBoekweg")
     data("spBoekweg")
-    psmBoekweg$pkey <- paste0(
-        basename(psmBoekweg$filename),
-        sub("^.+scan=", "::", psmBoekweg$scannr))
+    psmBoekweg$pkey <- sub("^.+scan=", "", psmBoekweg$scannr)
     sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
     seq_var <- psmVariables(psmBoekweg)[["peptide"]]
     fdr_var <- psmVariables(psmBoekweg)[["fdr"]]
