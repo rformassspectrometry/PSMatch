@@ -4,6 +4,7 @@
 
 - Added `validatePSM()` and its corresponding vignette and tests.
 - Added data bundled with the package: `spBoekweg` and `psmBoekweg`
+- Added paper reference in CITATION
 
 ## PSMatch 1.17.1
 

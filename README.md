@@ -30,6 +30,7 @@ To install the package from Bioconductor, make sure you have the
 ```r
 BiocManager::install("PSMatch")
 ```
+
 ## Contributions
 
 Contributions are welcome, and should ideally be provided through a Github pull
