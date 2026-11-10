@@ -4,6 +4,12 @@ export("reduced<-")
 export(ConnectedComponents)
 export(PSM)
 export(ccMatrix)
+export(checkABpresence)
+export(checkOverlap)
+export(checkParentIonIntensity)
+export(checkPrecursorPurity)
+export(checkShiftConsistency)
+export(checkXYpresence)
 export(connectedComponents)
 export(defaultNeutralLoss)
 export(describePeptides)
@@ -26,6 +32,7 @@ export(psmVariables)
 export(readPSMs)
 export(reducePSMs)
 export(reduced)
+export(validatePSM)
 exportClasses(PSM)
 exportMethods("[")
 exportMethods(adjacencyMatrix)
@@ -62,6 +69,7 @@ importFrom(QFeatures,reduceDataFrame)
 importFrom(Spectra,
   peaksData,
   precursorCharge,
+  precursorPurity,
   spectraData,
   spectraVariables
 )

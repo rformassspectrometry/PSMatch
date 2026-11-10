@@ -2,6 +2,8 @@
 
 ## PSMatch 1.17.2
 
+- Added `validatePSM()` and its corresponding vignette and tests.
+- Added data bundled with the package: `spBoekweg` and `psmBoekweg`
 - Added paper reference in CITATION
 
 ## PSMatch 1.17.1
@@ -14,6 +16,8 @@
 ## PSMatch 1.17.0
 
 - New Bioconductor devel.
+
+# PSMatch 1.15
 
 ## PSMatch 1.15.3
 

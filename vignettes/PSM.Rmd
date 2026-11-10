@@ -305,3 +305,8 @@ nrow(unique(id2_filtered))
 ```{r si}
 sessionInfo()
 ```
+
+# License
+
+This vignette is distributed under a
+[CC BY-SA license](https://creativecommons.org/licenses/by-sa/2.0/).
