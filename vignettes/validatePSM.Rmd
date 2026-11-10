@@ -205,7 +205,7 @@ summary(shifts[!is.na(shifts)])
 ```
 
 Observe that very few fragments (including a supposedly identified modification)
-are matched. The highest value being `r max(shifts)` for sequence 
+are matched. The highest value being `r max(shifts)` for sequence
 `r sp_psms$sequence[which.max(shifts)]`
 . Out of 7 potential sites including the identified modification, 4 have
 been matched:
@@ -302,13 +302,14 @@ combined <- merge(psm_df, res,
 )
 ```
 
+
+# License
+
+This vignette is distributed under a [CC BY-SA
+license](https://creativecommons.org/licenses/by-sa/2.0/).
+
 # Session information {-}
 
 ```{r si}
 sessionInfo()
 ```
-
-# License
-
-This vignette is distributed under a
-[CC BY-SA license](https://creativecommons.org/licenses/by-sa/2.0/).

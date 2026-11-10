@@ -313,16 +313,13 @@ library(factoextra)
 fviz_pca(prcomp(cctab, scale = TRUE, center = TRUE))
 ```
 
+# License
 
+This vignette is distributed under a [CC BY-SA
+license](https://creativecommons.org/licenses/by-sa/2.0/).
 
 # Session information
 
 ```{r si}
 sessionInfo()
 ```
-
-
-# License
-
-This vignette is distributed under a
-[CC BY-SA license](https://creativecommons.org/licenses/by-sa/2.0/).

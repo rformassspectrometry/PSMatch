@@ -22,7 +22,7 @@ Authors@R:
             role = "ctb"),
      person(given = "Guillaume", family = "Deflandre",
             email = "guillaume.deflandre@uclouvain.be",
-            role = "ctb",
+            role = "aut",
             comment = c(ORCID = "0009-0008-1257-2416")))
 Description: The PSMatch package helps proteomics practitioners to
     load, handle and manage Peptide Spectrum Matches. It provides

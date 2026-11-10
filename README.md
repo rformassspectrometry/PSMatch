@@ -46,3 +46,11 @@ Code in this package is partly composed of functions ported from
 make them more general and (2) integrate them with the [*R for Mass
 Spectrometry*](https://github.com/rformassspectrometry)
 infrastructure.
+
+## License
+
+The `PSMatch` code is provided under a
+[Artistic-2.0](https://opensource.org/license/Artistic-2.0) licence.
+The documentation, including the manual pages and the vignettes, are
+distributed under a [CC BY-SA
+license](https://creativecommons.org/licenses/by-sa/2.0/).
