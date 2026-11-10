@@ -53,8 +53,8 @@
 ##'
 ##' ## Summary of q-values
 ##' summary(psmBoekweg$peptide_q)
-"psmBoekweg"
-
+##' @name psmBoekweg
+NULL
 
 ##' Example mass spectrometry data
 ##'
@@ -128,4 +128,6 @@
 ##'
 ##' ## Find spectra with identifications
 ##' sum(spBoekweg$pkey %in% psmBoekweg$pkey)
-"spBoekweg"
+##'
+##' @name spBoekweg
+NULL

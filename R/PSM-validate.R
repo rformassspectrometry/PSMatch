@@ -67,9 +67,7 @@
 #'
 #' ## All checks at once with validatePSM()
 #' validatePSM(sp[1:20], peptideVariable = seq, fdr = fdr)
-#'
 validatePSM <- function(x, peptideVariable = "peptide", fdr = "fdr", ...) {
-
     stopifnot(requireNamespace("Spectra"))
     stopifnot(inherits(x, "Spectra"))
 
@@ -135,7 +133,6 @@ validatePSM <- function(x, peptideVariable = "peptide", fdr = "fdr", ...) {
 #'
 #' @export
 checkABpresence <- function(x, fragments = NULL) {
-
     if (!length(fragments)) {
         labels <- labelFragments(x, type = c("a", "b"))
     } else {
@@ -158,7 +155,6 @@ checkABpresence <- function(x, fragments = NULL) {
 #'
 #' @export
 checkXYpresence <- function(x, fragments = NULL) {
-
     if (!length(fragments)) {
         labels <- labelFragments(x, type = c("x", "y"))
     } else {
@@ -190,7 +186,6 @@ checkXYpresence <- function(x, fragments = NULL) {
 #' @export
 checkOverlap <- function(x, peptideVariable = "peptide",
                          fragments = NULL, strippedSeq = NULL) {
-
     if (length(strippedSeq)) {
         stripped_sequence <- strippedSeq
     } else {
@@ -244,7 +239,6 @@ checkOverlap <- function(x, peptideVariable = "peptide",
 #' @export
 checkShiftConsistency <- function(x, peptideVariable = "peptide",
                                   fragments = NULL, strippedSeq = NULL) {
-
     if (length(fragments)) {
         labels = fragments
     } else {
@@ -265,7 +259,6 @@ checkShiftConsistency <- function(x, peptideVariable = "peptide",
     ans <- vector(length = length(x))
 
     for (i in seq_along(x)) {
-
         if (is.na(x$sequence[i])) {
             ans[i] <- NA
         } else if (x$sequence[i] == stripped_sequence[i]) {
@@ -315,7 +308,6 @@ checkParentIonIntensity <- function (x,
                                      peaks = NULL,
                                      tolerance = 0,
                                      ppm = 20) {
-
     stopifnot(requireNamespace("Spectra"))
     stopifnot(inherits(x, "Spectra"))
 
@@ -328,7 +320,6 @@ checkParentIonIntensity <- function (x,
     precursors <- Spectra::precursorMz(x)
 
     for (i in seq_along(x)) {
-
         peak <- v[[i]]
         precursor_index <- MsCoreUtils::closest(precursors[i],
                                                 peak[, "mz"],
@@ -385,7 +376,6 @@ checkParentIonIntensity <- function (x,
 checkPrecursorPurity <- function(x, tolerance = 0.05, ppm = 0,
                                  useReportedIsolationWindow = FALSE,
                                  BPPARAM = BiocParallel::SerialParam()) {
-
     stopifnot(inherits(x, "Spectra"))
 
     Spectra::precursorPurity(x,

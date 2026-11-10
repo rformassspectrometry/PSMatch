@@ -148,7 +148,6 @@ sp_ms2 <- sp[!is.na(sp$sequence)]
 ## All checks at once with validatePSM()
 validatePSM(sp[1:20], peptideVariable = seq, fdr = fdr)
 
-
 checkABpresence(sp[c(16, 18)])
 plotSpectraPTM(sp[c(16, 18)], type = c("a","b")) ## See the coloured peaks
 

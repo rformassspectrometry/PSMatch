@@ -16,7 +16,7 @@ BiocStyle::markdown()
 ```
 
 **Package**: `r Biocpkg("PSMatch")`<br />
-**Authors**: `r packageDescription("PSMatch")[["Author"]] `<br />
+**Authors**: Guillaume Deflandre <br />
 **Last modified:** `r file.info("validatePSM.Rmd")$mtime`<br />
 **Compiled**: `r date()`
 
@@ -307,3 +307,8 @@ combined <- merge(psm_df, res,
 ```{r si}
 sessionInfo()
 ```
+
+# License
+
+This vignette is distributed under a
+[CC BY-SA license](https://creativecommons.org/licenses/by-sa/2.0/).
