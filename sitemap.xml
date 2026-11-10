@@ -4,6 +4,7 @@
 <url><loc>/articles/Fragments.html</loc></url>
 <url><loc>/articles/PSM.html</loc></url>
 <url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/validatePSM.html</loc></url>
 <url><loc>/authors.html</loc></url>
 <url><loc>/index.html</loc></url>
 <url><loc>/news/index.html</loc></url>
@@ -19,5 +20,8 @@
 <url><loc>/reference/index.html</loc></url>
 <url><loc>/reference/labelFragments.html</loc></url>
 <url><loc>/reference/plotSpectraPTM.html</loc></url>
+<url><loc>/reference/psmBoekweg.html</loc></url>
+<url><loc>/reference/spBoekweg.html</loc></url>
+<url><loc>/reference/validatePSM.html</loc></url>
 </urlset>
 

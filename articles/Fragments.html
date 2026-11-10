@@ -57,6 +57,9 @@
     <li>
       <a href="../articles/PSM.html">Working with PSM data</a>
     </li>
+    <li>
+      <a href="../articles/validatePSM.html">Validate PSMs based on spectral and identification features</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -107,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.24/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [ctb] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-09 15:35:19.106867<br><strong>Compiled</strong>: Mon Nov 9 16:00:35 2026</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-10 15:59:04.628378<br><strong>Compiled</strong>: Tue Nov 10 16:25:25 2026</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -165,7 +168,7 @@ package webpage.</p>
 <span><span class="co">##  ... 68 more variables/columns.</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## file(s):</span></span>
-<span><span class="co">## 13c23fe6a894_7858</span></span></code></pre>
+<span><span class="co">## 13c23613a0ae_7858</span></span></code></pre>
 <p>In this example, we are going to focus the MS2 scan with index 1158
 and its parent MS1 scan (index 1148, selected automatically with the <a href="https://rformassspectrometry.github.io/Spectra/reference/MsBackend.html" class="external-link">filterPrecursorScan()</a>
 function).</p>
@@ -413,6 +416,12 @@ the code locally.</p>
 </div>
 </div>
 <div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
+<p>This vignette is distributed under a <a href="https://creativecommons.org/licenses/by-sa/2.0/" class="external-link">CC BY-SA
+license</a>.</p>
+</div>
+<div class="section level2">
 <h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
@@ -508,7 +517,7 @@ the code locally.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Laurent Gatto, Johannes Rainer, Sebastian Gibb.</p>
+<p>Developed by Laurent Gatto, Johannes Rainer, Sebastian Gibb, Guillaume Deflandre.</p>
 </div>
 
 <div class="pkgdown">

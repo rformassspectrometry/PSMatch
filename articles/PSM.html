@@ -57,6 +57,9 @@
     <li>
       <a href="../articles/PSM.html">Working with PSM data</a>
     </li>
+    <li>
+      <a href="../articles/validatePSM.html">Validate PSMs based on spectral and identification features</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -107,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.24/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [ctb] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-09 15:35:19.106867<br><strong>Compiled</strong>: Mon Nov 9 16:01:11 2026</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-10 15:59:04.628378<br><strong>Compiled</strong>: Tue Nov 10 16:26:01 2026</p>
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
@@ -338,10 +341,10 @@ backend fails.</p></li>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required namespace: mzID</span></span></code></pre>
-<pre><code><span><span class="co">## reading 13c24156b484_7857...</span></span></code></pre>
+<pre><code><span><span class="co">## reading 13c21e0d9a4b_7857...</span></span></code></pre>
 <pre><code><span><span class="co">##  DONE!</span></span></code></pre>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   5.817   0.075   5.893</span></span></code></pre>
+<span><span class="co">##   6.015   0.076   6.091</span></span></code></pre>
 <p>Other differences in the two parsers include the columns that are
 returned, the way they name them, and, as will shown below the matches
 that are returned. Note for instance (and this will be important later),
@@ -463,6 +466,12 @@ same number of PSMs than with the <code>mzID</code> parser.</p>
 <pre><code><span><span class="co">## [1] 2646</span></span></code></pre>
 </div>
 <div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
+<p>This vignette is distributed under a <a href="https://creativecommons.org/licenses/by-sa/2.0/" class="external-link">CC BY-SA
+license</a>.</p>
+</div>
+<div class="section level2">
 <h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
@@ -570,7 +579,7 @@ reduce to output in the the next code chunks displaying parts of
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Laurent Gatto, Johannes Rainer, Sebastian Gibb.</p>
+<p>Developed by Laurent Gatto, Johannes Rainer, Sebastian Gibb, Guillaume Deflandre.</p>
 </div>
 
 <div class="pkgdown">
