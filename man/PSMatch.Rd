@@ -79,8 +79,8 @@ the package's
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/RforMassSpectrometry/PSM}
-  \item Report bugs at \url{https://github.com/RforMassSpectrometry/PSM/issues}
+  \item \url{https://github.com/RforMassSpectrometry/PSMatch}
+  \item Report bugs at \url{https://github.com/RforMassSpectrometry/PSMatch/issues}
 }
 
 }
@@ -92,13 +92,13 @@ Authors:
   \item Laurent Gatto \email{laurent.gatto@uclouvain.be} (\href{https://orcid.org/0000-0002-1520-2268}{ORCID})
   \item Johannes Rainer \email{Johannes.Rainer@eurac.edu} (\href{https://orcid.org/0000-0002-6977-7147}{ORCID})
   \item Sebastian Gibb \email{mail@sebastiangibb.de} (\href{https://orcid.org/0000-0001-7406-4443}{ORCID})
+  \item Guillaume Deflandre \email{guillaume.deflandre@uclouvain.be} (\href{https://orcid.org/0009-0008-1257-2416}{ORCID})
 }
 
 Other contributors:
 \itemize{
   \item Samuel Wieczorek \email{samuel.wieczorek@cea.fr} [contributor]
   \item Thomas Burger \email{thomas.burger@cea.fr} [contributor]
-  \item Guillaume Deflandre \email{guillaume.deflandre@uclouvain.be} (\href{https://orcid.org/0009-0008-1257-2416}{ORCID}) [contributor]
 }
 
 }

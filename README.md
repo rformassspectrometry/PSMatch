@@ -1,6 +1,4 @@
-# Handling peptide-spectrum matches
-
-<img src="stickers/PSMatch.png" align="right" height="139" alt="" />
+# Handling peptide-spectrum matches <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
 `PSMatch` is a simple package to load, process and analyse PSMs
 (Peptide-Spectrum Matches). The following references are a good way to
