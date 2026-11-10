@@ -1,3 +1,22 @@
+# PSMatch 1.17
+
+## PSMatch 1.17.2
+
+- Added `validatePSM()` and its corresponding vignette and tests.
+- Added data bundled with the package: `spBoekweg` and `psmBoekweg`
+- Added paper reference in CITATION
+
+## PSMatch 1.17.1
+
+- Added parameter `z` and `allCharges` in `plotSpectraPTM()` and
+  `labelFragments()` and set it to `1:precursorCharge(x)` by default when it used
+  to only display charge 1 before. See this
+  [PR](https://github.com/rformassspectrometry/PSMatch/pull/44).
+
+## PSMatch 1.17.0
+
+- New Bioconductor devel.
+
 # PSMatch 1.15
 
 ## PSMatch 1.15.3

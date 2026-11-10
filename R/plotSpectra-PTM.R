@@ -82,6 +82,17 @@
 ##' details on this, see the appropriate vignette by running
 ##' `vignette("Fragments", package = "PSMatch")
 ##'
+##' @param z `numeric()` vector of length equal to `length(x)` or `NULL`. Each
+##'     element specifies the charge state (or maximum charge state if
+##'     `allCharges = TRUE`) for the corresponding spectrum. If `NULL`
+##'     (default), uses `precursorCharge(x)` for each spectrum. Cannot be
+##'     used simultaneously with `variableModifications`.
+##'
+##' @param allCharges `logical(1L)`. If `TRUE` (default), generates fragments
+##'     for all charge states from 1 up to the value specified (either from
+##'     `z` or `precursorCharge(x)`). If `FALSE`, generates fragments only
+##'     for the specified charge state.
+##'
 ##' @param ... additional parameters to be passed to the `labelFragments()`
 ##'     and `calculateFragments()` functions.
 ##'
@@ -89,7 +100,7 @@
 ##'
 ##' @importFrom grDevices n2mfrow
 ##'
-##' @importFrom Spectra spectraVariables
+##' @importFrom Spectra spectraVariables precursorCharge
 ##'
 ##' @author Johannes Rainer, Sebastian Gibb, Guillaume Deflandre, Laurent Gatto
 ##'
@@ -158,6 +169,17 @@
 ##'
 ##' ## Color the peaks with different colors
 ##' plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
+##'
+##' ## Use only singly-charged fragments (allCharges = FALSE)
+##' plotSpectraPTM(sp, allCharges = FALSE)
+##'
+##' ## Specify custom charge states for multiple spectra
+##' sp2 <- c(sp, sp)
+##' sp2$precursorCharge <- c(2L, 3L)
+##' plotSpectraPTM(sp2, z = c(2, 3))
+##'
+##' ## Use only the specified charge (no range)
+##' plotSpectraPTM(sp2, z = c(1, 2), allCharges = FALSE)
 plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                            xlab = "m/z", ylab = "intensity [%]",
                            xlim = numeric(), ylim = numeric(),
@@ -172,9 +194,25 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
                            fixedModifications = NULL,
                            variableModifications = NULL,
                            addCarbamidomethyl = TRUE,
+                           z = NULL,
+                           allCharges = TRUE,
                            ...) {
     if (!("sequence" %in% Spectra::spectraVariables(x))) {
         stop("Missing 'sequence' in Spectra::spectraVariables(x)")
+    }
+
+    ## Validate that z and variableModifications are not both provided
+    if (!is.null(z) && !is.null(variableModifications)) {
+        stop("Cannot use both 'z' and 'variableModifications' ",
+             "parameters simultaneously. Please set one to NULL.")
+    }
+
+    ## Validate z parameter
+    if (!is.null(z)) {
+        if (!is.numeric(z) || length(z) != length(x)) {
+            stop("'z' must be NULL or a numeric vector of length ",
+                 "equal to length(x)")
+        }
     }
 
     ## Apply fixed modifications to all sequences if provided
@@ -183,7 +221,8 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
             fixedModifications = fixedModifications)
     }
 
-    ## Apply variable modifications, expanding spectra for each combination.
+    ## Apply variable modifications, expanding spectra for each
+    ## combination.
     if (!is.null(variableModifications)) {
         seqsIn <- x$sequence
         parts <- lapply(seq_along(x), function(i) {
@@ -206,11 +245,13 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     if (length(main) != nsp) main <- rep(main[1], nsp)
 
     labels <- labelFragments(x, ppm = ppm, what = "ion",
-        addCarbamidomethyl = addCarbamidomethyl, ...)
+        addCarbamidomethyl = addCarbamidomethyl, z = z,
+        allCharges = allCharges, ...)
 
     if (deltaMz) { ## Generate deltaMzData labels for .plot_single_spectrum_PTM
         deltaMzData <- labelFragments(x, ppm = ppm, what = "mz",
-            addCarbamidomethyl = addCarbamidomethyl, ...)
+            addCarbamidomethyl = addCarbamidomethyl, z = z,
+            allCharges = allCharges, ...)
         layout_matrix <- .make_layout_matrix(length(labels))
         layout(layout_matrix,
                heights = rep(c(5, 1), length.out = nrow(layout_matrix)))
@@ -353,7 +394,7 @@ plotSpectraPTM <- function(x, deltaMz = TRUE, ppm = 20,
     .(basename(spectraData(x)[["dataOrigin"]])) *
     "/scan: " * .(spectraData(x)[["scanIndex"]]) *
     "/rt: " * .(round(spectraData(x)[["rtime"]], 2L)) *
-    "/charge: " * .(spectraData(x)[["charge"]]) *
+    "/charge: " * .(spectraData(x)[["precursorCharge"]]) *
     "/peptide: " * bold(.(peptide_sequence))
     )
 

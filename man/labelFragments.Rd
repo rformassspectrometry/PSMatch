@@ -4,7 +4,15 @@
 \alias{labelFragments}
 \title{labels MS2 Fragments}
 \usage{
-labelFragments(x, tolerance = 0, ppm = 20, what = c("ion", "mz"), ...)
+labelFragments(
+  x,
+  tolerance = 0,
+  ppm = 20,
+  what = c("ion", "mz"),
+  z = NULL,
+  allCharges = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{An instance of class \code{Spectra} of length 1, containing a
@@ -12,16 +20,26 @@ spectra variable \code{"sequence"} with a \code{character(1)}
 representing a valid peptide sequence.}
 
 \item{tolerance}{absolute acceptable difference of m/z values for peaks to
-be considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::closest()}} for more details).}
+be considered matching (see \code{\link[MsCoreUtils:closest]{MsCoreUtils::closest()}} for more details).}
 
 \item{ppm}{m/z relative acceptable difference (in ppm) for peaks to be
-considered matching (see \code{\link[MsCoreUtils:matching]{MsCoreUtils::closest()}} for more details).}
+considered matching (see \code{\link[MsCoreUtils:closest]{MsCoreUtils::closest()}} for more details).}
 
 \item{what}{\code{character(1)}, one of \code{"ion"} (default) or \code{"mz"}, defining
 whether labels should be fragment ions, , or their m/z values. If the
 latter, then the m/z values are named with the ion labels.}
 
-\item{...}{additional parameters (except \code{verbose}) passed to
+\item{z}{\code{numeric()} vector of length equal to \code{length(x)} or \code{NULL}. Each
+element specifies the charge state (or maximum charge state if
+\code{allCharges = TRUE}) for the corresponding spectrum. If \code{NULL}
+(default), uses \code{precursorCharge(x)} for each spectrum.}
+
+\item{allCharges}{\code{logical(1L)}. If \code{TRUE} (default), generates fragments
+for all charge states from 1 up to the value specified (either from
+\code{z} or \code{precursorCharge(x)}). If \code{FALSE}, generates fragments only
+for the specified charge state.}
+
+\item{...}{additional parameters (except \code{verbose} and \code{z}) passed to
 \code{\link[=calculateFragments]{calculateFragments()}} to calculate fragment m/z values to be
 added to the spectra in \code{x}.}
 }
@@ -86,6 +104,14 @@ plotSpectra(sp, labels = labelFragments, labelPos = 3)
 
 ## By default used in `plotSpectraPTM()`.
 plotSpectraPTM(sp)
+
+## Use custom charge states
+sp2 <- c(sp, sp)
+sp2$precursorCharge <- c(2L, 3L)
+labelFragments(sp2, z = c(2, 3))
+
+## Use only the specified charge (no range)
+labelFragments(sp2, z = c(1, 2), allCharges = FALSE)
 }
 \author{
 Johannes Rainer, Guillaume Deflandre, Sebastian Gibb, Laurent Gatto

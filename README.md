@@ -1,5 +1,7 @@
 # Handling peptide-spectrum matches
 
+<img src="stickers/PSMatch.png" align="right" height="139" alt="" />
+
 `PSMatch` is a simple package to load, process and analyse PSMs
 (Peptide-Spectrum Matches). The following references are a good way to
 get started with the package:
@@ -28,6 +30,7 @@ To install the package from Bioconductor, make sure you have the
 ```r
 BiocManager::install("PSMatch")
 ```
+
 ## Contributions
 
 Contributions are welcome, and should ideally be provided through a Github pull
@@ -43,3 +46,11 @@ Code in this package is partly composed of functions ported from
 make them more general and (2) integrate them with the [*R for Mass
 Spectrometry*](https://github.com/rformassspectrometry)
 infrastructure.
+
+## License
+
+The `PSMatch` code is provided under a
+[Artistic-2.0](https://opensource.org/license/Artistic-2.0) licence.
+The documentation, including the manual pages and the vignettes, are
+distributed under a [CC BY-SA
+license](https://creativecommons.org/licenses/by-sa/2.0/).

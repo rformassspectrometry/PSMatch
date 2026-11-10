@@ -73,3 +73,44 @@ test_that("labelFragments() works with what = 'mz'", {
     ans_ions <- labelFragments(sp, what = "ion")
     expect_identical(frags[o,"ion"], ans_ions[[1]])
 })
+
+test_that("labelFragments() works with custom z values", {
+    seq <- c("PQR", "ACE")
+    ## Create fragments with different charge states
+    frags_pqr <- calculateFragments(seq[1], z = 1:2,
+                                     addCarbamidomethyl = FALSE)
+    frags_ace <- calculateFragments(seq[2], z = 1,
+                                     addCarbamidomethyl = FALSE)
+    ## Order fragments by mz
+    o_pqr <- order(frags_pqr$mz)
+    o_ace <- order(frags_ace$mz)
+    ## Create spectra
+    sp <- DataFrame(msLevel = c(2L, 2L), rtime = c(2345, 2346),
+                    sequence = seq, precursorCharge = c(2L, 1L))
+    sp$mz <- list(frags_pqr$mz[o_pqr][1:10],
+                  frags_ace$mz[o_ace][1:5])
+    sp$intensity <- list(rep(1, 10), rep(1, 5))
+    sp <- Spectra(sp)
+    ## Test with custom z values (numeric vector)
+    ans <- labelFragments(sp, z = c(2, 1), allCharges = TRUE,
+                          addCarbamidomethyl = FALSE)
+    expect_equal(length(ans), 2)
+    expect_equal(names(ans), seq)
+})
+
+test_that("labelFragments() works with allCharges = FALSE", {
+    seq <- "PQR"
+    ## Create fragments with charge 1 only
+    frags <- calculateFragments(seq, z = 1,
+                                addCarbamidomethyl = FALSE)
+    o <- order(frags$mz)
+    sp <- DataFrame(msLevel = 2L, rtime = 2345, sequence = seq,
+                    precursorCharge = 2L)
+    sp$mz <- list(frags$mz[o])
+    sp$intensity <- list(rep(1, length(o)))
+    sp <- Spectra(sp)
+    ## Test with allCharges = FALSE (only charge 1)
+    ans <- labelFragments(sp, z = c(1), allCharges = FALSE,
+                          addCarbamidomethyl = FALSE)
+    expect_equal(length(ans), 1)
+})

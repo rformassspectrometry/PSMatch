@@ -300,6 +300,11 @@ nrow(unique(id1_filtered))
 nrow(unique(id2_filtered))
 ```
 
+# License
+
+This vignette is distributed under a [CC BY-SA
+license](https://creativecommons.org/licenses/by-sa/2.0/).
+
 # Session information
 
 ```{r si}

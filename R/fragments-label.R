@@ -19,7 +19,17 @@
 ##'     whether labels should be fragment ions, , or their m/z values. If the
 ##'     latter, then the m/z values are named with the ion labels.
 ##'
-##' @param ... additional parameters (except `verbose`) passed to
+##' @param z `numeric()` vector of length equal to `length(x)` or `NULL`. Each
+##'     element specifies the charge state (or maximum charge state if
+##'     `allCharges = TRUE`) for the corresponding spectrum. If `NULL`
+##'     (default), uses `precursorCharge(x)` for each spectrum.
+##'
+##' @param allCharges `logical(1L)`. If `TRUE` (default), generates fragments
+##'     for all charge states from 1 up to the value specified (either from
+##'     `z` or `precursorCharge(x)`). If `FALSE`, generates fragments only
+##'     for the specified charge state.
+##'
+##' @param ... additional parameters (except `verbose` and `z`) passed to
 ##'     [calculateFragments()] to calculate fragment m/z values to be
 ##'     added to the spectra in `x`.
 ##'
@@ -86,20 +96,60 @@
 ##'
 ##' ## By default used in `plotSpectraPTM()`.
 ##' plotSpectraPTM(sp)
+##'
+##' ## Use custom charge states
+##' sp2 <- c(sp, sp)
+##' sp2$precursorCharge <- c(2L, 3L)
+##' labelFragments(sp2, z = c(2, 3))
+##'
+##' ## Use only the specified charge (no range)
+##' labelFragments(sp2, z = c(1, 2), allCharges = FALSE)
 labelFragments <- function(x, tolerance = 0, ppm = 20,
-                           what = c("ion", "mz"), ...) {
+                           what = c("ion", "mz"), z = NULL,
+                           allCharges = TRUE, ...) {
     stopifnot(requireNamespace("Spectra"))
     stopifnot(inherits(x, "Spectra"))
     what <- match.arg(what)
+
+    ## Validate z parameter
+    if (!is.null(z)) {
+        if (!is.numeric(z) || length(z) != length(x)) {
+            stop("'z' must be NULL or a numeric vector of length ",
+                 "equal to length(x)")
+        }
+    }
+
+    ## Create z_list for each spectrum
+    z_list <- lapply(seq_along(x), function(i) {
+        if (!is.null(z)) {
+            z_val <- z[i]
+        } else {
+            pc <- x$precursorCharge[i]
+            z_val <- if (!is.na(pc) & pc != 0) pc else 1L
+        }
+        if (allCharges) {
+            seq_len(z_val)
+        } else {
+            z_val
+        }
+    })
+
     super_labels <- vector("list", length = length(x))
     k <- integer()
     v <- peaksData(x)
+    dots <- list(...)
 
     for (j in seq_along(x)) {
         stopifnot("sequence" %in% Spectra::spectraVariables(x[j]))
         y <- Spectra::spectraData(x[j])[["sequence"]]
         x_data <- v[[j]]
-        y_data <- calculateFragments(y, verbose = FALSE, ...)
+
+        ## Prepare arguments for calculateFragments
+        calc_args <- dots
+        calc_args$z <- z_list[[j]]
+        calc_args$sequence <- y
+        calc_args$verbose <- FALSE
+        y_data <- do.call(calculateFragments, calc_args)
 
         y_data <- split(y_data, y_data$peptide)
 

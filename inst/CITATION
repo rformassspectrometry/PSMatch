@@ -1,15 +1,22 @@
 citHeader("To cite the PSMatch package in publications use:")
 
-citEntry(entry = "Manual",
-         title  = "PSMatch: an R/Bioconductor package to explore proteomics identification data.",
-         author = personList(
-           person(given = "Guillaume", family = "Deflandre"),
-           person(given = "Sebastian", family = "Gibbs"),
-           person(given = "Laurent", family = "Gatto")),
-         institution = "OSF",
-         year = "2025",
-         doi = "https://doi.org/10.31219/osf.io/62v9p_v2",
-         textVersion = paste("G. Deflandre, S. Gibbs and L. Gatto.",
-                             "PSMatch: an R/Bioconductor package to explore proteomics identification data.",
-                             "OSF; doi: https://doi.org/10.31219/osf.io/62v9p_v3")
-         )
+citEntry(
+    entry = "Article",
+    title = "PSMatch: an R/Bioconductor package to explore proteomics identification data.",
+    author = personList(
+        person(given = "Guillaume", family = "Deflandre"),
+        person(given = "Sebastian", family = "Gibb"),
+        person(given = "Laurent", family = "Gatto")
+    ),
+    journal = "Methods in Molecular Biology",
+    year = "2027",
+    doi = "10.1007/978-1-0716-5519-1_5",
+    textVersion = paste0(
+        "Deflandre, G., Gibb, S., Gatto, L. (2027). ",
+        "PSMatch: An R/Bioconductor Package to Explore",
+        " Proteomics Identification Data. In: Lisacek, F. ",
+        "(eds) Bioinformatics for Mass Spectrometry. Methods ",
+        "in Molecular Biology, vol 3071. Humana, New York, NY. ",
+        "https://doi.org/10.1007/978-1-0716-5519-1_5"
+    )
+)
