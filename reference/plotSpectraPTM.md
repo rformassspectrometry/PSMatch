@@ -256,6 +256,7 @@ plotSpectraPTM(sp_mod)
 ## Or call them within the function directly:
 plotSpectraPTM(sp, fixedModifications = NULL,
 variableModifications = c(R = "Methyl"))
+#> Warning: Dropping rownames: duplicated rownames present or rownames not available for all data.frames
 
 
 ## Annotate multiple spectra at a time
