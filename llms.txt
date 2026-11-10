@@ -1,0 +1,133 @@
+# Handling peptide-spectrum matches
+
+![](stickers/PSMatch.png)
+
+`PSMatch` is a simple package to load, process and analyse PSMs
+(Peptide-Spectrum Matches). The following references are a good way to
+get started with the package:
+
+- The [package manual
+  package](https://rformassspectrometry.github.io/PSMatch/reference/PSMatch.html)
+  for a general overview of the main concepts tackled by the `PSMatch`
+  package.
+- The [Working with PSM
+  data](https://rformassspectrometry.github.io/PSMatch/articles/PSM.html)
+  vignette to learn about the `PSM` to read and filter peptide-spectrum
+  matches.
+- The [Understanding protein groups with adjacency
+  matrices](https://rformassspectrometry.github.io/PSMatch/articles/AdjacencyMatrix.html)
+  vignette to learn about adjaceny matrices and connected components to
+  explore and manage protein groups.
+- The [MS2 fragment
+  ions](https://rformassspectrometry.github.io/PSMatch/articles/Fragments.html)
+  vignette to calculate and visualise MS2 fragment ions.
+
+## Installation instructions
+
+To install the package from Bioconductor, make sure you have the
+`BiocManager` package, available from CRAN, and then run
+
+\
+`BiocManager``::`[`install`](https://bioconductor.github.io/BiocManager/reference/install.html)`(``"PSMatch"``)`
+
+## Contributions
+
+Contributions are welcome, and should ideally be provided through a
+Github pull request. Feel free to discuss any more non-trivial
+suggestions or changes first in an issue. See also the main [R for Mass
+Spectrometry contribution
+guide](https://rformassspectrometry.github.io/RforMassSpectrometry/articles/RforMassSpectrometry.html#contributions)
+and [code of
+conduct](https://rformassspectrometry.github.io/RforMassSpectrometry/articles/RforMassSpectrometry.html#code-of-conduct)
+
+## Credit
+
+Code in this package is partly composed of functions ported from
+[`MSnbase`](http://lgatto.github.io/MSnbase/) with the goal to (1) make
+them more general and (2) integrate them with the [*R for Mass
+Spectrometry*](https://github.com/rformassspectrometry) infrastructure.
+
+## License
+
+The `PSMatch` code is provided under a
+[Artistic-2.0](https://opensource.org/license/Artistic-2.0) licence. The
+documentation, including the manual pages and the vignettes, are
+distributed under a [CC BY-SA
+license](https://creativecommons.org/licenses/by-sa/2.0/).
+
+# Package index
+
+## All functions
+
+- [`ConnectedComponents()`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  [`ccMatrix()`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  [`connectedComponents()`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  [`length(`*`<ConnectedComponents>`*`)`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  [`dims(`*`<ConnectedComponents>`*`)`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  [`ncols(`*`<ConnectedComponents>`*`)`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  [`nrows(`*`<ConnectedComponents>`*`)`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  [`` `[`( ``*`<ConnectedComponents>`*`,`*`<integer>`*`,`*`<ANY>`*`,`*`<ANY>`*`)`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  [`` `[`( ``*`<ConnectedComponents>`*`,`*`<logical>`*`,`*`<ANY>`*`,`*`<ANY>`*`)`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  [`` `[`( ``*`<ConnectedComponents>`*`,`*`<numeric>`*`,`*`<ANY>`*`,`*`<ANY>`*`)`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  [`prioritiseConnectedComponents()`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  [`prioritizeConnectedComponents()`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  [`adjacencyMatrix(`*`<ConnectedComponents>`*`)`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)
+  : Connected components
+- [`PSM()`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)
+  [`reduced()`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)
+  [`` `reduced<-`() ``](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)
+  [`psmVariables()`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)
+  [`reducePSMs()`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)
+  [`adjacencyMatrix(`*`<PSM>`*`)`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)
+  : A class for peptide-spectrum matches
+- [`PSMatch-package`](https://rformassspectrometry.github.io/PSMatch/reference/PSMatch.md)
+  [`PSMatch`](https://rformassspectrometry.github.io/PSMatch/reference/PSMatch.md)
+  : PSMatch: Handling and Managing Peptide Spectrum Matches
+- [`makeAdjacencyMatrix()`](https://rformassspectrometry.github.io/PSMatch/reference/adjacencyMatrix.md)
+  [`makePeptideProteinVector()`](https://rformassspectrometry.github.io/PSMatch/reference/adjacencyMatrix.md)
+  [`plotAdjacencyMatrix()`](https://rformassspectrometry.github.io/PSMatch/reference/adjacencyMatrix.md)
+  : Convert to/from an adjacency matrix.
+- [`calculateFragments(`*`<character>`*`,`*`<missing>`*`)`](https://rformassspectrometry.github.io/PSMatch/reference/calculateFragments.md)
+  : Calculate ions produced by fragmentation with variable modifications
+- [`describeProteins()`](https://rformassspectrometry.github.io/PSMatch/reference/describeProteins.md)
+  [`describePeptides()`](https://rformassspectrometry.github.io/PSMatch/reference/describeProteins.md)
+  : Describe protein and peptide compositions
+- [`filterPSMs()`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)
+  [`filterPsmDecoy()`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)
+  [`filterPsmRank()`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)
+  [`filterPsmShared()`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)
+  [`filterPsmFdr()`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)
+  : Filter out unreliable PSMs.
+- [`getAminoAcids()`](https://rformassspectrometry.github.io/PSMatch/reference/getAminoAcids.md)
+  : Amino acids
+- [`getAtomicMass()`](https://rformassspectrometry.github.io/PSMatch/reference/getAtomicMass.md)
+  : Atomic mass.
+- [`labelFragments()`](https://rformassspectrometry.github.io/PSMatch/reference/labelFragments.md)
+  : labels MS2 Fragments
+- [`plotSpectraPTM()`](https://rformassspectrometry.github.io/PSMatch/reference/plotSpectraPTM.md)
+  : Function to plot MS/MS spectra with PTMs
+- [`psmBoekweg`](https://rformassspectrometry.github.io/PSMatch/reference/psmBoekweg.md)
+  : Example peptide-spectrum match data
+- [`spBoekweg`](https://rformassspectrometry.github.io/PSMatch/reference/spBoekweg.md)
+  : Example mass spectrometry data
+- [`validatePSM()`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)
+  [`checkABpresence()`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)
+  [`checkXYpresence()`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)
+  [`checkOverlap()`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)
+  [`checkShiftConsistency()`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)
+  [`checkParentIonIntensity()`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)
+  [`checkPrecursorPurity()`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)
+  : Validate a PSM
+
+# Articles
+
+### All vignettes
+
+- [Understanding protein groups with adjacency
+  matrices](https://rformassspectrometry.github.io/PSMatch/articles/AdjacencyMatrix.md):
+- [MS2 fragment
+  ions](https://rformassspectrometry.github.io/PSMatch/articles/Fragments.md):
+- [Working with PSM
+  data](https://rformassspectrometry.github.io/PSMatch/articles/PSM.md):
+- [Validate PSMs based on spectral and identification
+  features](https://rformassspectrometry.github.io/PSMatch/articles/validatePSM.md):
