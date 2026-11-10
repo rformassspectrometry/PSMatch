@@ -1,5 +1,5 @@
 ## This file explains how the spBoekweg and psmBoekweg data are created.
-## In reality, it is a subset of the bulk Boekweg files from the `MsDataHub`
+## In reality, it is a subset of the bulk Boekweg files from the MsDataHub
 ## package. See ?Boekweg2022 for more details.
 
 library(PSMatch)
@@ -24,22 +24,22 @@ psms <- sagePSM(p)
 format(object.size(psms), units = "Mb") ## 44.7 Mb is too much
 
 set.seed(42)
-psmSubset <- sort(sample(NROW(psms), 10000))
+psmSubset <- sort(sample(NROW(psms), 700))
 psms <- psms[psmSubset, ]
 
-format(object.size(psms), units = "Mb") ## 4.8 Mb is better
+format(object.size(psms), units = "Mb") ## 0.4 Mb is better
 
 psmBoekweg <- psms
 
 save(psmBoekweg, file = "./data/psmBoekweg.rda", compress = "xz")
 
-psms <- filterPsmRank(psms)
+psms <- filterPsmRank(psms) ## make sure no rank > 1
 
-head(psms$pkey <- paste0(basename(psms$filename), sub("^.+scan=", "::", psms$scannr)))
-head(sp$pkey <- paste0(basename(sp$dataOrigin), sub("^.+scan=", "::", sp$spectrumId)))
+head(psms$pkey <- sub("^.+scan=", "", psms$scannr))
+head(sp$pkey <- sp$scanIndex)
 
 spJoined <- joinSpectraData(sp, psms, by.x = "pkey")
-format(object.size(spJoined), units = "Mb") ## 101.2 Mb: too big, take only a sample
+format(object.size(spJoined), units = "Mb") ## 87.6 Mb: too big, take only a sample
 
 ms2 <- spJoined[which(spJoined$msLevel == 2 & !is.na(spJoined$peptide))]
 ms1 <- spJoined[which(spJoined$msLevel == 1)]
@@ -53,15 +53,15 @@ spJoinedSampled <- spJoined[c(sampleMs1, sampleMs2)]
 o <- order(spJoinedSampled$rtime, decreasing = FALSE)
 spJoined <- spJoinedSampled[o] ## order by retention time
 
-format(object.size(spJoined), units = "Mb") ## 1.6 Mb, much better
-
-# spMatchedErwinia <- spJoined
-# save(spMatchedErwinia, file = "../../data/spMatchedErwinia.rda")
+format(object.size(spJoined), units = "Mb") ## 0.3 Mb, much better
 
 ## only subset original Spectra object but now linked to identifications
 n <- which(sp$pkey %in% spJoined$pkey)
 spBoekweg <- sp[n]
+spBoekweg$dataOrigin <- psms$filename[1]
 
 spBoekweg$dataOrigin <- basename(spBoekweg$dataOrigin)
 spBoekweg <- setBackend(spBoekweg, MsBackendMemory())
-save(spBoekweg, file = "../../data/spBoekweg.rda", compress = "xz")
+format(object.size(spBoekweg), units = "Mb") ## When loaded in memory, much larger: 4.6Mb
+
+save(spBoekweg, file = "./data/spBoekweg.rda", compress = "xz")

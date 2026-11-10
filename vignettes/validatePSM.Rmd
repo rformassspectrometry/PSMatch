@@ -85,15 +85,16 @@ values.
 ```{r add_mods}
 seq_var <- psmVariables(psmBoekweg)[["peptide"]]
 fdr_var <- psmVariables(psmBoekweg)[["fdr"]]
-## Preview the first few modified sequences
-head(sp[[seq_var]][!is.na(sp[[seq_var]])])
 
-## Carbamidomethyl is already present, no need to use:
+## In our case, carbamidomethylation is already present
+sp[[seq_var]][!is.na(sp[[seq_var]])][30]
+
+## There is no need to apply `PTMods::addFixedModifications()`:
 ## sp[["sequence"]] <- addFixedModifications(sp[[seq_var]])
 
 ## For converting the annotation style, use `PTMods::convertAnnotation()`
 sp[["sequence"]] <- convertAnnotation(sp[[seq_var]], convertToStyle = "name")
-head(sp[["sequence"]][!is.na(sp[["sequence"]])])
+sp[["sequence"]][!is.na(sp[["sequence"]])][30]
 ```
 
 We also create a convenience subset containing only the identified MS2 PSMs
@@ -161,16 +162,16 @@ table(overlap)
 **Interpretation of a gap.** A gap indicates a region of the peptide that is
 not covered by any matched fragment. This often points to an unaccounted-for
 modification sitting in the uncovered stretch. Consider the sequence
-`sp_psms[10]$sequence`:
+`sp_psms[115]$sequence`:
 
 ```{r overlapPlot}
-sp_psms[10]$sequence
-checkOverlap(sp_psms[10])
-plotSpectraPTM(sp_psms[10])
+sp_psms[115]$sequence
+checkOverlap(sp_psms[115])
+plotSpectraPTM(sp_psms[115])
 ```
 If the identified sequence does not contain a modification yet
 `checkOverlap()` returns `FALSE`, applying a modification on one of the
-residues in the identified gap could restore fragment coverage.
+residues in the identified gap _could_ restore fragment coverage.
 
 Conversely, if there are no matched fragments that include the modified
 fragments in the sequence, there is no guarantee that there might have been a
@@ -203,15 +204,16 @@ table(is.na(shifts))
 summary(shifts[!is.na(shifts)])
 ```
 
-Observe that very few fragments including a supposedly identified modification
-are matched. The highest value being 0.5833 for sequence `r sp_psms$sequence[3]`
-. Out of 12 potential sites including the identified modification, 7 have
+Observe that very few fragments (including a supposedly identified modification)
+are matched. The highest value being `r max(shifts)` for sequence 
+`r sp_psms$sequence[which.max(shifts)]`
+. Out of 7 potential sites including the identified modification, 4 have
 been matched:
 
 ```{r ex-checkShift}
-sp_psms[3]$sequence
-checkShiftConsistency(sp_psms[3])
-plotSpectraPTM(sp_psms[3])
+sp_psms[40]$sequence
+checkShiftConsistency(sp_psms[40])
+plotSpectraPTM(sp_psms[40])
 ```
 
 ## `checkParentIonIntensity()` : residual precursor in the MS2 spectrum {-}
@@ -258,9 +260,9 @@ The function operates on a `Spectra` object that contains **both MS1 and
 MS2 spectra** alongside the identification data.
 
 ```{r validatePSM}
-validatePSM(sp[1:400],
-    peptideVariable = seq_var,
-    fdr = fdr_var
+(res <- validatePSM(sp[1:40],
+                    peptideVariable = seq_var,
+                    fdr = fdr_var)
 )
 ```
 

@@ -46,54 +46,70 @@ import(PTMods)
 import(S4Vectors)
 importClassesFrom(S4Vectors,DFrame)
 importClassesFrom(S4Vectors,DataFrame)
-importFrom(BiocGenerics,dims)
-importFrom(BiocGenerics,fileName)
-importFrom(BiocGenerics,ncols)
-importFrom(BiocGenerics,nrows)
-importFrom(Matrix,Matrix)
-importFrom(Matrix,colSums)
-importFrom(Matrix,rowSums)
-importFrom(Matrix,sparseMatrix)
-importFrom(Matrix,t)
-importFrom(Matrix,tcrossprod)
+importFrom(BiocGenerics,
+  dims,
+  fileName,
+  ncols,
+  nrows
+)
+importFrom(Matrix,
+  Matrix,
+  colSums,
+  rowSums,
+  sparseMatrix,
+  t,
+  tcrossprod
+)
 importFrom(MsCoreUtils,closest)
-importFrom(ProtGenerics,adjacencyMatrix)
-importFrom(ProtGenerics,calculateFragments)
+importFrom(ProtGenerics,
+  adjacencyMatrix,
+  calculateFragments
+)
 importFrom(QFeatures,reduceDataFrame)
-importFrom(Spectra,peaksData)
-importFrom(Spectra,precursorCharge)
-importFrom(Spectra,precursorPurity)
-importFrom(Spectra,spectraData)
-importFrom(Spectra,spectraVariables)
-importFrom(grDevices,n2mfrow)
-importFrom(grDevices,xy.coords)
-importFrom(graphics,abline)
-importFrom(graphics,axis)
-importFrom(graphics,layout)
-importFrom(graphics,mtext)
-importFrom(graphics,par)
-importFrom(graphics,plot.new)
-importFrom(graphics,plot.window)
-importFrom(graphics,plot.xy)
-importFrom(graphics,points)
-importFrom(graphics,segments)
-importFrom(graphics,strheight)
-importFrom(graphics,strwidth)
-importFrom(graphics,text)
-importFrom(graphics,title)
-importFrom(igraph,"V<-")
-importFrom(igraph,V)
-importFrom(igraph,cluster_louvain)
-importFrom(igraph,components)
-importFrom(igraph,graph_from_adjacency_matrix)
-importFrom(igraph,graph_from_biadjacency_matrix)
-importFrom(igraph,groups)
-importFrom(igraph,layout_nicely)
-importFrom(igraph,modularity)
-importFrom(igraph,plot.igraph)
-importFrom(igraph,set_vertex_attr)
-importFrom(methods,as)
-importFrom(methods,is)
-importFrom(methods,new)
+importFrom(Spectra,
+  peaksData,
+  precursorCharge,
+  precursorPurity,
+  spectraData,
+  spectraVariables
+)
+importFrom(grDevices,
+  n2mfrow,
+  xy.coords
+)
+importFrom(graphics,
+  abline,
+  axis,
+  layout,
+  mtext,
+  par,
+  plot.new,
+  plot.window,
+  plot.xy,
+  points,
+  segments,
+  strheight,
+  strwidth,
+  text,
+  title
+)
+importFrom(igraph,
+  "V<-",
+  V,
+  cluster_louvain,
+  components,
+  graph_from_adjacency_matrix,
+  graph_from_biadjacency_matrix,
+  groups,
+  layout_nicely,
+  modularity,
+  plot.igraph,
+  set_vertex_attr
+)
+importFrom(methods,
+  as,
+  is,
+  new
+)
 importFrom(stats,setNames)
 importFrom(utils,adist)

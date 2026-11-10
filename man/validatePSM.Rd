@@ -129,6 +129,8 @@ sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
 
 ## Add carbamidomethylation or other modifications if need be
 ## See ?PTMods::addFixedModifications
+
+## Define the peptideVariable and fdr column names
 (seq <- psmVariables(psmBoekweg)[["peptide"]])
 (fdr <- psmVariables(psmBoekweg)[["fdr"]])
 
