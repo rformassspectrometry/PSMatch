@@ -8,8 +8,8 @@
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-10 16:43:29.989201\
-**Compiled**: Tue Nov 10 16:56:00 2026
+**Last modified:** 2026-11-10 22:55:30.100967\
+**Compiled**: Tue Nov 10 23:06:55 2026
 
 ## Installation instructions
 
@@ -48,7 +48,7 @@ class `PSM`. This class is a simple extension of the `DFrame` class,
 representing the peptide-spectrum matches in a tabular format.
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(`[`"PSMatch"`](https://github.com/RforMassSpectrometry/PSM)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`"PSMatch"`](https://github.com/RforMassSpectrometry/PSMatch)`)`\
 `id`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``)`
 
     ## Loading required namespace: mzR
@@ -289,19 +289,19 @@ namely `"mzR"` (the default value) and `"mzID"`.
 [`system.time`](https://rdrr.io/r/base/system.time.html)`(``id1`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``, parser ``=`` ``"mzR"``)``)`
 
     ##    user  system elapsed 
-    ##   0.183   0.008   0.191
+    ##   0.168   0.006   0.173
 
 \
 [`system.time`](https://rdrr.io/r/base/system.time.html)`(``id2`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``, parser ``=`` ``"mzID"``)``)`
 
     ## Loading required namespace: mzID
 
-    ## reading 3e86413d7b_7857...
+    ## reading 42322e074c0_7857...
 
     ##  DONE!
 
     ##    user  system elapsed 
-    ##   5.870   0.077   5.963
+    ##   5.796   0.084   5.880
 
 Other differences in the two parsers include the columns that are
 returned, the way they name them, and, as will shown below the matches
@@ -540,7 +540,7 @@ license](https://creativecommons.org/licenses/by-sa/2.0/).
     ##  [57] tibble_3.3.1                plyr_1.8.9                 
     ##  [59] withr_3.0.3                 Biobase_2.73.2             
     ##  [61] KEGGREST_1.53.6             evaluate_1.0.5             
-    ##  [63] desc_1.4.3                  Spectra_1.23.6             
+    ##  [63] desc_1.4.3                  Spectra_1.23.7             
     ##  [65] BiocFileCache_3.3.2         ExperimentHub_3.3.2        
     ##  [67] Biostrings_2.81.9           pillar_1.11.1              
     ##  [69] BiocManager_1.30.27         filelock_1.0.3             

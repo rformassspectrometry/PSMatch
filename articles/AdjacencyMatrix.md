@@ -8,8 +8,8 @@
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-10 16:43:29.988387\
-**Compiled**: Tue Nov 10 16:55:01 2026
+**Last modified:** 2026-11-10 22:55:30.100027\
+**Compiled**: Tue Nov 10 23:05:59 2026
 
 ## Introduction
 
@@ -28,7 +28,7 @@ data*](https://rformassspectrometry.github.io/PSMatch/articles/PSM.html)
 vignette.
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(`[`"PSMatch"`](https://github.com/RforMassSpectrometry/PSM)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`"PSMatch"`](https://github.com/RforMassSpectrometry/PSMatch)`)`\
 `id`` ``<-`` ``MsDataHub``::`[`TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid`](https://rformassspectrometry.github.io/MsDataHub/reference/PXD000001.html)`(``)`` ``|>`\
 `    `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``)`` ``|>`\
 `    `[`filterPsmDecoy`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)`(``)`` ``|>`\
@@ -520,7 +520,7 @@ license](https://creativecommons.org/licenses/by-sa/2.0/).
     ##  [52] curl_8.1.0              lattice_0.23-1          tibble_3.3.1           
     ##  [55] plyr_1.8.9              S7_0.2.2                withr_3.0.3            
     ##  [58] KEGGREST_1.53.6         evaluate_1.0.5          desc_1.4.3             
-    ##  [61] Spectra_1.23.6          BiocFileCache_3.3.2     ExperimentHub_3.3.2    
+    ##  [61] Spectra_1.23.7          BiocFileCache_3.3.2     ExperimentHub_3.3.2    
     ##  [64] Biostrings_2.81.9       ggpubr_1.0.0            pillar_1.11.1          
     ##  [67] BiocManager_1.30.27     filelock_1.0.3          carData_3.0-6          
     ##  [70] ncdf4_1.24              BiocVersion_3.24.0      scales_1.4.0           

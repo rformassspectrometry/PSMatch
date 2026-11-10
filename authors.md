@@ -19,7 +19,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/RforMassSpectrometry/PSM/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/RforMassSpectrometry/PSMatch/blob/main/inst/CITATION)
 
 Deflandre, G., Gibb, S., Gatto, L. (2027). PSMatch: An R/Bioconductor
 Package to Explore Proteomics Identification Data. In: Lisacek, F. (eds)

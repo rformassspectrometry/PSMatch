@@ -1,7 +1,5 @@
 # Handling peptide-spectrum matches
 
-![](stickers/PSMatch.png)
-
 `PSMatch` is a simple package to load, process and analyse PSMs
 (Peptide-Spectrum Matches). The following references are a good way to
 get started with the package:

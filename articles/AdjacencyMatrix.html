@@ -50,7 +50,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/RforMassSpectrometry/PSM/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/RforMassSpectrometry/PSMatch/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -63,11 +63,10 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Understanding protein groups with adjacency matrices</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Understanding protein groups with adjacency matrices</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/main/vignettes/AdjacencyMatrix.Rmd" class="external-link"><code>vignettes/AdjacencyMatrix.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSMatch/blob/main/vignettes/AdjacencyMatrix.Rmd" class="external-link"><code>vignettes/AdjacencyMatrix.Rmd</code></a></small>
       <div class="d-none name"><code>AdjacencyMatrix.Rmd</code></div>
     </div>
 
@@ -87,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.24/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-10 16:43:29.988387<br><strong>Compiled</strong>: Tue Nov 10 16:55:01 2026</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-10 22:55:30.100027<br><strong>Compiled</strong>: Tue Nov 10 23:05:59 2026</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -103,7 +102,7 @@ manual page (<code><a href="../reference/PSMatch.html">?PSMatch</a></code>) and 
 <p>Let’s start by loading and filter PSM data as illustrated in the <a href="https://rformassspectrometry.github.io/PSMatch/articles/PSM.html"><em>Working
 with PSM data</em></a> vignette.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/RforMassSpectrometry/PSM" class="external-link">"PSMatch"</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/RforMassSpectrometry/PSMatch" class="external-link">"PSMatch"</a></span><span class="op">)</span></span>
 <span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu">MsDataHub</span><span class="fu">::</span><span class="fu"><a href="https://rformassspectrometry.github.io/MsDataHub/reference/PXD000001.html" class="external-link">TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="../reference/filterPSMs.html">filterPsmDecoy</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -519,7 +518,7 @@ license</a>.</p>
 <span><span class="co">##  [52] curl_8.1.0              lattice_0.23-1          tibble_3.3.1           </span></span>
 <span><span class="co">##  [55] plyr_1.8.9              S7_0.2.2                withr_3.0.3            </span></span>
 <span><span class="co">##  [58] KEGGREST_1.53.6         evaluate_1.0.5          desc_1.4.3             </span></span>
-<span><span class="co">##  [61] Spectra_1.23.6          BiocFileCache_3.3.2     ExperimentHub_3.3.2    </span></span>
+<span><span class="co">##  [61] Spectra_1.23.7          BiocFileCache_3.3.2     ExperimentHub_3.3.2    </span></span>
 <span><span class="co">##  [64] Biostrings_2.81.9       ggpubr_1.0.0            pillar_1.11.1          </span></span>
 <span><span class="co">##  [67] BiocManager_1.30.27     filelock_1.0.3          carData_3.0-6          </span></span>
 <span><span class="co">##  [70] ncdf4_1.24              BiocVersion_3.24.0      scales_1.4.0           </span></span>

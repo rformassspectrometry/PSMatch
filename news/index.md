@@ -67,10 +67,10 @@
 - Add possibility to split protein groups in PSM data with
   `makeAdjacencyMatrix` (see
   [issue](https://github.com/rformassspectrometry/PSMatch/issues/30)
-  [\#30](https://github.com/RforMassSpectrometry/PSM/issues/30))
+  [\#30](https://github.com/RforMassSpectrometry/PSMatch/issues/30))
 - Removed `showDetails()` from `setMethod("show", "PSM")` as discussed
   in [issue](https://github.com/rformassspectrometry/PSMatch/issues/30)
-  [\#30](https://github.com/RforMassSpectrometry/PSM/issues/30)
+  [\#30](https://github.com/RforMassSpectrometry/PSMatch/issues/30)
 - Add `USI` parameter to `plotSpectraPTM`.
 - Correct `filterPsmFdr` output message
 - Update Fragments vignette.
@@ -78,7 +78,7 @@
   [`labelFragments()`](https://rformassspectrometry.github.io/PSMatch/reference/labelFragments.md)runtime
   (see
   [issue](https://github.com/rformassspectrometry/PSMatch/issues/25)
-  [\#25](https://github.com/RforMassSpectrometry/PSM/issues/25)).
+  [\#25](https://github.com/RforMassSpectrometry/PSMatch/issues/25)).
 - Add Selenocysteine and Pyrrolysine to
   [`getAminoAcids()`](https://rformassspectrometry.github.io/PSMatch/reference/getAminoAcids.md).
 
@@ -107,20 +107,20 @@
 - Deprecated `addFragments`. The use of `labelFragments` is endorsed
   instead. See
   [PR](https://github.com/rformassspectrometry/PSMatch/pull/20)
-  [\#20](https://github.com/RforMassSpectrometry/PSM/issues/20).
+  [\#20](https://github.com/RforMassSpectrometry/PSMatch/issues/20).
 
 ### PSMatch 1.11.2
 
 - Replace `calculateFragments` with `calculateFragments2`. See
   [PR](https://github.com/rformassspectrometry/PSMatch/pull/19)
-  [\#19](https://github.com/RforMassSpectrometry/PSM/issues/19).
+  [\#19](https://github.com/RforMassSpectrometry/PSMatch/issues/19).
 
 ### PSMatch 1.11.1
 
 - New `calculateFragments2` function includes fixed and variable
   modifications to fragments ions. See
   [PR](https://github.com/rformassspectrometry/PSMatch/pull/16)
-  [\#16](https://github.com/RforMassSpectrometry/PSM/issues/16).
+  [\#16](https://github.com/RforMassSpectrometry/PSMatch/issues/16).
 
 ### PSMatch 1.11.0
 
@@ -202,7 +202,8 @@
 
 - Fix bug in
   [`describePeptides()`](https://rformassspectrometry.github.io/PSMatch/reference/describeProteins.md)
-  (close [\#11](https://github.com/RforMassSpectrometry/PSM/issues/11)).
+  (close
+  [\#11](https://github.com/RforMassSpectrometry/PSMatch/issues/11)).
 
 ### Changes in 0.99.2
 

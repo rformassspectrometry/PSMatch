@@ -3,8 +3,8 @@
 **Package**:
 *[PSMatch](https://bioconductor.org/packages/3.24/PSMatch)*\
 **Authors**: Guillaume Deflandre\
-**Last modified:** 2026-11-10 16:43:29.989201\
-**Compiled**: Tue Nov 10 16:56:26 2026
+**Last modified:** 2026-11-10 22:55:30.100967\
+**Compiled**: Tue Nov 10 23:07:19 2026
 
 ## Introduction
 
@@ -485,7 +485,7 @@ license](https://creativecommons.org/licenses/by-sa/2.0/).
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] Spectra_1.23.6       BiocParallel_1.47.0  PSMatch_1.17.2      
+    ## [1] Spectra_1.23.7       BiocParallel_1.47.0  PSMatch_1.17.2      
     ## [4] PTMods_1.1.1         S4Vectors_0.51.10    BiocGenerics_0.59.12
     ## [7] generics_0.1.4       BiocStyle_2.41.0    
     ## 

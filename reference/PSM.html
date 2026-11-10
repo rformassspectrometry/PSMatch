@@ -43,7 +43,7 @@ Objects can be checked for their reduced state with the
 reduced() function which returns TRUE for reduced instances,
 FALSE when the spectrum identifiers are duplicated, or NA when
 unknown. The flag can also be set explicitly with the
-reduced()&amp;lt;- setter."></head><body>
+reduced()&amp;lt;- setter."><meta property="og:image" content="https://rformassspectrometry.github.io/PSMatch/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -70,7 +70,7 @@ reduced()&amp;lt;- setter."></head><body>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/RforMassSpectrometry/PSM/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/RforMassSpectrometry/PSMatch/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
 
 
@@ -78,9 +78,8 @@ reduced()&amp;lt;- setter."></head><body>
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>A class for peptide-spectrum matches</h1>
-      <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSM/blob/main/R/PSM-class.R" class="external-link"><code>R/PSM-class.R</code></a>, <a href="https://github.com/RforMassSpectrometry/PSM/blob/main/R/PSM-reduce.R" class="external-link"><code>R/PSM-reduce.R</code></a>, <a href="https://github.com/RforMassSpectrometry/PSM/blob/main/R/adjacencyMatrix-accessors.R" class="external-link"><code>R/adjacencyMatrix-accessors.R</code></a></small>
+      <img src="../logo.png" class="logo" alt=""><h1>A class for peptide-spectrum matches</h1>
+      <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/PSMatch/blob/main/R/PSM-class.R" class="external-link"><code>R/PSM-class.R</code></a>, <a href="https://github.com/RforMassSpectrometry/PSMatch/blob/main/R/PSM-reduce.R" class="external-link"><code>R/PSM-reduce.R</code></a>, <a href="https://github.com/RforMassSpectrometry/PSMatch/blob/main/R/adjacencyMatrix-accessors.R" class="external-link"><code>R/adjacencyMatrix-accessors.R</code></a></small>
       <div class="d-none name"><code>PSM.Rd</code></div>
     </div>
 
@@ -284,7 +283,7 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-in"><span><span class="co">## mzID parser</span></span></span>
 <span class="r-in"><span><span class="va">psm_mzid</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: mzID</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> reading 3e86413d7b_7857...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> reading 42322e074c0_7857...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'as.is' should be specified by the caller; using TRUE</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'as.is' should be specified by the caller; using TRUE</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'as.is' should be specified by the caller; using TRUE</span>
@@ -383,8 +382,8 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz from cache.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz from cache.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/956769735e8_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/956479feb40_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/9906c15675a_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/990445df5bc_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
 <span class="r-in"><span><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">mzids</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">psm</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 50314 rows and 31 columns.</span>
@@ -436,8 +435,8 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2         387 MNVLLLLVLC...       Q58D62|FET...       32.788864          12894</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     spectrumFile        idFile MetaMorpheus.score PSM.level.q.value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;character&gt;   &lt;character&gt;          &lt;numeric&gt;         &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... 956769735e...            31.2586                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... 956769735e...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... 9906c15675...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... 9906c15675...            31.2586                 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   modPeptideRef       modName   modMass modLocation subOriginalResidue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;   &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          P_19 Carbamidom...   57.0215           6                 NA</span>

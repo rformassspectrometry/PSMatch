@@ -73,9 +73,10 @@ list and open them directly in `R` or read them online on the package's
 
 Useful links:
 
-- <https://github.com/RforMassSpectrometry/PSM>
+- <https://github.com/RforMassSpectrometry/PSMatch>
 
-- Report bugs at <https://github.com/RforMassSpectrometry/PSM/issues>
+- Report bugs at
+  <https://github.com/RforMassSpectrometry/PSMatch/issues>
 
 ## Author
 
@@ -93,11 +94,11 @@ Authors:
 - Sebastian Gibb <mail@sebastiangibb.de>
   ([ORCID](https://orcid.org/0000-0001-7406-4443))
 
+- Guillaume Deflandre <guillaume.deflandre@uclouvain.be>
+  ([ORCID](https://orcid.org/0009-0008-1257-2416))
+
 Other contributors:
 
 - Samuel Wieczorek <samuel.wieczorek@cea.fr> \[contributor\]
 
 - Thomas Burger <thomas.burger@cea.fr> \[contributor\]
-
-- Guillaume Deflandre <guillaume.deflandre@uclouvain.be>
-  ([ORCID](https://orcid.org/0009-0008-1257-2416)) \[contributor\]
