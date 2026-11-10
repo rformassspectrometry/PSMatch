@@ -1,23 +1,25 @@
 # Working with PSM data
 
 **Package**:
-*[PSMatch](https://bioconductor.org/packages/3.24/PSMatch)*\
+*[PSMatch](https://bioconductor.org/packages/3.22/PSMatch)*  
 **Authors**: Laurent Gatto \[aut, cre\] (ORCID:
 <https://orcid.org/0000-0002-1520-2268>), Johannes Rainer \[aut\]
 (ORCID: <https://orcid.org/0000-0002-6977-7147>), Sebastian Gibb \[aut\]
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
-<https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-10 22:55:30.100967\
-**Compiled**: Tue Nov 10 23:06:55 2026
+<https://orcid.org/0009-0008-1257-2416>)  
+**Last modified:** 2026-11-10 23:10:48.284979  
+**Compiled**: Tue Nov 10 23:24:11 2026
 
 ## Installation instructions
 
 To install the package from Bioconductor, make sure you have the
 `BiocManager` package, available from CRAN, and then run
 
-\
-`BiocManager``::`[`install`](https://bioconductor.github.io/BiocManager/reference/install.html)`(``"PSMatch"``)`
+``` r
+
+BiocManager::install("PSMatch")
+```
 
 ## Introduction
 
@@ -34,8 +36,10 @@ and references therein.
 
 We are going to use an `mzid` file from the `MsDataHub` package.
 
-\
-`f`` ``<-`` ``MsDataHub``::`[`TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid`](https://rformassspectrometry.github.io/MsDataHub/reference/PXD000001.html)`(``)`
+``` r
+
+f <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
+```
 
     ## see ?MsDataHub and browseVignettes('MsDataHub') for documentation
 
@@ -47,14 +51,18 @@ function parses one or multiple `mzid` files and returns an object of
 class `PSM`. This class is a simple extension of the `DFrame` class,
 representing the peptide-spectrum matches in a tabular format.
 
-\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`"PSMatch"`](https://github.com/RforMassSpectrometry/PSMatch)`)`\
-`id`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``)`
+``` r
+
+library("PSMatch")
+id <- PSM(f)
+```
 
     ## Loading required namespace: mzR
 
-\
-`id`
+``` r
+
+id
+```
 
     ## PSM with 5802 rows and 35 columns.
     ## names(35): sequence spectrumID ... subReplacementResidue subLocation
@@ -62,23 +70,31 @@ representing the peptide-spectrum matches in a tabular format.
 This table contains 5802 matches for 5343 scans and 4938 peptides
 sequences, each annotated by 35 variables.
 
-\
-[`nrow`](https://rdrr.io/r/base/nrow.html)`(``id``)`` ``## number of matches`
+``` r
+
+nrow(id) ## number of matches
+```
 
     ## [1] 5802
 
-\
-[`length`](https://rdrr.io/r/base/length.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``id``$``spectrumID``)``)`` ``## number of scans`
+``` r
+
+length(unique(id$spectrumID)) ## number of scans
+```
 
     ## [1] 5343
 
-\
-[`length`](https://rdrr.io/r/base/length.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``id``$``sequence``)``)``   ``## number of peptide sequences`
+``` r
+
+length(unique(id$sequence))   ## number of peptide sequences
+```
 
     ## [1] 4938
 
-\
-[`names`](https://rdrr.io/r/base/names.html)`(``id``)`
+``` r
+
+names(id)
+```
 
     ##  [1] "sequence"                 "spectrumID"              
     ##  [3] "chargeState"              "rank"                    
@@ -103,8 +119,10 @@ The PSM data are read as is, without any filtering. As we can see below,
 we still have all the hits from the forward and reverse (decoy)
 databases.
 
-\
-[`table`](https://rdrr.io/r/base/table.html)`(``id``$``isDecoy``)`
+``` r
+
+table(id$isDecoy)
+```
 
     ## 
     ## FALSE  TRUE 
@@ -116,8 +134,10 @@ The data also contains multiple matches for several spectra. The table
 below shows the number of individual MS scans that have 1, 2, … up to 5
 matches.
 
-\
-[`table`](https://rdrr.io/r/base/table.html)`(`[`table`](https://rdrr.io/r/base/table.html)`(``id``$``spectrumID``)``)`
+``` r
+
+table(table(id$spectrumID))
+```
 
     ## 
     ##    1    2    3    4    5 
@@ -126,15 +146,19 @@ matches.
 More specifically, we can see below how scan 1774 has 4 matches, all to
 sequence `RTRYQAEVR`, which itself matches to 4 different proteins:
 
-\
-`i`` ``<-`` `[`grep`](https://rdrr.io/r/base/grep.html)`(``"scan=1774"``, ``id``$``spectrumID``)`\
-`id``[``i``, ``]`
+``` r
+
+i <- grep("scan=1774", id$spectrumID)
+id[i, ]
+```
 
     ## PSM with 4 rows and 35 columns.
     ## names(35): sequence spectrumID ... subReplacementResidue subLocation
 
-\
-`id``[``i``, ``"DatabaseAccess"``]`
+``` r
+
+id[i, "DatabaseAccess"]
+```
 
     ## [1] "ECA2104" "ECA2867" "ECA3427" "ECA4142"
 
@@ -143,10 +167,12 @@ one can *reduce* the `DataFrame` object by the `spectrumID` variable, so
 that each scan correponds to a single row that still stores all
 values[^1]:
 
-\
-`id2`` ``<-`` `[`reducePSMs`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``id``, ``id``$``spectrumID``)`\
-[`rownames`](https://rdrr.io/r/base/colnames.html)`(``id2``)`` ``<-`` ``NULL`` ``## rownames not needed here`\
-[`dim`](https://rdrr.io/r/base/dim.html)`(``id2``)`
+``` r
+
+id2 <- reducePSMs(id, id$spectrumID)
+rownames(id2) <- NULL ## rownames not needed here
+dim(id2)
+```
 
     ## [1] 5343   35
 
@@ -154,15 +180,19 @@ The resulting object contains a single entrie for scan 1774 with
 information for the multiple matches stored as a list within the table
 cell.
 
-\
-`j`` ``<-`` `[`grep`](https://rdrr.io/r/base/grep.html)`(``"scan=1774"``, ``id2``$``spectrumID``)`\
-`id2``[``j``, ``]`
+``` r
+
+j <- grep("scan=1774", id2$spectrumID)
+id2[j, ]
+```
 
     ## Reduced PSM with 1 rows and 35 columns.
     ## names(35): sequence spectrumID ... subReplacementResidue subLocation
 
-\
-`id2``[``j``, ``"DatabaseAccess"``]`
+``` r
+
+id2[j, "DatabaseAccess"]
+```
 
     ## CharacterList of length 1
     ## [["controllerType=0 controllerNumber=1 scan=1774"]] ECA2104 ECA2867 ECA3427 ECA4142
@@ -181,26 +211,34 @@ wrong or the least reliable identifications.
 
 #### Remove decoy hits
 
-\
-`id`` ``<-`` `[`filterPsmDecoy`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)`(``id``)`
+``` r
+
+id <- filterPsmDecoy(id)
+```
 
     ## Removed 2896 decoy hits.
 
-\
-`id`
+``` r
+
+id
+```
 
     ## PSM with 2906 rows and 35 columns.
     ## names(35): sequence spectrumID ... subReplacementResidue subLocation
 
 #### Keep first rank matches
 
-\
-`id`` ``<-`` `[`filterPsmRank`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)`(``id``)`
+``` r
+
+id <- filterPsmRank(id)
+```
 
     ## Removed 155 PSMs with rank > 1.
 
-\
-`id`
+``` r
+
+id
+```
 
     ## PSM with 2751 rows and 35 columns.
     ## names(35): sequence spectrumID ... subReplacementResidue subLocation
@@ -211,20 +249,26 @@ The data still contains shared peptides, i.e. those that different
 proteins. For example `QKTRCATRAFKANKGRAR` matches proteins `ECA2869`
 and `ECA4278`.
 
-\
-`id``[``id``$``sequence`` ``==`` ``"QKTRCATRAFKANKGRAR"``, ``"DatabaseAccess"``]`
+``` r
+
+id[id$sequence == "QKTRCATRAFKANKGRAR", "DatabaseAccess"]
+```
 
     ## [1] "ECA2869" "ECA4278"
 
 We can filter these out to retain unique peptides.
 
-\
-`id`` ``<-`` `[`filterPsmShared`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)`(``id``)`
+``` r
+
+id <- filterPsmShared(id)
+```
 
     ## Removed 85 shared peptides.
 
-\
-`id`
+``` r
+
+id
+```
 
     ## PSM with 2666 rows and 35 columns.
     ## names(35): sequence spectrumID ... subReplacementResidue subLocation
@@ -245,9 +289,11 @@ This can also be achieved with the
 [`filterPSMs()`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)
 function:
 
-\
-`id`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``)`\
-[`filterPSMs`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)`(``id``)`
+``` r
+
+id <- PSM(f)
+filterPSMs(id)
+```
 
     ## Starting with 5802 PSMs:
 
@@ -270,14 +316,14 @@ function can take two different values for the `parser` parameter,
 namely `"mzR"` (the default value) and `"mzID"`.
 
 - **mzR** uses the `openIDfile()` function from the
-  *[mzR](https://bioconductor.org/packages/3.24/mzR)* to parse the
+  *[mzR](https://bioconductor.org/packages/3.22/mzR)* to parse the
   `mzId` file(s), and then coerces the data to a `data.frame` which is
   eventually returned as a `PSM` object. The parser function uses
   dedicated code from the Proteowizard project (included in `mzR`) and
   is generally the fastest approach.
 
 - **mzID** parses the `mzId` file with `mzID()` function from the
-  *[mzID](https://bioconductor.org/packages/3.24/mzID)* package, and
+  *[mzID](https://bioconductor.org/packages/3.22/mzID)* package, and
   then flattens the data to a `data.frame` with
   [`mzID::flatten()`](https://rdrr.io/pkg/mzID/man/flatten.html) and
   eventuelly returns a `PSM` object. The `mzID` package relies on the
@@ -285,31 +331,37 @@ namely `"mzR"` (the default value) and `"mzID"`.
   but is is more robust to variations in the `mzID` implementation, as
   is thus a useful backup when the `mzR` backend fails.
 
-\
-[`system.time`](https://rdrr.io/r/base/system.time.html)`(``id1`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``, parser ``=`` ``"mzR"``)``)`
+``` r
+
+system.time(id1 <- PSM(f, parser = "mzR"))
+```
 
     ##    user  system elapsed 
-    ##   0.168   0.006   0.173
+    ##   0.118   0.005   0.123
 
-\
-[`system.time`](https://rdrr.io/r/base/system.time.html)`(``id2`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``, parser ``=`` ``"mzID"``)``)`
+``` r
+
+system.time(id2 <- PSM(f, parser = "mzID"))
+```
 
     ## Loading required namespace: mzID
 
-    ## reading 42322e074c0_7857...
+    ## reading 12a92290d66d_7857...
 
     ##  DONE!
 
     ##    user  system elapsed 
-    ##   5.796   0.084   5.880
+    ##   4.429   0.049   4.491
 
 Other differences in the two parsers include the columns that are
 returned, the way they name them, and, as will shown below the matches
 that are returned. Note for instance (and this will be important later),
 that there is no equivalent of `"modLocation"` in `id2`.
 
-\
-[`names`](https://rdrr.io/r/base/names.html)`(``id1``)`
+``` r
+
+names(id1)
+```
 
     ##  [1] "sequence"                 "spectrumID"              
     ##  [3] "chargeState"              "rank"                    
@@ -330,8 +382,10 @@ that there is no equivalent of `"modLocation"` in `id2`.
     ## [33] "subOriginalResidue"       "subReplacementResidue"   
     ## [35] "subLocation"
 
-\
-[`names`](https://rdrr.io/r/base/names.html)`(``id2``)`
+``` r
+
+names(id2)
+```
 
     ##  [1] "spectrumid"                "scan number(s)"           
     ##  [3] "acquisitionnum"            "passthreshold"            
@@ -351,25 +405,33 @@ that there is no equivalent of `"modLocation"` in `id2`.
 
 We also have different number of matches in the two tables:
 
-\
-[`nrow`](https://rdrr.io/r/base/nrow.html)`(``id1``)`
+``` r
+
+nrow(id1)
+```
 
     ## [1] 5802
 
-\
-[`nrow`](https://rdrr.io/r/base/nrow.html)`(``id2``)`
+``` r
+
+nrow(id2)
+```
 
     ## [1] 5759
 
-\
-[`table`](https://rdrr.io/r/base/table.html)`(``id1``$``isDecoy``)`
+``` r
+
+table(id1$isDecoy)
+```
 
     ## 
     ## FALSE  TRUE 
     ##  2906  2896
 
-\
-[`table`](https://rdrr.io/r/base/table.html)`(``id2``$``isdecoy``)`
+``` r
+
+table(id2$isdecoy)
+```
 
     ## 
     ## FALSE  TRUE 
@@ -380,8 +442,10 @@ relevant scans. Note that the default
 [`filterPSMs()`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)
 arguments are set to work with both parser.
 
-\
-`id1_filtered`` ``<-`` `[`filterPSMs`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)`(``id1``)`
+``` r
+
+id1_filtered <- filterPSMs(id1)
+```
 
     ## Starting with 5802 PSMs:
 
@@ -393,8 +457,10 @@ arguments are set to work with both parser.
 
     ## 2666 PSMs left.
 
-\
-`id2_filtered`` ``<-`` `[`filterPSMs`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)`(``id2``)`
+``` r
+
+id2_filtered <- filterPSMs(id2)
+```
 
     ## Starting with 5759 PSMs:
 
@@ -411,9 +477,11 @@ As can be seen, we are also left with 2666 vs 2646 PSMs after filtering.
 The difference doesn’t stem from different scans, given that the spectum
 identifiers are identical in both tables:
 
-\
-[`identical`](https://rdrr.io/r/base/identical.html)`(`[`sort`](https://rdrr.io/r/base/sort.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``id1_filtered``$``spectrumID``)``)``,`\
-`          `[`sort`](https://rdrr.io/r/base/sort.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``id2_filtered``$``spectrumid``)``)``)`
+``` r
+
+identical(sort(unique(id1_filtered$spectrumID)),
+          sort(unique(id2_filtered$spectrumid)))
+```
 
     ## [1] TRUE
 
@@ -421,16 +489,20 @@ The difference is obvious when we tally a table of spectrum id
 occurences in the filtered tables. In `id2_filtered`, each scan is
 unique, i.e matched only once.
 
-\
-[`anyDuplicated`](https://rdrr.io/r/base/duplicated.html)`(``id2_filtered``$``spectrumid``)`
+``` r
+
+anyDuplicated(id2_filtered$spectrumid)
+```
 
     ## [1] 0
 
 However, for `id1_filtered`, we see that some scans are still repeat up
 to 4 times in the table:
 
-\
-[`table`](https://rdrr.io/r/base/table.html)`(`[`table`](https://rdrr.io/r/base/table.html)`(``id1_filtered``$``spectrumID``)``)`
+``` r
+
+table(table(id1_filtered$spectrumID))
+```
 
     ## 
     ##    1    2    3    4 
@@ -440,33 +512,43 @@ The example below shows that these differences stem from the
 modification location (`"modLocation"`), that is not report by the
 `mzID` parser:
 
-\
-`k`` ``<-`` `[`names`](https://rdrr.io/r/base/names.html)`(`[`which`](https://rdrr.io/r/base/which.html)`(`[`table`](https://rdrr.io/r/base/table.html)`(``id1_filtered``$``spectrumID``)`` ``==`` ``4``)``)`\
-`id1_filtered``[``id1_filtered``$``spectrumID`` ``==`` ``k``, ``"sequence"``]`
+``` r
+
+k <- names(which(table(id1_filtered$spectrumID) == 4))
+id1_filtered[id1_filtered$spectrumID == k, "sequence"]
+```
 
     ## [1] "KCNQCLKVACTLFYCK" "KCNQCLKVACTLFYCK" "KCNQCLKVACTLFYCK" "KCNQCLKVACTLFYCK"
 
-\
-`id1_filtered``[``id1_filtered``$``spectrumID`` ``==`` ``k``, ``"modLocation"``]`
+``` r
+
+id1_filtered[id1_filtered$spectrumID == k, "modLocation"]
+```
 
     ## [1]  2  5 10 15
 
-\
-`id1_filtered``[``id1_filtered``$``spectrumID`` ``==`` ``k``, ``"modName"``]`
+``` r
+
+id1_filtered[id1_filtered$spectrumID == k, "modName"]
+```
 
     ## [1] "Carbamidomethyl" "Carbamidomethyl" "Carbamidomethyl" "Carbamidomethyl"
 
 If we remove the `"modLocation"` column, we recoved the same number of
 PSMs than with the `mzID` parser.
 
-\
-`id1_filtered``$``modLocation`` ``<-`` ``NULL`\
-[`nrow`](https://rdrr.io/r/base/nrow.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``id1_filtered``)``)`
+``` r
+
+id1_filtered$modLocation <- NULL
+nrow(unique(id1_filtered))
+```
 
     ## [1] 2646
 
-\
-[`nrow`](https://rdrr.io/r/base/nrow.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``id2_filtered``)``)`
+``` r
+
+nrow(unique(id2_filtered))
+```
 
     ## [1] 2646
 
@@ -477,12 +559,14 @@ license](https://creativecommons.org/licenses/by-sa/2.0/).
 
 ## Session information
 
-\
-[`sessionInfo`](https://rdrr.io/r/utils/sessionInfo.html)`(``)`
+``` r
 
-    ## R version 4.6.1 (2026-06-24)
+sessionInfo()
+```
+
+    ## R version 4.5.2 (2025-10-31)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Ubuntu 24.04.5 LTS
+    ## Running under: Ubuntu 24.04.3 LTS
     ## 
     ## Matrix products: default
     ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -504,64 +588,63 @@ license](https://creativecommons.org/licenses/by-sa/2.0/).
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] MsDataHub_1.13.3     PSMatch_1.17.2       PTMods_1.1.1        
-    ## [4] S4Vectors_0.51.10    BiocGenerics_0.59.12 generics_0.1.4      
-    ## [7] BiocStyle_2.41.0    
+    ## [1] MsDataHub_1.10.0    PSMatch_1.17.2      PTMods_1.1.1       
+    ## [4] S4Vectors_0.48.1    BiocGenerics_0.56.0 generics_0.1.4     
+    ## [7] BiocStyle_2.38.0   
     ## 
     ## loaded via a namespace (and not attached):
     ##   [1] DBI_1.3.0                   httr2_1.3.0                
     ##   [3] rlang_1.3.0                 magrittr_2.0.5             
-    ##   [5] clue_0.3-68                 otel_0.2.0                 
-    ##   [7] matrixStats_1.5.0           compiler_4.6.1             
+    ##   [5] clue_0.3-68                 otel_0.3.0                 
+    ##   [7] matrixStats_1.5.0           compiler_4.5.2             
     ##   [9] RSQLite_3.53.3              png_0.1-9                  
     ##  [11] systemfonts_1.3.2           vctrs_0.7.3                
     ##  [13] reshape2_1.4.5              stringr_1.6.0              
-    ##  [15] ProtGenerics_1.45.0         pkgconfig_2.0.3            
-    ##  [17] MetaboCoreUtils_1.21.2      crayon_1.5.3               
+    ##  [15] ProtGenerics_1.42.0         pkgconfig_2.0.3            
+    ##  [17] MetaboCoreUtils_1.18.1      crayon_1.5.3               
     ##  [19] fastmap_1.2.0               dbplyr_2.6.0               
-    ##  [21] XVector_0.53.0              rmarkdown_2.32             
+    ##  [21] XVector_0.50.0              rmarkdown_2.32             
     ##  [23] ragg_1.5.2                  purrr_1.2.2                
     ##  [25] bit_4.6.0                   xfun_0.62                  
-    ##  [27] MultiAssayExperiment_1.39.1 cachem_1.1.0               
+    ##  [27] MultiAssayExperiment_1.36.2 cachem_1.1.0               
     ##  [29] jsonlite_2.0.0              blob_1.3.0                 
-    ##  [31] DelayedArray_0.39.8         BiocParallel_1.47.0        
-    ##  [33] parallel_4.6.1              cluster_2.1.8.3            
+    ##  [31] DelayedArray_0.36.1         BiocParallel_1.44.0        
+    ##  [33] parallel_4.5.2              cluster_2.1.8.3            
     ##  [35] R6_2.6.1                    bslib_0.12.0               
-    ##  [37] stringi_1.8.9               GenomicRanges_1.65.4       
+    ##  [37] stringi_1.8.9               GenomicRanges_1.62.1       
     ##  [39] jquerylib_0.1.4             iterators_1.0.14           
-    ##  [41] Rcpp_1.1.2                  Seqinfo_1.3.2              
-    ##  [43] bookdown_0.48               SummarizedExperiment_1.43.0
-    ##  [45] knitr_1.52                  IRanges_2.47.5             
-    ##  [47] BiocBaseUtils_1.15.1        Matrix_1.7-6               
+    ##  [41] Rcpp_1.1.2                  Seqinfo_1.0.0              
+    ##  [43] bookdown_0.48               SummarizedExperiment_1.40.0
+    ##  [45] knitr_1.52                  IRanges_2.44.0             
+    ##  [47] BiocBaseUtils_1.12.0        Matrix_1.7-6               
     ##  [49] igraph_2.3.4                tidyselect_1.2.1           
     ##  [51] abind_1.4-8                 yaml_2.3.12                
     ##  [53] doParallel_1.0.17           codetools_0.2-20           
     ##  [55] curl_8.1.0                  lattice_0.23-1             
     ##  [57] tibble_3.3.1                plyr_1.8.9                 
-    ##  [59] withr_3.0.3                 Biobase_2.73.2             
-    ##  [61] KEGGREST_1.53.6             evaluate_1.0.5             
-    ##  [63] desc_1.4.3                  Spectra_1.23.7             
-    ##  [65] BiocFileCache_3.3.2         ExperimentHub_3.3.2        
-    ##  [67] Biostrings_2.81.9           pillar_1.11.1              
+    ##  [59] Biobase_2.70.0              withr_3.0.3                
+    ##  [61] KEGGREST_1.50.0             evaluate_1.0.5             
+    ##  [63] desc_1.4.3                  Spectra_1.20.1             
+    ##  [65] BiocFileCache_3.0.0         ExperimentHub_3.0.0        
+    ##  [67] Biostrings_2.78.0           pillar_1.11.1              
     ##  [69] BiocManager_1.30.27         filelock_1.0.3             
-    ##  [71] MatrixGenerics_1.25.0       foreach_1.5.2              
-    ##  [73] ncdf4_1.24                  BiocVersion_3.24.0         
+    ##  [71] MatrixGenerics_1.22.0       foreach_1.5.2              
+    ##  [73] ncdf4_1.24                  BiocVersion_3.22.0         
     ##  [75] glue_1.8.1                  lazyeval_0.2.3             
-    ##  [77] tools_4.6.1                 AnnotationHub_4.3.3        
-    ##  [79] mzID_1.51.0                 data.table_1.18.6.1        
-    ##  [81] mzR_2.47.1                  QFeatures_1.23.2           
-    ##  [83] XML_3.99-0.25               fs_2.1.0                   
-    ##  [85] grid_4.6.1                  tidyr_1.3.2                
-    ##  [87] MsCoreUtils_1.25.4          AnnotationDbi_1.75.2       
-    ##  [89] cli_3.6.6                   rappdirs_0.3.4             
-    ##  [91] textshaping_1.0.5           S4Arrays_1.13.2            
-    ##  [93] dplyr_1.2.1                 AnnotationFilter_1.37.0    
-    ##  [95] sass_0.4.10                 digest_0.6.39              
-    ##  [97] SparseArray_1.13.4          htmlwidgets_1.6.4          
-    ##  [99] memoise_2.0.1               htmltools_0.5.9            
-    ## [101] pkgdown_2.2.1.9000          lifecycle_1.0.5            
-    ## [103] httr_1.4.9                  bit64_4.8.6                
-    ## [105] MASS_7.3-66
+    ##  [77] tools_4.5.2                 AnnotationHub_4.0.0        
+    ##  [79] mzID_1.48.0                 mzR_2.44.0                 
+    ##  [81] QFeatures_1.20.0            XML_3.99-0.25              
+    ##  [83] fs_2.1.0                    grid_4.5.2                 
+    ##  [85] tidyr_1.3.2                 MsCoreUtils_1.25.4         
+    ##  [87] AnnotationDbi_1.72.0        cli_3.6.6                  
+    ##  [89] rappdirs_0.3.4              textshaping_1.0.5          
+    ##  [91] S4Arrays_1.10.1             dplyr_1.2.1                
+    ##  [93] AnnotationFilter_1.34.0     sass_0.4.10                
+    ##  [95] digest_0.6.39               SparseArray_1.10.10        
+    ##  [97] htmlwidgets_1.6.4           memoise_2.0.1              
+    ##  [99] htmltools_0.5.9             pkgdown_2.2.1.9000         
+    ## [101] lifecycle_1.0.5             httr_1.4.9                 
+    ## [103] bit64_4.8.6                 MASS_7.3-66
 
 [^1]: The rownames aren’t needed here and are removed to reduce to
     output in the the next code chunks displaying parts of `id2`.

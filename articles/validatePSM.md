@@ -1,10 +1,10 @@
 # Validate PSMs based on spectral and identification features
 
 **Package**:
-*[PSMatch](https://bioconductor.org/packages/3.24/PSMatch)*\
-**Authors**: Guillaume Deflandre\
-**Last modified:** 2026-11-10 22:55:30.100967\
-**Compiled**: Tue Nov 10 23:07:19 2026
+*[PSMatch](https://bioconductor.org/packages/3.22/PSMatch)*  
+**Authors**: Guillaume Deflandre  
+**Last modified:** 2026-11-10 23:10:48.284979  
+**Compiled**: Tue Nov 10 23:24:32 2026
 
 ## Introduction
 
@@ -28,13 +28,15 @@ This vignette uses `psmBoekweg` and `spBoekweg`, two objects bundled
 with `PSMatch`. `psmBoekweg` is a `PSM` object and `spBoekweg` is a
 `Spectra` object containing the corresponding raw MS1 and MS2 spectra.
 More details on these datasets can be found by loading the
-*[MsDataHub](https://bioconductor.org/packages/3.24/MsDataHub)* package
+*[MsDataHub](https://bioconductor.org/packages/3.22/MsDataHub)* package
 and using `?Boekweg2022`.
 
-\
-[`data`](https://rdrr.io/r/utils/data.html)`(``"psmBoekweg"``)`\
-[`data`](https://rdrr.io/r/utils/data.html)`(``"spBoekweg"``)`\
-`psmBoekweg`
+``` r
+
+data("psmBoekweg")
+data("spBoekweg")
+psmBoekweg
+```
 
     ## PSM with 700 rows and 40 columns.
     ## Spectra: 700 unique
@@ -42,8 +44,10 @@ and using `?Boekweg2022`.
     ##   ranks: 1:700 
     ## names(40): psm_id peptide ... protein_q ms2_intensity
 
-\
-`spBoekweg`
+``` r
+
+spBoekweg
+```
 
     ## MSn data (Spectra) with 348 spectra in a MsBackendMemory backend:
     ##       msLevel     rtime scanIndex
@@ -70,18 +74,20 @@ scan number. It is important to **keep both MS1 and MS2 spectra** in the
 merged object as MS1 spectra are required by
 [`checkPrecursorPurity()`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md).
 
-\
-`psmBoekweg``$``pkey`` ``<-`` `[`paste0`](https://rdrr.io/r/base/paste.html)`(`\
-`    `[`basename`](https://rdrr.io/r/base/basename.html)`(``psmBoekweg``$``filename``)``,`\
-`    `[`sub`](https://rdrr.io/r/base/grep.html)`(``"^.+scan="``, ``"::"``, ``psmBoekweg``$``scannr``)`\
-`)`\
-`spBoekweg``$``pkey`` ``<-`` `[`paste0`](https://rdrr.io/r/base/paste.html)`(`\
-`    `[`basename`](https://rdrr.io/r/base/basename.html)`(``spBoekweg``$``dataOrigin``)``,`\
-`    `[`sub`](https://rdrr.io/r/base/grep.html)`(``"^.+scan="``, ``"::"``, ``spBoekweg``$``spectrumId``)`\
-`)`\
-\
-`sp`` ``<-`` `[`joinSpectraData`](https://rdrr.io/pkg/Spectra/man/combineSpectra.html)`(``spBoekweg``, ``psmBoekweg``, by.x ``=`` ``"pkey"``)`\
-`sp`
+``` r
+
+psmBoekweg$pkey <- paste0(
+    basename(psmBoekweg$filename),
+    sub("^.+scan=", "::", psmBoekweg$scannr)
+)
+spBoekweg$pkey <- paste0(
+    basename(spBoekweg$dataOrigin),
+    sub("^.+scan=", "::", spBoekweg$spectrumId)
+)
+
+sp <- joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
+sp
+```
 
     ## MSn data (Spectra) with 348 spectra in a MsBackendMemory backend:
     ##       msLevel     rtime scanIndex
@@ -111,30 +117,36 @@ so that
 [`calculateFragments()`](https://rformassspectrometry.github.io/PSMatch/reference/calculateFragments.md)
 can account for it when computing fragment m/z values.
 
-\
-`seq_var`` ``<-`` `[`psmVariables`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``psmBoekweg``)``[[``"peptide"``]``]`\
-`fdr_var`` ``<-`` `[`psmVariables`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``psmBoekweg``)``[[``"fdr"``]``]`\
-\
-`## In our case, carbamidomethylation is already present`\
-`sp``[[``seq_var``]``]``[``!`[`is.na`](https://rdrr.io/r/base/NA.html)`(``sp``[[``seq_var``]``]``)``]``[``30``]`
+``` r
+
+seq_var <- psmVariables(psmBoekweg)[["peptide"]]
+fdr_var <- psmVariables(psmBoekweg)[["fdr"]]
+
+## In our case, carbamidomethylation is already present
+sp[[seq_var]][!is.na(sp[[seq_var]])][30]
+```
 
     ## [1] "VGC[+57.0215]C[+57.0215]SDGIGVSR"
 
-\
-`` ## There is no need to apply `PTMods::addFixedModifications()`: ``\
-`## sp[["sequence"]] <- addFixedModifications(sp[[seq_var]])`\
-\
-`` ## For converting the annotation style, use `PTMods::convertAnnotation()` ``\
-`sp``[[``"sequence"``]``]`` ``<-`` `[`convertAnnotation`](https://rdrr.io/pkg/PTMods/man/convertAnnotation.html)`(``sp``[[``seq_var``]``]``, convertToStyle ``=`` ``"name"``)`\
-`sp``[[``"sequence"``]``]``[``!`[`is.na`](https://rdrr.io/r/base/NA.html)`(``sp``[[``"sequence"``]``]``)``]``[``30``]`
+``` r
+
+## There is no need to apply `PTMods::addFixedModifications()`:
+## sp[["sequence"]] <- addFixedModifications(sp[[seq_var]])
+
+## For converting the annotation style, use `PTMods::convertAnnotation()`
+sp[["sequence"]] <- convertAnnotation(sp[[seq_var]], convertToStyle = "name")
+sp[["sequence"]][!is.na(sp[["sequence"]])][30]
+```
 
     ## [1] "VGC[Carbamidomethyl]C[Carbamidomethyl]SDGIGVSR"
 
 We also create a convenience subset containing only the identified MS2
 PSMs for use with the individual check functions below.
 
-\
-`sp_psms`` ``<-`` ``sp``[``!`[`is.na`](https://rdrr.io/r/base/NA.html)`(``sp``[[``"sequence"``]``]``)`` ``&`` ``sp``$``msLevel`` ``==`` ``2L``]`
+``` r
+
+sp_psms <- sp[!is.na(sp[["sequence"]]) & sp$msLevel == 2L]
+```
 
 ## Validation metrics
 
@@ -154,9 +166,11 @@ otherwise. A `FALSE` result does not necessarily mean a bad
 identification (it is not abnormal for small ions to be absent), but
 `TRUE` adds confidence.
 
-\
-`ab`` ``<-`` `[`checkABpresence`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)`(``sp_psms``[``1``:``100``]``)`\
-[`table`](https://rdrr.io/r/base/table.html)`(``ab``)`
+``` r
+
+ab <- checkABpresence(sp_psms[1:100])
+table(ab)
+```
 
     ## ab
     ## FALSE  TRUE 
@@ -168,9 +182,11 @@ Analogous to
 [`checkABpresence()`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)
 but for the C-terminal x2/y2 fragment pair.
 
-\
-`xy`` ``<-`` `[`checkXYpresence`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)`(``sp_psms``[``1``:``100``]``)`\
-[`table`](https://rdrr.io/r/base/table.html)`(``xy``)`
+``` r
+
+xy <- checkXYpresence(sp_psms[1:100])
+table(xy)
+```
 
     ## xy
     ## FALSE  TRUE 
@@ -191,17 +207,19 @@ n - y_max > b_max
 returns `FALSE` when such a gap is detected and `TRUE` when b- and
 y-ions jointly cover the sequence with overlap.
 
-\
-`## Pre-compute label fragments once to reuse across checks`\
-`frags`` ``<-`` `[`labelFragments`](https://rformassspectrometry.github.io/PSMatch/reference/labelFragments.md)`(``sp_psms``[``1``:``20``]``, type ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"a"``, ``"b"``, ``"c"``, ``"x"``, ``"y"``, ``"z"``)``)`\
-\
-`overlap`` ``<-`` `[`checkOverlap`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)`(``sp_psms``[``1``:``20``]``,`\
-`    peptideVariable ``=`` ``"sequence"``,`\
-`    fragments ``=`` ``frags``,`\
-`    strippedSeq ``=`` ``PTMods``::`[`getCanonicalSequence`](https://rdrr.io/pkg/PTMods/man/getCanonicalSequence.html)`(``sp_psms``[[``"sequence"``]``]``[``1``:``20``]``)`\
-`)`\
-\
-[`table`](https://rdrr.io/r/base/table.html)`(``overlap``)`
+``` r
+
+## Pre-compute label fragments once to reuse across checks
+frags <- labelFragments(sp_psms[1:20], type = c("a", "b", "c", "x", "y", "z"))
+
+overlap <- checkOverlap(sp_psms[1:20],
+    peptideVariable = "sequence",
+    fragments = frags,
+    strippedSeq = PTMods::getCanonicalSequence(sp_psms[["sequence"]][1:20])
+)
+
+table(overlap)
+```
 
     ## overlap
     ## FALSE  TRUE 
@@ -212,18 +230,24 @@ that is not covered by any matched fragment. This often points to an
 unaccounted-for modification sitting in the uncovered stretch. Consider
 the sequence `sp_psms[115]$sequence`:
 
-\
-`sp_psms``[``115``]``$``sequence`
+``` r
+
+sp_psms[115]$sequence
+```
 
     ## [1] "VQNEEGLQELRSLDANHIAR"
 
-\
-[`checkOverlap`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)`(``sp_psms``[``115``]``)`
+``` r
+
+checkOverlap(sp_psms[115])
+```
 
     ## [1] FALSE
 
-\
-[`plotSpectraPTM`](https://rformassspectrometry.github.io/PSMatch/reference/plotSpectraPTM.md)`(``sp_psms``[``115``]``)`
+``` r
+
+plotSpectraPTM(sp_psms[115])
+```
 
 ![](validatePSM_files/figure-html/overlapPlot-1.png) If the identified
 sequence does not contain a modification yet
@@ -258,17 +282,21 @@ returned. Higher values mean more of the expected shifted fragments were
 observed, which strengthens confidence in both the identification and
 the modification site assignment.
 
-\
-`shifts`` ``<-`` `[`checkShiftConsistency`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)`(``sp_psms``[``1``:``50``]``)`\
-`## NA for unmodified sequences, numeric for modified ones`\
-[`table`](https://rdrr.io/r/base/table.html)`(`[`is.na`](https://rdrr.io/r/base/NA.html)`(``shifts``)``)`
+``` r
+
+shifts <- checkShiftConsistency(sp_psms[1:50])
+## NA for unmodified sequences, numeric for modified ones
+table(is.na(shifts))
+```
 
     ## 
     ## FALSE  TRUE 
     ##    10    40
 
-\
-[`summary`](https://rdrr.io/r/base/summary.html)`(``shifts``[``!`[`is.na`](https://rdrr.io/r/base/NA.html)`(``shifts``)``]``)`
+``` r
+
+summary(shifts[!is.na(shifts)])
+```
 
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
     ##  0.0000  0.0000  0.1214  0.1588  0.2692  0.5714
@@ -278,18 +306,24 @@ modification) are matched. The highest value being NA for sequence
 APAM\[Oxidation\]FNIR . Out of 7 potential sites including the
 identified modification, 4 have been matched:
 
-\
-`sp_psms``[``40``]``$``sequence`
+``` r
+
+sp_psms[40]$sequence
+```
 
     ## [1] "APAM[Oxidation]FNIR"
 
-\
-[`checkShiftConsistency`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)`(``sp_psms``[``40``]``)`
+``` r
+
+checkShiftConsistency(sp_psms[40])
+```
 
     ## [1] 0.5714286
 
-\
-[`plotSpectraPTM`](https://rformassspectrometry.github.io/PSMatch/reference/plotSpectraPTM.md)`(``sp_psms``[``40``]``)`
+``` r
+
+plotSpectraPTM(sp_psms[40])
+```
 
 ![](validatePSM_files/figure-html/ex-checkShift-1.png)
 
@@ -305,9 +339,11 @@ peak (most intense peak) in the spectrum. A ratio close to 0 means the
 precursor was almost fully consumed; a ratio close to 1 means the
 precursor dominates: a sign of poor fragmentation.
 
-\
-`parent`` ``<-`` `[`checkParentIonIntensity`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)`(``sp_psms``[``1``:``50``]``)`\
-[`summary`](https://rdrr.io/r/base/summary.html)`(``parent``)`
+``` r
+
+parent <- checkParentIonIntensity(sp_psms[1:50])
+summary(parent)
+```
 
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
     ## 0.00000 0.00000 0.00000 0.16041 0.07075 1.00000
@@ -332,8 +368,10 @@ preceding MS1 scan return `NA`.
 Note that the full `sp` object (MS1 **and** MS2) must be passed here,
 not just the PSM subset.
 
-\
-[`checkPrecursorPurity`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)`(``sp``[``1``:``6``]``)`
+``` r
+
+checkPrecursorPurity(sp[1:6])
+```
 
     ## [1]       NA 1.000000       NA 0.945725       NA 1.000000
 
@@ -345,11 +383,13 @@ applies all metrics in a single call. It pre-computes `peaksData` and
 operates on a `Spectra` object that contains **both MS1 and MS2
 spectra** alongside the identification data.
 
-\
-`(``res`` ``<-`` `[`validatePSM`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)`(``sp``[``1``:``40``]``,`\
-`                    peptideVariable ``=`` ``seq_var``,`\
-`                    fdr ``=`` ``fdr_var``)`\
-`)`
+``` r
+
+(res <- validatePSM(sp[1:40],
+                    peptideVariable = seq_var,
+                    fdr = fdr_var)
+)
+```
 
     ##                                        spectrumId scanIndex
     ## 1   controllerType=0 controllerNumber=1 scan=6405      6405
@@ -443,13 +483,15 @@ The result can be merged with the original PSM table using the spectrum
 identifier or the scan index in order to include the metrics for
 rescoring:
 
-\
-`## Example: join with the PSM data.frame by spectrum ID`\
-`psm_df`` ``<-`` `[`as.data.frame`](https://rdrr.io/r/base/as.data.frame.html)`(``psmBoekweg``)`\
-`combined`` ``<-`` `[`merge`](https://rdrr.io/pkg/S4Vectors/man/Vector-merge.html)`(``psm_df``, ``res``,`\
-`    by.x ``=`` ``"scannr"``, by.y ``=`` ``"spectrumId"``,`\
-`    all.x ``=`` ``FALSE`\
-`)`
+``` r
+
+## Example: join with the PSM data.frame by spectrum ID
+psm_df <- as.data.frame(psmBoekweg)
+combined <- merge(psm_df, res,
+    by.x = "scannr", by.y = "spectrumId",
+    all.x = FALSE
+)
+```
 
 ## License
 
@@ -458,12 +500,14 @@ license](https://creativecommons.org/licenses/by-sa/2.0/).
 
 ## Session information
 
-\
-[`sessionInfo`](https://rdrr.io/r/utils/sessionInfo.html)`(``)`
+``` r
 
-    ## R version 4.6.1 (2026-06-24)
+sessionInfo()
+```
+
+    ## R version 4.5.2 (2025-10-31)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Ubuntu 24.04.5 LTS
+    ## Running under: Ubuntu 24.04.3 LTS
     ## 
     ## Matrix products: default
     ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -485,45 +529,45 @@ license](https://creativecommons.org/licenses/by-sa/2.0/).
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] Spectra_1.23.7       BiocParallel_1.47.0  PSMatch_1.17.2      
-    ## [4] PTMods_1.1.1         S4Vectors_0.51.10    BiocGenerics_0.59.12
-    ## [7] generics_0.1.4       BiocStyle_2.41.0    
+    ## [1] Spectra_1.20.1      BiocParallel_1.44.0 PSMatch_1.17.2     
+    ## [4] PTMods_1.1.1        S4Vectors_0.48.1    BiocGenerics_0.56.0
+    ## [7] generics_0.1.4      BiocStyle_2.38.0   
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] SummarizedExperiment_1.43.0 xfun_0.62                  
+    ##  [1] SummarizedExperiment_1.40.0 xfun_0.62                  
     ##  [3] bslib_0.12.0                htmlwidgets_1.6.4          
-    ##  [5] QFeatures_1.23.2            Biobase_2.73.2             
+    ##  [5] QFeatures_1.20.0            Biobase_2.70.0             
     ##  [7] lattice_0.23-1              vctrs_0.7.3                
-    ##  [9] tools_4.6.1                 parallel_4.6.1             
+    ##  [9] tools_4.5.2                 parallel_4.5.2             
     ## [11] tibble_3.3.1                cluster_2.1.8.3            
-    ## [13] pkgconfig_2.0.3             Matrix_1.7-6               
-    ## [15] data.table_1.18.6.1         desc_1.4.3                 
-    ## [17] lifecycle_1.0.5             compiler_4.6.1             
+    ## [13] pkgconfig_2.0.3             BiocBaseUtils_1.12.0       
+    ## [15] Matrix_1.7-6                desc_1.4.3                 
+    ## [17] lifecycle_1.0.5             compiler_4.5.2             
     ## [19] stringr_1.6.0               textshaping_1.0.5          
-    ## [21] Seqinfo_1.3.2               codetools_0.2-20           
+    ## [21] Seqinfo_1.0.0               codetools_0.2-20           
     ## [23] clue_0.3-68                 htmltools_0.5.9            
     ## [25] sass_0.4.10                 yaml_2.3.12                
-    ## [27] lazyeval_0.2.3              tidyr_1.3.2                
-    ## [29] pkgdown_2.2.1.9000          pillar_1.11.1              
-    ## [31] jquerylib_0.1.4             MASS_7.3-66                
-    ## [33] cachem_1.1.0                DelayedArray_0.39.8        
-    ## [35] MetaboCoreUtils_1.21.2      abind_1.4-8                
+    ## [27] lazyeval_0.2.3              pillar_1.11.1              
+    ## [29] pkgdown_2.2.1.9000          jquerylib_0.1.4            
+    ## [31] tidyr_1.3.2                 MASS_7.3-66                
+    ## [33] cachem_1.1.0                DelayedArray_0.36.1        
+    ## [35] MetaboCoreUtils_1.18.1      abind_1.4-8                
     ## [37] tidyselect_1.2.1            digest_0.6.39              
     ## [39] stringi_1.8.9               purrr_1.2.2                
     ## [41] dplyr_1.2.1                 reshape2_1.4.5             
     ## [43] bookdown_0.48               fastmap_1.2.0              
-    ## [45] grid_4.6.1                  cli_3.6.6                  
-    ## [47] SparseArray_1.13.4          magrittr_2.0.5             
-    ## [49] S4Arrays_1.13.2             rmarkdown_2.32             
-    ## [51] XVector_0.53.0              matrixStats_1.5.0          
-    ## [53] igraph_2.3.4                otel_0.2.0                 
+    ## [45] grid_4.5.2                  cli_3.6.6                  
+    ## [47] SparseArray_1.10.10         magrittr_2.0.5             
+    ## [49] S4Arrays_1.10.1             rmarkdown_2.32             
+    ## [51] XVector_0.50.0              matrixStats_1.5.0          
+    ## [53] igraph_2.3.4                otel_0.3.0                 
     ## [55] ragg_1.5.2                  evaluate_1.0.5             
-    ## [57] knitr_1.52                  GenomicRanges_1.65.4       
-    ## [59] IRanges_2.47.5              MultiAssayExperiment_1.39.1
+    ## [57] knitr_1.52                  GenomicRanges_1.62.1       
+    ## [59] IRanges_2.44.0              MultiAssayExperiment_1.36.2
     ## [61] rlang_1.3.0                 Rcpp_1.1.2                 
     ## [63] glue_1.8.1                  BiocManager_1.30.27        
-    ## [65] jsonlite_2.0.0              plyr_1.8.9                 
-    ## [67] AnnotationFilter_1.37.0     R6_2.6.1                   
-    ## [69] MatrixGenerics_1.25.0       systemfonts_1.3.2          
-    ## [71] fs_2.1.0                    ProtGenerics_1.45.0        
+    ## [65] jsonlite_2.0.0              AnnotationFilter_1.34.0    
+    ## [67] R6_2.6.1                    plyr_1.8.9                 
+    ## [69] MatrixGenerics_1.22.0       systemfonts_1.3.2          
+    ## [71] fs_2.1.0                    ProtGenerics_1.42.0        
     ## [73] MsCoreUtils_1.25.4
