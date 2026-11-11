@@ -1,15 +1,15 @@
 # Understanding protein groups with adjacency matrices
 
 **Package**:
-*[PSMatch](https://bioconductor.org/packages/3.24/PSMatch)*\
+*[PSMatch](https://bioconductor.org/packages/3.23/PSMatch)*\
 **Authors**: Laurent Gatto \[aut, cre\] (ORCID:
 <https://orcid.org/0000-0002-1520-2268>), Johannes Rainer \[aut\]
 (ORCID: <https://orcid.org/0000-0002-6977-7147>), Sebastian Gibb \[aut\]
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-11 14:50:34.195689\
-**Compiled**: Wed Nov 11 14:56:55 2026
+**Last modified:** 2026-11-11 15:00:52.182789\
+**Compiled**: Wed Nov 11 15:14:27 2026
 
 ## Introduction
 
@@ -27,12 +27,14 @@ Let’s start by loading and filter PSM data as illustrated in the
 data*](https://rformassspectrometry.github.io/PSMatch/articles/PSM.html)
 vignette.
 
-\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`"PSMatch"`](https://github.com/RforMassSpectrometry/PSMatch)`)`\
-`id`` ``<-`` ``MsDataHub``::`[`TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid`](https://rformassspectrometry.github.io/MsDataHub/reference/PXD000001.html)`(``)`` ``|>`\
-`    `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``)`` ``|>`\
-`    `[`filterPsmDecoy`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)`(``)`` ``|>`\
-`    `[`filterPsmRank`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)`(``)`
+``` r
+
+library("PSMatch")
+id <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid() |>
+    PSM() |>
+    filterPsmDecoy() |>
+    filterPsmRank()
+```
 
     ## see ?MsDataHub and browseVignettes('MsDataHub') for documentation
 
@@ -44,8 +46,10 @@ vignette.
 
     ## Removed 155 PSMs with rank > 1.
 
-\
-`id`
+``` r
+
+id
+```
 
     ## PSM with 2751 rows and 35 columns.
     ## names(35): sequence spectrumID ... subReplacementResidue subLocation
@@ -56,8 +60,10 @@ peptide sequences and the second the protein identifiers these peptides
 stem from. Below are the 10 first observations of our identification
 data table.
 
-\
-[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``id``[``1``:``10``, `[`c`](https://rdrr.io/r/base/c.html)`(``"sequence"``, ``"DatabaseAccess"``)``]``)`
+``` r
+
+data.frame(id[1:10, c("sequence", "DatabaseAccess")])
+```
 
     ##                                    sequence DatabaseAccess
     ## EH7807.1                       RQCRTDFLNYLR        ECA2006
@@ -77,14 +83,18 @@ generally a value \> 0) indicating that a peptides belongs to the
 corresponding proteins. Such a matrix is created below for our
 identification data.
 
-\
-`adj`` ``<-`` `[`makeAdjacencyMatrix`](https://rformassspectrometry.github.io/PSMatch/reference/adjacencyMatrix.md)`(``id``)`\
-[`dim`](https://rdrr.io/r/base/dim.html)`(``adj``)`
+``` r
+
+adj <- makeAdjacencyMatrix(id)
+dim(adj)
+```
 
     ## [1] 2357 1504
 
-\
-`adj``[``1``:``5``, ``1``:``5``]`
+``` r
+
+adj[1:5, 1:5]
+```
 
     ## 5 x 5 sparse Matrix of class "dgCMatrix"
     ##                                   ECA2006 ECA1676 ECA3009 ECA1420 ECA2142
@@ -100,13 +110,17 @@ the number of unique peptides sequences and database accession numbers.
 For the latter, if the peptide stems from multiple proteins, these
 proteins are separated by default with a semicolon `;`.
 
-\
-[`length`](https://rdrr.io/r/base/length.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``id``$``sequence``)``)`
+``` r
+
+length(unique(id$sequence))
+```
 
     ## [1] 2357
 
-\
-[`length`](https://rdrr.io/r/base/length.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(`[`unlist`](https://rdrr.io/r/base/unlist.html)`(`[`strsplit`](https://rdrr.io/r/base/strsplit.html)`(``id``$``DatabaseAccess``, ``";"``)``)``)``)`
+``` r
+
+length(unique(unlist(strsplit(id$DatabaseAccess, ";"))))
+```
 
     ## [1] 1504
 
@@ -123,14 +137,18 @@ These are represented by subsets of this large matrix named connected
 component. We can easily compute all these connected components to
 produce the multiple smaller and relevant adjacency matrices.
 
-\
-`cc`` ``<-`` `[`ConnectedComponents`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)`(``adj``)`\
-[`length`](https://rdrr.io/r/base/length.html)`(``cc``)`
+``` r
+
+cc <- ConnectedComponents(adj)
+length(cc)
+```
 
     ## [1] 1476
 
-\
-`cc`
+``` r
+
+cc
+```
 
     ## An instance of class ConnectedComponents 
     ##  Number of proteins: 1504 
@@ -143,8 +161,10 @@ Among the 2357 and the 1504 proteins, we have 1476 connected components.
 954 thereof, such as the one shown below, correspond to single proteins
 identified by a single peptide:
 
-\
-[`connectedComponents`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)`(``cc``, ``1``)`
+``` r
+
+connectedComponents(cc, 1)
+```
 
     ## 1 x 1 sparse Matrix of class "dgCMatrix"
     ##                        ECA0003
@@ -153,8 +173,10 @@ identified by a single peptide:
 7 thereof represent protein groups identified by a single shared
 peptide:
 
-\
-[`connectedComponents`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)`(``cc``, ``527``)`
+``` r
+
+connectedComponents(cc, 527)
+```
 
     ## 1 x 2 sparse Matrix of class "dgCMatrix"
     ##            ECA1637 ECA2914
@@ -162,8 +184,10 @@ peptide:
 
 501 represent single proteins identified by multiple unique peptides:
 
-\
-[`connectedComponents`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)`(``cc``, ``38``)`
+``` r
+
+connectedComponents(cc, 38)
+```
 
     ## 5 x 1 sparse Matrix of class "dgCMatrix"
     ##                               ECA0130
@@ -177,8 +201,10 @@ Finally, arguable those that warrant additional exploration are those
 that are composed of multiple peptides and multiple proteins. There are
 14 thereof in this identification; here’s an example:
 
-\
-[`connectedComponents`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)`(``cc``, ``920``)`
+``` r
+
+connectedComponents(cc, 920)
+```
 
     ## 4 x 2 sparse Matrix of class "dgCMatrix"
     ##                    ECA2869 ECA4278
@@ -193,13 +219,17 @@ Let’s identify the connected components that have at least 3 peptides
 (i.e. rows in the adjacency matrix) and 3 proteins (i.e. columns in the
 adjacency matrix).
 
-\
-`(``i`` ``<-`` `[`which`](https://rdrr.io/r/base/which.html)`(``nrows``(``cc``)`` ``>`` ``2`` ``&`` ``ncols``(``cc``)`` ``>`` ``2``)``)`
+``` r
+
+(i <- which(nrows(cc) > 2 & ncols(cc) > 2))
+```
 
     ## [1] 1079 1082
 
-\
-`dims``(``cc``)``[``i``, ``]`
+``` r
+
+dims(cc)[i, ]
+```
 
     ##      nrow ncol
     ## [1,]    3    4
@@ -211,9 +241,11 @@ the
 function and explore how to inform our peptides filtering beyond the
 `filterPsm*()` functions.
 
-\
-`cx`` ``<-`` `[`connectedComponents`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)`(``cc``, ``1082``)`\
-`cx`
+``` r
+
+cx <- connectedComponents(cc, 1082)
+cx
+```
 
     ## 7 x 4 sparse Matrix of class "dgCMatrix"
     ##                     ECA3406 ECA3415 ECA3389 ECA3399
@@ -232,8 +264,10 @@ default, proteins are shown as blue squares and peptides as white
 circles. Edge connect peptides/circles to proteins/squares, indicating
 that a peptide belongs to a protein.
 
-\
-[`plotAdjacencyMatrix`](https://rformassspectrometry.github.io/PSMatch/reference/adjacencyMatrix.md)`(``cx``)`
+``` r
+
+plotAdjacencyMatrix(cx)
+```
 
     ## Warning: vertex attribute color contains NAs. Replacing with default value 1
     ## vertex attribute color contains NAs. Replacing with default value 1
@@ -278,16 +312,20 @@ distance, dissimilar names).
 By setting the argument to 1, we see that proteins starting with `ECA33`
 and those starting with `ECA34` are represented with different colours.
 
-\
-[`plotAdjacencyMatrix`](https://rformassspectrometry.github.io/PSMatch/reference/adjacencyMatrix.md)`(``cx``, ``1``)`
+``` r
+
+plotAdjacencyMatrix(cx, 1)
+```
 
 ![](AdjacencyMatrix_files/figure-html/unnamed-chunk-13-1.png)
 
 We can further distinguish `ECA3406`, and `ECA314` and `ECA33*9` by
 setting `protColors` to 2.
 
-\
-[`plotAdjacencyMatrix`](https://rformassspectrometry.github.io/PSMatch/reference/adjacencyMatrix.md)`(``cx``, ``2``)`
+``` r
+
+plotAdjacencyMatrix(cx, 2)
+```
 
 ![](AdjacencyMatrix_files/figure-html/unnamed-chunk-14-1.png)
 
@@ -308,10 +346,12 @@ create a colour palette representing the range of scores.
 
 The named vector of scores:
 
-\
-`score`` ``<-`` ``id``$``MS.GF.RawScore`\
-[`names`](https://rdrr.io/r/base/names.html)`(``score``)`` ``<-`` ``id``$``sequence`\
-[`head`](https://rdrr.io/r/utils/head.html)`(``score``)`
+``` r
+
+score <- id$MS.GF.RawScore
+names(score) <- id$sequence
+head(score)
+```
 
     ##                      RQCRTDFLNYLR            ESVALADQVTCVDWRNRKATKK 
     ##                                10                                12 
@@ -322,11 +362,13 @@ The named vector of scores:
 
 The matching named vector of colours:
 
-\
-`cls`` ``<-`` `[`as.character`](https://rdrr.io/r/base/character.html)`(`[`cut`](https://rdrr.io/r/base/cut.html)`(``score``, ``12``,`\
-`                        labels ``=`` `[`colorRampPalette`](https://rdrr.io/r/grDevices/colorRamp.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"white"``, ``"red"``)``)``(``12``)``)``)`\
-[`names`](https://rdrr.io/r/base/names.html)`(``cls``)`` ``<-`` ``id``$``sequence`\
-[`head`](https://rdrr.io/r/utils/head.html)`(``cls``)`
+``` r
+
+cls <- as.character(cut(score, 12,
+                        labels = colorRampPalette(c("white", "red"))(12)))
+names(cls) <- id$sequence
+head(cls)
+```
 
     ##                      RQCRTDFLNYLR            ESVALADQVTCVDWRNRKATKK 
     ##                         "#FFA2A2"                         "#FFA2A2" 
@@ -339,8 +381,10 @@ Below, we see that all these peptides have relatively low scores (light
 red), and that two of the three of the `ECA34*` proteins have the
 highest scores.
 
-\
-[`plotAdjacencyMatrix`](https://rformassspectrometry.github.io/PSMatch/reference/adjacencyMatrix.md)`(``cx``, pepColors ``=`` ``cls``)`
+``` r
+
+plotAdjacencyMatrix(cx, pepColors = cls)
+```
 
 ![](AdjacencyMatrix_files/figure-html/unnamed-chunk-17-1.png)
 
@@ -355,26 +399,32 @@ contain quantitation values (i.e. those starting with `Intensity.`) and
 them create a `SummarizedExperiment` using the
 [readSummarizedExperiment()](https://rformassspectrometry.github.io/QFeatures/reference/readQFeatures.html)
 function from the
-*[QFeatures](https://bioconductor.org/packages/3.24/QFeatures)* package.
+*[QFeatures](https://bioconductor.org/packages/3.23/QFeatures)* package.
 
-\
-`f`` ``<-`` ``MsDataHub``::`[`cptac_a_b_peptides.txt`](https://rformassspectrometry.github.io/MsDataHub/reference/cptac.html)`(``)`\
-\
-`(``i`` ``<-`` `[`grep`](https://rdrr.io/r/base/grep.html)`(``"Intensity\\."``, `[`names`](https://rdrr.io/r/base/names.html)`(`[`read.delim`](https://rdrr.io/r/utils/read.table.html)`(``f``)``)``)``)`
+``` r
+
+f <- MsDataHub::cptac_a_b_peptides.txt()
+
+(i <- grep("Intensity\\.", names(read.delim(f))))
+```
 
     ## [1] 56 57 58 59 60 61
 
-\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`QFeatures`](https://rformassspectrometry.github.io/QFeatures)`)`\
-`se`` ``<-`` `[`readSummarizedExperiment`](https://rformassspectrometry.github.io/QFeatures/reference/readQFeatures.html)`(``f``, quantCols ``=`` ``i``, sep ``=`` ``"\t"``)`
+``` r
+
+library(QFeatures)
+se <- readSummarizedExperiment(f, quantCols = i, sep = "\t")
+```
 
 Below, we create a vector of protein groups (not leading razor protein
 names) and name it using the peptide sequences.
 
-\
-`prots`` ``<-`` ``rowData``(``se``)``$``Proteins`\
-[`names`](https://rdrr.io/r/base/names.html)`(``prots``)`` ``<-`` ``rowData``(``se``)``$``Sequence`\
-[`head`](https://rdrr.io/r/utils/head.html)`(``prots``)`
+``` r
+
+prots <- rowData(se)$Proteins
+names(prots) <- rowData(se)$Sequence
+head(prots)
+```
 
     ##                            AAAAGAGGAGDSGDAVTK 
     ##                        "sp|P38915|SPT8_YEAST" 
@@ -395,14 +445,18 @@ will split the protein groups into individual proteins using a `;` (used
 by default, so not required here) to construct the adjacency matrix,
 which itself can be used to compute the connected components.
 
-\
-`adj`` ``<-`` `[`makeAdjacencyMatrix`](https://rformassspectrometry.github.io/PSMatch/reference/adjacencyMatrix.md)`(``prots``, split ``=`` ``";"``)`\
-[`dim`](https://rdrr.io/r/base/dim.html)`(``adj``)`
+``` r
+
+adj <- makeAdjacencyMatrix(prots, split = ";")
+dim(adj)
+```
 
     ## [1] 11466  1718
 
-\
-`adj``[``1``:``3``, ``1``:``3``]`
+``` r
+
+adj[1:3, 1:3]
+```
 
     ## 3 x 3 sparse Matrix of class "dgCMatrix"
     ##                    sp|P38915|SPT8_YEAST sp|Q3E792|RS25A_YEAST
@@ -414,9 +468,11 @@ which itself can be used to compute the connected components.
     ## AAAALAGGK                              1
     ## AAAALAGGKK                             1
 
-\
-`cc`` ``<-`` `[`ConnectedComponents`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)`(``adj``)`\
-`cc`
+``` r
+
+cc <- ConnectedComponents(adj)
+cc
+```
 
     ## An instance of class ConnectedComponents 
     ##  Number of proteins: 1718 
@@ -434,8 +490,10 @@ describing the components composed of as least several peptides and
 proteins (150 in the example above) and ranks them from the most to the
 least interesting.
 
-\
-[`head`](https://rdrr.io/r/utils/head.html)`(``cctab`` ``<-`` `[`prioritiseConnectedComponents`](https://rformassspectrometry.github.io/PSMatch/reference/ConnectedComponents.md)`(``cc``)``)`
+``` r
+
+head(cctab <- prioritiseConnectedComponents(cc))
+```
 
     ##      nrow ncol n_coms  mod_coms   n rs_min rs_max cs_min cs_max  sparsity
     ## 1081   21    3      3 0.5793951  23      1      2      7      8 0.6349206
@@ -449,9 +507,11 @@ The prioritisation table can then be further summarised using a
 principal component to identify outliers (for example component 1200
 below) or groups of *similar* components to explore.
 
-\
-[`library`](https://rdrr.io/r/base/library.html)`(`[`factoextra`](https://github.com/kassambara/factoextra)`)`\
-[`fviz_pca`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html)`(`[`prcomp`](https://rdrr.io/r/stats/prcomp.html)`(``cctab``, scale ``=`` ``TRUE``, center ``=`` ``TRUE``)``)`
+``` r
+
+library(factoextra)
+fviz_pca(prcomp(cctab, scale = TRUE, center = TRUE))
+```
 
 ![](AdjacencyMatrix_files/figure-html/unnamed-chunk-22-1.png)
 
@@ -462,12 +522,14 @@ license](https://creativecommons.org/licenses/by-sa/2.0/).
 
 ## Session information
 
-\
-[`sessionInfo`](https://rdrr.io/r/utils/sessionInfo.html)`(``)`
+``` r
+
+sessionInfo()
+```
 
     ## R version 4.6.1 (2026-06-24)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Ubuntu 24.04.5 LTS
+    ## Running under: Ubuntu 24.04.4 LTS
     ## 
     ## Matrix products: default
     ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -501,7 +563,7 @@ license](https://creativecommons.org/licenses/by-sa/2.0/).
     ## 
     ## loaded via a namespace (and not attached):
     ##   [1] DBI_1.3.0               httr2_1.3.0             rlang_1.3.0            
-    ##   [4] magrittr_2.0.5          clue_0.3-68             otel_0.2.0             
+    ##   [4] magrittr_2.0.5          clue_0.3-68             otel_0.3.0             
     ##   [7] compiler_4.6.1          RSQLite_3.53.3          png_0.1-9              
     ##  [10] systemfonts_1.3.2       vctrs_0.7.3             reshape2_1.4.5         
     ##  [13] stringr_1.6.0           ProtGenerics_1.45.0     pkgconfig_2.0.3        
@@ -523,7 +585,7 @@ license](https://creativecommons.org/licenses/by-sa/2.0/).
     ##  [61] Spectra_1.23.7          BiocFileCache_3.3.2     ExperimentHub_3.3.2    
     ##  [64] Biostrings_2.81.9       ggpubr_1.0.0            pillar_1.11.1          
     ##  [67] BiocManager_1.30.27     filelock_1.0.3          carData_3.0-6          
-    ##  [70] ncdf4_1.24              BiocVersion_3.24.0      scales_1.4.0           
+    ##  [70] ncdf4_1.24              BiocVersion_3.23.1      scales_1.4.0           
     ##  [73] glue_1.8.1              lazyeval_0.2.3          tools_4.6.1            
     ##  [76] AnnotationHub_4.3.3     data.table_1.18.6.1     mzR_2.47.1             
     ##  [79] ggsignif_0.6.4          fs_2.1.0                grid_4.6.1             

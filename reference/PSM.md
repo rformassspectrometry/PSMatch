@@ -199,7 +199,7 @@ psmVariables(psm)
 ## mzID parser
 psm_mzid <- PSM(f, parser = "mzID")
 #> Loading required namespace: mzID
-#> reading 2e232b13963_7857...
+#> reading 42e341bb11d_7857...
 #> Warning: 'as.is' should be specified by the caller; using TRUE
 #> Warning: 'as.is' should be specified by the caller; using TRUE
 #> Warning: 'as.is' should be specified by the caller; using TRUE
@@ -275,7 +275,7 @@ reduced(rpsm2)
 
 library(rpx)
 PXD022816 <- PXDataset("PXD022816")
-#> Querying ProteomeXchange for PXD022816.
+#> Loading PXD022816 from cache.
 PXD022816
 #> Project PXD022816 with 33 files
 #>  
@@ -286,22 +286,20 @@ PXD022816
 (mzids <- pxget(PXD022816, grep("mzID", pxfiles(PXD022816))[1:2]))
 #> Project PXD022816 files (33):
 #>  [remote] PXD022816_community_annotated.sdrf.tsv
-#>  [remote] QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz
+#>  [local]  QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz
 #>  [remote] QEP2LC6_HeLa_50ng_251120_01-calib.mzML
 #>  [remote] QEP2LC6_HeLa_50ng_251120_01.raw
-#>  [remote] QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz
+#>  [local]  QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz
 #>  [remote] QEP2LC6_HeLa_50ng_251120_02-calib.mzML
 #>  [remote] QEP2LC6_HeLa_50ng_251120_02.raw
 #>  [remote] QEP2LC6_HeLa_50ng_251120_03-calib.mzID.gz
 #>  [remote] QEP2LC6_HeLa_50ng_251120_03-calib.mzML
 #>  [remote] QEP2LC6_HeLa_50ng_251120_03.raw
 #>  ...
-#> Downloading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz file.
-#> 
-#> Downloading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz file.
-#> 
-#> [1] "/github/home/.cache/R/rpx/716dc76999_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz" 
-#> [2] "/github/home/.cache/R/rpx/71621b5a82e_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"
+#> Loading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz from cache.
+#> Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz from cache.
+#> [1] "/github/home/.cache/R/rpx/e156639a588_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"
+#> [2] "/github/home/.cache/R/rpx/e15773c75b8_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"
 psm <- PSM(mzids)
 psm
 #> PSM with 50314 rows and 31 columns.
@@ -353,8 +351,8 @@ DataFrame(psm[6:7, ])
 #> 2         387 MNVLLLLVLC...       Q58D62|FET...       32.788864          12894
 #>     spectrumFile        idFile MetaMorpheus.score PSM.level.q.value
 #>      <character>   <character>          <numeric>         <numeric>
-#> 1 P:\\Project... 716dc76999...            31.2586                 0
-#> 2 P:\\Project... 716dc76999...            31.2586                 0
+#> 1 P:\\Project... e156639a58...            31.2586                 0
+#> 2 P:\\Project... e156639a58...            31.2586                 0
 #>   modPeptideRef       modName   modMass modLocation subOriginalResidue
 #>     <character>   <character> <numeric>   <integer>        <character>
 #> 1          P_19 Carbamidom...   57.0215           6                 NA

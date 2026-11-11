@@ -26,10 +26,10 @@ Package to Explore Proteomics Identification Data. In: Lisacek, F. (eds)
 Bioinformatics for Mass Spectrometry. Methods in Molecular Biology, vol
 3071. Humana, New York, NY. https://doi.org/10.1007/978-1-0716-5519-1_5
 
-@Article{,\
-  title = {PSMatch: an R/Bioconductor package to explore proteomics identification data.},\
-  author = {Guillaume Deflandre and Sebastian Gibb and Laurent Gatto},\
-  journal = {Methods in Molecular Biology},\
-  year = {2027},\
-  doi = {10.1007/978-1-0716-5519-1_5},\
-}
+    @Article{,
+      title = {PSMatch: an R/Bioconductor package to explore proteomics identification data.},
+      author = {Guillaume Deflandre and Sebastian Gibb and Laurent Gatto},
+      journal = {Methods in Molecular Biology},
+      year = {2027},
+      doi = {10.1007/978-1-0716-5519-1_5},
+    }

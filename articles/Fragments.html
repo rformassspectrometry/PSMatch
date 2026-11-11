@@ -83,10 +83,10 @@ document.addEventListener("DOMContentLoaded", function() {
     if (links[i].hostname != window.location.hostname)
       links[i].target = '_blank';
 });
-</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.24/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
+</script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.23/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-11 14:50:34.196697<br><strong>Compiled</strong>: Wed Nov 11 14:57:15 2026</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-11 15:00:52.183792<br><strong>Compiled</strong>: Wed Nov 11 15:14:47 2026</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -96,7 +96,7 @@ visualisation of MS2 fragment ions. For a general overview of the
 package, see the <code>PSMatch</code> package manual page
 (<code><a href="../reference/PSMatch.html">?PSMatch</a></code>) and references therein.</p>
 <p>To illustrate this vignette, we will import and merge raw and
-identification data from the <em><a href="https://bioconductor.org/packages/3.24/MsDataHub" class="external-link">MsDataHub</a></em>.
+identification data from the <em><a href="https://bioconductor.org/packages/3.23/MsDataHub" class="external-link">MsDataHub</a></em>.
 For details about this section, please visit the <a href="https://rformassspectrometry.github.io/Spectra/articles/Spectra.html" class="external-link">Spectra</a>
 package webpage.</p>
 <p>Load the raw MS data:</p>
@@ -144,7 +144,7 @@ package webpage.</p>
 <span><span class="co">##  ... 68 more variables/columns.</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## file(s):</span></span>
-<span><span class="co">## 2e25c562425_7858</span></span></code></pre>
+<span><span class="co">## 42e62637f2_7858</span></span></code></pre>
 <p>In this example, we are going to focus the MS2 scan with index 1158
 and its parent MS1 scan (index 1148, selected automatically with the <a href="https://rformassspectrometry.github.io/Spectra/reference/MsBackend.html" class="external-link">filterPrecursorScan()</a>
 function).</p>
@@ -404,7 +404,7 @@ license</a>.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.6.1 (2026-06-24)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 24.04.5 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 24.04.4 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -433,7 +433,7 @@ license</a>.</p>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] DBI_1.3.0                   httr2_1.3.0                </span></span>
 <span><span class="co">##  [3] rlang_1.3.0                 magrittr_2.0.5             </span></span>
-<span><span class="co">##  [5] clue_0.3-68                 otel_0.2.0                 </span></span>
+<span><span class="co">##  [5] clue_0.3-68                 otel_0.3.0                 </span></span>
 <span><span class="co">##  [7] matrixStats_1.5.0           compiler_4.6.1             </span></span>
 <span><span class="co">##  [9] RSQLite_3.53.3              png_0.1-9                  </span></span>
 <span><span class="co">## [11] systemfonts_1.3.2           vctrs_0.7.3                </span></span>
@@ -465,7 +465,7 @@ license</a>.</p>
 <span><span class="co">## [63] Biostrings_2.81.9           pillar_1.11.1              </span></span>
 <span><span class="co">## [65] BiocManager_1.30.27         filelock_1.0.3             </span></span>
 <span><span class="co">## [67] MatrixGenerics_1.25.0       ncdf4_1.24                 </span></span>
-<span><span class="co">## [69] BiocVersion_3.24.0          glue_1.8.1                 </span></span>
+<span><span class="co">## [69] BiocVersion_3.23.1          glue_1.8.1                 </span></span>
 <span><span class="co">## [71] lazyeval_0.2.3              tools_4.6.1                </span></span>
 <span><span class="co">## [73] AnnotationHub_4.3.3         data.table_1.18.6.1        </span></span>
 <span><span class="co">## [75] mzR_2.47.1                  QFeatures_1.23.2           </span></span>
