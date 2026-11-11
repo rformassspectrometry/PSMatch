@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">PSMatch</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.24/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-10 23:10:39.040848<br><strong>Compiled</strong>: Tue Nov 10 23:35:02 2026</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-11 14:50:34.196697<br><strong>Compiled</strong>: Wed Nov 11 14:57:46 2026</p>
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
@@ -315,14 +315,14 @@ backend fails.</p></li>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.170   0.006   0.175</span></span></code></pre>
+<span><span class="co">##   0.126   0.007   0.133</span></span></code></pre>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required namespace: mzID</span></span></code></pre>
-<pre><code><span><span class="co">## reading 13c276f70ce1_7857...</span></span></code></pre>
+<pre><code><span><span class="co">## reading 2e232b13963_7857...</span></span></code></pre>
 <pre><code><span><span class="co">##  DONE!</span></span></code></pre>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   5.272   0.043   5.315</span></span></code></pre>
+<span><span class="co">##   5.002   0.068   5.097</span></span></code></pre>
 <p>Other differences in the two parsers include the columns that are
 returned, the way they name them, and, as will shown below the matches
 that are returned. Note for instance (and this will be important later),
@@ -478,7 +478,7 @@ license</a>.</p>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] MsDataHub_1.13.3     PSMatch_1.17.2       PTMods_1.1.1        </span></span>
+<span><span class="co">## [1] MsDataHub_1.13.3     PSMatch_1.17.3       PTMods_1.1.1        </span></span>
 <span><span class="co">## [4] S4Vectors_0.51.10    BiocGenerics_0.59.12 generics_0.1.4      </span></span>
 <span><span class="co">## [7] BiocStyle_2.41.0    </span></span>
 <span><span class="co">## </span></span>

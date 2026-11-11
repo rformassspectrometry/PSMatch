@@ -8,8 +8,8 @@
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-10 23:10:39.040848\
-**Compiled**: Tue Nov 10 23:35:02 2026
+**Last modified:** 2026-11-11 14:50:34.196697\
+**Compiled**: Wed Nov 11 14:57:46 2026
 
 ## Installation instructions
 
@@ -289,19 +289,19 @@ namely `"mzR"` (the default value) and `"mzID"`.
 [`system.time`](https://rdrr.io/r/base/system.time.html)`(``id1`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``, parser ``=`` ``"mzR"``)``)`
 
     ##    user  system elapsed 
-    ##   0.170   0.006   0.175
+    ##   0.126   0.007   0.133
 
 \
 [`system.time`](https://rdrr.io/r/base/system.time.html)`(``id2`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``, parser ``=`` ``"mzID"``)``)`
 
     ## Loading required namespace: mzID
 
-    ## reading 13c276f70ce1_7857...
+    ## reading 2e232b13963_7857...
 
     ##  DONE!
 
     ##    user  system elapsed 
-    ##   5.272   0.043   5.315
+    ##   5.002   0.068   5.097
 
 Other differences in the two parsers include the columns that are
 returned, the way they name them, and, as will shown below the matches
@@ -504,7 +504,7 @@ license](https://creativecommons.org/licenses/by-sa/2.0/).
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] MsDataHub_1.13.3     PSMatch_1.17.2       PTMods_1.1.1        
+    ## [1] MsDataHub_1.13.3     PSMatch_1.17.3       PTMods_1.1.1        
     ## [4] S4Vectors_0.51.10    BiocGenerics_0.59.12 generics_0.1.4      
     ## [7] BiocStyle_2.41.0    
     ## 

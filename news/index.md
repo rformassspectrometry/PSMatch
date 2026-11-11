@@ -2,6 +2,10 @@
 
 ## PSMatch 1.17
 
+### PSMatch 1.17.3
+
+- Change license to GPL-3.
+
 ### PSMatch 1.17.2
 
 - Added

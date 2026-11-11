@@ -51,7 +51,7 @@ reduced()&amp;lt;- setter."><meta property="og:image" content="https://rformasss
 
     <a class="navbar-brand me-2" href="../index.html">PSMatch</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -283,7 +283,7 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-in"><span><span class="co">## mzID parser</span></span></span>
 <span class="r-in"><span><span class="va">psm_mzid</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: mzID</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> reading 13c276f70ce1_7857...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> reading 2e232b13963_7857...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'as.is' should be specified by the caller; using TRUE</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'as.is' should be specified by the caller; using TRUE</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'as.is' should be specified by the caller; using TRUE</span>
@@ -359,7 +359,7 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lgatto/rpx" class="external-link">rpx</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">PXD022816</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rpx/man/PXDataset2.html" class="external-link">PXDataset</a></span><span class="op">(</span><span class="st">"PXD022816"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading PXD022816 from cache.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Querying ProteomeXchange for PXD022816.</span>
 <span class="r-in"><span><span class="va">PXD022816</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Project PXD022816 with 33 files</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
@@ -370,20 +370,22 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-in"><span><span class="op">(</span><span class="va">mzids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rpx/man/PXDataset2.html" class="external-link">pxget</a></span><span class="op">(</span><span class="va">PXD022816</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"mzID"</span>, <span class="fu"><a href="https://rdrr.io/pkg/rpx/man/PXDataset2.html" class="external-link">pxfiles</a></span><span class="op">(</span><span class="va">PXD022816</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Project PXD022816 files (33):</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  [remote] PXD022816_community_annotated.sdrf.tsv</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  [local]  QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  [remote] QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  [remote] QEP2LC6_HeLa_50ng_251120_01-calib.mzML</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  [remote] QEP2LC6_HeLa_50ng_251120_01.raw</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  [local]  QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  [remote] QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  [remote] QEP2LC6_HeLa_50ng_251120_02-calib.mzML</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  [remote] QEP2LC6_HeLa_50ng_251120_02.raw</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  [remote] QEP2LC6_HeLa_50ng_251120_03-calib.mzID.gz</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  [remote] QEP2LC6_HeLa_50ng_251120_03-calib.mzML</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  [remote] QEP2LC6_HeLa_50ng_251120_03.raw</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz from cache.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz from cache.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/1f13647a4aea_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/1f1345ef358b_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz file.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz file.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.cache/R/rpx/716dc76999_QEP2LC6_HeLa_50ng_251120_01-calib.mzID.gz" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/github/home/.cache/R/rpx/71621b5a82e_QEP2LC6_HeLa_50ng_251120_02-calib.mzID.gz"</span>
 <span class="r-in"><span><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu">PSM</span><span class="op">(</span><span class="va">mzids</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">psm</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PSM with 50314 rows and 31 columns.</span>
@@ -435,8 +437,8 @@ adjacency matrix (for non-binary matrices), use
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2         387 MNVLLLLVLC...       Q58D62|FET...       32.788864          12894</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     spectrumFile        idFile MetaMorpheus.score PSM.level.q.value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      &lt;character&gt;   &lt;character&gt;          &lt;numeric&gt;         &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... 1f13647a4a...            31.2586                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... 1f13647a4a...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 P:\\Project... 716dc76999...            31.2586                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 P:\\Project... 716dc76999...            31.2586                 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   modPeptideRef       modName   modMass modLocation subOriginalResidue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;   &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          P_19 Carbamidom...   57.0215           6                 NA</span>
