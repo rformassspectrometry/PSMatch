@@ -1,5 +1,9 @@
 # PSMatch 1.17
 
+## PSMatch 1.17.4
+
+- Fix CC BY-SA link.
+
 ## PSMatch 1.17.3
 
 - Change license to GPL-3.
