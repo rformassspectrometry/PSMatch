@@ -25,10 +25,8 @@ get started with the package:
 To install the package from Bioconductor, make sure you have the
 `BiocManager` package, available from CRAN, and then run
 
-``` r
-
-BiocManager::install("PSMatch")
-```
+\
+`BiocManager``::`[`install`](https://bioconductor.github.io/BiocManager/reference/install.html)`(``"PSMatch"``)`
 
 ## Contributions
 

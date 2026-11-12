@@ -1,15 +1,15 @@
 # MS2 fragment ions
 
 **Package**:
-*[PSMatch](https://bioconductor.org/packages/3.23/PSMatch)*\
+*[PSMatch](https://bioconductor.org/packages/3.24/PSMatch)*\
 **Authors**: Laurent Gatto \[aut, cre\] (ORCID:
 <https://orcid.org/0000-0002-1520-2268>), Johannes Rainer \[aut\]
 (ORCID: <https://orcid.org/0000-0002-6977-7147>), Sebastian Gibb \[aut\]
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-12 13:10:28.559227\
-**Compiled**: Thu Nov 12 13:24:26 2026
+**Last modified:** 2026-11-12 13:10:35.545006\
+**Compiled**: Thu Nov 12 13:28:43 2026
 
 ## Introduction
 
@@ -22,35 +22,29 @@ and references therein.
 
 To illustrate this vignette, we will import and merge raw and
 identification data from the
-*[MsDataHub](https://bioconductor.org/packages/3.23/MsDataHub)*. For
+*[MsDataHub](https://bioconductor.org/packages/3.24/MsDataHub)*. For
 details about this section, please visit the
 [Spectra](https://rformassspectrometry.github.io/Spectra/articles/Spectra.html)
 package webpage.
 
 Load the raw MS data:
 
-``` r
-
-spf <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzML.gz()
-library(Spectra)
-sp <- Spectra(spf)
-```
+\
+`spf`` ``<-`` ``MsDataHub``::`[`TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzML.gz`](https://rformassspectrometry.github.io/MsDataHub/reference/PXD000001.html)`(``)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`Spectra`](https://github.com/RforMassSpectrometry/Spectra)`)`\
+`sp`` ``<-`` `[`Spectra`](https://rdrr.io/pkg/Spectra/man/Spectra.html)`(``spf``)`
 
 Load the identification data:
 
-``` r
-
-idf <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
-```
+\
+`idf`` ``<-`` ``MsDataHub``::`[`TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid`](https://rformassspectrometry.github.io/MsDataHub/reference/PXD000001.html)`(``)`
 
     ## see ?MsDataHub and browseVignettes('MsDataHub') for documentation
 
     ## loading from cache
 
-``` r
-
-id <- PSM(idf) |> filterPSMs()
-```
+\
+`id`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``idf``)`` ``|>`` `[`filterPSMs`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)`(``)`
 
     ## Starting with 5802 PSMs:
 
@@ -62,28 +56,22 @@ id <- PSM(idf) |> filterPSMs()
 
     ## 2666 PSMs left.
 
-``` r
-
-id
-```
+\
+`id`
 
     ## PSM with 2666 rows and 35 columns.
     ## names(35): sequence spectrumID ... subReplacementResidue subLocation
 
 Merge both:
 
-``` r
-
-sp <- joinSpectraData(sp, id, by.x = "spectrumId", by.y = "spectrumID")
-```
+\
+`sp`` ``<-`` `[`joinSpectraData`](https://rdrr.io/pkg/Spectra/man/combineSpectra.html)`(``sp``, ``id``, by.x ``=`` ``"spectrumId"``, by.y ``=`` ``"spectrumID"``)`
 
     ## Warning in joinSpectraData(sp, id, by.x = "spectrumId", by.y = "spectrumID"):
     ## Duplicates found in the 'y' key. Only last instance will be kept!
 
-``` r
-
-sp
-```
+\
+`sp`
 
     ## MSn data (Spectra) with 7534 spectra in a MsBackendMzR backend:
     ##        msLevel     rtime scanIndex
@@ -102,23 +90,19 @@ sp
     ##  ... 68 more variables/columns.
     ## 
     ## file(s):
-    ## 52074d5284f_7858
+    ## 5b7671cdb72_7858
 
 In this example, we are going to focus the MS2 scan with index 1158 and
 its parent MS1 scan (index 1148, selected automatically with the
 [filterPrecursorScan()](https://rformassspectrometry.github.io/Spectra/reference/MsBackend.html)
 function).
 
-``` r
+\
+`sp1158`` ``<-`` `[`filterPrecursorScan`](https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html)`(``sp``, ``1158``)`
 
-sp1158 <- filterPrecursorScan(sp, 1158)
-```
-
-``` r
-
-plotSpectra(sp1158[1], xlim = c(400, 600))
-abline(v = precursorMz(sp1158)[2], col = "red", lty = "dotted")
-```
+\
+[`plotSpectra`](https://rdrr.io/pkg/Spectra/man/spectra-plotting.html)`(``sp1158``[``1``]``, xlim ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``400``, ``600``)``)`\
+[`abline`](https://rdrr.io/r/graphics/abline.html)`(``v ``=`` `[`precursorMz`](https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html)`(``sp1158``)``[``2``]``, col ``=`` ``"red"``, lty ``=`` ``"dotted"``)`
 
 ![](Fragments_files/figure-html/unnamed-chunk-5-1.png)
 
@@ -126,10 +110,8 @@ abline(v = precursorMz(sp1158)[2], col = "red", lty = "dotted")
 
 The MS2 scan was matched to the sequence `SCALITDGR`.
 
-``` r
-
-sp1158$sequence
-```
+\
+`sp1158``$``sequence`
 
     ## [1] NA          "SCALITDGR"
 
@@ -141,10 +123,8 @@ sequence of the parent ion. By default, carbamidomethylation of
 cysteines is applied, but it can be turned off with the parameter
 `addCarbamidomethyl = FALSE`.
 
-``` r
-
-calculateFragments(sp1158$sequence[2], addCarbamidomethyl = FALSE)
-```
+\
+[`calculateFragments`](https://rformassspectrometry.github.io/PSMatch/reference/calculateFragments.md)`(``sp1158``$``sequence``[``2``]``, addCarbamidomethyl ``=`` ``FALSE``)`
 
     ##           mz ion type pos z      seq   peptide
     ## 1   88.03931  b1    b   1 1        S SCALITDGR
@@ -186,14 +166,12 @@ based on the peptide-modifications combinations available. The fragments
 can be traced to their parent ion by checking the `peptide` column. A
 fragment can have multiple modifications.
 
-``` r
-
-var_seq <- PTMods::addVariableModifications(sp1158$sequence[2],
-    variableModifications = c(C = 57.02146, T = 79.966)
-)
-
-calculateFragments(var_seq)
-```
+\
+`var_seq`` ``<-`` ``PTMods``::`[`addVariableModifications`](https://rdrr.io/pkg/PTMods/man/addVariableModifications.html)`(``sp1158``$``sequence``[``2``]``,`\
+`    variableModifications ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``C ``=`` ``57.02146``, T ``=`` ``79.966``)`\
+`)`\
+\
+[`calculateFragments`](https://rformassspectrometry.github.io/PSMatch/reference/calculateFragments.md)`(``var_seq``)`
 
     ##            mz ion type pos z      seq                       peptide
     ## 1    88.03931  b1    b   1 1        S                     SCALITDGR
@@ -317,10 +295,8 @@ your sequences or check out the corresponding vignette with
 We can now visualise these fragments directly on the MS spectrum. Let’s
 first visualise the spectrum as is:
 
-``` r
-
-plotSpectra(sp1158[2])
-```
+\
+[`plotSpectra`](https://rdrr.io/pkg/Spectra/man/spectra-plotting.html)`(``sp1158``[``2``]``)`
 
 ![](Fragments_files/figure-html/unnamed-chunk-9-1.png)
 
@@ -335,29 +311,25 @@ as carbamidomethylation of cysteines can be added using the
 `variableModifications` and `fixedModifications` parameters. Remember,
 by default, carbamidomethylation is applied on all sequences.
 
-``` r
-
-dataOrigin(sp1158)[2] <- "TMT_Erwinia" ## Reduces the mzspec text
-plotSpectraPTM(sp1158[2],
-    fixedModifications = c(C = "Carbamidomethyl")
-)
-```
+\
+[`dataOrigin`](https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html)`(``sp1158``)``[``2``]`` ``<-`` ``"TMT_Erwinia"`` ``## Reduces the mzspec text`\
+[`plotSpectraPTM`](https://rformassspectrometry.github.io/PSMatch/reference/plotSpectraPTM.md)`(``sp1158``[``2``]``,`\
+`    fixedModifications ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``C ``=`` ``"Carbamidomethyl"``)`\
+`)`
 
 ![](Fragments_files/figure-html/unnamed-chunk-10-1.png)
 
 For instance, there is a better match when carbamidomethylation of
 cysteines is applied (as above) compared to no modifications at all.
 
-``` r
-
-plotSpectraPTM(sp1158[2],
-    variableModifications = c(C = "Carbamidomethyl"),
-    addCarbamidomethyl = FALSE, ## Remove carbamidomethyl by default
-    asp = 1/2,
-    deltaMz = FALSE,
-    main = c("Scan 1158 without carbamidomethyl", "Scan 1158 with carbamidomethyl")
-)
-```
+\
+[`plotSpectraPTM`](https://rformassspectrometry.github.io/PSMatch/reference/plotSpectraPTM.md)`(``sp1158``[``2``]``,`\
+`    variableModifications ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``C ``=`` ``"Carbamidomethyl"``)``,`\
+`    addCarbamidomethyl ``=`` ``FALSE``, ``## Remove carbamidomethyl by default`\
+`    asp ``=`` ``1``/``2``,`\
+`    deltaMz ``=`` ``FALSE``,`\
+`    main ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Scan 1158 without carbamidomethyl"``, ``"Scan 1158 with carbamidomethyl"``)`\
+`)`
 
 ![](Fragments_files/figure-html/unnamed-chunk-11-1.png)
 
@@ -378,14 +350,12 @@ specifying the charge state (or maximum charge state) to use. The
 charges from 1 up to the specified value (`TRUE`, the default) or only
 for the exact charge specified (`FALSE`).
 
-``` r
-
-## Use fragments with a custom charge state
-plotSpectraPTM(sp1158[2], z = 2, allCharges = FALSE)
-
-## Use all charges from 1 to the precursor charge state or a custom charge
-plotSpectraPTM(sp1158[2], z = 2, allCharges = TRUE)
-```
+\
+`## Use fragments with a custom charge state`\
+[`plotSpectraPTM`](https://rformassspectrometry.github.io/PSMatch/reference/plotSpectraPTM.md)`(``sp1158``[``2``]``, z ``=`` ``2``, allCharges ``=`` ``FALSE``)`\
+\
+`## Use all charges from 1 to the precursor charge state or a custom charge`\
+[`plotSpectraPTM`](https://rformassspectrometry.github.io/PSMatch/reference/plotSpectraPTM.md)`(``sp1158``[``2``]``, z ``=`` ``2``, allCharges ``=`` ``TRUE``)`
 
 Note that `z` cannot be used simultaneously with
 `variableModifications`.
@@ -406,14 +376,12 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Session information
 
-``` r
-
-sessionInfo()
-```
+\
+[`sessionInfo`](https://rdrr.io/r/utils/sessionInfo.html)`(``)`
 
     ## R version 4.6.1 (2026-06-24)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Ubuntu 24.04.4 LTS
+    ## Running under: Ubuntu 24.04.5 LTS
     ## 
     ## Matrix products: default
     ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -436,13 +404,13 @@ sessionInfo()
     ## 
     ## other attached packages:
     ## [1] Spectra_1.23.7       BiocParallel_1.47.0  MsDataHub_1.13.3    
-    ## [4] PSMatch_1.17.4       PTMods_1.1.1         S4Vectors_0.51.10   
+    ## [4] PSMatch_1.17.4       PTMods_1.1.2         S4Vectors_0.51.10   
     ## [7] BiocGenerics_0.59.12 generics_0.1.4       BiocStyle_2.41.0    
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] DBI_1.3.0                   httr2_1.3.0                
     ##  [3] rlang_1.3.0                 magrittr_2.0.5             
-    ##  [5] clue_0.3-68                 otel_0.3.0                 
+    ##  [5] clue_0.3-68                 otel_0.2.0                 
     ##  [7] matrixStats_1.5.0           compiler_4.6.1             
     ##  [9] RSQLite_3.53.3              png_0.1-9                  
     ## [11] systemfonts_1.3.2           vctrs_0.7.3                
@@ -474,10 +442,10 @@ sessionInfo()
     ## [63] Biostrings_2.81.9           pillar_1.11.1              
     ## [65] BiocManager_1.30.27         filelock_1.0.3             
     ## [67] MatrixGenerics_1.25.0       ncdf4_1.24                 
-    ## [69] BiocVersion_3.23.1          glue_1.8.1                 
+    ## [69] BiocVersion_3.24.0          glue_1.8.1                 
     ## [71] lazyeval_0.2.3              tools_4.6.1                
     ## [73] AnnotationHub_4.3.3         data.table_1.18.6.1        
-    ## [75] mzR_2.47.1                  QFeatures_1.23.2           
+    ## [75] mzR_2.47.2                  QFeatures_1.23.2           
     ## [77] fs_2.1.0                    grid_4.6.1                 
     ## [79] tidyr_1.3.2                 MsCoreUtils_1.25.4         
     ## [81] AnnotationDbi_1.75.2        cli_3.6.6                  
