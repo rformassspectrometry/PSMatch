@@ -8,8 +8,8 @@
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-11 15:00:52.183792\
-**Compiled**: Wed Nov 11 15:14:47 2026
+**Last modified:** 2026-11-12 13:10:28.559227\
+**Compiled**: Thu Nov 12 13:24:26 2026
 
 ## Introduction
 
@@ -102,7 +102,7 @@ sp
     ##  ... 68 more variables/columns.
     ## 
     ## file(s):
-    ## 42e62637f2_7858
+    ## 52074d5284f_7858
 
 In this example, we are going to focus the MS2 scan with index 1158 and
 its parent MS1 scan (index 1148, selected automatically with the
@@ -402,7 +402,7 @@ can do, run
 ## License
 
 This vignette is distributed under a [CC BY-SA
-license](https://creativecommons.org/licenses/by-sa/2.0/).
+license](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Session information
 
@@ -436,7 +436,7 @@ sessionInfo()
     ## 
     ## other attached packages:
     ## [1] Spectra_1.23.7       BiocParallel_1.47.0  MsDataHub_1.13.3    
-    ## [4] PSMatch_1.17.3       PTMods_1.1.1         S4Vectors_0.51.10   
+    ## [4] PSMatch_1.17.4       PTMods_1.1.1         S4Vectors_0.51.10   
     ## [7] BiocGenerics_0.59.12 generics_0.1.4       BiocStyle_2.41.0    
     ## 
     ## loaded via a namespace (and not attached):

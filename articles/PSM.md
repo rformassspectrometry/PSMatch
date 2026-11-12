@@ -8,8 +8,8 @@
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-11 15:00:52.183792\
-**Compiled**: Wed Nov 11 15:15:19 2026
+**Last modified:** 2026-11-12 13:10:28.559227\
+**Compiled**: Thu Nov 12 13:25:02 2026
 
 ## Installation instructions
 
@@ -337,7 +337,7 @@ system.time(id1 <- PSM(f, parser = "mzR"))
 ```
 
     ##    user  system elapsed 
-    ##   0.131   0.007   0.145
+    ##   0.167   0.007   0.176
 
 ``` r
 
@@ -346,12 +346,12 @@ system.time(id2 <- PSM(f, parser = "mzID"))
 
     ## Loading required namespace: mzID
 
-    ## reading 42e341bb11d_7857...
+    ## reading 52023f38f18_7857...
 
     ##  DONE!
 
     ##    user  system elapsed 
-    ##   5.120   0.066   5.210
+    ##   5.973   0.066   6.065
 
 Other differences in the two parsers include the columns that are
 returned, the way they name them, and, as will shown below the matches
@@ -555,7 +555,7 @@ nrow(unique(id2_filtered))
 ## License
 
 This vignette is distributed under a [CC BY-SA
-license](https://creativecommons.org/licenses/by-sa/2.0/).
+license](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Session information
 
@@ -588,7 +588,7 @@ sessionInfo()
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] MsDataHub_1.13.3     PSMatch_1.17.3       PTMods_1.1.1        
+    ## [1] MsDataHub_1.13.3     PSMatch_1.17.4       PTMods_1.1.1        
     ## [4] S4Vectors_0.51.10    BiocGenerics_0.59.12 generics_0.1.4      
     ## [7] BiocStyle_2.41.0    
     ## 
