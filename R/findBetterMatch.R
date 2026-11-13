@@ -3,17 +3,58 @@
 ##' Try to find a better peptide-spectrum match than the current PSM.
 ##'
 ##' This function is meant to try your luck at finding a better peptide-spectrum
-##' match on the sole argument that [checkOverlap] has returned false. A peptide
-##' sequence is returned (with or without modifications) only if there is an
-##' increase in the number of matched peaks/a better ndotproduct
-##' (see [MsCoreUtils::ndotproduct()] for more details).
-##' @param x
-##' @param peptide
-##' @param modificationsList
-##' @param maxMods
-##' @param improvedBy
-##' @return
+##' match on the argument that [checkOverlap()] has returned false or that the
+##' PSM's FDR is on the lower side. A peptide sequence is returned (with or
+##' without modifications) for which the greatest number of matched peaks/a
+##' better ndotproduct (see [MsCoreUtils::ndotproduct()] for more details) was
+##' obtained.
+##'
+##' @param x a `Spectra()` object containing identifications.
+##'
+##' @param peptide a `character(1L)` pointing to the peptide sequence variable
+##'   in `x`.
+##'
+##' @param modificationsList a `character()` with all modifications to try out.
+##'   The modifications need to be present in the [modifications] dataset from
+##'   the unimod database. Note that the more modifications are included, the
+##'   more combinations are possible and the longer it takes to run.
+##'
+##' @param maxMods `integer(1L)` indicating the maximum modifications allowed at
+##'   the same time on one sequence.
+##'
+##' @param improvedBy `character(1L)`: either `"maxScore"` or `"maxCount"`,
+##'   defining how to choose the better match. `"maxScore"` keeps the match with
+##'   the highest `ndotproduct` and `"maxCount"` keeps the one with the most
+##'   matched peaks.
+##'
+##' @param convertToStyle
+##'
+##' @return A named `character()` vector of length equal to the number of
+##'   spectra with identifications. The values are the best matches found using
+##'   the `modificationsList` and the names are the indices for those sequences
+##'   in the innitial Spectra object `x`.
+##'
 ##' @author Guillaume Deflandre
+##'
+##' @examples
+##' ## Load the data: a Spectra object with identifications
+##' data(spBoekweg)
+##' data(psmBoekweg)
+##' head(psmBoekweg$pkey <- paste0(basename(psmBoekweg$filename),
+##'                                sub("^.+scan=", "::", psmBoekweg$scannr)))
+##' head(spBoekweg$pkey <- paste0(basename(spBoekweg$dataOrigin),
+##'                               sub("^.+scan=", "::", spBoekweg$spectrumId)))
+##' sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
+##'
+##' ## Run with stock modifications (see PSMatch:::.ptmNames)
+##' findBetterMatch(sp[30], "peptide", maxMods = 1)
+##'
+##' ## Run with custom modifications (need to be present in `modifications$Name`)
+##' sp[30]$sequence <- getCanonicalSequence(sp[30]$peptide)
+##' findBetterMatch(sp[30], "sequence", maxMods = 1)
+##'
+##' ## Get the best match based on the number of matched peaks
+##' findBetterMatch(sp[30], "sequence", maxMods = 1, improvedBy = "maxCount")
 findBetterMatch <- function(x,
                             peptide = "peptide",
                             modificationsList = NULL,
