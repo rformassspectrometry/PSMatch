@@ -4,7 +4,7 @@
 \alias{psmBoekweg}
 \title{Example peptide-spectrum match data}
 \format{
-A \code{PSM} object with 10,000 rows. Each PSM contains the following
+A \code{PSM} object with 700 rows. Each PSM contains the following
 metadata columns (among others):
 
 \describe{
@@ -22,7 +22,7 @@ metadata columns (among others):
 }
 }
 \description{
-\code{psmBoekweg} is a \code{PSM} object containing 10,000 peptide-spectrum
+\code{psmBoekweg} is a \code{PSM} object containing 700 peptide-spectrum
 matches randomly sampled from a larger dataset. The PSMs were
 identified using the Sage search engine.
 }
@@ -46,6 +46,14 @@ length(psmRank1)
 
 ## Summary of q-values
 summary(psmBoekweg$peptide_q)
+
+## To join with the spectra, use `Spectra::joinSpectraData()`
+data(spBoekweg)
+head(psmBoekweg$pkey <- paste0(basename(psmBoekweg$filename),
+                               sub("^.+scan=", "::", psmBoekweg$scannr)))
+head(spBoekweg$pkey <- paste0(basename(spBoekweg$dataOrigin),
+                              sub("^.+scan=", "::", spBoekweg$spectrumId)))
+sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
 }
 \seealso{
 \itemize{

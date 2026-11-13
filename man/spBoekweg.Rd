@@ -4,7 +4,7 @@
 \alias{spBoekweg}
 \title{Example mass spectrometry data}
 \format{
-A \code{Spectra} object with 4,766 spectra stored in memory using
+A \code{Spectra} object with 348 spectra stored in memory using
 \code{MsBackendMemory()}. The spectra contain standard metadata
 variables including:
 
@@ -18,7 +18,7 @@ variables including:
 }
 }
 \description{
-\code{spBoekweg} is a \code{Spectra} object containing 4,766 mass spectra
+\code{spBoekweg} is a \code{Spectra} object containing 348 mass spectra
 (MS1 and MS2) that are linked to peptide identifications in the
 \code{psmBoekweg} dataset.
 }
@@ -48,20 +48,13 @@ plot(spBoekweg$rtime, spBoekweg$basePeakIntensity,
      xlab = "Retention time (s)", ylab = "Base peak intensity",
      type = "l")
 
-## Link to PSM data using a common key
+## Link to PSM data using a common key and join into one Spectra object
 data(psmBoekweg)
-psmBoekweg$pkey <- paste0(
-    basename(psmBoekweg$filename),
-    sub("^.+scan=", "::", psmBoekweg$scannr)
-)
-spBoekweg$pkey <- paste0(
-    basename(spBoekweg$dataOrigin),
-    sub("^.+scan=", "::", spBoekweg$spectrumId)
-)
-
-## Find spectra with identifications
-sum(spBoekweg$pkey \%in\% psmBoekweg$pkey)
-
+head(psmBoekweg$pkey <- paste0(basename(psmBoekweg$filename),
+                               sub("^.+scan=", "::", psmBoekweg$scannr)))
+head(spBoekweg$pkey <- paste0(basename(spBoekweg$dataOrigin),
+                              sub("^.+scan=", "::", spBoekweg$spectrumId)))
+sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
 }
 \seealso{
 \itemize{
