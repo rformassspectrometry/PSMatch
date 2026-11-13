@@ -8,8 +8,8 @@
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-12 13:10:35.545006\
-**Compiled**: Thu Nov 12 13:29:15 2026
+**Last modified:** 2026-11-13 22:25:22.290796\
+**Compiled**: Fri Nov 13 22:42:02 2026
 
 ## Installation instructions
 
@@ -36,6 +36,9 @@ We are going to use an `mzid` file from the `MsDataHub` package.
 
 \
 `f`` ``<-`` ``MsDataHub``::`[`TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid`](https://rformassspectrometry.github.io/MsDataHub/reference/PXD000001.html)`(``)`
+
+    ## Warning: replacing previous import 'BiocGenerics::version' by
+    ## 'BiocManager::version' when loading 'AnnotationHub'
 
     ## see ?MsDataHub and browseVignettes('MsDataHub') for documentation
 
@@ -289,19 +292,19 @@ namely `"mzR"` (the default value) and `"mzID"`.
 [`system.time`](https://rdrr.io/r/base/system.time.html)`(``id1`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``, parser ``=`` ``"mzR"``)``)`
 
     ##    user  system elapsed 
-    ##   0.126   0.005   0.131
+    ##   0.124   0.005   0.128
 
 \
 [`system.time`](https://rdrr.io/r/base/system.time.html)`(``id2`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``, parser ``=`` ``"mzID"``)``)`
 
     ## Loading required namespace: mzID
 
-    ## reading 5b71a068abd_7857...
+    ## reading 77518acaa97_7857...
 
     ##  DONE!
 
     ##    user  system elapsed 
-    ##   5.082   0.070   5.152
+    ##   4.942   0.064   5.028
 
 Other differences in the two parsers include the columns that are
 returned, the way they name them, and, as will shown below the matches
@@ -504,8 +507,8 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] MsDataHub_1.13.3     PSMatch_1.17.4       PTMods_1.1.2        
-    ## [4] S4Vectors_0.51.10    BiocGenerics_0.59.12 generics_0.1.4      
+    ## [1] MsDataHub_1.13.4     PSMatch_1.17.4       PTMods_1.1.2        
+    ## [4] S4Vectors_0.51.10    BiocGenerics_0.59.13 generics_0.1.4      
     ## [7] BiocStyle_2.41.0    
     ## 
     ## loaded via a namespace (and not attached):
@@ -541,7 +544,7 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ##  [59] withr_3.0.3                 Biobase_2.73.2             
     ##  [61] KEGGREST_1.53.6             evaluate_1.0.5             
     ##  [63] desc_1.4.3                  Spectra_1.23.7             
-    ##  [65] BiocFileCache_3.3.2         ExperimentHub_3.3.2        
+    ##  [65] BiocFileCache_3.3.3         ExperimentHub_3.3.2        
     ##  [67] Biostrings_2.81.9           pillar_1.11.1              
     ##  [69] BiocManager_1.30.27         filelock_1.0.3             
     ##  [71] MatrixGenerics_1.25.0       foreach_1.5.2              

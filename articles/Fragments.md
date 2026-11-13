@@ -8,8 +8,8 @@
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-12 13:10:35.545006\
-**Compiled**: Thu Nov 12 13:28:43 2026
+**Last modified:** 2026-11-13 22:25:22.290796\
+**Compiled**: Fri Nov 13 22:41:31 2026
 
 ## Introduction
 
@@ -30,7 +30,12 @@ package webpage.
 Load the raw MS data:
 
 \
-`spf`` ``<-`` ``MsDataHub``::`[`TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzML.gz`](https://rformassspectrometry.github.io/MsDataHub/reference/PXD000001.html)`(``)`\
+`spf`` ``<-`` ``MsDataHub``::`[`TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzML.gz`](https://rformassspectrometry.github.io/MsDataHub/reference/PXD000001.html)`(``)`
+
+    ## Warning: replacing previous import 'BiocGenerics::version' by
+    ## 'BiocManager::version' when loading 'AnnotationHub'
+
+\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`Spectra`](https://github.com/RforMassSpectrometry/Spectra)`)`\
 `sp`` ``<-`` `[`Spectra`](https://rdrr.io/pkg/Spectra/man/Spectra.html)`(``spf``)`
 
@@ -90,7 +95,7 @@ Merge both:
     ##  ... 68 more variables/columns.
     ## 
     ## file(s):
-    ## 5b7671cdb72_7858
+    ## 775598fdb7a_7858
 
 In this example, we are going to focus the MS2 scan with index 1158 and
 its parent MS1 scan (index 1148, selected automatically with the
@@ -403,9 +408,9 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] Spectra_1.23.7       BiocParallel_1.47.0  MsDataHub_1.13.3    
+    ## [1] Spectra_1.23.7       BiocParallel_1.47.0  MsDataHub_1.13.4    
     ## [4] PSMatch_1.17.4       PTMods_1.1.2         S4Vectors_0.51.10   
-    ## [7] BiocGenerics_0.59.12 generics_0.1.4       BiocStyle_2.41.0    
+    ## [7] BiocGenerics_0.59.13 generics_0.1.4       BiocStyle_2.41.0    
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] DBI_1.3.0                   httr2_1.3.0                
@@ -438,7 +443,7 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ## [55] plyr_1.8.9                  withr_3.0.3                
     ## [57] Biobase_2.73.2              KEGGREST_1.53.6            
     ## [59] evaluate_1.0.5              desc_1.4.3                 
-    ## [61] BiocFileCache_3.3.2         ExperimentHub_3.3.2        
+    ## [61] BiocFileCache_3.3.3         ExperimentHub_3.3.2        
     ## [63] Biostrings_2.81.9           pillar_1.11.1              
     ## [65] BiocManager_1.30.27         filelock_1.0.3             
     ## [67] MatrixGenerics_1.25.0       ncdf4_1.24                 

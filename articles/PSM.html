@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.24/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-12 13:10:35.545006<br><strong>Compiled</strong>: Thu Nov 12 13:29:15 2026</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-13 22:25:22.290796<br><strong>Compiled</strong>: Fri Nov 13 22:42:02 2026</p>
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
@@ -114,32 +114,34 @@ manual page (<code><a href="../reference/PSMatch.html">?PSMatch</a></code>) and 
 <code>MsDataHub</code> package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">MsDataHub</span><span class="fu">::</span><span class="fu"><a href="https://rformassspectrometry.github.io/MsDataHub/reference/PXD000001.html" class="external-link">TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: replacing previous import 'BiocGenerics::version' by</span></span>
+<span><span class="co">## 'BiocManager::version' when loading 'AnnotationHub'</span></span></code></pre>
 <pre><code><span><span class="co">## see ?MsDataHub and browseVignettes('MsDataHub') for documentation</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
 <p>The <code><a href="../reference/PSM.html">PSM()</a></code> function parses one or multiple
 <code>mzid</code> files and returns an object of class <code>PSM</code>.
 This class is a simple extension of the <code>DFrame</code> class,
 representing the peptide-spectrum matches in a tabular format.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/RforMassSpectrometry/PSMatch" class="external-link">"PSMatch"</a></span><span class="op">)</span></span>
 <span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required namespace: mzR</span></span></code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span></span></code></pre></div>
 <pre><code><span><span class="co">## PSM with 5802 rows and 35 columns.</span></span>
 <span><span class="co">## names(35): sequence spectrumID ... subReplacementResidue subLocation</span></span></code></pre>
 <p>This table contains 5802 matches for 5343 scans and 4938 peptides
 sequences, each annotated by 35 variables.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="co">## number of matches</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 5802</span></span></code></pre>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span><span class="op">)</span> <span class="co">## number of scans</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 5343</span></span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id</span><span class="op">$</span><span class="va">sequence</span><span class="op">)</span><span class="op">)</span>   <span class="co">## number of peptide sequences</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 4938</span></span></code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1] "sequence"                 "spectrumID"              </span></span>
 <span><span class="co">##  [3] "chargeState"              "rank"                    </span></span>
@@ -162,7 +164,7 @@ sequences, each annotated by 35 variables.</p>
 <p>The PSM data are read as is, without any filtering. As we can see
 below, we still have all the hits from the forward and reverse (decoy)
 databases.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id</span><span class="op">$</span><span class="va">isDecoy</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## FALSE  TRUE </span></span>
@@ -174,7 +176,7 @@ databases.</p>
 <p>The data also contains multiple matches for several spectra. The
 table below shows the number of individual MS scans that have 1, 2, … up
 to 5 matches.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">##    1    2    3    4    5 </span></span>
@@ -182,12 +184,12 @@ to 5 matches.</p>
 <p>More specifically, we can see below how scan 1774 has 4 matches, all
 to sequence <code>RTRYQAEVR</code>, which itself matches to 4 different
 proteins:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"scan=1774"</span>, <span class="va">id</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span></span>
 <span><span class="va">id</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## PSM with 4 rows and 35 columns.</span></span>
 <span><span class="co">## names(35): sequence spectrumID ... subReplacementResidue subLocation</span></span></code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span><span class="op">[</span><span class="va">i</span>, <span class="st">"DatabaseAccess"</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "ECA2104" "ECA2867" "ECA3427" "ECA4142"</span></span></code></pre>
 <p>If the goal is to keep all the matches, but arranged by
@@ -196,7 +198,7 @@ by the <code>spectrumID</code> variable, so that each scan correponds to
 a single row that still stores all values<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;The rownames aren’t needed here and are removed to
 reduce to output in the the next code chunks displaying parts of
 &lt;code&gt;id2&lt;/code&gt;.&lt;/p&gt;"><sup>1</sup></a>:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">reducePSMs</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">id</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span> <span class="co">## rownames not needed here</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span></span></code></pre></div>
@@ -204,12 +206,12 @@ reduce to output in the the next code chunks displaying parts of
 <p>The resulting object contains a single entrie for scan 1774 with
 information for the multiple matches stored as a list within the table
 cell.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">j</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"scan=1774"</span>, <span class="va">id2</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span></span>
 <span><span class="va">id2</span><span class="op">[</span><span class="va">j</span>, <span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## Reduced PSM with 1 rows and 35 columns.</span></span>
 <span><span class="co">## names(35): sequence spectrumID ... subReplacementResidue subLocation</span></span></code></pre>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id2</span><span class="op">[</span><span class="va">j</span>, <span class="st">"DatabaseAccess"</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## CharacterList of length 1</span></span>
 <span><span class="co">## [["controllerType=0 controllerNumber=1 scan=1774"]] ECA2104 ECA2867 ECA3427 ECA4142</span></span></code></pre>
@@ -227,10 +229,10 @@ filter out wrong or the least reliable identifications.</p>
 <div class="section level4">
 <h4 id="remove-decoy-hits">Remove decoy hits<a class="anchor" aria-label="anchor" href="#remove-decoy-hits"></a>
 </h4>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPsmDecoy</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Removed 2896 decoy hits.</span></span></code></pre>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span></span></code></pre></div>
 <pre><code><span><span class="co">## PSM with 2906 rows and 35 columns.</span></span>
 <span><span class="co">## names(35): sequence spectrumID ... subReplacementResidue subLocation</span></span></code></pre>
@@ -238,10 +240,10 @@ filter out wrong or the least reliable identifications.</p>
 <div class="section level4">
 <h4 id="keep-first-rank-matches">Keep first rank matches<a class="anchor" aria-label="anchor" href="#keep-first-rank-matches"></a>
 </h4>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPsmRank</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Removed 155 PSMs with rank &gt; 1.</span></span></code></pre>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span></span></code></pre></div>
 <pre><code><span><span class="co">## PSM with 2751 rows and 35 columns.</span></span>
 <span><span class="co">## names(35): sequence spectrumID ... subReplacementResidue subLocation</span></span></code></pre>
@@ -252,14 +254,14 @@ filter out wrong or the least reliable identifications.</p>
 <p>The data still contains shared peptides, i.e. those that different
 proteins. For example <code>QKTRCATRAFKANKGRAR</code> matches proteins
 <code>ECA2869</code> and <code>ECA4278</code>.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span><span class="op">[</span><span class="va">id</span><span class="op">$</span><span class="va">sequence</span> <span class="op">==</span> <span class="st">"QKTRCATRAFKANKGRAR"</span>, <span class="st">"DatabaseAccess"</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "ECA2869" "ECA4278"</span></span></code></pre>
 <p>We can filter these out to retain unique peptides.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPsmShared</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Removed 85 shared peptides.</span></span></code></pre>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span></span></code></pre></div>
 <pre><code><span><span class="co">## PSM with 2666 rows and 35 columns.</span></span>
 <span><span class="co">## names(35): sequence spectrumID ... subReplacementResidue subLocation</span></span></code></pre>
@@ -276,7 +278,7 @@ manual page.</p>
 </h4>
 <p>This can also be achieved with the <code><a href="../reference/filterPSMs.html">filterPSMs()</a></code>
 function:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Starting with 5802 PSMs:</span></span></code></pre>
@@ -312,23 +314,23 @@ is slower but is is more robust to variations in the <code>mzID</code>
 implementation, as is thus a useful backup when the <code>mzR</code>
 backend fails.</p></li>
 </ul>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.126   0.005   0.131</span></span></code></pre>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<span><span class="co">##   0.124   0.005   0.128</span></span></code></pre>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required namespace: mzID</span></span></code></pre>
-<pre><code><span><span class="co">## reading 5b71a068abd_7857...</span></span></code></pre>
+<pre><code><span><span class="co">## reading 77518acaa97_7857...</span></span></code></pre>
 <pre><code><span><span class="co">##  DONE!</span></span></code></pre>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   5.082   0.070   5.152</span></span></code></pre>
+<span><span class="co">##   4.942   0.064   5.028</span></span></code></pre>
 <p>Other differences in the two parsers include the columns that are
 returned, the way they name them, and, as will shown below the matches
 that are returned. Note for instance (and this will be important later),
 that there is no equivalent of <code>"modLocation"</code> in
 <code>id2</code>.</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1] "sequence"                 "spectrumID"              </span></span>
 <span><span class="co">##  [3] "chargeState"              "rank"                    </span></span>
@@ -348,7 +350,7 @@ that there is no equivalent of <code>"modLocation"</code> in
 <span><span class="co">## [31] "modMass"                  "modLocation"             </span></span>
 <span><span class="co">## [33] "subOriginalResidue"       "subReplacementResidue"   </span></span>
 <span><span class="co">## [35] "subLocation"</span></span></code></pre>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1] "spectrumid"                "scan number(s)"           </span></span>
 <span><span class="co">##  [3] "acquisitionnum"            "passthreshold"            </span></span>
@@ -366,18 +368,18 @@ that there is no equivalent of <code>"modLocation"</code> in
 <span><span class="co">## [27] "modification"              "idFile"                   </span></span>
 <span><span class="co">## [29] "spectrumFile"              "databaseFile"</span></span></code></pre>
 <p>We also have different number of matches in the two tables:</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 5802</span></span></code></pre>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 5759</span></span></code></pre>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id1</span><span class="op">$</span><span class="va">isDecoy</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## FALSE  TRUE </span></span>
 <span><span class="co">##  2906  2896</span></span></code></pre>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id2</span><span class="op">$</span><span class="va">isdecoy</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## FALSE  TRUE </span></span>
@@ -385,14 +387,14 @@ that there is no equivalent of <code>"modLocation"</code> in
 <p>Let’s first filter the PSM tables to facilitate focus the comparison
 of relevant scans. Note that the default <code><a href="../reference/filterPSMs.html">filterPSMs()</a></code>
 arguments are set to work with both parser.</p>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id1_filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="va">id1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Starting with 5802 PSMs:</span></span></code></pre>
 <pre><code><span><span class="co">## Removed 2896 decoy hits.</span></span></code></pre>
 <pre><code><span><span class="co">## Removed 155 PSMs with rank &gt; 1.</span></span></code></pre>
 <pre><code><span><span class="co">## Removed 85 shared peptides.</span></span></code></pre>
 <pre><code><span><span class="co">## 2666 PSMs left.</span></span></code></pre>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id2_filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterPSMs.html">filterPSMs</a></span><span class="op">(</span><span class="va">id2</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Starting with 5759 PSMs:</span></span></code></pre>
 <pre><code><span><span class="co">## Removed 2873 decoy hits.</span></span></code></pre>
@@ -403,19 +405,19 @@ arguments are set to work with both parser.</p>
 filtering.</p>
 <p>The difference doesn’t stem from different scans, given that the
 spectum identifiers are identical in both tables:</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>          <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id2_filtered</span><span class="op">$</span><span class="va">spectrumid</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
 <p>The difference is obvious when we tally a table of spectrum id
 occurences in the filtered tables. In <code>id2_filtered</code>, each
 scan is unique, i.e matched only once.</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">anyDuplicated</a></span><span class="op">(</span><span class="va">id2_filtered</span><span class="op">$</span><span class="va">spectrumid</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 0</span></span></code></pre>
 <p>However, for <code>id1_filtered</code>, we see that some scans are
 still repeat up to 4 times in the table:</p>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">##    1    2    3    4 </span></span>
@@ -423,23 +425,23 @@ still repeat up to 4 times in the table:</p>
 <p>The example below shows that these differences stem from the
 modification location (<code>"modLocation"</code>), that is not report
 by the <code>mzID</code> parser:</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span><span class="op">)</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">id1_filtered</span><span class="op">[</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span> <span class="op">==</span> <span class="va">k</span>, <span class="st">"sequence"</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "KCNQCLKVACTLFYCK" "KCNQCLKVACTLFYCK" "KCNQCLKVACTLFYCK" "KCNQCLKVACTLFYCK"</span></span></code></pre>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id1_filtered</span><span class="op">[</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span> <span class="op">==</span> <span class="va">k</span>, <span class="st">"modLocation"</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1]  2  5 10 15</span></span></code></pre>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id1_filtered</span><span class="op">[</span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">spectrumID</span> <span class="op">==</span> <span class="va">k</span>, <span class="st">"modName"</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "Carbamidomethyl" "Carbamidomethyl" "Carbamidomethyl" "Carbamidomethyl"</span></span></code></pre>
 <p>If we remove the <code>"modLocation"</code> column, we recoved the
 same number of PSMs than with the <code>mzID</code> parser.</p>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id1_filtered</span><span class="op">$</span><span class="va">modLocation</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id1_filtered</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 2646</span></span></code></pre>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id2_filtered</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 2646</span></span></code></pre>
 </div>
@@ -452,7 +454,7 @@ license</a>.</p>
 <div class="section level2">
 <h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.6.1 (2026-06-24)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
@@ -478,8 +480,8 @@ license</a>.</p>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] MsDataHub_1.13.3     PSMatch_1.17.4       PTMods_1.1.2        </span></span>
-<span><span class="co">## [4] S4Vectors_0.51.10    BiocGenerics_0.59.12 generics_0.1.4      </span></span>
+<span><span class="co">## [1] MsDataHub_1.13.4     PSMatch_1.17.4       PTMods_1.1.2        </span></span>
+<span><span class="co">## [4] S4Vectors_0.51.10    BiocGenerics_0.59.13 generics_0.1.4      </span></span>
 <span><span class="co">## [7] BiocStyle_2.41.0    </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
@@ -515,7 +517,7 @@ license</a>.</p>
 <span><span class="co">##  [59] withr_3.0.3                 Biobase_2.73.2             </span></span>
 <span><span class="co">##  [61] KEGGREST_1.53.6             evaluate_1.0.5             </span></span>
 <span><span class="co">##  [63] desc_1.4.3                  Spectra_1.23.7             </span></span>
-<span><span class="co">##  [65] BiocFileCache_3.3.2         ExperimentHub_3.3.2        </span></span>
+<span><span class="co">##  [65] BiocFileCache_3.3.3         ExperimentHub_3.3.2        </span></span>
 <span><span class="co">##  [67] Biostrings_2.81.9           pillar_1.11.1              </span></span>
 <span><span class="co">##  [69] BiocManager_1.30.27         filelock_1.0.3             </span></span>
 <span><span class="co">##  [71] MatrixGenerics_1.25.0       foreach_1.5.2              </span></span>

@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.24/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-12 13:10:35.543928<br><strong>Compiled</strong>: Thu Nov 12 13:28:24 2026</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-13 22:25:22.290796<br><strong>Compiled</strong>: Fri Nov 13 22:41:10 2026</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -107,12 +107,14 @@ with PSM data</em></a> vignette.</p>
 <span>    <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="../reference/filterPSMs.html">filterPsmDecoy</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="../reference/filterPSMs.html">filterPsmRank</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: replacing previous import 'BiocGenerics::version' by</span></span>
+<span><span class="co">## 'BiocManager::version' when loading 'AnnotationHub'</span></span></code></pre>
 <pre><code><span><span class="co">## see ?MsDataHub and browseVignettes('MsDataHub') for documentation</span></span></code></pre>
 <pre><code><span><span class="co">## loading from cache</span></span></code></pre>
 <pre><code><span><span class="co">## Loading required namespace: mzR</span></span></code></pre>
 <pre><code><span><span class="co">## Removed 2896 decoy hits.</span></span></code></pre>
 <pre><code><span><span class="co">## Removed 155 PSMs with rank &gt; 1.</span></span></code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">id</span></span></code></pre></div>
 <pre><code><span><span class="co">## PSM with 2751 rows and 35 columns.</span></span>
 <span><span class="co">## names(35): sequence spectrumID ... subReplacementResidue subLocation</span></span></code></pre>
@@ -121,7 +123,7 @@ peptides is typically encoded in two columns, once containing the
 peptide sequences and the second the protein identifiers these peptides
 stem from. Below are the 10 first observations of our identification
 data table.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">id</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sequence"</span>, <span class="st">"DatabaseAccess"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                                    sequence DatabaseAccess</span></span>
 <span><span class="co">## EH7807.1                       RQCRTDFLNYLR        ECA2006</span></span>
@@ -139,11 +141,11 @@ with peptides along the rows and proteins along the columns, and a 1 (or
 more generally a value &gt; 0) indicating that a peptides belongs to the
 corresponding proteins. Such a matrix is created below for our
 identification data.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adjacencyMatrix.html">makeAdjacencyMatrix</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 2357 1504</span></span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">adj</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## 5 x 5 sparse Matrix of class "dgCMatrix"</span></span>
 <span><span class="co">##                                   ECA2006 ECA1676 ECA3009 ECA1420 ECA2142</span></span>
@@ -158,10 +160,10 @@ checking the number of unique peptides sequences and database accession
 numbers. For the latter, if the peptide stems from multiple proteins,
 these proteins are separated by default with a semicolon
 <code>;</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">id</span><span class="op">$</span><span class="va">sequence</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 2357</span></span></code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">id</span><span class="op">$</span><span class="va">DatabaseAccess</span>, <span class="st">";"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 1504</span></span></code></pre>
 <p>Some values are &gt; 1 because some peptide sequences are observed
@@ -175,11 +177,11 @@ defined by a set of peptides (whether shared or unique) is relevant.
 These are represented by subsets of this large matrix named connected
 component. We can easily compute all these connected components to
 produce the multiple smaller and relevant adjacency matrices.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">ConnectedComponents</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 1476</span></span></code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cc</span></span></code></pre></div>
 <pre><code><span><span class="co">## An instance of class ConnectedComponents </span></span>
 <span><span class="co">##  Number of proteins: 1504 </span></span>
@@ -190,21 +192,21 @@ produce the multiple smaller and relevant adjacency matrices.</p>
 components.</p>
 <p>954 thereof, such as the one shown below, correspond to single
 proteins identified by a single peptide:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## 1 x 1 sparse Matrix of class "dgCMatrix"</span></span>
 <span><span class="co">##                        ECA0003</span></span>
 <span><span class="co">## KTLGAYDFSFGEGIYTHMKALR       1</span></span></code></pre>
 <p>7 thereof represent protein groups identified by a single shared
 peptide:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">527</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## 1 x 2 sparse Matrix of class "dgCMatrix"</span></span>
 <span><span class="co">##            ECA1637 ECA2914</span></span>
 <span><span class="co">## KEIILNKNEK       1       1</span></span></code></pre>
 <p>501 represent single proteins identified by multiple unique
 peptides:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">38</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## 5 x 1 sparse Matrix of class "dgCMatrix"</span></span>
 <span><span class="co">##                               ECA0130</span></span>
@@ -216,7 +218,7 @@ peptides:</p>
 <p>Finally, arguable those that warrant additional exploration are those
 that are composed of multiple peptides and multiple proteins. There are
 14 thereof in this identification; here’s an example:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">920</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## 4 x 2 sparse Matrix of class "dgCMatrix"</span></span>
 <span><span class="co">##                    ECA2869 ECA4278</span></span>
@@ -231,10 +233,10 @@ that are composed of multiple peptides and multiple proteins. There are
 <p>Let’s identify the connected components that have at least 3 peptides
 (i.e. rows in the adjacency matrix) and 3 proteins (i.e. columns in the
 adjacency matrix).</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu">nrows</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span> <span class="op">&amp;</span> <span class="fu">ncols</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 1079 1082</span></span></code></pre>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dims</span><span class="op">(</span><span class="va">cc</span><span class="op">)</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##      nrow ncol</span></span>
 <span><span class="co">## [1,]    3    4</span></span>
@@ -243,7 +245,7 @@ adjacency matrix).</p>
 about the <code><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix()</a></code> function and explore how to
 inform our peptides filtering beyond the <code>filterPsm*()</code>
 functions.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">connectedComponents</a></span><span class="op">(</span><span class="va">cc</span>, <span class="fl">1082</span><span class="op">)</span></span>
 <span><span class="va">cx</span></span></code></pre></div>
 <pre><code><span><span class="co">## 7 x 4 sparse Matrix of class "dgCMatrix"</span></span>
@@ -260,7 +262,7 @@ the <code><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix()</a><
 represent proteins and petides - by default, proteins are shown as blue
 squares and peptides as white circles. Edge connect peptides/circles to
 proteins/squares, indicating that a peptide belongs to a protein.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">cx</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning: vertex attribute color contains NAs. Replacing with default value 1</span></span>
 <span><span class="co">## vertex attribute color contains NAs. Replacing with default value 1</span></span>
@@ -304,13 +306,13 @@ colours (large distance, dissimilar names).</p>
 <p>By setting the argument to 1, we see that proteins starting with
 <code>ECA33</code> and those starting with <code>ECA34</code> are
 represented with different colours.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">cx</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AdjacencyMatrix_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="700"></p>
 <p>We can further distinguish <code>ECA3406</code>, and
 <code>ECA314</code> and <code>ECA33*9</code> by setting
 <code>protColors</code> to 2.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">cx</span>, <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AdjacencyMatrix_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="700"></p>
 <p><code>protColors</code> can also be a character of colours named by
@@ -328,7 +330,7 @@ peptides sequences. Let’s use the search engine score (here
 <p>We can extract this metric from the PSM object we started with and
 create a colour palette representing the range of scores.</p>
 <p>The named vector of scores:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">score</span> <span class="op">&lt;-</span> <span class="va">id</span><span class="op">$</span><span class="va">MS.GF.RawScore</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">score</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">id</span><span class="op">$</span><span class="va">sequence</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">score</span><span class="op">)</span></span></code></pre></div>
@@ -339,7 +341,7 @@ create a colour palette representing the range of scores.</p>
 <span><span class="co">##            QRMARTSDKQQSIRFLERLCGR CIDRARHVEVQIFGDGKGRVVALGERDCSLQRR </span></span>
 <span><span class="co">##                                21                               -31</span></span></code></pre>
 <p>The matching named vector of colours:</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">score</span>, <span class="fl">12</span>,</span>
 <span>                        labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">12</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cls</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">id</span><span class="op">$</span><span class="va">sequence</span></span>
@@ -353,7 +355,7 @@ create a colour palette representing the range of scores.</p>
 <p>Below, we see that all these peptides have relatively low scores
 (light red), and that two of the three of the <code>ECA34*</code>
 proteins have the highest scores.</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/adjacencyMatrix.html">plotAdjacencyMatrix</a></span><span class="op">(</span><span class="va">cx</span>, pepColors <span class="op">=</span> <span class="va">cls</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AdjacencyMatrix_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="700"></p>
 </div>
@@ -372,17 +374,17 @@ contain quantitation values (i.e. those starting with
 <code>SummarizedExperiment</code> using the <a href="https://rformassspectrometry.github.io/QFeatures/reference/readQFeatures.html" class="external-link">readSummarizedExperiment()</a>
 function from the <em><a href="https://bioconductor.org/packages/3.24/QFeatures" class="external-link">QFeatures</a></em>
 package.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">MsDataHub</span><span class="fu">::</span><span class="fu"><a href="https://rformassspectrometry.github.io/MsDataHub/reference/cptac.html" class="external-link">cptac_a_b_peptides.txt</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="op">(</span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"Intensity\\."</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 56 57 58 59 60 61</span></span></code></pre>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rformassspectrometry.github.io/QFeatures" class="external-link">QFeatures</a></span><span class="op">)</span></span>
 <span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rformassspectrometry.github.io/QFeatures/reference/readQFeatures.html" class="external-link">readSummarizedExperiment</a></span><span class="op">(</span><span class="va">f</span>, quantCols <span class="op">=</span> <span class="va">i</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></code></pre></div>
 <p>Below, we create a vector of protein groups (not leading razor
 protein names) and name it using the peptide sequences.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prots</span> <span class="op">&lt;-</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">Proteins</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">prots</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">rowData</span><span class="op">(</span><span class="va">se</span><span class="op">)</span><span class="op">$</span><span class="va">Sequence</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">prots</span><span class="op">)</span></span></code></pre></div>
@@ -402,11 +404,11 @@ protein names) and name it using the peptide sequences.</p>
 groups into individual proteins using a <code>;</code> (used by default,
 so not required here) to construct the adjacency matrix, which itself
 can be used to compute the connected components.</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adjacencyMatrix.html">makeAdjacencyMatrix</a></span><span class="op">(</span><span class="va">prots</span>, split <span class="op">=</span> <span class="st">";"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 11466  1718</span></span></code></pre>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">adj</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## 3 x 3 sparse Matrix of class "dgCMatrix"</span></span>
 <span><span class="co">##                    sp|P38915|SPT8_YEAST sp|Q3E792|RS25A_YEAST</span></span>
@@ -417,7 +419,7 @@ can be used to compute the connected components.</p>
 <span><span class="co">## AAAAGAGGAGDSGDAVTK                     .</span></span>
 <span><span class="co">## AAAALAGGK                              1</span></span>
 <span><span class="co">## AAAALAGGKK                             1</span></span></code></pre>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">ConnectedComponents</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span></span>
 <span><span class="va">cc</span></span></code></pre></div>
 <pre><code><span><span class="co">## An instance of class ConnectedComponents </span></span>
@@ -435,7 +437,7 @@ investigate. The function computes a set of metrics describing the
 components composed of as least several peptides and proteins (150 in
 the example above) and ranks them from the most to the least
 interesting.</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cctab</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ConnectedComponents.html">prioritiseConnectedComponents</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##      nrow ncol n_coms  mod_coms   n rs_min rs_max cs_min cs_max  sparsity</span></span>
 <span><span class="co">## 1081   21    3      3 0.5793951  23      1      2      7      8 0.6349206</span></span>
@@ -447,7 +449,7 @@ interesting.</p>
 <p>The prioritisation table can then be further summarised using a
 principal component to identify outliers (for example component 1200
 below) or groups of <em>similar</em> components to explore.</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kassambara/factoextra" class="external-link">factoextra</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html" class="external-link">fviz_pca</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">prcomp</a></span><span class="op">(</span><span class="va">cctab</span>, scale <span class="op">=</span> <span class="cn">TRUE</span>, center <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AdjacencyMatrix_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="700"></p>
@@ -461,7 +463,7 @@ license</a>.</p>
 <div class="section level2">
 <h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.6.1 (2026-06-24)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
@@ -492,9 +494,9 @@ license</a>.</p>
 <span><span class="co">##  [5] SummarizedExperiment_1.43.0 Biobase_2.73.2             </span></span>
 <span><span class="co">##  [7] GenomicRanges_1.65.4        Seqinfo_1.3.2              </span></span>
 <span><span class="co">##  [9] IRanges_2.47.5              MatrixGenerics_1.25.0      </span></span>
-<span><span class="co">## [11] matrixStats_1.5.0           MsDataHub_1.13.3           </span></span>
+<span><span class="co">## [11] matrixStats_1.5.0           MsDataHub_1.13.4           </span></span>
 <span><span class="co">## [13] PSMatch_1.17.4              PTMods_1.1.2               </span></span>
-<span><span class="co">## [15] S4Vectors_0.51.10           BiocGenerics_0.59.12       </span></span>
+<span><span class="co">## [15] S4Vectors_0.51.10           BiocGenerics_0.59.13       </span></span>
 <span><span class="co">## [17] generics_0.1.4              BiocStyle_2.41.0           </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
@@ -518,7 +520,7 @@ license</a>.</p>
 <span><span class="co">##  [52] curl_8.1.0              lattice_0.23-1          tibble_3.3.1           </span></span>
 <span><span class="co">##  [55] plyr_1.8.9              S7_0.2.2                withr_3.0.3            </span></span>
 <span><span class="co">##  [58] KEGGREST_1.53.6         evaluate_1.0.5          desc_1.4.3             </span></span>
-<span><span class="co">##  [61] Spectra_1.23.7          BiocFileCache_3.3.2     ExperimentHub_3.3.2    </span></span>
+<span><span class="co">##  [61] Spectra_1.23.7          BiocFileCache_3.3.3     ExperimentHub_3.3.2    </span></span>
 <span><span class="co">##  [64] Biostrings_2.81.9       ggpubr_1.0.0            pillar_1.11.1          </span></span>
 <span><span class="co">##  [67] BiocManager_1.30.27     filelock_1.0.3          carData_3.0-6          </span></span>
 <span><span class="co">##  [70] ncdf4_1.24              BiocVersion_3.24.0      scales_1.4.0           </span></span>

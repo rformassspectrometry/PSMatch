@@ -1,13 +1,13 @@
 # Example peptide-spectrum match data
 
-`psmBoekweg` is a `PSM` object containing 10,000 peptide-spectrum
-matches randomly sampled from a larger dataset. The PSMs were identified
-using the Sage search engine.
+`psmBoekweg` is a `PSM` object containing 700 peptide-spectrum matches
+randomly sampled from a larger dataset. The PSMs were identified using
+the Sage search engine.
 
 ## Format
 
-A `PSM` object with 10,000 rows. Each PSM contains the following
-metadata columns (among others):
+A `PSM` object with 700 rows. Each PSM contains the following metadata
+columns (among others):
 
 - `psm_id`:
 
@@ -100,4 +100,24 @@ length(psmRank1)
 summary(psmBoekweg$peptide_q)
 #>      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
 #> 4.338e-05 4.338e-05 4.338e-05 7.034e-02 1.200e-01 3.598e-01 
+
+## To join with the spectra, use `Spectra::joinSpectraData()`
+data(spBoekweg)
+head(psmBoekweg$pkey <- paste0(basename(psmBoekweg$filename),
+                               sub("^.+scan=", "::", psmBoekweg$scannr)))
+#> [1] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::124613"
+#> [2] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::32698" 
+#> [3] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::85610" 
+#> [4] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::124591"
+#> [5] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::124193"
+#> [6] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::52322" 
+head(spBoekweg$pkey <- paste0(basename(spBoekweg$dataOrigin),
+                              sub("^.+scan=", "::", spBoekweg$spectrumId)))
+#> [1] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::6404"
+#> [2] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::6405"
+#> [3] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::6833"
+#> [4] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::6843"
+#> [5] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::7218"
+#> [6] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::7219"
+sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
 ```

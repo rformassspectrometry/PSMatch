@@ -1,12 +1,12 @@
 # Example mass spectrometry data
 
-`spBoekweg` is a `Spectra` object containing 4,766 mass spectra (MS1 and
+`spBoekweg` is a `Spectra` object containing 348 mass spectra (MS1 and
 MS2) that are linked to peptide identifications in the `psmBoekweg`
 dataset.
 
 ## Format
 
-A `Spectra` object with 4,766 spectra stored in memory using
+A `Spectra` object with 348 spectra stored in memory using
 [`MsBackendMemory()`](https://rdrr.io/pkg/Spectra/man/MsBackend.html).
 The spectra contain standard metadata variables including:
 
@@ -97,18 +97,23 @@ plot(spBoekweg$rtime, spBoekweg$basePeakIntensity,
      type = "l")
 
 
-## Link to PSM data using a common key
+## Link to PSM data using a common key and join into one Spectra object
 data(psmBoekweg)
-psmBoekweg$pkey <- paste0(
-    basename(psmBoekweg$filename),
-    sub("^.+scan=", "::", psmBoekweg$scannr)
-)
-spBoekweg$pkey <- paste0(
-    basename(spBoekweg$dataOrigin),
-    sub("^.+scan=", "::", spBoekweg$spectrumId)
-)
-
-## Find spectra with identifications
-sum(spBoekweg$pkey %in% psmBoekweg$pkey)
-#> [1] 175
+head(psmBoekweg$pkey <- paste0(basename(psmBoekweg$filename),
+                               sub("^.+scan=", "::", psmBoekweg$scannr)))
+#> [1] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::124613"
+#> [2] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::32698" 
+#> [3] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::85610" 
+#> [4] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::124591"
+#> [5] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::124193"
+#> [6] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::52322" 
+head(spBoekweg$pkey <- paste0(basename(spBoekweg$dataOrigin),
+                              sub("^.+scan=", "::", spBoekweg$spectrumId)))
+#> [1] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::6404"
+#> [2] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::6405"
+#> [3] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::6833"
+#> [4] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::6843"
+#> [5] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::7218"
+#> [6] "OR11_20160122_PG_HeLa_CVB3_CT_A.mzML::7219"
+sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
 ```

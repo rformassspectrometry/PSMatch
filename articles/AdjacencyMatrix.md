@@ -8,8 +8,8 @@
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-12 13:10:35.543928\
-**Compiled**: Thu Nov 12 13:28:24 2026
+**Last modified:** 2026-11-13 22:25:22.290796\
+**Compiled**: Fri Nov 13 22:41:10 2026
 
 ## Introduction
 
@@ -33,6 +33,9 @@ vignette.
 `    `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``)`` ``|>`\
 `    `[`filterPsmDecoy`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)`(``)`` ``|>`\
 `    `[`filterPsmRank`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)`(``)`
+
+    ## Warning: replacing previous import 'BiocGenerics::version' by
+    ## 'BiocManager::version' when loading 'AnnotationHub'
 
     ## see ?MsDataHub and browseVignettes('MsDataHub') for documentation
 
@@ -494,9 +497,9 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ##  [5] SummarizedExperiment_1.43.0 Biobase_2.73.2             
     ##  [7] GenomicRanges_1.65.4        Seqinfo_1.3.2              
     ##  [9] IRanges_2.47.5              MatrixGenerics_1.25.0      
-    ## [11] matrixStats_1.5.0           MsDataHub_1.13.3           
+    ## [11] matrixStats_1.5.0           MsDataHub_1.13.4           
     ## [13] PSMatch_1.17.4              PTMods_1.1.2               
-    ## [15] S4Vectors_0.51.10           BiocGenerics_0.59.12       
+    ## [15] S4Vectors_0.51.10           BiocGenerics_0.59.13       
     ## [17] generics_0.1.4              BiocStyle_2.41.0           
     ## 
     ## loaded via a namespace (and not attached):
@@ -520,7 +523,7 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ##  [52] curl_8.1.0              lattice_0.23-1          tibble_3.3.1           
     ##  [55] plyr_1.8.9              S7_0.2.2                withr_3.0.3            
     ##  [58] KEGGREST_1.53.6         evaluate_1.0.5          desc_1.4.3             
-    ##  [61] Spectra_1.23.7          BiocFileCache_3.3.2     ExperimentHub_3.3.2    
+    ##  [61] Spectra_1.23.7          BiocFileCache_3.3.3     ExperimentHub_3.3.2    
     ##  [64] Biostrings_2.81.9       ggpubr_1.0.0            pillar_1.11.1          
     ##  [67] BiocManager_1.30.27     filelock_1.0.3          carData_3.0-6          
     ##  [70] ncdf4_1.24              BiocVersion_3.24.0      scales_1.4.0           

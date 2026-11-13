@@ -231,6 +231,7 @@ connectedComponents(cc, 1:2) ## a List
 ## From an PSM object
 ## --------------------------------
 f <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
+#> Warning: replacing previous import ‘BiocGenerics::version’ by ‘BiocManager::version’ when loading ‘AnnotationHub’
 #> see ?MsDataHub and browseVignettes('MsDataHub') for documentation
 #> loading from cache
 
