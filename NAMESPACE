@@ -19,6 +19,7 @@ export(filterPsmDecoy)
 export(filterPsmFdr)
 export(filterPsmRank)
 export(filterPsmShared)
+export(findBetterMatch)
 export(getAminoAcids)
 export(getAtomicMass)
 export(labelFragments)
@@ -60,7 +61,10 @@ importFrom(Matrix,
   t,
   tcrossprod
 )
-importFrom(MsCoreUtils,closest)
+importFrom(MsCoreUtils,
+  closest,
+  ndotproduct
+)
 importFrom(ProtGenerics,
   adjacencyMatrix,
   calculateFragments

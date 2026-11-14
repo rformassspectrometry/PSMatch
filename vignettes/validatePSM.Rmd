@@ -302,6 +302,21 @@ combined <- merge(psm_df, res,
 )
 ```
 
+# Find a better peptide-spectrum match with `findBetterMatch()` {-}
+
+The checks mentioned above show how some identifications can get flagged as
+dubious, be it because of a low FDR or because accumulated failed checks.
+`checkOverlap()` in particular shows that some identifications might be missing
+PTMs or that the wrong PTMs have been included in the identification. 
+
+`findBetterMatch()` acts as a smallscale search engine: finding the best match
+for an already identified spectrum. Given a list of potential PTMs, it finds the
+best match based on either the greatest amount of matched peaks or the best
+spectrum similarity score (`ndotscore`). 
+
+```{r findMatch}
+## Add vignette docs TODO 
+```
 
 # License
 

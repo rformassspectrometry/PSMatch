@@ -2,20 +2,11 @@
 % Please edit documentation in R/findBetterMatch.R
 \name{findBetterMatch}
 \alias{findBetterMatch}
-\title{findBetterMatch
-
-Try to find a better peptide-spectrum match than the current PSM.
-
-This function is meant to try your luck at finding a better peptide-spectrum
-match on the argument that \code{\link[=checkOverlap]{checkOverlap()}} has returned false or that the
-PSM's FDR is on the lower side. A peptide sequence is returned (with or
-without modifications) for which the greatest number of matched peaks/a
-better ndotproduct (see \code{\link[MsCoreUtils:ndotproduct]{MsCoreUtils::ndotproduct()}} for more details) was
-obtained.}
+\title{findBetterMatch}
 \usage{
 findBetterMatch(
   x,
-  peptide = "peptide",
+  peptideVariable = "peptide",
   modificationsList = NULL,
   maxMods = 2,
   improvedBy = c("maxScore", "maxCount"),
@@ -25,13 +16,14 @@ findBetterMatch(
 \arguments{
 \item{x}{a \code{Spectra()} object containing identifications.}
 
-\item{peptide}{a \code{character(1L)} pointing to the peptide sequence variable
-in \code{x}.}
+\item{peptideVariable}{a \code{character(1L)} pointing to the peptide sequence
+variable in \code{x}.}
 
 \item{modificationsList}{a \code{character()} with all modifications to try out.
-The modifications need to be present in the \link{modifications} dataset from
-the unimod database. Note that the more modifications are included, the
-more combinations are possible and the longer it takes to run.}
+The modifications need to be present in the \link[PTMods:modifications]{PTMods::modifications}
+dataset from the unimod database. Note that the more modifications are
+included, the more combinations are possible and the longer it takes to
+run.}
 
 \item{maxMods}{\code{integer(1L)} indicating the maximum modifications allowed at
 the same time on one sequence.}
@@ -40,6 +32,9 @@ the same time on one sequence.}
 defining how to choose the better match. \code{"maxScore"} keeps the match with
 the highest \code{ndotproduct} and \code{"maxCount"} keeps the one with the most
 matched peaks.}
+
+\item{convertToStyle}{\code{character(1L)} to choose from those available in
+\code{\link[PTMods:convertAnnotation]{PTMods::convertAnnotation()}}. By default, the unimod "name" is given.}
 }
 \value{
 A named \code{character()} vector of length equal to the number of
@@ -48,10 +43,9 @@ the \code{modificationsList} and the names are the indices for those sequences
 in the innitial Spectra object \code{x}.
 }
 \description{
-findBetterMatch
-
 Try to find a better peptide-spectrum match than the current PSM.
-
+}
+\details{
 This function is meant to try your luck at finding a better peptide-spectrum
 match on the argument that \code{\link[=checkOverlap]{checkOverlap()}} has returned false or that the
 PSM's FDR is on the lower side. A peptide sequence is returned (with or

@@ -1,7 +1,9 @@
 ##' @title findBetterMatch
 ##'
+##' @description
 ##' Try to find a better peptide-spectrum match than the current PSM.
 ##'
+##' @details
 ##' This function is meant to try your luck at finding a better peptide-spectrum
 ##' match on the argument that [checkOverlap()] has returned false or that the
 ##' PSM's FDR is on the lower side. A peptide sequence is returned (with or
@@ -11,13 +13,14 @@
 ##'
 ##' @param x a `Spectra()` object containing identifications.
 ##'
-##' @param peptide a `character(1L)` pointing to the peptide sequence variable
-##'   in `x`.
+##' @param peptideVariable a `character(1L)` pointing to the peptide sequence
+##'   variable in `x`.
 ##'
 ##' @param modificationsList a `character()` with all modifications to try out.
-##'   The modifications need to be present in the [modifications] dataset from
-##'   the unimod database. Note that the more modifications are included, the
-##'   more combinations are possible and the longer it takes to run.
+##'   The modifications need to be present in the [PTMods::modifications]
+##'   dataset from the unimod database. Note that the more modifications are
+##'   included, the more combinations are possible and the longer it takes to
+##'   run.
 ##'
 ##' @param maxMods `integer(1L)` indicating the maximum modifications allowed at
 ##'   the same time on one sequence.
@@ -27,14 +30,20 @@
 ##'   the highest `ndotproduct` and `"maxCount"` keeps the one with the most
 ##'   matched peaks.
 ##'
-##' @param convertToStyle
+##' @param convertToStyle `character(1L)` to choose from those available in
+##'   [PTMods::convertAnnotation()]. By default, the unimod "name" is given.
 ##'
 ##' @return A named `character()` vector of length equal to the number of
 ##'   spectra with identifications. The values are the best matches found using
 ##'   the `modificationsList` and the names are the indices for those sequences
 ##'   in the innitial Spectra object `x`.
 ##'
+##' @importFrom Spectra peaksData
+##' @importFrom MsCoreUtils ndotproduct
+##'
 ##' @author Guillaume Deflandre
+##'
+##' @export
 ##'
 ##' @examples
 ##' ## Load the data: a Spectra object with identifications
@@ -56,7 +65,7 @@
 ##' ## Get the best match based on the number of matched peaks
 ##' findBetterMatch(sp[30], "sequence", maxMods = 1, improvedBy = "maxCount")
 findBetterMatch <- function(x,
-                            peptide = "peptide",
+                            peptideVariable = "peptide",
                             modificationsList = NULL,
                             maxMods = 2,
                             improvedBy = c("maxScore", "maxCount"),
@@ -77,11 +86,11 @@ findBetterMatch <- function(x,
     }
 
     ## Only keep identified spectra
-    ids <- which(!is.na(x[[peptide]]))
+    ids <- which(!is.na(x[[peptideVariable]]))
     x <- x[ids, ]
 
     ## Get the canonical sequences on which to apply the function
-    x$pepSequence <- getCanonicalSequence(x[[peptide]])
+    x$pepSequence <- getCanonicalSequence(x[[peptideVariable]])
 
     ## Load data and select only a portion of it
     data(modifications)
@@ -97,18 +106,23 @@ findBetterMatch <- function(x,
     }
 
     ## Finally, convert the annotation style
-    improvedSequences <- convertAnnotation(improvedSequences, convertToStyle = convertToStyle)
+    improvedSequences <- convertAnnotation(improvedSequences,
+                                           convertToStyle = convertToStyle)
     names(improvedSequences) <- ids
     return(improvedSequences)
 }
 
 ##' Helper function to `findBetterMatch()`
 ##'
-##' @param x
-##' @param pepSequences
-##' @param restrictedList
-##' @param maxMods
-##' @return
+##' @param x a `Spectra()` object containing identifications.
+##' @param restrictedList The modifications data restricted to the PTMs provided
+##' @param maxMods `integer(1L)` indicating the maximum modifications allowed at
+##'   the same time on one sequence.
+##' @param improvedBy `character(1L)`: either `"maxScore"` or `"maxCount"`,
+##'   defining how to choose the better match. `"maxScore"` keeps the match with
+##'   the highest `ndotproduct` and `"maxCount"` keeps the one with the most
+##'   matched peaks.
+##' @return The better match for a given identified spectrum
 ##' @author GuillaumeDeflandre
 ##' @noRd
 .findBetterMatch <- function(x,
@@ -157,11 +171,11 @@ findBetterMatch <- function(x,
 ##' Helper function: calculate similarity between observed and
 ##' theoretical spectrum using the ndotproduct
 ##'
-##' @title
-##' @param seqLabs
-##' @param observed
-##' @return
+##' @param seqLabs results from `labelFragments()`
+##' @param observed the peaksData() from a Spectra object
+##' @return similarity results for all sequences
 ##' @author GuillaumeDeflandre
+##' @noRd
 .calculateSimilarity <- function(seqLabs, observed) {
     obsMz <- observed[, "mz"]
     obsInt <- observed[, "intensity"]
