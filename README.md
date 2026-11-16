@@ -19,6 +19,10 @@ get started with the package:
 - The [MS2 fragment
   ions](https://rformassspectrometry.github.io/PSMatch/articles/Fragments.html)
   vignette to calculate and visualise MS2 fragment ions.
+- The [Validate 
+  PSMs](https://rformassspectrometry.github.io/PSMatch/articles/validatePSM.html)
+  to run checks and search for better matches to validate identifications.
+
 
 ## Installation instructions
 

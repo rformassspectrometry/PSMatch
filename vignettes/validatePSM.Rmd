@@ -314,9 +314,39 @@ for an already identified spectrum. Given a list of potential PTMs, it finds the
 best match based on either the greatest amount of matched peaks or the best
 spectrum similarity score (`ndotscore`). 
 
-```{r findMatch}
-## Add vignette docs TODO 
+```{r defExample}
+## Let's take `sp[30]` as an example here.
+ex <- sp[30]
+ex$sequence <- getCanonicalSequence(ex$peptide)
 ```
+
+In this example, the search engine identified `r ex$peptide` as the PSM for this
+spectrum. We can now validate this identification using `findBetterMatch()`.
+Note that we will use the canonical sequence here, but the function applies
+modifications on the canonical sequence of the provided peptide by default.
+
+```{r findBetterMatch}
+findBetterMatch(ex,
+                peptideVariable = "sequence",
+                modificationsList = c("Oxidation",
+                                      "Carbamidomethyl",
+                                      "Acetyl"),
+                improvedBy = "maxScore"
+                maxMods = 1,
+                convertToStyle = "name")
+
+```
+
+Notice that we have set 3 PTMs as variable modifications here. By default, a
+standard series of 49 common modifications (listed in unimod) is used. This
+extended series of PTMs makes the function very slow. We recommend somewhat
+restricting this list of modifications if they are to be applied on multiple
+PSMs.
+
+Also note that it is best to double-check the results from this search.
+Identifications are not best done on strictly the number of matched peaks or the
+`ndotproduct` score. That being said, the function does provide some directive
+on how a secondary search should be run with certain missed PTMs.
 
 # License
 

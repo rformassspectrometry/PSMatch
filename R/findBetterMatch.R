@@ -58,7 +58,10 @@
 ##' ## Run with stock modifications (see PSMatch:::.ptmNames)
 ##' findBetterMatch(sp[30], "peptide", maxMods = 1)
 ##'
-##' ## Run with custom modifications (need to be present in `modifications$Name`)
+##' ## Run with custom modifications (need to be present in
+##' # `modifications$Name`). Notice that for this example, the identified match
+##' ## includes an oxidation. We are removing it to show that findBetterMatch()
+##' ## also identifies the same sequence.
 ##' sp[30]$sequence <- getCanonicalSequence(sp[30]$peptide)
 ##' findBetterMatch(sp[30], "sequence", maxMods = 1)
 ##'
@@ -96,13 +99,14 @@ findBetterMatch <- function(x,
     data(modifications)
     restrictedList <- modifications[modifications$Name %in% modificationsList, c("Name", "Site")]
 
-    improvedSequences <- NULL
+    improvedSequences <- vector("character", length = length(x))
     for (i in seq_along(x)) {
-        improvedSequences <- c(improvedSequences,
-                               .findBetterMatch(x[i],
-                                                restrictedList,
-                                                maxMods,
-                                                improvedBy = improvedBy))
+        newSeq <- .findBetterMatch(x[i],
+                                   restrictedList,
+                                   maxMods,
+                                   improvedBy = improvedBy)
+
+        improvedSequences[i] <- newSeq
     }
 
     ## Finally, convert the annotation style

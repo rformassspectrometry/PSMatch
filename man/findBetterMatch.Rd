@@ -66,7 +66,10 @@ sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
 ## Run with stock modifications (see PSMatch:::.ptmNames)
 findBetterMatch(sp[30], "peptide", maxMods = 1)
 
-## Run with custom modifications (need to be present in `modifications$Name`)
+## Run with custom modifications (need to be present in
+# `modifications$Name`). Notice that for this example, the identified match
+## includes an oxidation. We are removing it to show that findBetterMatch()
+## also identifies the same sequence.
 sp[30]$sequence <- getCanonicalSequence(sp[30]$peptide)
 findBetterMatch(sp[30], "sequence", maxMods = 1)
 
