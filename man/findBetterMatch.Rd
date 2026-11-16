@@ -54,6 +54,7 @@ better ndotproduct (see \code{\link[MsCoreUtils:ndotproduct]{MsCoreUtils::ndotpr
 obtained.
 }
 \examples{
+\dontrun{
 ## Load the data: a Spectra object with identifications
 data(spBoekweg)
 data(psmBoekweg)
@@ -75,6 +76,7 @@ findBetterMatch(sp[30], "sequence", maxMods = 1)
 
 ## Get the best match based on the number of matched peaks
 findBetterMatch(sp[30], "sequence", maxMods = 1, improvedBy = "maxCount")
+}
 }
 \author{
 Guillaume Deflandre

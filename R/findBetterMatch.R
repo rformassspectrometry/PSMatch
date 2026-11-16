@@ -46,6 +46,7 @@
 ##' @export
 ##'
 ##' @examples
+##' \dontrun{
 ##' ## Load the data: a Spectra object with identifications
 ##' data(spBoekweg)
 ##' data(psmBoekweg)
@@ -67,6 +68,7 @@
 ##'
 ##' ## Get the best match based on the number of matched peaks
 ##' findBetterMatch(sp[30], "sequence", maxMods = 1, improvedBy = "maxCount")
+##' }
 findBetterMatch <- function(x,
                             peptideVariable = "peptide",
                             modificationsList = NULL,
@@ -74,9 +76,9 @@ findBetterMatch <- function(x,
                             improvedBy = c("maxScore", "maxCount"),
                             convertToStyle = "name") {
     ## Stop if x is not spectra object or if peptide sequence is not found:
-    if (class(x) != "Spectra" | !("sequence" %in% Spectra::spectraVariables(x))) {
-        stop(paste0("'x' must be a Spectra object and \nmust have an existing",
-                    "'peptide' argument in Spectra::spectraVariables(x)"))
+    if (class(x) != "Spectra" | !(peptideVariable %in% Spectra::spectraVariables(x))) {
+        stop(paste0("'x' must be a Spectra object and must have an existing \n",
+                    "'peptideVariable' argument in Spectra::spectraVariables(x)"))
     }
 
     if (!requireNamespace("MsCoreUtils", quietly = TRUE))

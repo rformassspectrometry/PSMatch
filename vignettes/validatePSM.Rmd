@@ -338,10 +338,10 @@ findBetterMatch(ex,
 ```
 
 Notice that we have set 3 PTMs as variable modifications here. By default, a
-standard series of 49 common modifications (listed in unimod) is used. This
-extended series of PTMs makes the function very slow. We recommend somewhat
-restricting this list of modifications if they are to be applied on multiple
-PSMs.
+standard series of 49 common modifications (listed in unimod, see `.ptmNames`)
+is used. This extended series of PTMs makes the function very slow. We recommend
+somewhat restricting this list of modifications if they are to be applied on
+multiple PSMs.
 
 Also note that it is best to double-check the results from this search.
 Identifications are not best done on strictly the number of matched peaks or the
