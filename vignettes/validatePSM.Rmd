@@ -331,7 +331,7 @@ findBetterMatch(ex,
                 modificationsList = c("Oxidation",
                                       "Carbamidomethyl",
                                       "Acetyl"),
-                improvedBy = "maxScore"
+                improvedBy = "maxScore",
                 maxMods = 1,
                 convertToStyle = "name")
 
