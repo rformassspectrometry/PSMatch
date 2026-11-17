@@ -123,3 +123,19 @@ test_that("validatePSM() returns a data.frame with expected columns", {
     ## Only identified PSMs should appear
     expect_true(all(!is.na(res$peptide)))
 })
+
+## findBetterMatch
+
+test_that("findBetterMatch() returns the best match", {
+    data("psmBoekweg")
+    data("spBoekweg")
+    psmBoekweg$pkey <- sub("^.+scan=", "", psmBoekweg$scannr)
+    sp <- Spectra::joinSpectraData(spBoekweg, psmBoekweg, by.x = "pkey")
+    seq_var <- psmVariables(psmBoekweg)[["peptide"]]
+    sp$peptide <- PTMods::convertAnnotation(sp$peptide, "name")
+    sp$sequence <- PTMods::getCanonicalSequence(sp$peptide)
+
+    res <- findBetterMatch(sp[30], peptideVariable = seq_var,
+                           modificationsList = c("Oxidation"))
+    expect_true(res == sp[30]$peptide)
+})

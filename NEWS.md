@@ -1,5 +1,9 @@
 # PSMatch 1.17
 
+## PSMatch 1.17.5
+
+- Added `findBetterMatch()`.
+
 ## PSMatch 1.17.4
 
 - Fix CC BY-SA link.
