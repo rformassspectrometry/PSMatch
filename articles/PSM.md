@@ -8,8 +8,8 @@
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-13 22:25:22.290796\
-**Compiled**: Fri Nov 13 22:42:02 2026
+**Last modified:** 2026-11-17 18:57:57.129949\
+**Compiled**: Tue Nov 17 19:15:36 2026
 
 ## Installation instructions
 
@@ -292,19 +292,19 @@ namely `"mzR"` (the default value) and `"mzID"`.
 [`system.time`](https://rdrr.io/r/base/system.time.html)`(``id1`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``, parser ``=`` ``"mzR"``)``)`
 
     ##    user  system elapsed 
-    ##   0.124   0.005   0.128
+    ##   0.110   0.006   0.121
 
 \
 [`system.time`](https://rdrr.io/r/base/system.time.html)`(``id2`` ``<-`` `[`PSM`](https://rformassspectrometry.github.io/PSMatch/reference/PSM.md)`(``f``, parser ``=`` ``"mzID"``)``)`
 
     ## Loading required namespace: mzID
 
-    ## reading 77518acaa97_7857...
+    ## reading 7f32b94e401_7857...
 
     ##  DONE!
 
     ##    user  system elapsed 
-    ##   4.942   0.064   5.028
+    ##   4.164   0.049   4.214
 
 Other differences in the two parsers include the columns that are
 returned, the way they name them, and, as will shown below the matches
@@ -507,7 +507,7 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] MsDataHub_1.13.4     PSMatch_1.17.4       PTMods_1.1.2        
+    ## [1] MsDataHub_1.13.4     PSMatch_1.17.5       PTMods_1.1.2        
     ## [4] S4Vectors_0.51.10    BiocGenerics_0.59.13 generics_0.1.4      
     ## [7] BiocStyle_2.41.0    
     ## 
@@ -552,7 +552,7 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ##  [75] glue_1.8.1                  lazyeval_0.2.3             
     ##  [77] tools_4.6.1                 AnnotationHub_4.3.3        
     ##  [79] mzID_1.51.0                 data.table_1.18.6.1        
-    ##  [81] mzR_2.47.2                  QFeatures_1.23.2           
+    ##  [81] mzR_2.47.2                  QFeatures_1.23.3           
     ##  [83] XML_3.99-0.25               fs_2.1.0                   
     ##  [85] grid_4.6.1                  tidyr_1.3.2                
     ##  [87] MsCoreUtils_1.25.4          AnnotationDbi_1.75.2       
@@ -560,7 +560,7 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ##  [91] textshaping_1.0.5           S4Arrays_1.13.2            
     ##  [93] dplyr_1.2.1                 AnnotationFilter_1.37.0    
     ##  [95] sass_0.4.10                 digest_0.6.39              
-    ##  [97] SparseArray_1.13.4          htmlwidgets_1.6.4          
+    ##  [97] SparseArray_1.13.5          htmlwidgets_1.6.4          
     ##  [99] memoise_2.0.1               htmltools_0.5.9            
     ## [101] pkgdown_2.2.1.9000          lifecycle_1.0.5            
     ## [103] httr_1.4.9                  bit64_4.8.6                

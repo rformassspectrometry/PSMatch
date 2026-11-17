@@ -8,8 +8,8 @@
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-13 22:25:22.290796\
-**Compiled**: Fri Nov 13 22:41:10 2026
+**Last modified:** 2026-11-17 18:57:57.129347\
+**Compiled**: Tue Nov 17 19:14:49 2026
 
 ## Introduction
 
@@ -493,12 +493,12 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ## 
     ## other attached packages:
     ##  [1] factoextra_2.2.0            ggplot2_4.0.3              
-    ##  [3] QFeatures_1.23.2            MultiAssayExperiment_1.39.1
+    ##  [3] QFeatures_1.23.3            MultiAssayExperiment_1.39.1
     ##  [5] SummarizedExperiment_1.43.0 Biobase_2.73.2             
     ##  [7] GenomicRanges_1.65.4        Seqinfo_1.3.2              
     ##  [9] IRanges_2.47.5              MatrixGenerics_1.25.0      
     ## [11] matrixStats_1.5.0           MsDataHub_1.13.4           
-    ## [13] PSMatch_1.17.4              PTMods_1.1.2               
+    ## [13] PSMatch_1.17.5              PTMods_1.1.2               
     ## [15] S4Vectors_0.51.10           BiocGenerics_0.59.13       
     ## [17] generics_0.1.4              BiocStyle_2.41.0           
     ## 
@@ -535,7 +535,7 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ##  [88] textshaping_1.0.5       S4Arrays_1.13.2         dplyr_1.2.1            
     ##  [91] AnnotationFilter_1.37.0 gtable_0.3.6            rstatix_1.1.0          
     ##  [94] sass_0.4.10             digest_0.6.39           ggrepel_0.9.8          
-    ##  [97] SparseArray_1.13.4      farver_2.1.2            htmlwidgets_1.6.4      
+    ##  [97] SparseArray_1.13.5      farver_2.1.2            htmlwidgets_1.6.4      
     ## [100] memoise_2.0.1           htmltools_0.5.9         pkgdown_2.2.1.9000     
     ## [103] lifecycle_1.0.5         httr_1.4.9              bit64_4.8.6            
     ## [106] MASS_7.3-66

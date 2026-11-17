@@ -41,6 +41,8 @@
   [`filterPsmShared()`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)
   [`filterPsmFdr()`](https://rformassspectrometry.github.io/PSMatch/reference/filterPSMs.md)
   : Filter out unreliable PSMs.
+- [`findBetterMatch()`](https://rformassspectrometry.github.io/PSMatch/reference/findBetterMatch.md)
+  : findBetterMatch
 - [`getAminoAcids()`](https://rformassspectrometry.github.io/PSMatch/reference/getAminoAcids.md)
   : Amino acids
 - [`getAtomicMass()`](https://rformassspectrometry.github.io/PSMatch/reference/getAtomicMass.md)

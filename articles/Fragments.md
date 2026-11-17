@@ -8,8 +8,8 @@
 (ORCID: <https://orcid.org/0000-0001-7406-4443>), Samuel Wieczorek
 \[ctb\], Thomas Burger \[ctb\], Guillaume Deflandre \[aut\] (ORCID:
 <https://orcid.org/0009-0008-1257-2416>)\
-**Last modified:** 2026-11-13 22:25:22.290796\
-**Compiled**: Fri Nov 13 22:41:31 2026
+**Last modified:** 2026-11-17 18:57:57.129949\
+**Compiled**: Tue Nov 17 19:15:08 2026
 
 ## Introduction
 
@@ -95,7 +95,7 @@ Merge both:
     ##  ... 68 more variables/columns.
     ## 
     ## file(s):
-    ## 775598fdb7a_7858
+    ## 7f33c107167_7858
 
 In this example, we are going to focus the MS2 scan with index 1158 and
 its parent MS1 scan (index 1148, selected automatically with the
@@ -409,7 +409,7 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ## 
     ## other attached packages:
     ## [1] Spectra_1.23.7       BiocParallel_1.47.0  MsDataHub_1.13.4    
-    ## [4] PSMatch_1.17.4       PTMods_1.1.2         S4Vectors_0.51.10   
+    ## [4] PSMatch_1.17.5       PTMods_1.1.2         S4Vectors_0.51.10   
     ## [7] BiocGenerics_0.59.13 generics_0.1.4       BiocStyle_2.41.0    
     ## 
     ## loaded via a namespace (and not attached):
@@ -450,14 +450,14 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ## [69] BiocVersion_3.24.0          glue_1.8.1                 
     ## [71] lazyeval_0.2.3              tools_4.6.1                
     ## [73] AnnotationHub_4.3.3         data.table_1.18.6.1        
-    ## [75] mzR_2.47.2                  QFeatures_1.23.2           
+    ## [75] mzR_2.47.2                  QFeatures_1.23.3           
     ## [77] fs_2.1.0                    grid_4.6.1                 
     ## [79] tidyr_1.3.2                 MsCoreUtils_1.25.4         
     ## [81] AnnotationDbi_1.75.2        cli_3.6.6                  
     ## [83] rappdirs_0.3.4              textshaping_1.0.5          
     ## [85] S4Arrays_1.13.2             dplyr_1.2.1                
     ## [87] AnnotationFilter_1.37.0     sass_0.4.10                
-    ## [89] digest_0.6.39               SparseArray_1.13.4         
+    ## [89] digest_0.6.39               SparseArray_1.13.5         
     ## [91] htmlwidgets_1.6.4           memoise_2.0.1              
     ## [93] htmltools_0.5.9             pkgdown_2.2.1.9000         
     ## [95] lifecycle_1.0.5             httr_1.4.9                 

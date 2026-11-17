@@ -3,8 +3,8 @@
 **Package**:
 *[PSMatch](https://bioconductor.org/packages/3.24/PSMatch)*\
 **Authors**: Guillaume Deflandre\
-**Last modified:** 2026-11-13 22:25:22.290796\
-**Compiled**: Fri Nov 13 22:42:24 2026
+**Last modified:** 2026-11-17 18:57:57.129949\
+**Compiled**: Tue Nov 17 19:15:56 2026
 
 ## Introduction
 
@@ -451,6 +451,59 @@ rescoring:
 `    all.x ``=`` ``FALSE`\
 `)`
 
+## Find a better peptide-spectrum match with `findBetterMatch()`
+
+The checks mentioned above show how some identifications can get flagged
+as dubious, be it because of a low FDR or because accumulated failed
+checks.
+[`checkOverlap()`](https://rformassspectrometry.github.io/PSMatch/reference/validatePSM.md)
+in particular shows that some identifications might be missing PTMs or
+that the wrong PTMs have been included in the identification.
+
+[`findBetterMatch()`](https://rformassspectrometry.github.io/PSMatch/reference/findBetterMatch.md)
+acts as a smallscale search engine: finding the best match for an
+already identified spectrum. Given a list of potential PTMs, it finds
+the best match based on either the greatest amount of matched peaks or
+the best spectrum similarity score (`ndotscore`).
+
+\
+`` ## Let's take `sp[30]` as an example here. ``\
+`ex`` ``<-`` ``sp``[``30``]`\
+`ex``$``sequence`` ``<-`` `[`getCanonicalSequence`](https://rdrr.io/pkg/PTMods/man/getCanonicalSequence.html)`(``ex``$``peptide``)`
+
+In this example, the search engine identified
+GILVKSTQEQSIFDM\[+15.994\]NR as the PSM for this spectrum. We can now
+validate this identification using
+[`findBetterMatch()`](https://rformassspectrometry.github.io/PSMatch/reference/findBetterMatch.md).
+Note that we will use the canonical sequence here, but the function
+applies modifications on the canonical sequence of the provided peptide
+by default.
+
+\
+[`findBetterMatch`](https://rformassspectrometry.github.io/PSMatch/reference/findBetterMatch.md)`(``ex``,`\
+`                peptideVariable ``=`` ``"sequence"``,`\
+`                modificationsList ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Oxidation"``,`\
+`                                      ``"Carbamidomethyl"``,`\
+`                                      ``"Acetyl"``)``,`\
+`                improvedBy ``=`` ``"maxScore"``,`\
+`                maxMods ``=`` ``1``,`\
+`                convertToStyle ``=`` ``"name"``)`
+
+    ##                              1 
+    ## "GILVKSTQEQSIFDM[Oxidation]NR"
+
+Notice that we have set 3 PTMs as variable modifications here. By
+default, a standard series of 49 common modifications (listed in unimod,
+see `.ptmNames`) is used. This extended series of PTMs makes the
+function very slow. We recommend somewhat restricting this list of
+modifications if they are to be applied on multiple PSMs.
+
+Also note that it is best to double-check the results from this search.
+Identifications are not best done on strictly the number of matched
+peaks or the `ndotproduct` score. That being said, the function does
+provide some directive on how a secondary search should be run with
+certain missed PTMs.
+
 ## License
 
 This vignette is distributed under a [CC BY-SA
@@ -485,14 +538,14 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] Spectra_1.23.7       BiocParallel_1.47.0  PSMatch_1.17.4      
+    ## [1] Spectra_1.23.7       BiocParallel_1.47.0  PSMatch_1.17.5      
     ## [4] PTMods_1.1.2         S4Vectors_0.51.10    BiocGenerics_0.59.13
     ## [7] generics_0.1.4       BiocStyle_2.41.0    
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] SummarizedExperiment_1.43.0 xfun_0.62                  
     ##  [3] bslib_0.12.0                htmlwidgets_1.6.4          
-    ##  [5] QFeatures_1.23.2            Biobase_2.73.2             
+    ##  [5] QFeatures_1.23.3            Biobase_2.73.2             
     ##  [7] lattice_0.23-1              vctrs_0.7.3                
     ##  [9] tools_4.6.1                 parallel_4.6.1             
     ## [11] tibble_3.3.1                cluster_2.1.8.3            
@@ -513,7 +566,7 @@ license](https://creativecommons.org/licenses/by-sa/4.0/).
     ## [41] dplyr_1.2.1                 reshape2_1.4.5             
     ## [43] bookdown_0.48               fastmap_1.2.0              
     ## [45] grid_4.6.1                  cli_3.6.6                  
-    ## [47] SparseArray_1.13.4          magrittr_2.0.5             
+    ## [47] SparseArray_1.13.5          magrittr_2.0.5             
     ## [49] S4Arrays_1.13.2             rmarkdown_2.32             
     ## [51] XVector_0.53.0              matrixStats_1.5.0          
     ## [53] igraph_2.3.4                otel_0.2.0                 

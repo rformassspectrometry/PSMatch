@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">PSMatch</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.24/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Laurent Gatto [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-1520-2268" class="external-link uri">https://orcid.org/0000-0002-1520-2268</a>), Johannes Rainer
 [aut] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Sebastian Gibb
 [aut] (ORCID: <a href="https://orcid.org/0000-0001-7406-4443" class="external-link uri">https://orcid.org/0000-0001-7406-4443</a>), Samuel Wieczorek
-[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-13 22:25:22.290796<br><strong>Compiled</strong>: Fri Nov 13 22:42:02 2026</p>
+[ctb], Thomas Burger [ctb], Guillaume Deflandre [aut] (ORCID: <a href="https://orcid.org/0009-0008-1257-2416" class="external-link uri">https://orcid.org/0009-0008-1257-2416</a>)<br><strong>Last modified:</strong> 2026-11-17 18:57:57.129949<br><strong>Compiled</strong>: Tue Nov 17 19:15:36 2026</p>
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
@@ -317,14 +317,14 @@ backend fails.</p></li>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzR"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   0.124   0.005   0.128</span></span></code></pre>
+<span><span class="co">##   0.110   0.006   0.121</span></span></code></pre>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">id2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PSM.html">PSM</a></span><span class="op">(</span><span class="va">f</span>, parser <span class="op">=</span> <span class="st">"mzID"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required namespace: mzID</span></span></code></pre>
-<pre><code><span><span class="co">## reading 77518acaa97_7857...</span></span></code></pre>
+<pre><code><span><span class="co">## reading 7f32b94e401_7857...</span></span></code></pre>
 <pre><code><span><span class="co">##  DONE!</span></span></code></pre>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">##   4.942   0.064   5.028</span></span></code></pre>
+<span><span class="co">##   4.164   0.049   4.214</span></span></code></pre>
 <p>Other differences in the two parsers include the columns that are
 returned, the way they name them, and, as will shown below the matches
 that are returned. Note for instance (and this will be important later),
@@ -480,7 +480,7 @@ license</a>.</p>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] MsDataHub_1.13.4     PSMatch_1.17.4       PTMods_1.1.2        </span></span>
+<span><span class="co">## [1] MsDataHub_1.13.4     PSMatch_1.17.5       PTMods_1.1.2        </span></span>
 <span><span class="co">## [4] S4Vectors_0.51.10    BiocGenerics_0.59.13 generics_0.1.4      </span></span>
 <span><span class="co">## [7] BiocStyle_2.41.0    </span></span>
 <span><span class="co">## </span></span>
@@ -525,7 +525,7 @@ license</a>.</p>
 <span><span class="co">##  [75] glue_1.8.1                  lazyeval_0.2.3             </span></span>
 <span><span class="co">##  [77] tools_4.6.1                 AnnotationHub_4.3.3        </span></span>
 <span><span class="co">##  [79] mzID_1.51.0                 data.table_1.18.6.1        </span></span>
-<span><span class="co">##  [81] mzR_2.47.2                  QFeatures_1.23.2           </span></span>
+<span><span class="co">##  [81] mzR_2.47.2                  QFeatures_1.23.3           </span></span>
 <span><span class="co">##  [83] XML_3.99-0.25               fs_2.1.0                   </span></span>
 <span><span class="co">##  [85] grid_4.6.1                  tidyr_1.3.2                </span></span>
 <span><span class="co">##  [87] MsCoreUtils_1.25.4          AnnotationDbi_1.75.2       </span></span>
@@ -533,7 +533,7 @@ license</a>.</p>
 <span><span class="co">##  [91] textshaping_1.0.5           S4Arrays_1.13.2            </span></span>
 <span><span class="co">##  [93] dplyr_1.2.1                 AnnotationFilter_1.37.0    </span></span>
 <span><span class="co">##  [95] sass_0.4.10                 digest_0.6.39              </span></span>
-<span><span class="co">##  [97] SparseArray_1.13.4          htmlwidgets_1.6.4          </span></span>
+<span><span class="co">##  [97] SparseArray_1.13.5          htmlwidgets_1.6.4          </span></span>
 <span><span class="co">##  [99] memoise_2.0.1               htmltools_0.5.9            </span></span>
 <span><span class="co">## [101] pkgdown_2.2.1.9000          lifecycle_1.0.5            </span></span>
 <span><span class="co">## [103] httr_1.4.9                  bit64_4.8.6                </span></span>

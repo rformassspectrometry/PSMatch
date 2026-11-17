@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">PSMatch</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function() {
       links[i].target = '_blank';
 });
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.24/PSMatch" class="external-link">PSMatch</a></em><br><strong>Authors</strong>: Guillaume Deflandre <br><strong>Last
-modified:</strong> 2026-11-13 22:25:22.290796<br><strong>Compiled</strong>: Fri Nov 13 22:42:24 2026</p>
+modified:</strong> 2026-11-17 18:57:57.129949<br><strong>Compiled</strong>: Tue Nov 17 19:15:56 2026</p>
 <div class="section level2">
 <h2 class="unnumbered" id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -555,6 +555,52 @@ for rescoring:</p>
 </div>
 </div>
 <div class="section level2">
+<h2 class="unnumbered" id="find-a-better-peptide-spectrum-match-with-findbettermatch">Find a better peptide-spectrum match with
+<code>findBetterMatch()</code><a class="anchor" aria-label="anchor" href="#find-a-better-peptide-spectrum-match-with-findbettermatch"></a>
+</h2>
+<p>The checks mentioned above show how some identifications can get
+flagged as dubious, be it because of a low FDR or because accumulated
+failed checks. <code><a href="../reference/validatePSM.html">checkOverlap()</a></code> in particular shows that some
+identifications might be missing PTMs or that the wrong PTMs have been
+included in the identification.</p>
+<p><code><a href="../reference/findBetterMatch.html">findBetterMatch()</a></code> acts as a smallscale search engine:
+finding the best match for an already identified spectrum. Given a list
+of potential PTMs, it finds the best match based on either the greatest
+amount of matched peaks or the best spectrum similarity score
+(<code>ndotscore</code>).</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Let's take `sp[30]` as an example here.</span></span>
+<span><span class="va">ex</span> <span class="op">&lt;-</span> <span class="va">sp</span><span class="op">[</span><span class="fl">30</span><span class="op">]</span></span>
+<span><span class="va">ex</span><span class="op">$</span><span class="va">sequence</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/PTMods/man/getCanonicalSequence.html" class="external-link">getCanonicalSequence</a></span><span class="op">(</span><span class="va">ex</span><span class="op">$</span><span class="va">peptide</span><span class="op">)</span></span></code></pre></div>
+<p>In this example, the search engine identified
+GILVKSTQEQSIFDM[+15.994]NR as the PSM for this spectrum. We can now
+validate this identification using <code><a href="../reference/findBetterMatch.html">findBetterMatch()</a></code>. Note
+that we will use the canonical sequence here, but the function applies
+modifications on the canonical sequence of the provided peptide by
+default.</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/findBetterMatch.html">findBetterMatch</a></span><span class="op">(</span><span class="va">ex</span>,</span>
+<span>                peptideVariable <span class="op">=</span> <span class="st">"sequence"</span>,</span>
+<span>                modificationsList <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Oxidation"</span>,</span>
+<span>                                      <span class="st">"Carbamidomethyl"</span>,</span>
+<span>                                      <span class="st">"Acetyl"</span><span class="op">)</span>,</span>
+<span>                improvedBy <span class="op">=</span> <span class="st">"maxScore"</span>,</span>
+<span>                maxMods <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                convertToStyle <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                              1 </span></span>
+<span><span class="co">## "GILVKSTQEQSIFDM[Oxidation]NR"</span></span></code></pre>
+<p>Notice that we have set 3 PTMs as variable modifications here. By
+default, a standard series of 49 common modifications (listed in unimod,
+see <code>.ptmNames</code>) is used. This extended series of PTMs makes
+the function very slow. We recommend somewhat restricting this list of
+modifications if they are to be applied on multiple PSMs.</p>
+<p>Also note that it is best to double-check the results from this
+search. Identifications are not best done on strictly the number of
+matched peaks or the <code>ndotproduct</code> score. That being said,
+the function does provide some directive on how a secondary search
+should be run with certain missed PTMs.</p>
+</div>
+<div class="section level2">
 <h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h2>
 <p>This vignette is distributed under a <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC BY-SA
@@ -563,7 +609,7 @@ license</a>.</p>
 <div class="section level2">
 <h2 class="unnumbered" id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.6.1 (2026-06-24)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
@@ -589,14 +635,14 @@ license</a>.</p>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] Spectra_1.23.7       BiocParallel_1.47.0  PSMatch_1.17.4      </span></span>
+<span><span class="co">## [1] Spectra_1.23.7       BiocParallel_1.47.0  PSMatch_1.17.5      </span></span>
 <span><span class="co">## [4] PTMods_1.1.2         S4Vectors_0.51.10    BiocGenerics_0.59.13</span></span>
 <span><span class="co">## [7] generics_0.1.4       BiocStyle_2.41.0    </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] SummarizedExperiment_1.43.0 xfun_0.62                  </span></span>
 <span><span class="co">##  [3] bslib_0.12.0                htmlwidgets_1.6.4          </span></span>
-<span><span class="co">##  [5] QFeatures_1.23.2            Biobase_2.73.2             </span></span>
+<span><span class="co">##  [5] QFeatures_1.23.3            Biobase_2.73.2             </span></span>
 <span><span class="co">##  [7] lattice_0.23-1              vctrs_0.7.3                </span></span>
 <span><span class="co">##  [9] tools_4.6.1                 parallel_4.6.1             </span></span>
 <span><span class="co">## [11] tibble_3.3.1                cluster_2.1.8.3            </span></span>
@@ -617,7 +663,7 @@ license</a>.</p>
 <span><span class="co">## [41] dplyr_1.2.1                 reshape2_1.4.5             </span></span>
 <span><span class="co">## [43] bookdown_0.48               fastmap_1.2.0              </span></span>
 <span><span class="co">## [45] grid_4.6.1                  cli_3.6.6                  </span></span>
-<span><span class="co">## [47] SparseArray_1.13.4          magrittr_2.0.5             </span></span>
+<span><span class="co">## [47] SparseArray_1.13.5          magrittr_2.0.5             </span></span>
 <span><span class="co">## [49] S4Arrays_1.13.2             rmarkdown_2.32             </span></span>
 <span><span class="co">## [51] XVector_0.53.0              matrixStats_1.5.0          </span></span>
 <span><span class="co">## [53] igraph_2.3.4                otel_0.2.0                 </span></span>

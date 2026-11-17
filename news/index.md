@@ -2,6 +2,13 @@
 
 ## PSMatch 1.17
 
+### PSMatch 1.17.5
+
+- Added
+  [`findBetterMatch()`](https://rformassspectrometry.github.io/PSMatch/reference/findBetterMatch.md).
+- Import [`utils::data`](https://rdrr.io/r/utils/data.html), suggest
+  `IRanges`, address other notes.
+
 ### PSMatch 1.17.4
 
 - Fix CC BY-SA link.
