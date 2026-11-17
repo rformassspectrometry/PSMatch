@@ -14,12 +14,12 @@ findBetterMatch(
 )
 }
 \arguments{
-\item{x}{a \code{Spectra()} object containing identifications.}
+\item{x}{\code{Spectra()} object containing identifications.}
 
-\item{peptideVariable}{a \code{character(1L)} pointing to the peptide sequence
+\item{peptideVariable}{\code{character(1L)} pointing to the peptide sequence
 variable in \code{x}.}
 
-\item{modificationsList}{a \code{character()} with all modifications to try out.
+\item{modificationsList}{\code{character()} with all modifications to try out.
 The modifications need to be present in the \link[PTMods:modifications]{PTMods::modifications}
 dataset from the unimod database. Note that the more modifications are
 included, the more combinations are possible and the longer it takes to
@@ -46,12 +46,13 @@ in the innitial Spectra object \code{x}.
 Try to find a better peptide-spectrum match than the current PSM.
 }
 \details{
-This function is meant to try your luck at finding a better peptide-spectrum
-match on the argument that \code{\link[=checkOverlap]{checkOverlap()}} has returned false or that the
-PSM's FDR is on the lower side. A peptide sequence is returned (with or
-without modifications) for which the greatest number of matched peaks/a
-better ndotproduct (see \code{\link[MsCoreUtils:ndotproduct]{MsCoreUtils::ndotproduct()}} for more details) was
-obtained.
+This function is meant to help finding a better peptide-spectrum
+match for identifications that fail certain checks (i.e. \code{\link[=checkOverlap]{checkOverlap()}}
+has returned false) or if the PSM's FDR doesn't qualify it as a
+confident identification. A peptide sequence is returned (with
+or without modifications) for which the greatest number of matched
+peaks/a better ndotproduct (see \code{\link[MsCoreUtils:ndotproduct]{MsCoreUtils::ndotproduct()}} for
+more details) was obtained.
 }
 \examples{
 \dontrun{

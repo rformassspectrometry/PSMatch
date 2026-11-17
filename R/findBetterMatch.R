@@ -4,19 +4,20 @@
 ##' Try to find a better peptide-spectrum match than the current PSM.
 ##'
 ##' @details
-##' This function is meant to try your luck at finding a better peptide-spectrum
-##' match on the argument that [checkOverlap()] has returned false or that the
-##' PSM's FDR is on the lower side. A peptide sequence is returned (with or
-##' without modifications) for which the greatest number of matched peaks/a
-##' better ndotproduct (see [MsCoreUtils::ndotproduct()] for more details) was
-##' obtained.
+##' This function is meant to help finding a better peptide-spectrum
+##' match for identifications that fail certain checks (i.e. [checkOverlap()]
+##' has returned false) or if the PSM's FDR doesn't qualify it as a
+##' confident identification. A peptide sequence is returned (with
+##' or without modifications) for which the greatest number of matched
+##' peaks/a better ndotproduct (see [MsCoreUtils::ndotproduct()] for
+##' more details) was obtained.
 ##'
-##' @param x a `Spectra()` object containing identifications.
+##' @param x `Spectra()` object containing identifications.
 ##'
-##' @param peptideVariable a `character(1L)` pointing to the peptide sequence
+##' @param peptideVariable `character(1L)` pointing to the peptide sequence
 ##'   variable in `x`.
 ##'
-##' @param modificationsList a `character()` with all modifications to try out.
+##' @param modificationsList `character()` with all modifications to try out.
 ##'   The modifications need to be present in the [PTMods::modifications]
 ##'   dataset from the unimod database. Note that the more modifications are
 ##'   included, the more combinations are possible and the longer it takes to
@@ -76,7 +77,7 @@ findBetterMatch <- function(x,
                             improvedBy = c("maxScore", "maxCount"),
                             convertToStyle = "name") {
     ## Stop if x is not spectra object or if peptide sequence is not found:
-    if (class(x) != "Spectra" | !(peptideVariable %in% Spectra::spectraVariables(x))) {
+    if (!inherits(x, "Spectra") | !(peptideVariable %in% Spectra::spectraVariables(x))) {
         stop(paste0("'x' must be a Spectra object and must have an existing \n",
                     "'peptideVariable' argument in Spectra::spectraVariables(x)"))
     }
