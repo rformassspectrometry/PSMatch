@@ -3,6 +3,7 @@
 ## PSMatch 1.17.5
 
 - Added `findBetterMatch()`.
+- Import `utils::data`, suggest `IRanges`, address other notes.
 
 ## PSMatch 1.17.4
 

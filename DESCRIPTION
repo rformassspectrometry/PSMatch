@@ -57,6 +57,7 @@ Suggests:
     knitr,
     factoextra,
     vdiffr (>= 1.0.0),
+    IRanges,
     testthat
 License: GPL-3
 Encoding: UTF-8

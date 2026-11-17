@@ -41,6 +41,7 @@
 ##'
 ##' @importFrom Spectra peaksData
 ##' @importFrom MsCoreUtils ndotproduct
+##' @importFrom utils data
 ##'
 ##' @author Guillaume Deflandre
 ##'
@@ -61,7 +62,7 @@
 ##' findBetterMatch(sp[30], "peptide", maxMods = 1)
 ##'
 ##' ## Run with custom modifications (need to be present in
-##' # `modifications$Name`). Notice that for this example, the identified match
+##' ## `modifications$Name`). Notice that for this example, the identified match
 ##' ## includes an oxidation. We are removing it to show that findBetterMatch()
 ##' ## also identifies the same sequence.
 ##' sp[30]$sequence <- getCanonicalSequence(sp[30]$peptide)
@@ -99,7 +100,8 @@ findBetterMatch <- function(x,
     x$pepSequence <- getCanonicalSequence(x[[peptideVariable]])
 
     ## Load data and select only a portion of it
-    data(modifications)
+    modifications <- NULL
+    data(modifications, package = "PTMods", envir = environment())
     restrictedList <- modifications[modifications$Name %in% modificationsList, c("Name", "Site")]
 
     improvedSequences <- vector("character", length = length(x))

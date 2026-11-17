@@ -116,4 +116,7 @@ importFrom(methods,
   new
 )
 importFrom(stats,setNames)
-importFrom(utils,adist)
+importFrom(utils,
+  adist,
+  data
+)

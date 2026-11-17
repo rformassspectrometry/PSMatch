@@ -174,7 +174,9 @@ plotSpectraPTM(sp, type = c("a", "b", "x", "y"))
 
 ## Annotate the spectrum with modifications using PTMods
 sp_mod <- sp
-sp_mod$sequence <- PTMods::addFixedModifications("SIGFEGDSIGR", fixedModifications = c(Nterm = "Acetyl"))
+sp_mod$sequence <-
+     PTMods::addFixedModifications("SIGFEGDSIGR",
+                                   fixedModifications = c(Nterm = "Acetyl"))
 plotSpectraPTM(sp_mod)
 
 ## Or call them within the function directly:
@@ -185,7 +187,8 @@ variableModifications = c(R = "Methyl"))
 plotSpectraPTM(c(sp, sp))
 
 ## Color the peaks with different colors
-plotSpectraPTM(sp, col = c(y = "red", b = "blue", acxy = "chartreuse3", other = "black"))
+plotSpectraPTM(sp, col = c(y = "red", b = "blue",
+               acxy = "chartreuse3", other = "black"))
 
 ## Use only singly-charged fragments (allCharges = FALSE)
 plotSpectraPTM(sp, allCharges = FALSE)
